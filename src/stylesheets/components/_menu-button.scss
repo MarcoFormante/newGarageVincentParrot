@@ -1,0 +1,17 @@
+.menu-button{
+    height: 80%;
+    width: 40px;
+    margin-right: 15px;
+   
+    display: flex;
+
+    flex-direction: column;
+    justify-content: space-around;
+
+    span{
+       
+        background-color: black;
+        padding: 2px;
+
+    }
+}

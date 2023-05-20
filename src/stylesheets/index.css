@@ -1,10 +1,8 @@
 /*
 Abstract: mixins,variables
 */
-body {
-  color: green;
-}
-
+/* type Color */
+/* type Value Number */
 /*
 base: base, fonts, helpers, typography
 */
@@ -33,9 +31,49 @@ html {
 /*
 components: button
 */
+.menu-button {
+  height: 80%;
+  width: 40px;
+  margin-right: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.menu-button span {
+  background-color: black;
+  padding: 2px;
+}
+
 /*
 layout: header
 */
+header {
+  height: 50px;
+  background-color: #D64E54;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand_logo {
+  background-color: #353535;
+  height: 100%;
+  width: 111px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 10px;
+  -webkit-clip-path: polygon(0 0, 100% 0%, 75% 100%, 0% 100%);
+          clip-path: polygon(0 0, 100% 0%, 75% 100%, 0% 100%);
+}
+.brand_logo img {
+  width: 72px;
+  height: 33px;
+}
+
 /*
 pages: home
 */

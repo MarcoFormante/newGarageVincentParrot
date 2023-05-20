@@ -1,0 +1,25 @@
+header{
+    height: $header_height_mobile;
+    background-color: $brand_color;
+    @include flex_spaceB;
+}
+
+//brand logo in header
+.brand_logo{
+    background-color: $secondary_color;
+    height: 100%;
+    width: 111px;
+    @include flex_center;
+    justify-content: flex-start;
+    padding-left:10px;
+    clip-path: polygon(0 0, 100% 0%, 75% 100%, 0% 100%);
+
+        img{
+            width: 72px;
+            height: 33px;
+
+        }   
+}
+
+
+
