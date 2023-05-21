@@ -1,10 +1,18 @@
-import Home from "./components/pages/Home";
+import Header from './components/header/Header';
+import Home from './components/pages/Home';
+import { Routes, Route } from 'react-router-dom';
+
 
 function App() {
   return (
     <div className="App">
       {/*public*/}
-      <Home />
+      <Header />
+      <Routes>
+        <Route exact path='/' element={<Home />} />
+      </Routes>
+       {/*Protected*/}
+      
     </div>
   );
 }

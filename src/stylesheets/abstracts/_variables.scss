@@ -1,12 +1,20 @@
 
-/* type Color */
+/* @type color */
 $brand_color:#D64E54;
 $secondary_color:#353535;
+$white-color:#FFFFFF;
 
-/* type Value Number */
+/* @type header_height depends of screen width */
 $header_height_mobile: 50px;
 $header_height: 76px;
 
+
+/* @type Font_size */
+$font_size :(
+  "small": 16px,
+  "medium":24px,
+  "big":32px,
+)!default;
 
 
 

@@ -1,7 +1,7 @@
 
 @import './fonts',
-        './helpers',
-        './typography';
+        './helpers';
+       
 
         
 html {
@@ -16,3 +16,6 @@ html {
   box-sizing: inherit;
 }
 
+a{
+  text-decoration: none;
+}

@@ -1,17 +1,40 @@
-.menu-button{
-    height: 80%;
-    width: 40px;
-    margin-right: 15px;
-   
+.menu_button{
+    height: 70%;
+    width: 35px;
+    margin-right: 10px;
+    cursor: pointer;
     display: flex;
-
     flex-direction: column;
     justify-content: space-around;
+    position: relative;
+    z-index: 1;
 
     span{
-       
-        background-color: black;
-        padding: 2px;
+        background-color: $secondary_color;
+        padding: 1.5px;
+        transition: all ease 0.3s;
+    }
+}
 
+
+.menu_button--open {
+    span{
+    background: $white-color;
+    }
+
+    & span:nth-child(2){
+        opacity: 0;
+    }
+
+    & span:nth-child(1){
+        transform: translateY(12px) rotate(-45deg);
+    }
+
+    & span:nth-child(3){
+        transform: translateY(-11px)rotate(45deg)
+    }
+
+    &.nav{
+        display: none;
     }
 }

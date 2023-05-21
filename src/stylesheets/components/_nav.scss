@@ -1,0 +1,40 @@
+.nav{
+    height: 100vh;
+    width: 0vw;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: $secondary_color;
+    z-index: 0;
+    font-size: map-get($font_size,"medium");
+    transition: width ease 0.3s;
+    
+
+//nav if menu is opened
+    &--open{
+        width: 100vw;
+        
+        & > .nav_container{
+            opacity: 1;
+        }
+    }
+
+    &_container{
+      @include flex_center(column);
+        height: inherit;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+
+//Link tags
+    &_link{
+        margin-top: 20px;
+        color: $white-color;
+
+        //if equal to pathname set border-bottom
+        &--active{
+            border-bottom: 1px solid $white-color;
+        }
+    }
+    
+}
