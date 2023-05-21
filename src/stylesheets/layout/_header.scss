@@ -2,6 +2,10 @@ header{
     height: $header_height_mobile;
     background-color: $brand_color;
     @include flex_spaceB;
+
+    @media screen and (min-width:769px) {
+        height:$header_height;
+    }
 }
 
 //brand logo in header
@@ -14,10 +18,21 @@ header{
     padding-left:10px;
     clip-path: polygon(0 0, 100% 0%, 75% 100%, 0% 100%);
 
+    @media screen and (min-width:769px) {
+       width: 150px;
+       padding-left: 25px;
+    }
+
         img{
             width: 72px;
             height: 33px;
+            @media screen and (min-width:769px) {
+                width: 70%;
+                height: 70%;
+                
+             }
         }   
+        
 }
 
 
