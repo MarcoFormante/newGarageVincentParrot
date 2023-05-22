@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-
+import HeroHome from './HeroHome'
 
 const Home = ({ pageTitle }) => {
   useEffect(() => {
@@ -8,12 +8,8 @@ const Home = ({ pageTitle }) => {
   
   return (
     <div>
-    
-      <figure className='hero_home'>
-        <h2 className="page_title_home">Vehicules d'occasion au <span>meilleurs</span> prix</h2>
-        <figcaption className='hero_home_caption'>La voiture de vos rêves au prix le moins cher du marché.</figcaption>
-      </figure>
-      
+      <HeroHome />
+        <h3 className='section_title'>Nos offres du mois</h3>
     </div>
   )
 }
