@@ -5,12 +5,6 @@ Abstract: mixins,variables
 
 
 /*
-base: base, fonts, helpers, typography
-*/
-@import './base/base';
-
-
-/*
 components: button
 */
 @import './components/components';
@@ -36,8 +30,11 @@ Vendors: Normalize
 
 
 
-    
+/*
+base: base, fonts, helpers, typography
+*/
+@import './base/base';
 
-
+  
 
 

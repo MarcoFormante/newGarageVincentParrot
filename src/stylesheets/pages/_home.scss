@@ -1,0 +1,24 @@
+//Home Image Hero
+.hero_home{
+    width: 100vw;
+    height: 95vh;
+    background-image: url(/public/images/bkhome-mb.jpg);
+    background-position: center;
+    background-size: cover;
+
+
+    &_caption{
+        width: 90%;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 14%;
+        text-align: center;
+        font-size: calc(20px + 1vw);
+        color: $white_color;
+        font-weight: bold;
+    }
+}
+
+
+

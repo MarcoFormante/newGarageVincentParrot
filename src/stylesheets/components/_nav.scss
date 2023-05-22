@@ -3,11 +3,11 @@
     .nav{
         height: 100vh;
         width: 0vw;
-        position: absolute;
+        position: fixed;
         left: 0;
         top: 0;
         background-color: $secondary_color;
-        z-index: 0;
+        z-index: 9;
         font-size: map-get($font_size,"medium");
         transition: width ease 0.3s;
         
@@ -18,14 +18,18 @@
             
             & > .nav_container{
                 opacity: 1;
+                transform: translateX(0);
             }
+
+            
         }
-    
+    //nav-container (childs:nav_link)
         &_container{
           @include flex_center(column);
             height: inherit;
             opacity: 0;
-            transition: opacity 0.2s ease;
+            transform: translateX(-200px);
+            transition: all 0.2s ease;
         }
     
     //Link tags
@@ -33,7 +37,7 @@
             margin-top: 20px;
             
     
-            //if equal to pathname set border-bottom
+            //if nav_link is equal to pathname set border-bottom
             &--active{
                 border-bottom: 1px solid $white-color;
             }
