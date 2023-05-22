@@ -1,26 +1,54 @@
+
+.card_carousel_flex{
+    display: flex;
+    gap: 10px;
+}
+
+.test{
+    overflow-y: hidden;
+    margin-left: 10px;
+}
+
 .car_card{
     width: 80vw;
     min-width: 250px;
-    max-height: 304px;
-    height: 340px;
-    
-    border: 1px solid $secondary_color;
+    max-width: 304px;
+    border: 2px solid $secondary_color;
+    min-height: 340px;
+    padding-bottom: 10px;
+   
+  
 
     img{
-        width: 100%;
-        height: 55%;
+        width:100%;
+        height: 199px;
+       
     }
     
     figcaption{
         font-weight: bold;
+        padding: 0 5px;
     }
 
     &_details{
           @include flex_spaceB;
+          
 
         &--left{
             display:flex;
             flex-direction: column;
+            color: $light-gray-color;
+            font-size: map-get($font_size,"small");
+            padding: 0 5px;
+
+            &_km{
+                font-weight: 600;
+            }
+
+            &_year{
+                color: $dark_gray_color;
+                
+            }
         }
 
         &--right{
@@ -51,10 +79,28 @@
         display: flex;
         justify-content: space-between;
         margin: 0 28px;
+
+        .car_card_cta{
+            @extend .cta;
+        }
+
+        & :first-child{
+            color: $white-color;
+        }
+
+        & > :nth-child(2){
+            background-color: $white-color;
+          
+            a{
+                color:black;
+            }
+        }
+        
     }
 
     & *:not(.car_card > img) {
         margin-top: 7px;
+      
     }
 }
 

@@ -1,0 +1,13 @@
+.cta{
+    background-color: $brand_color;
+    padding: 5px;
+    border-radius: 4px;
+    border: 2px solid $secondary_color;
+    font-size: map-get($font_size,"small");
+    min-width: 87px;
+    cursor: pointer;
+
+    
+}
+
+
