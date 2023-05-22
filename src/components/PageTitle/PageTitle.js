@@ -6,7 +6,6 @@ const PageTitle = ({ pageTitle }) => {
   return (
     <div className='page_title'>
           <h1>{pageTitle}</h1>
-       
     </div>
   )
 }

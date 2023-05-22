@@ -121,6 +121,59 @@ h2.page_title_home {
   font-size: 20px;
 }
 
+.car_card {
+  width: 80vw;
+  min-width: 250px;
+  max-height: 304px;
+  height: 340px;
+  border: 1px solid #353535;
+}
+.car_card img {
+  width: 100%;
+  height: 55%;
+}
+.car_card figcaption {
+  font-weight: bold;
+}
+.car_card_details {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.car_card_details--left {
+  display: flex;
+  flex-direction: column;
+}
+.car_card_details--right {
+  display: flex;
+  gap: 10px;
+  margin-right: 20px;
+}
+.car_card_details_offer_price {
+  padding: 5px;
+  color: #FFFFFF;
+  font-weight: bold;
+  background-color: #D64E54;
+  border-radius: 12px;
+  transform: rotate(-22deg);
+  position: relative;
+  top: -8px;
+}
+.car_card_details_price {
+  font-size: 20px;
+  color: black;
+  font-weight: 600;
+}
+.car_card_buttons {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 28px;
+}
+.car_card *:not(.car_card > img) {
+  margin-top: 7px;
+}
+
 /*
 layout: header
 */

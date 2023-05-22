@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import HeroHome from './HeroHome'
+import Offers from './Offers'
 
 const Home = ({ pageTitle }) => {
   useEffect(() => {
@@ -9,7 +10,7 @@ const Home = ({ pageTitle }) => {
   return (
     <div>
       <HeroHome />
-        <h3 className='section_title'>Nos offres du mois</h3>
+      <Offers />
     </div>
   )
 }

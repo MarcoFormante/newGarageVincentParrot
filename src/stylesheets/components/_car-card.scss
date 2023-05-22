@@ -1,0 +1,62 @@
+.car_card{
+    width: 80vw;
+    min-width: 250px;
+    max-height: 304px;
+    height: 340px;
+    
+    border: 1px solid $secondary_color;
+
+    img{
+        width: 100%;
+        height: 55%;
+    }
+    
+    figcaption{
+        font-weight: bold;
+    }
+
+    &_details{
+          @include flex_spaceB;
+
+        &--left{
+            display:flex;
+            flex-direction: column;
+        }
+
+        &--right{
+            display:flex;
+            gap: 10px;
+            margin-right: 20px;
+        }
+
+        &_offer_price{
+            padding: 5px;
+            color:$white-color;
+            font-weight: bold;
+            background-color: $brand_color;
+            border-radius: 12px;
+            transform: rotate(-22deg);
+            position: relative;
+            top: -8px;
+        }
+
+        &_price{
+            font-size: 20px;
+            color: black;
+            font-weight: 600;
+        }
+    }
+
+    &_buttons{
+        display: flex;
+        justify-content: space-between;
+        margin: 0 28px;
+    }
+
+    & *:not(.car_card > img) {
+        margin-top: 7px;
+    }
+}
+
+
+//$light-gray-color
