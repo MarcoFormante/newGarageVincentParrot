@@ -5,21 +5,21 @@ import { Link, useLocation} from 'react-router-dom'
 const Nav = ({menuToggle,handleMenu}) => {
     const location = useLocation();
    //public Routes (all users)
-    const publicRoutes = [{
+    const publicLinks = [{
             page: "Acceuil",
             path: "/"
         },
         {
             page: "Parc auto",
-            path: "/Parc-auto"
+            path: "/parc-auto"
         },
         {
                 page: "Contact",
-                path: "/Contact"
+                path: "/contact"
         },
         {
                 page: "Area Reservé",
-                path: "/Area-Reserve"
+                path: "/area-reserve"
         },
     ]
     //check if link Name is equal to location.pathname
@@ -31,15 +31,15 @@ const Nav = ({menuToggle,handleMenu}) => {
   return (
       <nav className={'nav' + menuisOpen }>
           <div className='nav_container'>
-            {publicRoutes.map((route, index) =>
+            {publicLinks.map((link, index) =>
         
         <Link 
-            className={`nav_link${isActive(route.path)}`}
+            className={`nav_link${isActive(link.path)}`}
             key={index + new Date().getMilliseconds()}
-            to={route.path}
+            to={link.path}
             onClick={handleMenu}      
         >
-            {route.page}
+            {link.page}
         </Link>)}
         </div>
     </nav>

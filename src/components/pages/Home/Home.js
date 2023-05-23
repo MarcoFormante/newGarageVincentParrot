@@ -5,7 +5,7 @@ import Offers from './Offers'
 const Home = ({ pageTitle }) => {
   useEffect(() => {
     pageTitle("Garage Vincent Parrot")
-  }, [])
+  }, [pageTitle])
   
   return (
     <div>
