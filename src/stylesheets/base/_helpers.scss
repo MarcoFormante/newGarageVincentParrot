@@ -1,11 +1,20 @@
-.text_tochange--center{
-    text-align: center;
-}
 
-.item_tochange--center{
-    margin: auto;
-}
 
+//item with 100% of width and child is flex-center(row/col)
 .container_full--flex{
     @include flex-center(row);
+} 
+
+//item flex-row and flex-column depends of screen width
+.container--flex{
+    @include flex-center(column);
+ 
+}
+
+ul{
+   
+
+    li{
+        display: list-item;
+    }
 }
