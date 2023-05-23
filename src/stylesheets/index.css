@@ -7,6 +7,45 @@ Abstract: mixins,variables
 /*
 components: button
 */
+.cta, .car_card_buttons .car_card_cta {
+  padding: 5px;
+  border-radius: 4px;
+  border: 2px solid #353535;
+  font-size: 16px;
+  min-width: 87px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px #9b9b9b;
+}
+.cta--red {
+  background-color: #D64E54;
+  color: #FFFFFF;
+  font-size: 24px;
+  padding: 10px;
+}
+.cta--red:hover {
+  background-color: #e0777c;
+}
+.cta--red a {
+  color: #FFFFFF;
+}
+.cta--white {
+  background-color: #FFFFFF;
+  color: #353535;
+  font-size: 16px;
+  padding: 5px;
+}
+.cta--white:hover {
+  background-color: #f4f4f4;
+}
+.cta--white a {
+  color: #353535;
+}
+.cta_offers {
+  margin-top: 95px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 .menu_button {
   height: 70%;
   width: 35px;
@@ -27,6 +66,7 @@ components: button
   background-color: #353535;
   padding: 1.5px;
   transition: all ease 0.3s;
+  height: 2px;
 }
 
 .menu_button--open span {
@@ -118,32 +158,50 @@ h1 {
 }
 
 h2.page_title_home {
-  font-size: 20px;
+  font-size: calc(16px + 0.6vw);
+}
+
+.card_carousel_flex {
+  display: flex;
+  gap: 10px;
+}
+
+.carCards_container {
+  overflow-y: hidden;
+  margin-left: 10px;
 }
 
 .car_card {
   width: 80vw;
   min-width: 250px;
-  max-height: 304px;
-  height: 340px;
-  border: 1px solid #353535;
+  max-width: 304px;
+  border: 2px solid #353535;
+  min-height: 340px;
+  padding-bottom: 10px;
+  background-color: #FFFFFF;
 }
 .car_card img {
   width: 100%;
-  height: 55%;
+  height: 199px;
 }
 .car_card figcaption {
   font-weight: bold;
+  padding: 0 5px;
 }
 .car_card_details {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 15px;
 }
 .car_card_details--left {
   display: flex;
   flex-direction: column;
+  color: #afb7bd;
+  font-size: 16px;
+  padding: 0 5px;
+  font-weight: 600;
 }
 .car_card_details--right {
   display: flex;
@@ -241,6 +299,12 @@ pages: home
   font-size: calc(20px + 1vw);
   color: #FFFFFF;
   font-weight: bold;
+}
+
+.section_page--grey {
+  background-color: #CBD0D4;
+  padding-top: 27px;
+  padding-bottom: 80px;
 }
 
 /*
@@ -562,6 +626,21 @@ body {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.text_tochange--center {
+  text-align: center;
+}
+
+.item_tochange--center {
+  margin: auto;
+}
+
+.container_full--flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 html {

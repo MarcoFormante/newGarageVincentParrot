@@ -1,0 +1,48 @@
+.cta{
+   
+    padding: 5px;
+    border-radius: 4px;
+    border: 2px solid $secondary_color;
+    font-size: map-get($font_size,"small");
+    min-width: 87px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px lighten($secondary_color,40);
+    
+
+    &--red{
+        background-color: $brand_color;
+        color:$white-color;
+        font-size: 24px;
+        padding: 10px;
+
+        &:hover{
+            background-color: lighten($brand_color,10);
+        }
+
+        a{
+            color:$white-color;
+        }
+    }
+
+    &--white{
+        background-color: $white-color;
+        color:$secondary_color;
+        font-size: 16px;
+        padding: 5px;
+        &:hover{
+            background-color: lighten($secondary_color,75);
+        }
+
+        a{
+            color:$secondary_color;
+        }
+    }
+
+    &_offers{
+        margin-top: 95px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+

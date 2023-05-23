@@ -1,5 +1,6 @@
 import React from 'react'
 import CarCard from '../../CarCard/CarCard'
+import ButtonCta from '../../Buttons/ButtonCta'
 
 const Offers = () => {
     /* provisoire!! fetch data Count(card_offers)*/
@@ -10,7 +11,7 @@ const Offers = () => {
             model: "Mazda steng 98k",
             km: 80000,
             year: 2001,
-            offer: 6500,
+            offer: 1000,
             price: 7500
         },{
             id: 2,
@@ -18,7 +19,7 @@ const Offers = () => {
             model: "Mazda steng 98k",
             km: 80000,
             year: 2001,
-            offer: 4900,
+            offer: 400,
             price: 5200
         },{
             id: 3,
@@ -26,7 +27,15 @@ const Offers = () => {
             model: "Mazda steng 98k",
             km: 80000,
             year: 2001,
-            offer: 6300,
+            offer: 700,
+            price: 6800
+        },{
+            id: 3,
+            imgPath:"/images/bkhome-mb.jpg",
+            model: "Mazda steng 98k",
+            km: 80000,
+            year: 2001,
+            offer: 700,
             price: 6800
         }
     ]
@@ -35,11 +44,22 @@ const Offers = () => {
         return
     }
 
-  return (
-    <div className='page_section page_section_offers'>
-          <h3 className='section_title'>Nos offres du mois</h3>  
-          {offerCards.map((car, index) => <CarCard key={index + car.id } {...offerCards[index]} />)}
-    </div>
+    return (
+        <>
+        <h3 className={'section_title section_title_offres'}>Nos offres du mois</h3> 
+        <div className={"section_page section_page--grey"}>
+      
+            <div className={'carCards_container'}>
+            <div className={'page_section page_section_offers card_carousel_flex'}>
+                 {offerCards.map((car, index) => <CarCard key={index + car.id } {...offerCards[index]} />)}
+            </div>
+              
+            </div>
+            <div className={"container_full--flex"}>
+                <ButtonCta className={"cta cta--red cta_offers"} inner={"Tous nos vèhicules"} type={"link"} to={"/parc-auto"} />
+            </div>
+        </div>
+        </>
   )
 }
 
