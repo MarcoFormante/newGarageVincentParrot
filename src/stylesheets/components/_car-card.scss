@@ -17,7 +17,7 @@
     min-height: 340px;
     padding-bottom: 10px;
     background-color: $white-color;
-    
+
    
   
 
@@ -34,23 +34,16 @@
 
     &_details{
           @include flex_spaceB;
-        
+            margin-bottom: 15px;
 
         &--left{
             display:flex;
             flex-direction: column;
-            color: $light-gray-color;
+            color: darken($light-gray-color,10);
             font-size: map-get($font_size,"small");
             padding: 0 5px;
+            font-weight: 600;
 
-            &_km{
-                font-weight: 600;
-            }
-
-            &_year{
-                color: $dark_gray_color;
-                
-            }
         }
 
         &--right{

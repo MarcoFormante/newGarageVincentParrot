@@ -193,19 +193,15 @@ h2.page_title_home {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 15px;
 }
 .car_card_details--left {
   display: flex;
   flex-direction: column;
-  color: #CBD0D4;
+  color: #afb7bd;
   font-size: 16px;
   padding: 0 5px;
-}
-.car_card_details--left_km {
   font-weight: 600;
-}
-.car_card_details--left_year {
-  color: #7D7D7D;
 }
 .car_card_details--right {
   display: flex;
