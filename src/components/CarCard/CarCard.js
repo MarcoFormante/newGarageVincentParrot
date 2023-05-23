@@ -1,36 +1,44 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 import ButtonCta from '../Buttons/ButtonCta'
 
+
 const CarCard = ({ id, imgPath, model, km, year, offer, price }) => {
-    
+  const handleSubject = (subject) => {
+    sessionStorage.setItem("carSubject", subject)
+    console.log(sessionStorage.getItem("carSubject"));
+  }
+ 
   return (
-    
       <figure className='car_card'>
             <img src={imgPath} alt={model}/>
-              <figcaption className="car_card_model">{model}</figcaption>
-              <div className='car_card_details'>
-                  {/*card_details_left*/}
-                <div className='car_card_details--left'>
-                    <span className='car_card_details--left_km'>{km}km</span>
-                    <span className='car_card_details--left_year'>Année:{year}</span>
+              <figcaption className={"car_card_model"}>{model}</figcaption>
+                <div className={'car_card_details'}>
+        
+                {/*card_details_left*/}
+        
+                <div className={'car_card_details--left'}>
+                    <span className={'car_card_details--left_km'}>{km}km</span>
+                    <span className={'car_card_details--left_year'}>Année:{year}</span>
                 </div>
-                   {/*card_details_right (price)*/}
-                  <div className='car_card_details--right'>
+        
+                  {/*card_details_right (price)*/}
+        
+                  <div className={'car_card_details--right'}>
                       {offer && offer > 0
                         ?
-                          <span className='car_card_details_offer_price'>{price - offer} $</span>
+                          <span className={'car_card_details_offer_price'}>{price - offer} $</span>
                         :
                           ""
                       }
-                      <span className="car_card_details_price" style={offer > 0 ?{textDecoration:"line-through"}:{}}>{price} $</span>
+                      <span className={"car_card_details_price"} style={offer > 0 ?{textDecoration:"line-through"}:{}}>{price} $</span>
                 </div>
               </div>
-
-              <div className='car_card_buttons'>
-                  <ButtonCta className="car_card_cta" inner="Contacter" type="button"/>
-                  <ButtonCta className="car_card_cta"  inner="Details" type="link" style={{color:"black"}}  to={"parc-auto/details/"+ id} />
+                  {/*Buttons: Contacter, Details  (Links to pages)*/} 
+      
+              <div className={'car_card_buttons'}>
+                  <ButtonCta className={"car_card_cta cta--red"} inner="Contacter" onClick={() => handleSubject(model)} type="link" to={"/contact"} />
+                  <ButtonCta className={"car_card_cta cta--white"} inner={"Details"} type={"link"} to={"/parc-auto/details/"+ id} />
               </div>
 
       </figure>

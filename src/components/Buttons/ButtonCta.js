@@ -7,7 +7,7 @@ const ButtonCta = ({ type,inner,to,...rest}) => {
         return (
                 <button {...rest}>{inner}</button>
         )
-    } else {
+    } else if(type ==="link"){
       return (
         <button {...rest}><Link to={to}>{inner}</Link></button>
       )

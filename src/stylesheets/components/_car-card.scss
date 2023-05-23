@@ -4,7 +4,7 @@
     gap: 10px;
 }
 
-.test{
+.carCards_container{
     overflow-y: hidden;
     margin-left: 10px;
 }
@@ -16,6 +16,8 @@
     border: 2px solid $secondary_color;
     min-height: 340px;
     padding-bottom: 10px;
+    background-color: $white-color;
+    
    
   
 
@@ -32,7 +34,7 @@
 
     &_details{
           @include flex_spaceB;
-          
+        
 
         &--left{
             display:flex;
@@ -84,17 +86,7 @@
             @extend .cta;
         }
 
-        & :first-child{
-            color: $white-color;
-        }
-
-        & > :nth-child(2){
-            background-color: $white-color;
-          
-            a{
-                color:black;
-            }
-        }
+        
         
     }
 
