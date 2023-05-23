@@ -20,11 +20,62 @@
     }
 }
 
+
+//Services section in Home page
 .section_page--grey{
     background-color: $light-gray-color;
     padding-top: 27px;
     padding-bottom: 80px;
 }
 
+.section_page_services{
+    img{
+        width: 70vw;
+        height: 204px;
+        max-width: 528px ;
+        margin-bottom: 10px;
+    }
+}
+
+
+.services_list{
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 50px;
+    margin-bottom: 30px;
+    
+    li{
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 18px;
+
+        &::before{
+            content: "";
+            width:6px;
+            height:6px;
+            background-color: $brand_color;
+            display: block;
+            border-radius: 50%;
+            margin-left: 15px;
+        }
+    }
+}
+
+.txt-services{
+    margin: 10px;
+
+    a{
+        color: $brand_color;
+        font-weight: bold;
+        text-decoration: underline;
+       
+    }
+
+    &--lineheight{
+        line-height: 148.7%;
+    }
+}
 
 
