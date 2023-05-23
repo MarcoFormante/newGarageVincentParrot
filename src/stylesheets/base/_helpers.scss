@@ -1,0 +1,11 @@
+.text_tochange--center{
+    text-align: center;
+}
+
+.item_tochange--center{
+    margin: auto;
+}
+
+.container_full--flex{
+    @include flex-center(row);
+}
