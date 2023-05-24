@@ -40,8 +40,18 @@
 .btn_avis{
     @extend .cta--red;
     display: block;
+    padding: 0;
     margin: 25px auto;
     border-radius: 8px;
     width: 80%;
     max-width: 310px;
+   
+
+    a{
+        display: block;
+        height: 100%;
+        width: 100%;
+        padding: 10px;
+    }
+
 }

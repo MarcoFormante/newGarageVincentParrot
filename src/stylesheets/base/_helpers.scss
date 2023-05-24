@@ -1,9 +1,5 @@
 
 
-//item with 100% of width and child is flex-center(row/col)
-.container_full--flex{
-    @include flex-center(row);
-} 
 
 //item flex-row and flex-column depends of screen width
 .container--flex{

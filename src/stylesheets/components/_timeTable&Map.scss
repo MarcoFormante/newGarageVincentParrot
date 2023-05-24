@@ -3,12 +3,15 @@
     width: fit-content;
     margin: auto;
     padding: 10px;
-    table{
+    tbody{
+        
         span{
             display: inline-block;
-           width:50px;
-           text-align: left;
+            width:50px;
+            text-align: center;
         }
+        
+       
      
     }
 
@@ -22,15 +25,19 @@
 
 .time_table_single{
     font-size: map-get($font_size,"medium");
-    
+    @media screen and (max-width: 370px) {
+        font-size: map-get($font_size,"small");
+    }
 }
 
 .map_container{
     @include flex-center(column);
         width: 300px;
         max-width: 300px;
-            img{
-                width: 100%;
+            iframe{
+                width: 100vw;
+                height: 400px;
+                max-width: 90vw;
             }
     }
   

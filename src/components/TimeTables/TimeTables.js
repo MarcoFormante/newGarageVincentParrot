@@ -61,9 +61,11 @@ const TimeTables = () => {
           <h3 className={'section_title section_title_time_tables'}>Nos horaires</h3> 
           <div className='time_table_container'>
               <table>
-                  <tr>
-                  {timeTable.map((time, index) => <td> <TimeComponent key={"time_table" + index} {...time} day={days[index]} />  </td>)}
-                  </tr>
+                  <tbody>
+                    <tr>
+                    {timeTable.map((time, index) => <td key={"time_table" + index}> <TimeComponent  {...time} day={days[index]} />  </td>)}
+                    </tr>
+                    </tbody>
               </table>
             
             </div>

@@ -15,6 +15,7 @@ components: button
   min-width: 87px;
   cursor: pointer;
   box-shadow: 0 4px 10px #9b9b9b;
+  display: block;
 }
 .cta--red, .btn_avis {
   background-color: #D64E54;
@@ -41,9 +42,9 @@ components: button
   color: #353535;
 }
 .cta_offers {
-  margin-top: 95px;
   padding-left: 20px;
   padding-right: 20px;
+  margin: 95px auto;
 }
 
 .menu_button {
@@ -268,10 +269,17 @@ h2.page_title_home {
 
 .btn_avis {
   display: block;
+  padding: 0;
   margin: 25px auto;
   border-radius: 8px;
   width: 80%;
   max-width: 310px;
+}
+.btn_avis a {
+  display: block;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
 }
 
 .time_table_container {
@@ -280,10 +288,10 @@ h2.page_title_home {
   margin: auto;
   padding: 10px;
 }
-.time_table_container table span {
+.time_table_container tbody span {
   display: inline-block;
   width: 50px;
-  text-align: left;
+  text-align: center;
 }
 .time_table_container tr, .time_table_container td {
   display: block;
@@ -295,6 +303,11 @@ h2.page_title_home {
 .time_table_single {
   font-size: 24px;
 }
+@media screen and (max-width: 370px) {
+  .time_table_single {
+    font-size: 16px;
+  }
+}
 
 .map_container {
   display: flex;
@@ -304,8 +317,10 @@ h2.page_title_home {
   width: 300px;
   max-width: 300px;
 }
-.map_container img {
-  width: 100%;
+.map_container iframe {
+  width: 100vw;
+  height: 400px;
+  max-width: 90vw;
 }
 
 /*
@@ -798,13 +813,6 @@ body {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
-}
-
-.container_full--flex {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
 }
 
 .container--flex {

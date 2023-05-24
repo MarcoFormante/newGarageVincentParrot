@@ -7,6 +7,7 @@
     min-width: 87px;
     cursor: pointer;
     box-shadow: 0 4px 10px lighten($secondary_color,40);
+    display: block;
     
 
     &--red{
@@ -39,9 +40,10 @@
     }
 
     &_offers{
-        margin-top: 95px;
+       
         padding-left: 20px;
         padding-right: 20px;
+        margin:  95px auto;
     }
 }
 
