@@ -1,0 +1,47 @@
+.avis_cards_container{
+    overflow-y: hidden;
+
+    &_inner{
+        display: flex;
+        gap: 10px;
+        overflow-y: hidden;
+    }
+    
+}
+
+
+.avis_card{
+    @include flex-center(column);
+    text-align: center;
+    gap: 30px;
+    margin: 10px 0;
+    min-height: 320px;
+    min-width: 300px;
+    border: 1px solid $light-gray-color;
+    border-radius: 8px;
+
+    &_name{
+        text-transform: capitalize;
+        font-weight: bold;
+        font-size: map-get($font_size,"medium");
+        
+    }
+
+    &_text{
+        width: 100%;
+        
+    }
+
+    .star{
+        margin-left: 10px;
+    }
+}
+
+.btn_avis{
+    @extend .cta--red;
+    display: block;
+    margin: 25px auto;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 310px;
+}

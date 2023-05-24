@@ -79,3 +79,80 @@
 }
 
 
+//Avis section
+
+.section_avis{
+
+    .section_page--grey{
+        padding-bottom: 30px;
+      
+        
+    }
+  
+   
+}
+
+.avis_score{
+
+    &_stars{
+        background-color: $white_color;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        width: fit-content;
+        margin: auto;
+        padding: 8px;
+        border-radius: 8px;
+
+        .star{
+            margin-left: 10px;
+        }
+
+        .score{
+            font-weight: bold;
+            font-size: map-get($font_size,"small");
+            color:lighten($dark-gray-color,20)
+        }
+    }
+}
+
+
+.score_bar{
+
+    height: 26px;
+    display: flex;
+    align-items: center;
+    margin: 20px 0 0 0px ;
+    gap: 30px;
+    justify-content: center;
+    
+span{
+    font-weight: bold;
+}
+
+    .bar_outer{
+        background-color: $white_color;
+        width: 70%;
+        height: 100%;
+        border-radius: 12px;
+        max-width: 477px;
+      
+    }
+
+    .bar_inner{
+        background-color: $brand_color;
+        @extend .bar_outer;
+        width: 80%;
+     
+    }
+}
+
+.title_cta{
+    font-size: map-get($font_size,"medium");
+    font-weight: bold;
+    margin-top: 40px;
+    text-align: center;
+    color: lighten($dark-gray-color,20);
+}
+
+

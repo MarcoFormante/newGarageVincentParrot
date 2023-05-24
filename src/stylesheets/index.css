@@ -16,16 +16,16 @@ components: button
   cursor: pointer;
   box-shadow: 0 4px 10px #9b9b9b;
 }
-.cta--red {
+.cta--red, .btn_avis {
   background-color: #D64E54;
   color: #FFFFFF;
   font-size: 24px;
   padding: 10px;
 }
-.cta--red:hover {
+.cta--red:hover, .btn_avis:hover {
   background-color: #e0777c;
 }
-.cta--red a {
+.cta--red a, .btn_avis a {
   color: #FFFFFF;
 }
 .cta--white {
@@ -232,6 +232,48 @@ h2.page_title_home {
   margin-top: 7px;
 }
 
+.avis_cards_container {
+  overflow-y: hidden;
+}
+.avis_cards_container_inner {
+  display: flex;
+  gap: 10px;
+  overflow-y: hidden;
+}
+
+.avis_card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 30px;
+  margin: 10px 0;
+  min-height: 320px;
+  min-width: 300px;
+  border: 1px solid #CBD0D4;
+  border-radius: 8px;
+}
+.avis_card_name {
+  text-transform: capitalize;
+  font-weight: bold;
+  font-size: 24px;
+}
+.avis_card_text {
+  width: 100%;
+}
+.avis_card .star {
+  margin-left: 10px;
+}
+
+.btn_avis {
+  display: block;
+  margin: 25px auto;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 310px;
+}
+
 /*
 layout: header
 */
@@ -346,6 +388,61 @@ pages: home
 }
 .txt-services--lineheight {
   line-height: 148.7%;
+}
+
+.section_avis .section_page--grey {
+  padding-bottom: 30px;
+}
+
+.avis_score_stars {
+  background-color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: auto;
+  padding: 8px;
+  border-radius: 8px;
+}
+.avis_score_stars .star {
+  margin-left: 10px;
+}
+.avis_score_stars .score {
+  font-weight: bold;
+  font-size: 16px;
+  color: #b0b0b0;
+}
+
+.score_bar {
+  height: 26px;
+  display: flex;
+  align-items: center;
+  margin: 20px 0 0 0px;
+  gap: 30px;
+  justify-content: center;
+}
+.score_bar span {
+  font-weight: bold;
+}
+.score_bar .bar_outer, .score_bar .bar_inner {
+  background-color: #FFFFFF;
+  width: 70%;
+  height: 100%;
+  border-radius: 12px;
+  max-width: 477px;
+}
+.score_bar .bar_inner {
+  background-color: #D64E54;
+  width: 80%;
+}
+
+.title_cta {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 40px;
+  text-align: center;
+  color: #b0b0b0;
 }
 
 /*
