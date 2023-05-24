@@ -5,7 +5,11 @@ import ButtonCta from '../../Buttons/ButtonCta'
 
 //Section "Vos Avis" in home page
 const AvisSection = () => {
+    const [avis, setAvis] = useState([]);
 
+    useEffect(() => {
+        setAvis([...avisClient])
+    },[avis])
     const avisClient = [
         {
             name: "clement",
@@ -50,7 +54,7 @@ const AvisSection = () => {
           </div>
             <div className={"avis_cards_container"}>
                 <div className={"avis_cards_container_inner"}>
-                  {avisClient.map((avis, index) => <AvisCard key={"avis_" + index +"_card" } name={avis.name}  text={avis.text} note={avis.note} />)}
+                  {avis.map((avis, index) => <AvisCard key={"avis_" + index +"_card" } name={avis.name}  text={avis.text} note={avis.note} />)}
               </div>
               <p className='title_cta'>Votre avis nous interesse</p>
               <ButtonCta type={"link"} to={"/avis"} inner={"Je donne mon avis"} className={"btn_avis"} />
