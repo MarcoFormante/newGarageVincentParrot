@@ -1,0 +1,38 @@
+.time_table_container{
+  
+    width: fit-content;
+    margin: auto;
+    padding: 10px;
+    table{
+        span{
+            display: inline-block;
+           width:50px;
+           text-align: left;
+        }
+     
+    }
+
+    tr,td{
+        display: block;
+        border: 1px solid black;
+        padding: 10px;
+        border-radius: 4px;
+    }
+}
+
+.time_table_single{
+    font-size: map-get($font_size,"medium");
+    
+}
+
+.map_container{
+    @include flex-center(column);
+        width: 300px;
+        max-width: 300px;
+            img{
+                width: 100%;
+            }
+    }
+  
+
+

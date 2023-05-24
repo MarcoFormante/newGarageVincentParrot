@@ -274,6 +274,40 @@ h2.page_title_home {
   max-width: 310px;
 }
 
+.time_table_container {
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: auto;
+  padding: 10px;
+}
+.time_table_container table span {
+  display: inline-block;
+  width: 50px;
+  text-align: left;
+}
+.time_table_container tr, .time_table_container td {
+  display: block;
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.time_table_single {
+  font-size: 24px;
+}
+
+.map_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  max-width: 300px;
+}
+.map_container img {
+  width: 100%;
+}
+
 /*
 layout: header
 */

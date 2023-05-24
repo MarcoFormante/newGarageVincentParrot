@@ -5,39 +5,37 @@ import ButtonCta from '../../Buttons/ButtonCta'
 
 //Section "Vos Avis" in home page
 const AvisSection = () => {
-    const [avis, setAvis] = useState([]);
-
+    const [avis, setAvis] = useState([{
+        name: "clement",
+        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum pariatur nihil animi voluptates repellat qui dicta, repudiandae vel saepe labore suscipit dolor voluptate possimus reprehenderit ducimus odit deserunt delectus distinctio?",
+        note: Math.floor(Math.random()*6)
+    },
+    {
+        name: "clement",
+        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum pariatur nihil animi voluptates repellat qui dicta, repudiandae vel saepe labore suscipit dolor voluptate possimus reprehenderit ducimus odit deserunt delectus distinctio?",
+        note:Math.floor(Math.random()*6)
+    },
+    {
+        name: "clement",
+        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum pariatur nihil animi voluptates repellat qui dicta, repudiandae vel saepe labore suscipit dolor voluptate possimus reprehenderit ducimus odit deserunt delectus distinctio?",
+        note: Math.floor(Math.random()*6)
+    },
+    {
+        name: "clement",
+        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum pariatur nihil animi voluptates repellat qui dicta, repudiandae vel saepe labore suscipit dolor voluptate possimus reprehenderit ducimus odit deserunt delectus distinctio?",
+        note: Math.floor(Math.random()*6)
+    },
+    {
+        name: "clement",
+        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum pariatur nihil animi voluptates repellat qui dicta, repudiandae vel saepe labore suscipit dolor voluptate possimus reprehenderit ducimus odit deserunt delectus distinctio?",
+        note: Math.floor(Math.random()*6)
+    }]);
+    
     useEffect(() => {
-        setAvis([...avisClient])
-    },[avis])
-    const avisClient = [
-        {
-            name: "clement",
-            text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum pariatur nihil animi voluptates repellat qui dicta, repudiandae vel saepe labore suscipit dolor voluptate possimus reprehenderit ducimus odit deserunt delectus distinctio?",
-            note: Math.floor(Math.random()*6)
-        },
-        {
-            name: "clement",
-            text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum pariatur nihil animi voluptates repellat qui dicta, repudiandae vel saepe labore suscipit dolor voluptate possimus reprehenderit ducimus odit deserunt delectus distinctio?",
-            note:Math.floor(Math.random()*6)
-        },
-        {
-            name: "clement",
-            text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum pariatur nihil animi voluptates repellat qui dicta, repudiandae vel saepe labore suscipit dolor voluptate possimus reprehenderit ducimus odit deserunt delectus distinctio?",
-            note: Math.floor(Math.random()*6)
-        },
-        {
-            name: "clement",
-            text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum pariatur nihil animi voluptates repellat qui dicta, repudiandae vel saepe labore suscipit dolor voluptate possimus reprehenderit ducimus odit deserunt delectus distinctio?",
-            note: Math.floor(Math.random()*6)
-        },
-        {
-            name: "clement",
-            text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum pariatur nihil animi voluptates repellat qui dicta, repudiandae vel saepe labore suscipit dolor voluptate possimus reprehenderit ducimus odit deserunt delectus distinctio?",
-            note: Math.floor(Math.random()*6)
-        }
-
-    ]
+    setAvis([...avis])
+},[])
+   
+  
    
   return (
     <div className={'section_avis'}>

@@ -4,6 +4,7 @@ import Offers from './Offers'
 import Services from './Services'
 import AvisSection from './AvisSection'
 
+
 const Home = ({ pageTitle }) => {
   useEffect(() => {
     pageTitle("Garage Vincent Parrot")
@@ -15,6 +16,7 @@ const Home = ({ pageTitle }) => {
       <Offers />
       <Services />
       <AvisSection />
+    
     </div>
   )
 }
