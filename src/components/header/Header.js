@@ -14,40 +14,41 @@ const Header = () => {
   }
 
 
-// if screen width < 769 and menu is open , this function closes the menu (see useEffect)
+  // if screen width < 769 and menu is open , this function closes the menu (see useEffect)
   const handleResizeScreen = () => {
     if (window.scrollY > 769) {
-        setMenuToggle(false)
+      setMenuToggle(false)
     }
+  }
  
 
-//resize event
-  useEffect(() => {
+    //resize event
+    useEffect(() => {
    
-    window.addEventListener("resize", handleResizeScreen)
+      window.addEventListener("resize", handleResizeScreen)
 
-    return () => {
-      window.removeEventListener("resize", handleResizeScreen)
+      return () => {
+        window.removeEventListener("resize", handleResizeScreen)
       
-    }
-  
-  }, [])
+      }
+    }, [])
 
  
 
-  return (
-    <div className={'header_outer'} style={isSticky && menuToggle === false ? { position: "sticky" } : {position:"relative"}}>
+    return (
+      <div className={'header_outer'} style={isSticky && menuToggle === false ? { position: "sticky" } : { position: "relative" }}>
     
-      <header>
-        <div className={"brand_logo"}>
-          <img src={"/images/brand-logo.png"} alt={"Garage Vincent Parrot"} />
-        </div>
+        <header>
+          <div className={"brand_logo"}>
+            <img src={"/images/brand-logo.png"} alt={"Garage Vincent Parrot"} />
+          </div>
   
-        <Nav menuToggle={menuToggle} handleMenu={handleMenu} />
-        <MenuButton className={`menu_button ${menuToggle ? "menu_button--open ":""} `} onClick={handleMenu} />
-      </header>
-    </div>
-  )
-}
+          <Nav menuToggle={menuToggle} handleMenu={handleMenu} />
+          <MenuButton className={`menu_button ${menuToggle ? "menu_button--open " : ""} `} onClick={handleMenu} />
+        </header>
+      </div>
+    )
+  }
+
 
 export default Header
