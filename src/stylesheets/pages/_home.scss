@@ -34,6 +34,11 @@
         height: 300px;
         max-width: 450px ;
         margin-bottom: 10px;
+
+        @media screen and (max-width:375px) {
+            height: 250px;
+            width: 90vw;
+        }
     }
 }
 
@@ -78,7 +83,7 @@
             display: block;
             border-radius: 50%;
             margin-left: 1px;
-            
+            padding: 3px;
 
             @media screen and (max-width:map-get($breakpoints,"medium")) {
                 padding: 2px;

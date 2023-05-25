@@ -31,9 +31,18 @@
 }
 
 .time_table_single{
+
+    span{
+        font-weight: bold;
+    }
     font-size: map-get($font_size,"medium");
     @media screen and (max-width: 370px) {
         font-size: map-get($font_size,"small");
+    }
+
+    &--close{
+        color:$brand_color;
+        font-weight: bold;
     }
 }
 

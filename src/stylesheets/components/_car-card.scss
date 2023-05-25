@@ -2,6 +2,20 @@
 .card_carousel_flex{
     display: flex;
     gap: 10px;
+
+     figure{
+       position: relative;
+        &:last-child::after{
+            content: '';
+         background-color: $brand_color;
+         width: 6px;
+         height: 100%;
+         display: block;
+         position: absolute;
+         top: 0;
+         right: 0;
+        }
+     }
 }
 
 ::-webkit-scrollbar{

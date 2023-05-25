@@ -1,29 +1,34 @@
 import React,{ useState,useEffect,useRef } from 'react'
 import CarCard from '../../CarCard/CarCard'
 import ButtonCta from '../../Buttons/ButtonCta'
+import Arrows from '../../Arrows/Arrows'
 
 
 const Offers = () => {
-    const [arrowTarget, setArrowTarget] = useState();
+    const [arrowTarget, setArrowTarget] = useState()
+    const [carouselWidth,setCarouselWidth]=useState()
+    const [carouselX,setCarouselX]=useState()
     const carousel = useRef();
-    const cardPadding = 20;
+  
+
 
     //carousel scroll event
-    const handleScrollCarousel = (dir) => {
+    const handleScrollCarousel = (direction) => {
+        const cardPadding = 20;
             carousel.current.scrollBy({
                 top: 0,
-                left: dir + window.innerWidth - cardPadding,
+                left: direction + window.innerWidth - cardPadding,
                 behavior: "smooth"
             })
         
         /** prevent multiple clicks*/
             setTimeout(() => {
                 setArrowTarget("")
-            },500) 
+            }, 500) 
         }
 
     useEffect(() => {
-        
+        setCarouselWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
         switch (arrowTarget) {
             
             case "left":
@@ -36,8 +41,10 @@ const Offers = () => {
             default:
                 break;
         }
-    },[arrowTarget])
 
+        setCarouselX(carousel.current.scrollLeft);
+    },[arrowTarget,carouselWidth])
+   
     /* provisoire!! fetch data Count(card_offers)*/
     const offerCards = [
         {
@@ -163,15 +170,12 @@ const Offers = () => {
 
     return (
         <>
+          {carouselX}
+            
             <h3 className={'section_title section_title_offres'}>Nos offres du mois</h3> 
-            <div className={"arrows_container"}>
-                <button className={'arrow arrow_left_car_carousel'} onClick={() => setArrowTarget("left")}>
-                    <div className={'arrow_left'} ></div>
-            </button >
-                <button className={'arrow  arrow_right_car_carousel'}  onClick={()=> setArrowTarget("right")}><div className={'arrow_right'}></div></button>
-            </div>
+            <Arrows carouselX={carouselX} carouselWidth={carouselWidth} onClick={(direction)=>setArrowTarget(direction)}  />
+           
         <div className={"section_page section_page--grey"}>
-      
             <div className={'carCards_container'} ref={carousel}>
             <div className={'page_section page_section_offers card_carousel_flex'}>
                  {offerCards.map((car, index) => <CarCard key={index + car.id } {...offerCards[index]} />)}
@@ -187,4 +191,5 @@ const Offers = () => {
 }
 
 export default Offers
+
 

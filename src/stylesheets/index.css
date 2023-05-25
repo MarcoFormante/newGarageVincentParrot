@@ -166,6 +166,19 @@ h2.page_title_home {
   display: flex;
   gap: 10px;
 }
+.card_carousel_flex figure {
+  position: relative;
+}
+.card_carousel_flex figure:last-child::after {
+  content: "";
+  background-color: #D64E54;
+  width: 6px;
+  height: 100%;
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
 
 ::-webkit-scrollbar {
   display: none;
@@ -354,10 +367,17 @@ h2.page_title_home {
 .time_table_single {
   font-size: 24px;
 }
+.time_table_single span {
+  font-weight: bold;
+}
 @media screen and (max-width: 370px) {
   .time_table_single {
     font-size: 16px;
   }
+}
+.time_table_single--close {
+  color: #D64E54;
+  font-weight: bold;
 }
 
 .map_container {
@@ -548,6 +568,12 @@ pages: home
   max-width: 450px;
   margin-bottom: 10px;
 }
+@media screen and (max-width: 375px) {
+  .section_page_services img {
+    height: 250px;
+    width: 90vw;
+  }
+}
 
 .services_list {
   margin-top: 50px;
@@ -589,6 +615,7 @@ pages: home
   display: block;
   border-radius: 50%;
   margin-left: 1px;
+  padding: 3px;
 }
 @media screen and (max-width: 768px) {
   .services_list li::before {

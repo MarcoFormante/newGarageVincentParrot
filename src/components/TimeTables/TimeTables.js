@@ -82,7 +82,7 @@ const TimeComponent = (props) => {
           
             {props.close === true
             ?
-            <p className={"time_table_single"}> <span>{props.day}:</span> Fermé</p>
+            <p className={"time_table_single time_table_single--close"}> <span>{props.day}:</span> Fermé</p>
             :
             <p className={"time_table_single"}><span>{props.day}: </span> <time>{props.amStart}</time>-<time>{props.amEnd}</time>, <time>{props.pmStart}</time>-<time>{props.pmEnd}</time></p>
             }
