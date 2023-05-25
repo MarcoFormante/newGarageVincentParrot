@@ -97,7 +97,7 @@
 
         @media screen and (min-width:1025px){
             text-align: center;
-            margin: 20px auto;
+            margin: 50px auto;
             width: clamp(300px,60vw,800px);
         
         }
@@ -142,7 +142,6 @@
 
 
 .score_bar{
-
     height: 26px;
     display: flex;
     align-items: center;

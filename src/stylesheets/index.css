@@ -167,6 +167,45 @@ h2.page_title_home {
   gap: 10px;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
+.arrows_container {
+  display: flex;
+  justify-content: end;
+  padding: 20px;
+  gap: 10px;
+}
+@media screen and (max-width: 768px) {
+  .arrows_container {
+    display: none;
+  }
+}
+
+.arrow {
+  cursor: pointer;
+  border-radius: 4px;
+}
+.arrow div {
+  width: 50px;
+  height: 50px;
+  background-color: #FFFFFF;
+  background-image: url(/public/icons/arrow.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.arrow div:active {
+  background-color: #D64E54;
+}
+.arrow div.arrow_left {
+  transform: rotateY(180deg);
+  background-color: #CBD0D4;
+}
+.arrow div.arrow_left:active {
+  background-color: #D64E54;
+}
+
 .carCards_container {
   overflow-y: hidden;
   margin-left: 10px;
@@ -564,7 +603,7 @@ pages: home
 @media screen and (min-width: 1025px) {
   .txt_services_after_list {
     text-align: center;
-    margin: 20px auto;
+    margin: 50px auto;
     width: clamp(300px, 60vw, 800px);
   }
 }
