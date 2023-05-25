@@ -25,6 +25,28 @@
         }
 
     }
+
+    &.container_time_map{
+
+        @media screen and (min-width:1025px){
+            flex-direction: row;
+            gap: 0 100px;
+            align-items: baseline;
+            
+
+        .map_container{
+            width: 300px;
+            
+                iframe{
+                    width: 50vw;
+                    max-width: 400px;
+                    max-height: 350px;
+                    margin-top: 20px;
+                }
+        }
+         }
+        
+    }
 }
 
 ul{

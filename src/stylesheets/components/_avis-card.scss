@@ -1,6 +1,11 @@
 .avis_cards_container{
     overflow-y: hidden;
-    margin: 50px;
+    
+
+    @media screen and (min-width:1025px){
+        margin: 50px;
+    }
+
     &_inner{
         display: flex;
         gap: 10px;
@@ -14,7 +19,7 @@
     @include flex-center(column);
     text-align: center;
     gap: 30px;
-    margin: 10px 20px;
+    margin: 10px 5px;
     min-height: 320px;
     min-width: 300px;
     border: 1px solid $light-gray-color;

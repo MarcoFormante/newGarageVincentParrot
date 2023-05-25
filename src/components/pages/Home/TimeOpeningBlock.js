@@ -4,7 +4,7 @@ import Map from '../../Map/Map'
 
 const TimeOpeningBlock = () => {
   return (
-    <div className='container--flex'>
+    <div className='container--flex container_time_map'>
       <TimeTables />
       <Map/>
     </div>
