@@ -4,7 +4,9 @@ import MenuButton from './MenuButton';
 
 const Header = () => {
   const [menuToggle, setMenuToggle] = useState(false);
-  
+  const [scrollY, setScrollY] = useState(0);
+  const [isSticky,setIsSticky] = useState(false);
+
   //menu Toggle function (used by menuButton and nav_links)
   const handleMenu = () => {
     setMenuToggle(!menuToggle);
@@ -13,11 +15,25 @@ const Header = () => {
 
 // if screen width < 769 and menu is open , this function closes the menu (see useEffect)
   const handleResizeScreen = () => {
-    if (window.innerWidth < 769) {
+    if (window.scrollY > 769) {
         setMenuToggle(false)
     }
   }
+
+//on scroll header becomes sticky when user scoll Up
+  const handleScroll = () => {
+
+    if ( window.scrollY > scrollY + 200) {
+      setScrollY(window.scrollY);
+      setIsSticky(false);
+    } else if (window.scrollY < scrollY - 200) {
+      setScrollY(window.scrollY);
+      setIsSticky(true);
+    }
+  }
   
+
+//resize event
   useEffect(() => {
     window.addEventListener("resize", handleResizeScreen)
 
@@ -27,11 +43,22 @@ const Header = () => {
   
   }, [])
 
+  //Scroll event
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll)
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+    }
+  
+  }, [scrollY])
+
   return (
-    <div>
+    <div className={'header_outer'} style={isSticky ? { position: "sticky" } : {}}>
+    
       <header>
-        <div className="brand_logo">
-          <img src="/images/brand-logo.png" alt="Garage Vincent Parrot" />
+        <div className={"brand_logo"}>
+          <img src={"/images/brand-logo.png"} alt={"Garage Vincent Parrot"} />
         </div>
     {menuToggle.toString()}
         <Nav menuToggle={menuToggle} handleMenu={handleMenu} />
