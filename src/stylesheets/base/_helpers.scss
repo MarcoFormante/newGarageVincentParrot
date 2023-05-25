@@ -4,7 +4,27 @@
 //item flex-row and flex-column depends of screen width
 .container--flex{
     @include flex-center(column);
- 
+
+    &.container_services_first_block{
+
+        @media screen and (min-width:1025px){
+            flex-direction: row;
+            margin: auto;
+            gap: 10vw;
+
+            img{
+                width: 35vw;
+                height: 300px;
+                min-width: 400px;
+            }
+
+            .txt-services{
+                width: 25%;
+                min-width: 300px;
+            }
+        }
+
+    }
 }
 
 ul{

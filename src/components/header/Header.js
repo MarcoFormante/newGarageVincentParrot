@@ -60,7 +60,7 @@ const Header = () => {
         <div className={"brand_logo"}>
           <img src={"/images/brand-logo.png"} alt={"Garage Vincent Parrot"} />
         </div>
-    {menuToggle.toString()}
+  
         <Nav menuToggle={menuToggle} handleMenu={handleMenu} />
         <MenuButton className={`menu_button ${menuToggle ? "menu_button--open":""} `} onClick={handleMenu} />
       </header>

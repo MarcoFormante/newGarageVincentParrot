@@ -235,6 +235,7 @@ h2.page_title_home {
 
 .avis_cards_container {
   overflow-y: hidden;
+  margin: 50px;
 }
 .avis_cards_container_inner {
   display: flex;
@@ -249,7 +250,7 @@ h2.page_title_home {
   align-items: center;
   text-align: center;
   gap: 30px;
-  margin: 10px 0;
+  margin: 10px 20px;
   min-height: 320px;
   min-width: 300px;
   border: 1px solid #CBD0D4;
@@ -262,6 +263,7 @@ h2.page_title_home {
 }
 .avis_card_text {
   width: 100%;
+  padding: 10px;
 }
 .avis_card .star {
   margin-left: 10px;
@@ -493,8 +495,8 @@ pages: home
 
 .section_page_services img {
   width: 70vw;
-  height: 204px;
-  max-width: 528px;
+  height: 300px;
+  max-width: 450px;
   margin-bottom: 10px;
 }
 
@@ -504,6 +506,18 @@ pages: home
   grid-template-columns: 1fr;
   gap: 50px;
   margin-bottom: 30px;
+}
+@media screen and (min-width: 1025px) {
+  .services_list {
+    grid-template-columns: 1fr 1fr;
+    width: -moz-fit-content;
+    width: fit-content;
+    padding: 50px;
+    gap: 80px 100px;
+    width: fit-content;
+    margin: auto;
+    padding-left: 7vw;
+  }
 }
 .services_list li {
   display: flex;
@@ -521,16 +535,25 @@ pages: home
   margin-left: 15px;
 }
 
-.txt-services {
+.txt_services {
   margin: 10px;
+  padding: 5px;
 }
-.txt-services a {
+.txt_services a {
   color: #D64E54;
   font-weight: bold;
   text-decoration: underline;
 }
-.txt-services--lineheight {
+.txt_services--lineheight {
   line-height: 148.7%;
+  padding: 20px;
+}
+@media screen and (min-width: 1025px) {
+  .txt_services_after_list {
+    text-align: center;
+    margin: 20px auto;
+    width: clamp(300px, 60vw, 800px);
+  }
 }
 
 .section_avis .section_page--grey {
@@ -914,6 +937,22 @@ code {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+@media screen and (min-width: 1025px) {
+  .container--flex.container_services_first_block {
+    flex-direction: row;
+    margin: auto;
+    gap: 10vw;
+  }
+  .container--flex.container_services_first_block img {
+    width: 35vw;
+    height: 300px;
+    min-width: 400px;
+  }
+  .container--flex.container_services_first_block .txt-services {
+    width: 25%;
+    min-width: 300px;
+  }
 }
 
 ul li {

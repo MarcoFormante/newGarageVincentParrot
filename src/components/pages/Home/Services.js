@@ -5,9 +5,9 @@ const Services = () => {
   return (
     <div className={'section_page section_page_services'}>
         <h3 className={'section_title section_title_services'}>Decouvrez nos services</h3> 
-        <figure className={'container--flex'}>
+        <figure className={'container--flex container_services_first_block'}>
             <img src={"/images/bkhome-mb.jpg"} alt="" width={530} height={447}/>
-          <p className={'txt-services txt-services--lineheight'}>Dans notre centre,
+          <p className={'txt-services txt_services--lineheight'}>Dans notre centre,
             nous nous engageons à fournir des services
             de haute qualité pour assurer que votre véhicule
             soit dans les meilleures conditions possibles.
@@ -18,16 +18,19 @@ const Services = () => {
       </figure>
       
           <ul className={"services_list"}>
-              <li>service</li>
-              <li>service</li>
-              <li>service</li>
-              <li>service</li>
-              <li>service</li>
-              <li>service</li>
-              <li>service</li>
+              <li>service sadjkashdkjah jjkkkkkkkknnkjk jkkk jnkjnknkkkkkkkkkkkkkkksajdkashdksahdkhaskdh</li>
+              <li>service sadjkashdkjah jjkkkkkkkknnkjk jkkk jnkjnknkkkkkkkkkkkkkkksajdkashdksahdkhaskdh</li>
+              <li>service sadjkashdkjah jjkkkkkkkknnkjk jkkk jnkjnknkkkkkkkkkkkkkkksajdkashdksahdkhaskdh</li>
+              <li>service sadjkashdkjah jjkkkkkkkknnkjk jkkk jnkjnknkkkkkkkkkkkkkkksajdkashdksahdkhaskdh</li>
+              <li>serviceasdasjdhgj asgdhjasghdasgd ashdgas</li>
+              <li>service hghyguhij jjkk</li>
+              <li>service kjnkhjgygjk jhbhjgjg</li>
+              <li>service kjjhyuguguk jhugguh</li>
           </ul>
 
-      <p className='txt-services'>N’hésitez pas à nous <Link to={"contact"}>contacter</Link> si vous souhaitez obtenir plus d’informations. Notre équipe se tient à votre disposition pour répondre à toutes vos questions et vous fournir les reinseignements dont vous avez besoin</p>
+      <p className={'txt_services txt_services_after_list'}>N’hésitez pas à nous <Link to={"/contact"}>contacter </Link>
+         si vous souhaitez obtenir plus d’informations. Notre équipe se tient à votre disposition pour répondre
+        à toutes vos questions et vous fournir les reinseignements dont vous avez besoin.</p>
         
     </div>
   )
