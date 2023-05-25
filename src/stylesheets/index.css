@@ -305,6 +305,12 @@ h2.page_title_home {
   padding: 10px;
   border-radius: 4px;
 }
+.time_table_container tr {
+  background-color: #b0b0b0;
+}
+.time_table_container td {
+  background-color: #FFFFFF;
+}
 
 .time_table_single {
   font-size: 24px;
@@ -960,6 +966,9 @@ code {
     width: 25%;
     min-width: 300px;
   }
+}
+.container--flex.container_time_map {
+  margin-bottom: 100px;
 }
 @media screen and (min-width: 1025px) {
   .container--flex.container_time_map {
