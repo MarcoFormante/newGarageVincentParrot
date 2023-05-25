@@ -5,7 +5,8 @@ import MenuButton from './MenuButton';
 const Header = () => {
   const [menuToggle, setMenuToggle] = useState(false);
   const [scrollY, setScrollY] = useState(0);
-  const [isSticky,setIsSticky] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
+  const [lastScrollY, setLastScrolly] = useState(0);
 
   //menu Toggle function (used by menuButton and nav_links)
   const handleMenu = () => {
@@ -18,43 +19,24 @@ const Header = () => {
     if (window.scrollY > 769) {
         setMenuToggle(false)
     }
-  }
-
-//on scroll header becomes sticky when user scoll Up
-  const handleScroll = () => {
-
-    if ( window.scrollY > scrollY + 200) {
-      setScrollY(window.scrollY);
-      setIsSticky(false);
-    } else if (window.scrollY < scrollY - 200) {
-      setScrollY(window.scrollY);
-      setIsSticky(true);
-    }
-  }
-  
+ 
 
 //resize event
   useEffect(() => {
+   
     window.addEventListener("resize", handleResizeScreen)
 
     return () => {
       window.removeEventListener("resize", handleResizeScreen)
+      
     }
   
   }, [])
 
-  //Scroll event
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll)
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
-  
-  }, [scrollY])
+ 
 
   return (
-    <div className={'header_outer'} style={isSticky ? { position: "sticky" } : {}}>
+    <div className={'header_outer'} style={isSticky && menuToggle === false ? { position: "sticky" } : {position:"relative"}}>
     
       <header>
         <div className={"brand_logo"}>
@@ -62,7 +44,7 @@ const Header = () => {
         </div>
   
         <Nav menuToggle={menuToggle} handleMenu={handleMenu} />
-        <MenuButton className={`menu_button ${menuToggle ? "menu_button--open":""} `} onClick={handleMenu} />
+        <MenuButton className={`menu_button ${menuToggle ? "menu_button--open ":""} `} onClick={handleMenu} />
       </header>
     </div>
   )

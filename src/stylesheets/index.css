@@ -70,6 +70,9 @@ components: button
   height: 2px;
 }
 
+.menu_button--open {
+  z-index: 10;
+}
 .menu_button--open span {
   background: #FFFFFF;
 }

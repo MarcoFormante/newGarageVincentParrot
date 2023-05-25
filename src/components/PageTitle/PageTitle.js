@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 const PageTitle = ({ pageTitle }) => {
     
   return (
-    <div className='page_title'>
+    <div className={'page_title'}>
           <h1>{pageTitle}</h1>
     </div>
   )
@@ -12,6 +12,4 @@ const PageTitle = ({ pageTitle }) => {
 
 export default PageTitle
 
-PageTitle.propTypes = {
-    pageTitle: PropTypes.string
-}
+

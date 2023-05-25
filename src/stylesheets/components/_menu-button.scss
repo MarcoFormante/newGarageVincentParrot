@@ -25,7 +25,9 @@
     
     
     .menu_button--open {
-        
+        z-index: 10;
+      
+
         span{
         background: $white-color;
         }
