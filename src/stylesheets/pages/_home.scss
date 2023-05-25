@@ -61,6 +61,14 @@
         align-items: center;
         gap: 4px;
         font-size: 18px;
+        word-break: break-all;
+
+        @media screen and (max-width:map-get($breakpoints,"medium")) {
+            padding: 5px;
+            font-size: map-get($font_size,"small");
+           
+        }
+      
 
         &::before{
             content: "";
@@ -69,7 +77,15 @@
             background-color: $brand_color;
             display: block;
             border-radius: 50%;
-            margin-left: 15px;
+            margin-left: 1px;
+            
+
+            @media screen and (max-width:map-get($breakpoints,"medium")) {
+                padding: 2px;
+               
+                
+            }
+          
         }
     }
 }

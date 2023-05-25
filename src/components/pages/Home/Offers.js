@@ -5,7 +5,6 @@ import ButtonCta from '../../Buttons/ButtonCta'
 
 const Offers = () => {
     const [arrowTarget, setArrowTarget] = useState();
-    const [carouselX, setCarouselX] = useState(0);
     const carousel = useRef();
     const cardPadding = 20;
 
@@ -16,8 +15,9 @@ const Offers = () => {
                 left: dir + window.innerWidth - cardPadding,
                 behavior: "smooth"
             })
+        
+        /** prevent multiple clicks*/
             setTimeout(() => {
-                setCarouselX(carousel.current.scrollLeft)
                 setArrowTarget("")
             },500) 
         }
