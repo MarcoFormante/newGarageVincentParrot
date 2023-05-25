@@ -10,8 +10,6 @@ const Offers = () => {
     const [carouselX,setCarouselX]=useState()
     const carousel = useRef();
   
-
-
     //carousel scroll event
     const handleScrollCarousel = (direction) => {
         const cardPadding = 20;
@@ -28,9 +26,9 @@ const Offers = () => {
         }
 
     useEffect(() => {
+        setCarouselX(carousel.current.scrollLeft);
         setCarouselWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
         switch (arrowTarget) {
-            
             case "left":
                 handleScrollCarousel("-")
                 break;
@@ -41,9 +39,17 @@ const Offers = () => {
             default:
                 break;
         }
+    }, [arrowTarget, carouselWidth])
+    
+    //every tick check scrollLeft of carousel ref
+    useEffect(() => {
+        carousel.current.addEventListener("scroll", () => {
+            setCarouselX(carousel.current.scrollLeft)
+        })   
 
-        setCarouselX(carousel.current.scrollLeft);
-    },[arrowTarget,carouselWidth])
+        return carousel.current.removeEventListener("scroll",()=>{})
+
+    },[])
    
     /* provisoire!! fetch data Count(card_offers)*/
     const offerCards = [
@@ -170,8 +176,6 @@ const Offers = () => {
 
     return (
         <>
-          {carouselX}
-            
             <h3 className={'section_title section_title_offres'}>Nos offres du mois</h3> 
             <Arrows carouselX={carouselX} carouselWidth={carouselWidth} onClick={(direction)=>setArrowTarget(direction)}  />
            
