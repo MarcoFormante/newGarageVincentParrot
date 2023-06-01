@@ -16,11 +16,13 @@ function App() {
       {/*public*/}
       <Header />
       <Routes>
-        <Route path='/' element={<Home pageTitle={(title) => setPageTitle(title)} />} />
-        <Route path='/parc-auto' element={<ParcAuto/>} />
+        <Route exact path='/' element={<Home pageTitle={(title) => setPageTitle(title)} />} />
+        <Route path='/parc-auto' element={<ParcAuto />} />
+       <Route path='*' element={"NOT FOUND 404"} />
       </Routes>
       <TimeOpeningBlock />
-      <Footer/>
+      <Footer />
+   
        {/*Protected*/}
       
     </div>

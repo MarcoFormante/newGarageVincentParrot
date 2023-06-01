@@ -7,7 +7,8 @@ import Arrows from '../../Arrows/Arrows'
 const Offers = () => {
     const [arrowTarget, setArrowTarget] = useState()
     const [carouselWidth,setCarouselWidth]=useState()
-    const [carouselX,setCarouselX]=useState()
+    const [carouselX, setCarouselX] = useState()
+    const [pathName,setPathName]=useState("")
     const carousel = useRef();
   
     //carousel scroll event
@@ -23,7 +24,11 @@ const Offers = () => {
             setTimeout(() => {
                 setArrowTarget("")
             }, 500) 
-        }
+    }
+    
+    useEffect(() => {
+        setPathName(window.location.pathname)   
+    },[window.location.pathname])
 
     useEffect(() => {
         setCarouselX(carousel.current.scrollLeft);
@@ -52,17 +57,22 @@ const Offers = () => {
     }, [])
     
      useEffect(() => {
-        window.addEventListener("resize", () => {
-            setCarouselX(carousel.current.scrollLeft);
-            setCarouselWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+         window.addEventListener("resize", () => {
+            if (pathName === "/") {
+                setCarouselX(carousel.current.scrollLeft);
+                setCarouselWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+            }
+           
         })   
 
-        return window.removeEventListener("resize", () => {
-            setCarouselX(carousel.current.scrollLeft);
-            setCarouselWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+         return window.removeEventListener("resize", () => {
+             if (pathName === "/") {
+                 setCarouselX(carousel.current.scrollLeft);
+                 setCarouselWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+             }
         })
 
-    },[])
+    },[pathName])
    
     /* provisoire!! fetch data Count(card_offers)*/
     const offerCards = [

@@ -701,6 +701,63 @@ pages: home
   color: #b0b0b0;
 }
 
+.parc_auto_cars_section {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding-top: 80px;
+  max-width: 95vw;
+  margin: auto;
+}
+
+.switch_page_block {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 10px;
+  padding-top: 80px;
+  font-size: 16px;
+  width: -moz-fit-content;
+  width: fit-content;
+  min-width: 30vw;
+  margin: 20px auto 40px auto;
+  max-width: 90vw;
+}
+@media screen and (max-width: 768px) {
+  .switch_page_block {
+    max-width: 95vw;
+  }
+}
+.switch_page_block_numbers {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+.switch_page_block a {
+  color: #D64E54;
+  font-weight: bold;
+}
+.switch_page_block a.switch_page_block_arrow {
+  min-width: 40px;
+  width: 40px;
+  height: 40px;
+  background-image: url(/public/icons/arrow.svg);
+  border: 1px solid #353535;
+  background-size: cover;
+  background-position: center;
+}
+.switch_page_block a.switch_page_block_arrow--left {
+  transform: rotateY(180deg);
+}
+
 /*
 Vendors: Normalize
 */

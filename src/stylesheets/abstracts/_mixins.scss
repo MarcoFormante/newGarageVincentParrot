@@ -13,3 +13,14 @@
   align-items: center;
 }
 
+
+
+@mixin flex($dir,$jus,$ali,$gap){
+  display: flex;
+  flex-direction: $dir;
+  justify-content: $jus;
+  align-items: $ali;
+  gap: $gap;
+
+}
+

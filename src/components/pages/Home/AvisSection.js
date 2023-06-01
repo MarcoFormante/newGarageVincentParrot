@@ -9,7 +9,8 @@ const AvisSection = () => {
     const carousel = useRef();
     const [arrowTarget, setArrowTarget] = useState()
     const [carouselWidth,setCarouselWidth]=useState()
-    const [carouselX,setCarouselX]=useState()
+    const [carouselX, setCarouselX] = useState()
+    const [pathName,setPathName]=useState("")
     const [avis, setAvis] = useState([{
         name: "clement",
         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum pariatur nihil animi voluptates repellat qui dicta, repudiandae vel saepe labore suscipit dolor voluptate possimus reprehenderit ducimus odit deserunt delectus distinctio?",
@@ -36,6 +37,7 @@ const AvisSection = () => {
         note: Math.floor(Math.random()*6)
         }]);
     
+    
     const handleScrollCarousel = (direction) => {
        
             const cardPadding = 20;
@@ -54,9 +56,12 @@ const AvisSection = () => {
     
     useEffect(() => {
       
-            setAvis([...avis])
+        setAvis([...avis])
+        setPathName(window.location.pathname)
     
-    }, [])
+    }, [window.location.pathname])
+
+  
     
     useEffect(() => {
      
@@ -94,18 +99,22 @@ const AvisSection = () => {
     
     useEffect(() => {
        
-            window.addEventListener("resize", () => {
+        window.addEventListener("resize", () => {
+            if (pathName === "/") {
                 setCarouselX(carousel.current.scrollLeft);
                 setCarouselWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+            }
             })
 
-            return window.removeEventListener("resize", () => {
+        return window.removeEventListener("resize", () => {
+            if (pathName === "/") {
                 setCarouselX(carousel.current.scrollLeft);
                 setCarouselWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+            }
             })
         
 
-    }, [])
+    }, [pathName])
 
    
         return (

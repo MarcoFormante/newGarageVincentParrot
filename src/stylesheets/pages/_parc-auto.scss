@@ -1,0 +1,49 @@
+.parc_auto_cars_section{
+   @include flex(row,center,center,10px);
+    flex-wrap: wrap;
+    padding-top: 80px;
+    max-width: 95vw;
+    margin: auto
+}
+
+.switch_page_block{
+    @include flex(row,space-evenly,center,10px);
+    
+    padding-top: 80px;
+    font-size: map-get($font_size,"small");
+    width: fit-content;
+    min-width: 30vw;
+    margin:  20px auto  40px auto;
+    max-width: 90vw;
+   
+
+    @media screen and (max-width:map-get($breakpoints,"medium")) {
+        max-width: 95vw;
+    }
+
+    &_numbers{
+        @include flex(row,center,center,20px);
+        flex-wrap: wrap;
+        padding: 20px;
+    }
+   
+    & a{
+        color: $brand_color;
+        font-weight: bold;
+    }
+
+
+    a.switch_page_block_arrow{
+        min-width: 40px;
+         width: 40px;
+         height: 40px;
+         background-image: url(/public/icons/arrow.svg);
+         border: 1px solid $secondary_color;
+         background-size: cover;
+         background-position: center;
+
+         &--left{
+            transform: rotateY(180deg);
+         }
+    }
+}
