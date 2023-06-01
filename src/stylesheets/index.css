@@ -450,6 +450,8 @@ header {
   margin-top: 40px;
   gap: 20px;
   font-size: 16px;
+  position: relative;
+  z-index: 1;
 }
 .footer_items_block {
   display: flex;
@@ -705,11 +707,11 @@ pages: home
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
+  align-items: none;
   gap: 10px;
   flex-wrap: wrap;
   padding-top: 80px;
-  max-width: 95vw;
+  max-width: 80vw;
   margin: auto;
 }
 
@@ -756,6 +758,27 @@ pages: home
 }
 .switch_page_block a.switch_page_block_arrow--left {
   transform: rotateY(180deg);
+}
+
+.parc-auto_page aside {
+  padding: 50px;
+  padding-top: 100px;
+  background-color: #353535;
+  position: fixed;
+  min-width: 250px;
+  top: 0px;
+  color: #FFFFFF;
+  height: 100vh;
+  z-index: 0;
+}
+
+input[type=checkbox] {
+  cursor: pointer;
+}
+
+.filters_btn_toggle {
+  position: relative;
+  z-index: 2;
 }
 
 /*

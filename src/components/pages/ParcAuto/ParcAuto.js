@@ -2,10 +2,11 @@ import React, { useState,useEffect } from 'react'
 import PageTitle from '../../PageTitle/PageTitle'
 import CarCard from '../../CarCard/CarCard'
 import SwitchPageBlock from '../../SwitchPageBlock/SwitchPageBlock'
+import CarFilters from './CarFilters'
 
 const ParcAuto = () => {
   const [cars, setCars] = useState([])
-
+    const [filtersToggle, setFiltersToggle] = useState(false);
   
   useEffect(() => {
   //fetch data * all cars limit 12 
@@ -180,15 +181,29 @@ const ParcAuto = () => {
               },
     ])
     
-}, [])
+  }, [])
+    
+
   
   return (
-      <div>
-      <PageTitle pageTitle={"Notre Parc automobile"} />
-        <div className={'parc_auto_cars_section'}>
-        {cars.map((car, index) => <CarCard key={"parc-auto " + index + car.id} {...cars[index]} />)}
-          </div>
-          <SwitchPageBlock dataLength={cars.length}/>
+      <div className='parc-auto_page'>
+        <div className='filters_btn_toggle' onClick={()=> setFiltersToggle(!filtersToggle)}>{filtersToggle ? "X" : "Filters"}</div>
+          <aside style={filtersToggle === true ? { display: "block" } : { display: "none" }}>
+              
+                <p className='filtre_title'>Filtres</p>
+              <CarFilters />
+
+              </aside>
+              <PageTitle pageTitle={"Notre Parc automobile"} />
+              <div className='parc_auto_cars_switch_block'>
+                  
+                  <div className={'parc_auto_cars_section'}>   
+              
+                {cars.map((car, index) => <CarCard key={"parc-auto " + index + car.id} {...cars[index]} />)}
+            </div>
+                  <SwitchPageBlock dataLength={cars.length} />
+            </div>
+        
     </div>
   )
 }

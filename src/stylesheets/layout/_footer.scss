@@ -5,6 +5,8 @@
     margin-top: 40px;
     gap: 20px;
     font-size: map-get($font_size,"small");
+    position: relative;
+    z-index: 1;
     
     &_items_block{
         @include  flex_center(column);

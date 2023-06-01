@@ -1,9 +1,9 @@
 .parc_auto_cars_section{
-   @include flex(row,center,center,10px);
+   @include flex(row,center,none,10px);
     flex-wrap: wrap;
     padding-top: 80px;
-    max-width: 95vw;
-    margin: auto
+    max-width: 80vw;
+    margin: auto;
 }
 
 .switch_page_block{
@@ -46,4 +46,27 @@
             transform: rotateY(180deg);
          }
     }
+}
+
+
+.parc-auto_page aside{
+ padding: 50px;
+ padding-top: 100px;
+ background-color: $secondary_color;
+ position: fixed; 
+ min-width: 250px;
+ top: 0px;
+ color: $white-color;
+ height: 100vh;
+ z-index: 0;
+}
+
+input[type="checkbox"]{
+    cursor: pointer;
+}
+
+.filters_btn_toggle{
+    position: relative;
+    z-index: 2;
+    
 }
