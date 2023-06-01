@@ -49,6 +49,19 @@ const Offers = () => {
 
         return carousel.current.removeEventListener("scroll",()=>{})
 
+    }, [])
+    
+     useEffect(() => {
+        window.addEventListener("resize", () => {
+            setCarouselX(carousel.current.scrollLeft);
+            setCarouselWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+        })   
+
+        return window.removeEventListener("resize", () => {
+            setCarouselX(carousel.current.scrollLeft);
+            setCarouselWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+        })
+
     },[])
    
     /* provisoire!! fetch data Count(card_offers)*/
