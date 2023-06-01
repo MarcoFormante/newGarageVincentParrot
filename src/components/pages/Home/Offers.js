@@ -183,12 +183,9 @@ const Offers = () => {
         }
     ]
 
-    if (!offerCards.length > 0) {
-        return
-    }
 
     return (
-        <>
+        <div style={offerCards.length > 0 ? {display:"block"} : {display:"none"}}>
             <h3 className={'section_title section_title_offres'}>Nos offres du mois</h3> 
             <Arrows carouselX={carouselX} carouselWidth={carouselWidth} onClick={(direction)=>setArrowTarget(direction)}  />
            
@@ -203,7 +200,7 @@ const Offers = () => {
                 <ButtonCta className={"cta cta--red cta_offers"} inner={"Tous nos vèhicules"} type={"link"} to={"/parc-auto"} />
             </div>
         </div>
-        </>
+        </div>
   )
 }
 
