@@ -54,7 +54,7 @@
  padding-top: 100px;
  background-color: $secondary_color;
  position: fixed; 
- min-width: 250px;
+ min-width: inherit;
  top: 0px;
  color: $white-color;
  height: 100vh;
@@ -65,8 +65,24 @@ input[type="checkbox"]{
     cursor: pointer;
 }
 
-.filters_btn_toggle{
+.filters_container{
     position: relative;
+    width: 290px;
+}
+
+.filters_btn_toggle{
+    position: absolute;
     z-index: 2;
-    
+   margin-left: 20px;
+    top: 30px;
+    font-weight: bold;
+    color: $brand_color;
+    font-size: 30px;
+    cursor: pointer;
+
+        &--active{
+            margin: 0 ;
+            right: 2px;
+            top: 5px;
+        }
 }

@@ -765,7 +765,7 @@ pages: home
   padding-top: 100px;
   background-color: #353535;
   position: fixed;
-  min-width: 250px;
+  min-width: inherit;
   top: 0px;
   color: #FFFFFF;
   height: 100vh;
@@ -776,9 +776,25 @@ input[type=checkbox] {
   cursor: pointer;
 }
 
-.filters_btn_toggle {
+.filters_container {
   position: relative;
+  width: 290px;
+}
+
+.filters_btn_toggle {
+  position: absolute;
   z-index: 2;
+  margin-left: 20px;
+  top: 30px;
+  font-weight: bold;
+  color: #D64E54;
+  font-size: 30px;
+  cursor: pointer;
+}
+.filters_btn_toggle--active {
+  margin: 0;
+  right: 2px;
+  top: 5px;
 }
 
 /*
