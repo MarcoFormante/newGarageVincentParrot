@@ -145,7 +145,7 @@ const CarPhotos = ({model,year,km,price,offer}) => {
     
 
     return (
-        <div>
+        <div className='car_details_top_carousel_container'>
             <div className='img_show_large'>
                 <img src={imgLarge} alt="" width={600} /> 
                 <div className='car_details_base'>

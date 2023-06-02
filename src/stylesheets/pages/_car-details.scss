@@ -1,15 +1,21 @@
+.car_details_top_carousel_container{
+    background-color: $light_gray_color;
+    border-bottom: 1px solid $secondary_color;
+    padding:50px;
+}
+
 .img_show_large{
     @include flex-center(row);
     height: 400px;
     gap: 40px;
     margin: auto auto;
-    background-color: $light-gray-color;
     padding: 20px 10px;
-    border-bottom: 1px solid $secondary_color;
+   
     
     img{
         height: 100%;
         border: 1px solid $secondary_color;
+        object-fit: cover;
     }
 
     @media screen and (max-width:map-get($breakpoints,"medium")) {
@@ -46,7 +52,6 @@
 .details_carousel_container{
     overflow-y: hidden;
     width: 90vw;
-   
     margin: auto;
 }
 
@@ -58,6 +63,10 @@
     background-color: $secondary_color;
     margin:10px auto;
     width: fit-content;
+
+    img{
+        object-fit: cover;
+    }
 }
 
 .img_carousel_details{
