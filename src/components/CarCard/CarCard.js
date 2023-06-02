@@ -38,9 +38,9 @@ const CarCard = ({ id, imgPath, model, km, year, offer, price }) => {
       
               <div className={'car_card_buttons'}>
                   <ButtonCta className={"car_card_cta cta--red"} inner="Contacter" onClick={() => handleSubject(model)} type="link" to={"/contact"} />
-                  <ButtonCta className={"car_card_cta cta--white"} inner={"Details"} type={"link"} to={"/parc-auto/details/"+ id} />
+                  <ButtonCta className={"car_card_cta cta--white"} inner={"Details"} type={"link"} to={"/parc-auto/details/"+ id} state={{model,year,km,price,offer}} />
               </div>
-
+                 
       </figure>
     
   )

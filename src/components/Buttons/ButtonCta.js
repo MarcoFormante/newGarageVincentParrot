@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const ButtonCta = ({ type,inner,to,...rest}) => {
+const ButtonCta = ({ state,type,inner,to,...rest}) => {
     
     if (type === "button") {
         return (
@@ -9,7 +9,7 @@ const ButtonCta = ({ type,inner,to,...rest}) => {
         )
     } else if(type ==="link"){
       return (
-        <button {...rest}><Link to={to}>{inner}</Link></button>
+        <button {...rest}><Link to={to} state={{...state}} >{inner}</Link></button>
       )
     }
  

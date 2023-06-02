@@ -797,6 +797,80 @@ input[type=checkbox] {
   top: 5px;
 }
 
+.img_show_large {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  gap: 40px;
+  margin: auto auto;
+  background-color: #CBD0D4;
+  padding: 20px 10px;
+  border-bottom: 1px solid #353535;
+}
+.img_show_large img {
+  height: 100%;
+  border: 1px solid #353535;
+}
+@media screen and (max-width: 768px) {
+  .img_show_large {
+    width: 90vw;
+    margin: 20px auto;
+    min-width: 300px;
+    height: 60vw;
+  }
+}
+
+.car_details_base {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+.car_details_base div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  font-size: 20px;
+}
+.car_details_base div:first-child {
+  align-items: flex-end;
+  font-weight: bold;
+}
+.car_details_base div:last-child {
+  align-items: flex-start;
+}
+
+.details_carousel_container {
+  overflow-y: hidden;
+  width: 90vw;
+  margin: auto;
+}
+
+.details_carousel_imgs {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid #353535;
+  background-color: #353535;
+  margin: 10px auto;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.img_carousel_details {
+  cursor: pointer;
+}
+.img_carousel_details:hover {
+  opacity: 0.8;
+}
+
 /*
 Vendors: Normalize
 */

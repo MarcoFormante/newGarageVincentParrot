@@ -189,17 +189,22 @@ const ParcAuto = () => {
       <div className='parc-auto_page'>
         
             <div className='filters_container'>
-            <div className={filtersToggle ? "filters_btn_toggle filters_btn_toggle--active" :'filters_btn_toggle' }onClick={() => setFiltersToggle(!filtersToggle)}>{filtersToggle ? "X" : "Filters"}</div>
+                <div
+                  className={filtersToggle ? "filters_btn_toggle filters_btn_toggle--active" : 'filters_btn_toggle'}
+                  onClick={() => setFiltersToggle(!filtersToggle)}
+                >
+                  {filtersToggle ? "X" : "Filters"}
+                </div>
+
                 <aside style={filtersToggle === true ? { display: "block" } : { display: "none" }}>
                     <p className='filtre_title'>Filtres</p>
                     <CarFilters />
                 </aside>
             </div>
-              <PageTitle pageTitle={"Notre Parc automobile"} />
-              <div className='parc_auto_cars_switch_block'>
-                  
-                  <div className={'parc_auto_cars_section'}>   
-              
+            <PageTitle pageTitle={"Notre Parc automobile"} />
+          
+            <div className='parc_auto_cars_switch_block'>
+                <div className={'parc_auto_cars_section'}>   
                 {cars.map((car, index) => <CarCard key={"parc-auto " + index + car.id} {...cars[index]} />)}
             </div>
                   <SwitchPageBlock dataLength={cars.length} />

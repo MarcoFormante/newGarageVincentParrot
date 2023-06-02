@@ -6,6 +6,7 @@ import TimeOpeningBlock from './components/pages/Home/TimeOpeningBlock';
 import Footer from './components/Footer/Footer';
 import ParcAuto from './components/pages/ParcAuto/ParcAuto';
 import { Routes, Route } from 'react-router-dom';
+import CarDetails from './components/pages/ParcAuto/CarDetails';
 
 
 function App() {
@@ -18,7 +19,8 @@ function App() {
       <Routes>
         <Route exact path='/' element={<Home pageTitle={(title) => setPageTitle(title)} />} />
         <Route path='/parc-auto' element={<ParcAuto />} />
-       <Route path='*' element={"NOT FOUND 404"} />
+        <Route path='/parc-auto/details/:id' element={<CarDetails />} />
+        <Route path='*' element={"NOT FOUND 404"} />
       </Routes>
       <TimeOpeningBlock />
       <Footer />
