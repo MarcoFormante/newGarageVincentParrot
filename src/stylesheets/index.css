@@ -121,9 +121,6 @@ components: button
   .nav_link {
     margin-top: 20px;
   }
-  .nav_link--active {
-    border-bottom: 1px solid #FFFFFF;
-  }
 }
 .nav_link {
   color: #FFFFFF;
@@ -139,6 +136,10 @@ components: button
     gap: 20px;
   }
 }
+a.active {
+  border-bottom: 1px solid #FFFFFF;
+}
+
 .page_title_home, .page_title {
   text-align: center;
   position: absolute;

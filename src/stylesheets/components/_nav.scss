@@ -35,12 +35,6 @@
     //Link tags
         &_link{
             margin-top: 20px;
-            
-    
-            //if nav_link is equal to pathname set border-bottom
-            &--active{
-                border-bottom: 1px solid $white-color;
-            }
         }
         
     }
@@ -61,5 +55,11 @@
         }
     }    
         
+}
+
+
+//NAVLINK if active add border bottom
+a.active{
+    border-bottom: 1px solid $white-color;
 }
 

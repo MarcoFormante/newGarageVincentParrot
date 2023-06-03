@@ -1,9 +1,9 @@
 import React from 'react'
 
-import { Link, useLocation} from 'react-router-dom'
+import { NavLink} from 'react-router-dom'
 
 const Nav = ({menuToggle,handleMenu}) => {
-    const location = useLocation();
+  
    //public Routes (all users)
     const publicLinks = [{
             page: "Acceuil",
@@ -22,8 +22,6 @@ const Nav = ({menuToggle,handleMenu}) => {
                 path: "/area-reserve"
         },
     ]
-    //check if link Name is equal to location.pathname
-    let isActive = (path) => location.pathname === path ? " nav_link--active" : "";
 
     //check if Menu is Open (menuToggle active) then play transition(sass)
     let menuisOpen = menuToggle ? " nav--open" :"";
@@ -33,14 +31,15 @@ const Nav = ({menuToggle,handleMenu}) => {
           <div className='nav_container'>
             {publicLinks.map((link, index) =>
         
-        <Link 
-            className={`nav_link${isActive(link.path)}`}
+        <NavLink 
+            className={`nav_link`}
             key={index + new Date().getMilliseconds()}
             to={link.path}
+            end
             onClick={handleMenu}      
         >
             {link.page}
-        </Link>)}
+        </NavLink>)}
         </div>
     </nav>
   )
