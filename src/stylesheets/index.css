@@ -245,13 +245,13 @@ h2.page_title_home {
   flex-direction: column;
   color: #afb7bd;
   font-size: 16px;
-  padding: 0 5px;
+  margin: 0 12px;
   font-weight: 600;
 }
 .car_card_details--right {
   display: flex;
   gap: 10px;
-  margin-right: 20px;
+  margin-right: 12px;
 }
 .car_card_details_offer_price {
   padding: 5px;
@@ -1370,6 +1370,9 @@ ul li {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+.container--center--row--flex-end {
+  align-items: flex-end;
 }
 
 .container--center--column {

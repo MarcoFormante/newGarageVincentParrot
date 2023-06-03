@@ -59,6 +59,10 @@ ul{
 
 .container--center--row{
     @include flex-center(row);
+
+    &--flex-end{
+        align-items: flex-end;
+    }
 }
 
 

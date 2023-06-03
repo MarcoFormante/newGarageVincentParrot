@@ -4,6 +4,7 @@
     gap: 10px;
 }
 
+
 ::-webkit-scrollbar{
     display: none;
 }
@@ -15,15 +16,18 @@
     justify-content: end;
     padding: 20px;
     gap: 10px;
-
+    
     @media screen and (max-width:map-get($breakpoints,"medium")) {
         display: none;
     }
 }
 
+
+
 .arrow{
     cursor: pointer;
     border-radius: 4px;
+
 
     div{
         width: 50px;
@@ -32,9 +36,12 @@
         background-image: url(/public/icons/arrow.svg);
         background-repeat: no-repeat;
         background-size: cover;
+
+
         &:active{
             background-color: $brand_color;
         }
+
 
         &.arrow_left{
             transform:rotateY(180deg);
@@ -46,10 +53,13 @@
     }
 }
 
+
+
 .carCards_container{
     overflow-y: hidden;
     margin-left: 10px;
 }
+
 
 
 .car_card{
@@ -83,7 +93,7 @@
             flex-direction: column;
             color: darken($light-gray-color,10);
             font-size: map-get($font_size,"small");
-            padding: 0 5px;
+            margin: 0 12px;
             font-weight: 600;
 
         }
@@ -91,8 +101,9 @@
         &--right{
             display:flex;
             gap: 10px;
-            margin-right: 20px;
+            margin-right: 12px;
         }
+
 
         &_offer_price{
             padding: 5px;
@@ -105,12 +116,15 @@
             top: -8px;
         }
 
+
         &_price{
             font-size: 20px;
             color: black;
             font-weight: 600;
         }
     }
+
+
 
     &_buttons{
         display: flex;
@@ -119,17 +133,13 @@
 
         .car_card_cta{
             @extend .cta;
-        }
-
-        
-        
+        }   
     }
+
 
     & *:not(.car_card > img) {
         margin-top: 7px;
-      
     }
 }
 
 
-//$light-gray-color

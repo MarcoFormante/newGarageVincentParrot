@@ -70,6 +70,7 @@ const CarPhotos = ({model,year,km,price,offer}) => {
                 break;
         }
     }, [arrowTarget, carouselWidth])
+
     
     //every tick check scrollLeft of carousel ref
     useEffect(() => {
@@ -80,6 +81,7 @@ const CarPhotos = ({model,year,km,price,offer}) => {
         return carousel.current.removeEventListener("scroll",()=>{})
 
     }, [])
+
     
      useEffect(() => {
          window.addEventListener("resize", () => {
@@ -164,7 +166,6 @@ const CarPhotos = ({model,year,km,price,offer}) => {
     
                 <img src={imgLarge} alt="" /> 
                 
-                
                 </div> 
             </div>
             {/**Carousel car details */}
@@ -230,7 +231,7 @@ const Details = ({id}) => {
 
     return (
         <div>
-            <div className={'container--center--row container--center--row--noAlignCenter'}>
+            <div className={'container--center--row container--center--row--flex-end'}>
                 <div
                     className={'details_first_container details_container'}
                     style={activeDetail === true ? { border: "1px solid", backgroundColor: "#D64E54" } : { opacity: "0.3" }}
