@@ -33,7 +33,7 @@ const SwitchPageBlock = (props) => {
         <div className={'switch_page_block'}>
            <Link onClick={currentPage > 1 ? () => setCurrentPage(prev => (prev - 1)) : ""} className={"switch_page_block_arrow switch_page_block_arrow--left "}></Link>
             <div  className={'switch_page_block_numbers'}>
-              {pages.map((page, index) => <Link className={"page_number"} to={""} style={page === currentPage ? { textDecoration: "underline" } : {}} onClick={() => setCurrentPage(page)}>{page}</Link>)}
+              {pages.map((page, index) => <Link key={"page_" + index} className={"page_number"} to={""} style={page === currentPage ? { textDecoration: "underline" } : {}} onClick={() => setCurrentPage(page)}>{page}</Link>)}
             </div>
             <Link onClick={currentPage < pages.length ? () => setCurrentPage(prev => (prev + 1)) : ""} className={"switch_page_block_arrow switch_page_block_arrow--right"}></Link>
         </div>

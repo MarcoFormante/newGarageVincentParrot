@@ -1,44 +1,65 @@
 .car_details_top_carousel_container{
-    background-color: $light_gray_color;
+    // background-color: $light_gray_color;
     border-bottom: 1px solid $secondary_color;
-    padding:50px;
+    padding:30px;
+
+    @media screen and (max-width:map-get($breakpoints,"medium")) {
+       padding: 0;  
+    }
 }
 
 .img_show_large{
-    @include flex-center(row);
-    height: 400px;
+    @include flex-center(column);
     gap: 40px;
-    margin: auto auto;
-    padding: 20px 10px;
-   
-    
-    img{
-        height: 100%;
-        border: 1px solid $secondary_color;
-        object-fit: cover;
-    }
+    margin: auto;
+
 
     @media screen and (max-width:map-get($breakpoints,"medium")) {
-        width: 90vw;
-        margin: 20px auto;
-        min-width: 300px;
-        height: 60vw;
+        flex-direction: column;   
+        padding: 30px;
+    }
+
+
+     @media screen and (min-width:(map-get($breakpoints,"medium") + 1)) {
+        margin: 0px auto;
+    }
+    
+  
+    img{
+        width: 600px;
+        max-height: 400px;
+        border: 1px solid $secondary_color;
+        object-fit: cover;
+        box-shadow: 0 0 10px black;
+        padding: 2px;
+        background-color: black;
+        border-radius: 4px; 
+        margin-top: 20px;
+
+        @media screen and (max-width:(map-get($breakpoints,"medium"))) {
+            display: none;
+        }
+      
     }
 }
 
 .car_details_base{
-    @include flex-center(row);
-    gap: 30px;
+    @include flex-center(column);
+    gap: 8px;
 
     div{
-        @include flex-center(column);
-        gap: 40px;
-        font-size: 20px;
+        margin-top: 50px;
+        @include flex-center(row);
+        gap: 50px;
+        font-size: clamp(15px,3vw,18px);
+        text-align: center;
+        padding: 5px;
+
        
         &:first-child{
-            align-items:flex-end ;
-            font-weight: bold;
+            font-weight: 600;
         }
+
 
         &:last-child{
             align-items:flex-start ;   
@@ -53,6 +74,11 @@
     overflow-y: hidden;
     width: 90vw;
     margin: auto;
+
+    @media screen and (max-width:map-get($breakpoints,"medium")) {
+        width: 100vw;
+        padding: 0px;
+    }
 }
 
 
@@ -63,16 +89,125 @@
     background-color: $secondary_color;
     margin:10px auto;
     width: fit-content;
+    gap: 10px;
+
 
     img{
         object-fit: cover;
+
+        @media screen and (max-width:map-get($breakpoints,"medium")) {
+            width: 280px;
+            height: 300px;
+        }
     }
+
+    .img_carousel_details--active{
+        border: 2px solid $brand_color;
+        box-shadow: 0 0 10px $brand_color;
+
+        @media screen and (max-width:map-get($breakpoints,"medium")) {
+            border: none;
+            box-shadow: none;
+        }
+    }
+    
 }
+
+
 
 .img_carousel_details{
     cursor: pointer;
+    
 
     &:hover{
         opacity: 0.8;
     }
 }
+
+
+
+.details_container {
+    margin: 50px 0 0 0;
+    padding:20px;
+    width: 90vw;
+    cursor: pointer;
+
+    .details_title_header{
+        display: block;
+        text-align: center;
+        color:$white-color;
+        font-size: clamp(14px, 2vw, 18px);
+        font-weight: bold;
+    }
+}
+
+.details_first_container{
+    background-color: $secondary_color;
+}
+
+.details_second_container{
+    background-color: $secondary_color;
+}
+
+
+.detail_first_inner{
+    color: $secondary_color;
+    background-color: $light_gray_color;
+    width:100vw;
+    
+}
+
+
+.detail_first_inner_list{
+    display:grid;
+    grid-template-columns: 1fr 1fr ;
+    width: fit-content;
+    padding: 20px;
+    margin: auto;
+    
+
+    @media screen and (min-width:(map-get($breakpoints,"large") + 1)) {
+        grid-template-columns: 1fr 1fr 1fr 1fr ;
+        grid-template-rows: auto;
+        padding: 40px;
+        justify-content: center;
+    }
+
+        li{
+            margin: 10px;
+            list-style: none;
+            border: 1px solid black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            gap: 10px;
+            background-color: $white-color;
+            min-width: 200px;
+
+            @media screen and (max-width:map-get($breakpoints,"medium")) {
+                margin: 10px;
+                min-width: 100px;
+                text-align: center;
+                justify-content: center;
+                
+            }
+
+            span{
+                font-weight: 600;
+            }
+
+
+            .detail_title{
+                font-weight: bold;
+                color: $brand_color;
+                
+
+                &--black{
+                    color:$secondary_color;
+                    list-style:circle;
+                }
+            }
+        }
+}
+
