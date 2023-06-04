@@ -22,6 +22,7 @@ components: button
   color: #FFFFFF;
   font-size: 24px;
   padding: 10px;
+  cursor: pointer;
 }
 .cta--red:hover, .btn_avis:hover {
   background-color: #e0777c;
@@ -861,9 +862,14 @@ input[type=checkbox] {
   justify-content: center;
   align-items: center;
   gap: 50px;
-  font-size: clamp(15px, 3vw, 18px);
+  font-size: clamp(16px, 3vw, 18px);
   text-align: center;
   padding: 5px;
+}
+@media screen and (max-width: 768px) {
+  .car_details_base div span:last-child {
+    display: block;
+  }
 }
 .car_details_base div:first-child {
   font-weight: 600;
@@ -999,6 +1005,57 @@ input[type=checkbox] {
 .detail_first_inner_list li .detail_title--black {
   color: #353535;
   list-style: circle;
+}
+
+.contact_form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding-top: 80px;
+}
+.contact_form div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: auto;
+  gap: 5px;
+}
+.contact_form div label {
+  align-self: flex-start;
+  font-weight: 600;
+}
+.contact_form div input, .contact_form div textArea {
+  min-width: 200px;
+  width: 80vw;
+  max-width: 670px;
+  height: 42px;
+  background-color: #e1e4e6;
+  padding: 5px;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border: none;
+}
+@media screen and (max-width: 768px) {
+  .contact_form div input, .contact_form div textArea {
+    height: 35px;
+    width: 90vw;
+  }
+}
+.contact_form div textArea {
+  height: 246px;
+  max-height: 246px;
+  min-height: 100px;
+}
+@media screen and (max-width: 768px) {
+  .contact_form div textArea {
+    height: 200px;
+  }
 }
 
 /*

@@ -1,0 +1,43 @@
+.contact_form{
+    @include flex-center(column);
+    gap: 16px;
+    padding-top: 80px;
+    
+    div{
+        @include flex-center(column);
+        width: fit-content;
+        margin: auto;
+        gap: 5px;
+
+        label{
+            align-self: flex-start;
+            font-weight: 600;
+        }
+
+        input,textArea{
+            min-width: 200px;
+            width: 80vw;
+            max-width: 670px;
+            height: 42px;
+            background-color: lighten($light_gray_color,8);
+            padding: 5px;
+            appearance: none;
+            border: none;
+
+            @media screen and (max-width:map-get($breakpoints,"medium")) {
+                height: 35px;
+                width: 90vw;
+            }
+        }
+
+        textArea{
+            height: 246px;
+            max-height: 246px;
+            min-height: 100px;
+
+            @media screen and (max-width:map-get($breakpoints,"medium")) {
+                height: 200px;
+            }
+        }
+    }
+}

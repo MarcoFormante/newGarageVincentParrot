@@ -6,6 +6,7 @@ import Footer from './components/Footer/Footer';
 import ParcAuto from './components/pages/ParcAuto/ParcAuto';
 import CarDetails from './components/pages/ParcAuto/CarDetails';  
 import { Routes, Route } from 'react-router-dom';
+import Contact from './components/Contact/Contact';
 
 
 
@@ -20,7 +21,7 @@ function App() {
         <Route exact path='/' element={<Home pageTitle={(title) => setPageTitle(title)} />} />
         <Route path='/parc-auto' element={<ParcAuto />} />
         <Route path='/parc-auto/details/:id' element={<CarDetails />} />
-        <Route path="/contact" />
+        <Route path="/contact"  element={<Contact/>} />
         <Route path='*' element={"NOT FOUND 404"} />
       </Routes>
       <TimeOpeningBlock />
