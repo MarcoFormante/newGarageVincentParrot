@@ -391,6 +391,57 @@ h2.page_title_home {
   max-width: 90vw;
 }
 
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding-top: 80px;
+}
+.form div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: auto;
+  gap: 5px;
+}
+.form div label {
+  align-self: flex-start;
+  font-weight: 600;
+}
+.form div input, .form div textArea {
+  min-width: 200px;
+  width: 80vw;
+  max-width: 670px;
+  height: 42px;
+  background-color: #e1e4e6;
+  padding: 5px;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border: none;
+}
+@media screen and (max-width: 768px) {
+  .form div input, .form div textArea {
+    height: 35px;
+    width: 90vw;
+  }
+}
+.form div textArea {
+  height: 246px;
+  max-height: 246px;
+  min-height: 100px;
+}
+@media screen and (max-width: 768px) {
+  .form div textArea {
+    height: 200px;
+  }
+}
+
 /*
 layout: header
 */
@@ -1006,57 +1057,6 @@ input[type=checkbox] {
 .detail_first_inner_list li .detail_title--black {
   color: #353535;
   list-style: circle;
-}
-
-.contact_form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-  padding-top: 80px;
-}
-.contact_form div {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: -moz-fit-content;
-  width: fit-content;
-  margin: auto;
-  gap: 5px;
-}
-.contact_form div label {
-  align-self: flex-start;
-  font-weight: 600;
-}
-.contact_form div input, .contact_form div textArea {
-  min-width: 200px;
-  width: 80vw;
-  max-width: 670px;
-  height: 42px;
-  background-color: #e1e4e6;
-  padding: 5px;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  border: none;
-}
-@media screen and (max-width: 768px) {
-  .contact_form div input, .contact_form div textArea {
-    height: 35px;
-    width: 90vw;
-  }
-}
-.contact_form div textArea {
-  height: 246px;
-  max-height: 246px;
-  min-height: 100px;
-}
-@media screen and (max-width: 768px) {
-  .contact_form div textArea {
-    height: 200px;
-  }
 }
 
 /*

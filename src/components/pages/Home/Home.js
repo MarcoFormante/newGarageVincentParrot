@@ -7,18 +7,15 @@ import PageTitle from '../../PageTitle/PageTitle'
 
 
 
-const Home = ({children}) => {
- 
+const Home = () =>{
   
   return (
     <div>
-      {!children && <PageTitle pageTitle={"Garage Vincent Parrot"} />}
-      {children}
+    <PageTitle pageTitle={"Garage Vincent Parrot"} />
       <HeroHome />
       <Offers />
       <Services />
       <AvisSection />
-      
     </div>
   )
 }

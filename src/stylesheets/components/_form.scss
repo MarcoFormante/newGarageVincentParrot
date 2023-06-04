@@ -1,4 +1,4 @@
-.contact_form{
+.form{
     @include flex-center(column);
     gap: 16px;
     padding-top: 80px;
@@ -8,6 +8,7 @@
         width: fit-content;
         margin: auto;
         gap: 5px;
+        
 
         label{
             align-self: flex-start;
