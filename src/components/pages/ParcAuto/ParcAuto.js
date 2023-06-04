@@ -204,7 +204,8 @@ const ParcAuto = () => {
             <PageTitle pageTitle={"Notre Parc automobile"} />
           
             <div className='parc_auto_cars_switch_block'>
-                <div className={'parc_auto_cars_section'}>   
+              <div className={'parc_auto_cars_section'}>   
+                  
                 {cars.map((car, index) => <CarCard key={"parc-auto " + index + car.id} {...cars[index]} />)}
             </div>
                   <SwitchPageBlock dataLength={cars.length} />

@@ -15,6 +15,7 @@
         color:$white-color;
         font-size: 24px;
         padding: 10px;
+        cursor: pointer;
 
         &:hover{
             background-color: lighten($brand_color,10);

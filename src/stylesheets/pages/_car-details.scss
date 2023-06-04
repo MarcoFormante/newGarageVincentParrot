@@ -51,9 +51,18 @@
         margin-top: 50px;
         @include flex-center(row);
         gap: 50px;
-        font-size: clamp(15px,3vw,18px);
+        font-size: clamp(16px,3vw,18px);
         text-align: center;
         padding: 5px;
+
+
+        @media screen and (max-width:(map-get($breakpoints,"medium"))) {
+            span:last-child{
+
+                display: block;
+            }
+        }
+        
 
        
         &:first-child{

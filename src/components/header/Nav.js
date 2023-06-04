@@ -1,9 +1,16 @@
 import React from 'react'
 
+<<<<<<< HEAD
 import { NavLink} from 'react-router-dom'
 
 const Nav = ({menuToggle,handleMenu}) => {
   
+=======
+import { NavLink } from 'react-router-dom'
+
+const Nav = ({menuToggle,handleMenu}) => {
+   
+>>>>>>> contact
    //public Routes (all users)
     const publicLinks = [{
             page: "Acceuil",
@@ -22,6 +29,10 @@ const Nav = ({menuToggle,handleMenu}) => {
                 path: "/area-reserve"
         },
     ]
+<<<<<<< HEAD
+=======
+    
+>>>>>>> contact
 
     //check if Menu is Open (menuToggle active) then play transition(sass)
     let menuisOpen = menuToggle ? " nav--open" :"";
