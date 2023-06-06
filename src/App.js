@@ -57,8 +57,7 @@ const ProtectedRoute = ({ auth, redirectPath }) => {
 
 return auth
       ?
-  <div>
-    
+      <div>
     <Outlet />
       </div>
       :
