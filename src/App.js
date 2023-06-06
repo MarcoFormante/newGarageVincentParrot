@@ -10,6 +10,7 @@ import Contact from './components/pages/Contact/Contact';
 import ReservedArea from './components/pages/ReservedArea/ReservedArea';
 import CheckUser from './helpers/CheckUser';
 import axios from 'axios';
+import AdminNav from './components/AdminNav/AdminNav';
 
 
 function App() {
@@ -57,7 +58,8 @@ const ProtectedRoute = ({ auth, redirectPath }) => {
 
 return auth
       ?
-      <div>
+  <div>
+    <AdminNav/>
     <Outlet />
       </div>
       :
