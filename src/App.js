@@ -13,7 +13,6 @@ import axios from 'axios';
 
 
 function App() {
-  const [pageTitle, setPageTitle] = useState("")
   const location = useLocation()
   const hiddenElementsWith = ["admin", "area-reserve"];
   
@@ -23,7 +22,7 @@ function App() {
       {/*public*/}
       <Header />
       <Routes>
-        <Route exact path='/' element={<Home pageTitle={(title) => setPageTitle(title)} />} />
+        <Route exact path='/' element={<Home />} />
         <Route path='/parc-auto' element={<ParcAuto />} />
         <Route path='/parc-auto/details/:id' element={<CarDetails />} />
         <Route path="/contact"  element={<Contact/>} />
@@ -33,7 +32,7 @@ function App() {
         {/*Protected*/}
         
         <Route element={<ProtectedRoute auth={window.localStorage.getItem("token")} redirectPath={"/"}/>}>
-          <Route path={"/admin"} element={<h1>admin</h1>} />
+          <Route path={"/admin"} element={<div><Home /></div>} />
        </Route>
 
        
@@ -58,7 +57,10 @@ const ProtectedRoute = ({ auth, redirectPath }) => {
 
 return auth
       ?
-      <Outlet />
+  <div>
+    
+    <Outlet />
+      </div>
       :
       <Navigate to={redirectPath} replace state={{from: location} } />
 }
