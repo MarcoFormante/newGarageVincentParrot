@@ -4,7 +4,8 @@ import FormElement from '../../FormElement/FormElement'
 import { useNavigate, Navigate, useLocation } from 'react-router-dom'
 import CheckUser from '../../../helpers/CheckUser'
 import { setAuthToken } from '../../../helpers/SetAuth'
-
+import { add, remove } from '../../Reducers/RoleReducer'
+import { useDispatch } from 'react-redux'
 
 const ReservedArea = () => {
   const [email, setEmail] = useState("");
@@ -12,7 +13,7 @@ const ReservedArea = () => {
   const navigate = useNavigate()
   const location = useLocation() 
   const [errorInputMessage, setErrorInputMessage] = useState("");
-
+  const  dispatch = useDispatch()
 
   function handleSubmit(e) {
    //send form data to validate admin account
@@ -25,9 +26,11 @@ const ReservedArea = () => {
           const token = response.data.token;
           window.localStorage.setItem("token", token);
           setAuthToken(token);
-          navigate("/admin", { replace:true ,state:{from:location}})
+          dispatch(add(response.data.role))
+          navigate("/admin/home", { replace:true ,state:{from:location}})
         } else {
           setErrorInputMessage(response.data.message)
+          
         }
       }
       );

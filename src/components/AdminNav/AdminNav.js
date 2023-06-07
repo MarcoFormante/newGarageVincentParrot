@@ -1,9 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Navigate,useLocation } from 'react-router-dom'
-
-const AdminNav = ({ role="employee" }) => {
+import { useSelector } from 'react-redux';
+const AdminNav = () => {
     const location = useLocation()
+    const role = useSelector( (state)=> state.role.value)
     const adminLinks = [
         {
             to: "admin/new-car",
@@ -52,7 +53,7 @@ const AdminNav = ({ role="employee" }) => {
                 ? adminLinks.map((link, index) => <Link to={link.to} key={link.linkName + "_" + index}>{link.linkName}</Link>)
                   : role && role === "employee"
                         ? employeeLinks.map((link, index) => <Link to={link.to} key={link.linkName + "_" + index}>{link.linkName}</Link>)
-                        : <Navigate to={"/"} replace state={{from:location}} />
+                        : " "
                 }
       </nav>
     </div>
@@ -60,3 +61,5 @@ const AdminNav = ({ role="employee" }) => {
 }
 
 export default AdminNav
+
+{/* <Navigate to={"/"} replace state={{from:location}} /> */}

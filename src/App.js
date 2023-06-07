@@ -8,20 +8,23 @@ import { Routes, Route, useLocation, Navigate,Outlet, useNavigate } from 'react-
 import CarDetails from './components/pages/ParcAuto/CarDetails';
 import Contact from './components/pages/Contact/Contact';
 import ReservedArea from './components/pages/ReservedArea/ReservedArea';
-import CheckUser from './helpers/CheckUser';
-import axios from 'axios';
 import AdminNav from './components/AdminNav/AdminNav';
+
 
 
 function App() {
   const location = useLocation()
   const hiddenElementsWith = ["admin", "area-reserve"];
-  
+ 
+ 
+
   return (
     <div className="App">
 
       {/*public*/}
-      <Header />
+      
+        <Header />
+        <AdminNav/>
       <Routes>
         <Route exact path='/' element={<Home />} />
         <Route path='/parc-auto' element={<ParcAuto />} />
@@ -33,7 +36,7 @@ function App() {
         {/*Protected*/}
         
         <Route element={<ProtectedRoute auth={window.localStorage.getItem("token")} redirectPath={"/"}/>}>
-          <Route path={"/admin"} element={<div><Home /></div>} />
+          <Route path={"/admin/home"} element={<div><Home /></div>} />
        </Route>
 
        
@@ -55,11 +58,12 @@ export default App;
 const ProtectedRoute = ({ auth, redirectPath }) => {
   const location = useLocation();
  
+ 
 
 return auth
       ?
   <div>
-    <AdminNav/>
+   
     <Outlet />
       </div>
       :
