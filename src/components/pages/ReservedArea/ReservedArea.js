@@ -32,7 +32,6 @@ const ReservedArea = ({ setLogin }) => {
           navigate("/", { replace:true ,state:{from:location}})
         } else {
           setErrorMessage(response.data.message)
-          
         }
       }
       );
