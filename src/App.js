@@ -9,40 +9,51 @@ import CarDetails from './components/pages/ParcAuto/CarDetails';
 import Contact from './components/pages/Contact/Contact';
 import ReservedArea from './components/pages/ReservedArea/ReservedArea';
 import AdminNav from './components/AdminNav/AdminNav';
-
+import { useSelector,useDispatch } from 'react-redux';
+import CheckToken from './helpers/CheckToken';
+import { add,remove } from './components/Reducers/RoleReducer';
 
 
 function App() {
-  const location = useLocation()
-  const hiddenElementsWith = ["admin", "area-reserve"];
- 
- 
 
+  const role = (useSelector((state) => state.role.value))
+  const [login, setlogin] = useState(false)
+  const location = useLocation()
+
+ 
   return (
     <div className="App">
 
       {/*public*/}
       
-        <Header />
-        <AdminNav/>
+      <Header />
+      <AdminNav role={role}  />
       <Routes>
         <Route exact path='/' element={<Home />} />
         <Route path='/parc-auto' element={<ParcAuto />} />
         <Route path='/parc-auto/details/:id' element={<CarDetails />} />
         <Route path="/contact"  element={<Contact/>} />
-        <Route path="/area-reserve" element={<ReservedArea />} />
+        <Route path="/area-reserve" element={<ReservedArea setLogin={(value) => setlogin(value)} />} />
         <Route path='*' element={"NOT FOUND 404"} />
     
         {/*Protected*/}
         
-        <Route element={<ProtectedRoute auth={window.localStorage.getItem("token")} redirectPath={"/"}/>}>
-          <Route path={"/admin/home"} element={<div><Home /></div>} />
-       </Route>
-
-       
+        <Route element={<ProtectedRoute auth={window.localStorage.getItem("token")}
+          login={login} redirectPath={"/"} />}
+        >
+          <Route path={"/admin/new-car"} element={<h1>adminpage</h1>} />
+          <Route path={"/admin/modify-car"} element={<h1>adminpage</h1>} />
+          <Route path={"/admin/services"} element={<h1>adminpage</h1>} />
+          <Route path={"/admin/accounts"} element={<h1>adminpage</h1>} />
+          <Route path={"/admin/accounts"} element={<h1>adminpage</h1>} />
+          <Route path={"/admin/feedback"} element={<h1>adminpage</h1>} />
+          <Route path={"/admin/time-table"} element={<h1>adminpage</h1>} />
+          <Route path={"/admin/*"} element={<h1>notfound</h1>} />
+        </Route>
+        
       </Routes>
       {
-        !hiddenElementsWith.includes(location.pathname.slice(1)) &&
+        !location.pathname.includes('admin') &&
         <div>
           <TimeOpeningBlock />
           <Footer />
@@ -55,16 +66,45 @@ function App() {
 
 export default App;
 
-const ProtectedRoute = ({ auth, redirectPath }) => {
+const ProtectedRoute = ({ auth, redirectPath,login , role}) => {
+
   const location = useLocation();
+
+  const [token,setToken]= useState("")
+  const dispatch = useDispatch()
  
- 
+  
+  function checkStorage() {
+   
+    if (token || localStorage.getItem("token")) {
+        CheckToken(localStorage.getItem("token")).then((response) => {
+         let isValid = response.data.status;
+         if (isValid === 1) {
+             const userRole = response.data.role; 
+              dispatch(add(userRole))
+  
+         } else {
+            dispatch(remove())
+             setToken("")
+         }
+     })
+    } else {
+      setToken("token")
+      dispatch(remove())
+    }
+  }
+  
+  useEffect(() => {
+     window.addEventListener("storage",checkStorage())
+    
+    return window.removeEventListener("storage",checkStorage())
+    
+},[login])
 
 return auth
       ?
   <div>
-   
-    <Outlet />
+     <Outlet />
       </div>
       :
       <Navigate to={redirectPath} replace state={{from: location} } />

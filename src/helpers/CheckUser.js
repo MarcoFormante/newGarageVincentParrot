@@ -7,4 +7,6 @@ export default function CheckUser(email, password) {
     formData.append("password", password);
     return axios.post(`${process.env.REACT_APP_HTTP}helpers/check/`,formData)
 }
+
+
     

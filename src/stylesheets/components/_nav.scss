@@ -67,3 +67,11 @@ a.active{
     border-bottom: 1px solid $white-color;
 }
 
+
+.admin_nav{
+    background-color: $dark_gray_color;
+    @include flex_center(row);
+    gap: 30px;
+    padding: 20px;
+}
+

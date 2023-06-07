@@ -1,10 +1,10 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { Navigate,useLocation } from 'react-router-dom'
-import { useSelector } from 'react-redux';
+import React, { useEffect,useState} from 'react'
+import { NavLink } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+
+
 const AdminNav = () => {
-    const location = useLocation()
-    const role = useSelector( (state)=> state.role.value)
+ const role = useSelector((state) => state.role.value)
     const adminLinks = [
         {
             to: "admin/new-car",
@@ -27,11 +27,9 @@ const AdminNav = () => {
             linkName : "Gestion Avis"
         },
         {
-            to: "admin/timeTable",
+            to: "admin/time-table",
             linkName : "Horaires"
-        }, 
-    ]
-
+        }, ]
     const employeeLinks = [
         {
             to: "admin/new-car",
@@ -46,20 +44,40 @@ const AdminNav = () => {
     ]
 
     return (
-    <div>
-          <nav className='admin_nav'>
-              
-              {role && role === "admin"
-                ? adminLinks.map((link, index) => <Link to={link.to} key={link.linkName + "_" + index}>{link.linkName}</Link>)
-                  : role && role === "employee"
-                        ? employeeLinks.map((link, index) => <Link to={link.to} key={link.linkName + "_" + index}>{link.linkName}</Link>)
-                        : " "
-                }
-      </nav>
-    </div>
+
+       role
+            ? 
+            <div>
+                <nav className='admin_nav'>
+                {role && role === "admin"
+                ? adminLinks.map((link, index) => <NavLink  end className={`nav_link `} to={link.to} key={link.linkName + "_" + index}>{link.linkName}</NavLink>)
+                : role && role === "employee"
+                        ? employeeLinks.map((link, index) => <NavLink  end className={`nav_link`} to={link.to} key={link.linkName + "_" + index}>{link.linkName}</NavLink>)
+                            : " "}
+                    
+                </nav>
+            </div>
+            : ""
+        
+        
+      
   )
 }
 
 export default AdminNav
 
-{/* <Navigate to={"/"} replace state={{from:location}} /> */}
+
+{/* <div>
+{
+ <nav className='admin_nav'>
+ {role && role === "admin"
+    ? adminLinks.map((link, index) => <NavLink  end className={`nav_link `} to={link.to} key={link.linkName + "_" + index}>{link.linkName}</NavLink>)
+      : role && role === "employee"
+            ? employeeLinks.map((link, index) => <NavLink  end className={`nav_link`} to={link.to} key={link.linkName + "_" + index}>{link.linkName}</NavLink>)
+                : " "}
+          <input type="checkbox"  id="toggleEdit" onChange={setEditMode} />view mode
+    </nav>
+    
+}
+
+</div> */}

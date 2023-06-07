@@ -7,12 +7,13 @@ import { setAuthToken } from '../../../helpers/SetAuth'
 import { add, remove } from '../../Reducers/RoleReducer'
 import { useDispatch } from 'react-redux'
 
-const ReservedArea = () => {
+const ReservedArea = ({ setLogin }) => {
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate()
   const location = useLocation() 
-  const [errorInputMessage, setErrorInputMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const  dispatch = useDispatch()
 
   function handleSubmit(e) {
@@ -27,9 +28,10 @@ const ReservedArea = () => {
           window.localStorage.setItem("token", token);
           setAuthToken(token);
           dispatch(add(response.data.role))
-          navigate("/admin/home", { replace:true ,state:{from:location}})
+          setLogin(true)
+          navigate("/", { replace:true ,state:{from:location}})
         } else {
-          setErrorInputMessage(response.data.message)
+          setErrorMessage(response.data.message)
           
         }
       }
@@ -45,7 +47,7 @@ const ReservedArea = () => {
         <FormElement label={{ for: "password", text: "Password" }} input={{ type: "password", name: "password", id: "password", required: true , value: password, onChange: (e) => setPassword(e.target.value) }} />
         <FormElement input={{type:"submit",value:"Acceder"}}/>
       </form>
-      {errorInputMessage && <p>{errorInputMessage}</p>}
+      {errorMessage && <p>{errorMessage}</p>}
     </div>
   )
 }
