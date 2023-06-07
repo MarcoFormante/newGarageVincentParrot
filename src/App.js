@@ -4,7 +4,7 @@ import Home from './components/pages/Home/Home';
 import TimeOpeningBlock from './components/pages/Home/TimeOpeningBlock';
 import Footer from './components/Footer/Footer';
 import ParcAuto from './components/pages/ParcAuto/ParcAuto';
-import { Routes, Route, useLocation, Navigate,Outlet, useNavigate } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate,Outlet} from 'react-router-dom';
 import CarDetails from './components/pages/ParcAuto/CarDetails';
 import Contact from './components/pages/Contact/Contact';
 import ReservedArea from './components/pages/ReservedArea/ReservedArea';
@@ -12,6 +12,7 @@ import AdminNav from './components/AdminNav/AdminNav';
 import { useSelector,useDispatch } from 'react-redux';
 import CheckToken from './helpers/CheckToken';
 import { add,remove } from './components/Reducers/RoleReducer';
+import AvisPage from './components/pages/avisPage/AvisPage';
 
 
 function App() {
@@ -33,8 +34,9 @@ function App() {
         <Route exact path='/' element={<Home />} />
         <Route path='/parc-auto' element={<ParcAuto />} />
         <Route path='/parc-auto/details/:id' element={<CarDetails />} />
-        <Route path="/contact"  element={<Contact/>} />
+        <Route path="/contact" element={<Contact/>} />
         <Route path="/area-reserve" element={<ReservedArea setLogin={(value) => setlogin(value)} />} />
+        <Route path="/avis" element={<AvisPage/>} />
         <Route path='*' element={"NOT FOUND 404"} />
     
         {/*Protected*/}

@@ -47,6 +47,10 @@ components: button
   padding-right: 20px;
   margin: 95px auto;
 }
+.cta--padding-plus {
+  padding-left: 20px;
+  padding-right: 20px;
+}
 
 .menu_button {
   height: 70%;
@@ -417,7 +421,7 @@ h2.page_title_home {
   gap: 16px;
   padding-top: 80px;
 }
-.form div {
+.form div:not(.stars_block) {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -427,11 +431,11 @@ h2.page_title_home {
   margin: auto;
   gap: 5px;
 }
-.form div label {
+.form div:not(.stars_block) label {
   align-self: flex-start;
   font-weight: 600;
 }
-.form div input, .form div textArea {
+.form div:not(.stars_block) input, .form div:not(.stars_block) textArea {
   min-width: 200px;
   width: 80vw;
   max-width: 670px;
@@ -444,20 +448,26 @@ h2.page_title_home {
   border: none;
 }
 @media screen and (max-width: 768px) {
-  .form div input, .form div textArea {
+  .form div:not(.stars_block) input, .form div:not(.stars_block) textArea {
     height: 35px;
     width: 90vw;
   }
 }
-.form div textArea {
+.form div:not(.stars_block) textArea {
   height: 246px;
   max-height: 246px;
   min-height: 100px;
 }
 @media screen and (max-width: 768px) {
-  .form div textArea {
+  .form div:not(.stars_block) textArea {
     height: 200px;
   }
+}
+.form .stars_block {
+  padding: 10px;
+}
+.form .stars_block .star {
+  padding: 10px;
 }
 
 /*

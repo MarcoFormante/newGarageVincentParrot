@@ -3,11 +3,13 @@
     gap: 16px;
     padding-top: 80px;
     
-    div{
+    div:not(.stars_block){
         @include flex-center(column);
         width: fit-content;
         margin: auto;
         gap: 5px;
+
+        
         
 
         label{
@@ -40,5 +42,13 @@
                 height: 200px;
             }
         }
+    }
+
+    & .stars_block{
+        padding: 10px;
+}
+
+    & .stars_block .star{
+            padding: 10px;
     }
 }
