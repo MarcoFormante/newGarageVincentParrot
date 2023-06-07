@@ -5,6 +5,7 @@ import { useNavigate, Navigate, useLocation } from 'react-router-dom'
 import CheckUser from '../../../helpers/CheckUser'
 import { setAuthToken } from '../../../helpers/SetAuth'
 
+
 const ReservedArea = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,19 +18,19 @@ const ReservedArea = () => {
    //send form data to validate admin account
     // replace this function to axios  request when front is finished
     e.preventDefault();
-
     if (email && password) {
       CheckUser(email, password).then((response) => {
         let isValid = response.data.status;
-        if (isValid) {
+        if (isValid === 1) {
           const token = response.data.token;
           window.localStorage.setItem("token", token);
           setAuthToken(token);
           navigate("/admin", { replace:true ,state:{from:location}})
         } else {
-          setErrorInputMessage("Que des lettres et de nombre sont admisent")
+          setErrorInputMessage(response.data.message)
         }
-      });
+      }
+      );
     }
   }
   
