@@ -13,6 +13,7 @@ import { useSelector,useDispatch } from 'react-redux';
 import CheckToken from './helpers/CheckToken';
 import { add,remove } from './components/Reducers/RoleReducer';
 import AvisPage from './components/pages/avisPage/AvisPage';
+import { type } from '@testing-library/user-event/dist/type';
 
 
 function App() {
@@ -20,8 +21,9 @@ function App() {
   const role = (useSelector((state) => state.role.value))
   const [login, setlogin] = useState(false)
   const location = useLocation()
-
-
+  let hiddenTimeMapCondition = ["admin","area-reserve"].filter(path => location.pathname.includes(path))
+  
+  
  
   return (
     <div className="App">
@@ -56,7 +58,7 @@ function App() {
         
       </Routes>
       {
-        !location.pathname.includes('admin') &&
+        !hiddenTimeMapCondition &&
         <div>
           <TimeOpeningBlock />
           <Footer />
