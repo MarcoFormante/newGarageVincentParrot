@@ -1,5 +1,7 @@
 import React from 'react'
-
+import fbIcon from '../../icons/facebook.svg'
+import instagramIcon from '../../icons/instagram.svg'
+import twitterIcon from '../../icons/facebook.svg'
 
 const Footer = () => {
   return (
@@ -14,9 +16,9 @@ const Footer = () => {
             {/* social media, politique de confidentialité*/}
           <div className='footer_second_block footer_items_block'>
               <div className='social_icons'>
-                  <a href="https://www.facebook.com"><img src="/icons/facebook.svg" width={38} height={30} alt="Visitez notre page facebook" /></a>
-                  <a href="https://www.instagram.com"><img src="/icons/instagram.svg" width={38} height={30} alt="Visitez notre page instagram" /></a>
-                  <a href="https://www.twitter.com"><img src="/icons/twitter.svg" width={38} height={30} alt="Visitez notre page twitter" /></a>
+                  <a href="https://www.facebook.com"><img src={fbIcon} width={38} height={30} alt="Visitez notre page facebook" /></a>
+                  <a href="https://www.instagram.com"><img src={instagramIcon} width={38} height={30} alt="Visitez notre page instagram" /></a>
+                  <a href="https://www.twitter.com"><img src={twitterIcon} width={38} height={30} alt="Visitez notre page twitter" /></a>
               </div>
               <a href='pol'>Politique de confidentialité</a>
           </div>
