@@ -58,6 +58,11 @@
 .carCards_container{
     overflow-y: hidden;
     margin-left: 10px;
+
+    @media screen and (min-width:(map-get($breakpoints,"large") + 1))  {
+        margin: 50px;
+    }
+ 
 }
 
 

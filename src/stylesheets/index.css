@@ -240,6 +240,11 @@ h2.page_title_home {
   overflow-y: hidden;
   margin-left: 10px;
 }
+@media screen and (min-width: 1025px) {
+  .carCards_container {
+    margin: 50px;
+  }
+}
 
 .car_card {
   width: 80vw;
