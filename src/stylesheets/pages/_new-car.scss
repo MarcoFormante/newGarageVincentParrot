@@ -28,15 +28,20 @@ label[for=img-thumb]{
      }
 }
 
+
+
 input[name=img-thumb]{
     display: none;
 }
+
+
 
 .new_car{
 
     &_img-thumb{
             position: relative; 
     }
+
 
     &_details_title{
         padding: 20px;
@@ -46,5 +51,11 @@ input[name=img-thumb]{
         color: $white-color;
         font-weight: bold;
         margin-bottom: 20px;
+
+        &--black{
+            background-color: $secondary_color;
+        }
     }
+    
+
 }

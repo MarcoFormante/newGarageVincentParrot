@@ -442,7 +442,7 @@ h2.page_title_home {
     grid-template-columns: 1fr 1fr;
     gap: 40px;
   }
-  .form div:not(.stars_block) .row_inputs_container div input {
+  .form div:not(.stars_block) .row_inputs_container div input, .form div:not(.stars_block) .row_inputs_container div select {
     width: 45vw;
   }
 }
@@ -476,6 +476,21 @@ h2.page_title_home {
 @media screen and (max-width: 768px) {
   .form div:not(.stars_block) textArea {
     height: 200px;
+  }
+}
+.form div:not(.stars_block) select {
+  min-width: 200px;
+  width: 80vw;
+  max-width: 670px;
+  height: 42px;
+  background-color: #e1e4e6;
+  padding: 5px;
+  border: none;
+}
+@media screen and (max-width: 768px) {
+  .form div:not(.stars_block) select {
+    height: 35px;
+    width: 90vw;
   }
 }
 .form .stars_block {
@@ -1145,6 +1160,9 @@ input[name=img-thumb] {
   color: #FFFFFF;
   font-weight: bold;
   margin-bottom: 20px;
+}
+.new_car_details_title--black {
+  background-color: #353535;
 }
 
 /*
