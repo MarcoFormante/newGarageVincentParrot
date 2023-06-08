@@ -2,6 +2,8 @@
     @include flex-center(column);
     gap: 16px;
     padding-top: 80px;
+
+    
     
     div:not(.stars_block){
         @include flex-center(column);
@@ -9,9 +11,23 @@
         margin: auto;
         gap: 5px;
 
-        
-        
+        .row_inputs_container{
 
+            @media screen and (min-width:map-get($breakpoints,"medium")) {
+               display: grid;
+               grid-template-columns: 1fr 1fr;
+                gap: 40px;
+
+                div{
+                    input {
+                        width: 45vw;
+                    }
+                }
+            }
+            }
+           
+
+        
         label{
             align-self: flex-start;
             font-weight: 600;
@@ -51,4 +67,7 @@
     & .stars_block .star{
             padding: 10px;
     }
+
+    
 }
+

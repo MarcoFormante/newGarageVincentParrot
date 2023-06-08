@@ -436,6 +436,16 @@ h2.page_title_home {
   margin: auto;
   gap: 5px;
 }
+@media screen and (min-width: 768px) {
+  .form div:not(.stars_block) .row_inputs_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+  .form div:not(.stars_block) .row_inputs_container div input {
+    width: 45vw;
+  }
+}
 .form div:not(.stars_block) label {
   align-self: flex-start;
   font-weight: 600;
@@ -1092,6 +1102,51 @@ input[type=checkbox] {
   list-style: circle;
 }
 
+label[for=img-thumb] {
+  text-align: center;
+  position: relative;
+}
+label[for=img-thumb]::after {
+  content: "";
+  margin-top: 10px;
+  width: 300px;
+  height: 300px;
+  display: block;
+  background-color: #CBD0D4;
+}
+label[for=img-thumb]::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  background-image: url("/src/icons/edit.svg");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  z-index: 1;
+}
+
+input[name=img-thumb] {
+  display: none;
+}
+
+.new_car_img-thumb {
+  position: relative;
+}
+.new_car_details_title {
+  padding: 20px;
+  background-color: #D64E54;
+  width: 100vw;
+  text-align: center;
+  color: #FFFFFF;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
 /*
 Vendors: Normalize
 */
@@ -1474,6 +1529,14 @@ ul li {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+
+.container--pad-top {
+  padding-top: 80px;
+}
+
+.text-bold {
+  font-weight: bold;
 }
 
 html {

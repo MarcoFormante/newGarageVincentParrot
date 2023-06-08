@@ -13,7 +13,8 @@ import { useSelector,useDispatch } from 'react-redux';
 import CheckToken from './helpers/CheckToken';
 import { add,remove } from './components/Reducers/RoleReducer';
 import AvisPage from './components/pages/avisPage/AvisPage';
-import { type } from '@testing-library/user-event/dist/type';
+import NewCarPage from './components/pages/NewCar/NewCarPage';
+
 
 
 function App() {
@@ -21,9 +22,16 @@ function App() {
   const role = (useSelector((state) => state.role.value))
   const [login, setlogin] = useState(false)
   const location = useLocation()
-  let hiddenTimeMapCondition = ["admin","area-reserve"].filter(path => location.pathname.includes(path))
+  const [hidden,setHidden] = useState([])
   
   
+
+  useEffect(() => {
+    setHidden(["admin","area-reserve"].filter(path => location.pathname.includes(path)))
+  }, [location.pathname])
+  
+
+ 
  
   return (
     <div className="App">
@@ -46,7 +54,7 @@ function App() {
         <Route element={<ProtectedRoute auth={window.localStorage.getItem("token")}
           login={login} redirectPath={"/"} />}
         >
-          <Route path={"/admin/new-car"} element={<h1>adminpage</h1>} />
+          <Route path={"/admin/new-car"} element={<NewCarPage/>} />
           <Route path={"/admin/modify-car"} element={<h1>adminpage</h1>} />
           <Route path={"/admin/services"} element={<h1>adminpage</h1>} />
           <Route path={"/admin/accounts"} element={<h1>adminpage</h1>} />
@@ -58,7 +66,7 @@ function App() {
         
       </Routes>
       {
-        !hiddenTimeMapCondition &&
+        !hidden[0] &&
         <div>
           <TimeOpeningBlock />
           <Footer />

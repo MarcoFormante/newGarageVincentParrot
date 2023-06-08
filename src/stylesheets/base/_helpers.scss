@@ -68,6 +68,15 @@ ul{
 
 .container--center--column{
     @include flex-center(row);
-
-    
 }
+
+
+.container--pad-top{
+   padding-top: 80px;
+}
+
+
+.text-bold{
+    font-weight: bold;
+}
+
