@@ -37,6 +37,7 @@ input[name=img-thumb]{
 
 
 .new_car{
+    padding-bottom: 100px;
 
     &_img-thumb{
             position: relative; 
@@ -60,9 +61,31 @@ input[name=img-thumb]{
     &_add-equipement{
         width: 50px;
         height: 50px;
-        background-color: aqua;
+        background-image: url(/src/icons/add.svg);
+        cursor: pointer;
+
+        span{
+            position: relative;
+            top: 30px;
+            text-align: center;
+            left: 4px;
+        }
     }
     
+    &_equip_list{
+        min-width: 250px;
+       
+        li{
+            margin-top: 30px;
+            list-style:circle;
+            list-style-type: circle;
+            list-style-type: circle;
+            list-style-position: inside;
+            font-size: clamp(map-get($font_size,"small"),2vw,20px);
+            @include flex_spaceB; 
+            gap: 5px;
+        }
 
+    }
 }
 

@@ -1,5 +1,4 @@
-import React, { useRef, useState } from 'react'
-import ReactDOM from 'react-dom'
+import React, { useEffect, useRef, useState } from 'react'
 import PageTitle from '../../PageTitle/PageTitle'
 import FormElement from '../../FormElement/FormElement'
 import DetailsInputs from './DetailsInputs'
@@ -9,24 +8,29 @@ import DetailsInputs from './DetailsInputs'
 
 const NewCarPage = () => {
   const equipListContainer = useRef()
-  const [equipList,setEquipeList]=useState([])
+  const [equipList, setEquipeList] = useState([])
+  const [equipValue, setEquipValue] = useState("")
   
-  function createEquipementInput() {
-    setEquipeList(
-      prev => [...prev,
-        <FormElement label={{ for: "fuel", text: "Energie" }}
-          select={{
-            options: ["Essence", "Gazole", "Électrique", "GPL"],
-            name: "fuel", id: "fuel"
-          }} required={true}
-        />
-  ])
+
+  useEffect(() => {
+    
+  },[])
+  
+  function handleEquipValue() {
+    if (equipValue ) {
+      setEquipeList(
+        prev => [...prev, equipValue]
+      )
+      setEquipValue("")
+    }
+   
   }
 
   function deleteEquipment(index) {
     let equipements = equipList.filter(equip => equip !== equipList[index])
     setEquipeList([...equipements])
   }
+
 
   return (
     <div>
@@ -49,15 +53,37 @@ const NewCarPage = () => {
                       </div>
                     </div>
 
-                    <div className='new_car_details container--pad-top'>
-                    <span className='new_car_details_title new_car_details_title--black'>Equipements</span>
-                    <span  className={"new_car_add-equipement"} onClick={createEquipementInput}>+</span>
-                        <ul ref={equipListContainer}>
+                    <div className={'new_car_details container--pad-top'}>
+                        <span className={'new_car_details_title new_car_details_title--black'}>Equipements</span>
+                        <ul  className={"new_car_equip_list"} ref={equipListContainer}>
                           {equipList && equipList.map((equip, index) =>
-                            <li key={"equip_list" + index + "i" + Math.floor(Math.random() * 200)}>{equip} <span onClick={()=>deleteEquipment(index)}>Supprime</span></li>  
-                           
-                           )}
-                        </ul>
+                            <li
+                              key={"equip_item" + index + "i" + Math.floor(Math.random() * 200)}>- {equip}
+                              <span className={'delete_icon'} onClick={() => deleteEquipment(index)}></span>
+                            </li>  
+                          )}
+                           </ul>
+                                 {/** Add equipement array from database */}
+                            <FormElement
+                              label={{
+                                for: "equipment",
+                                text: "Equipement"
+                              }}
+                            select={{
+                              name: "equipment",
+                              id: "equipment",
+                              value: equipValue,
+                              onChange: (e) => setEquipValue(e.target.value)
+                          }} required={true}>
+            
+                          {/** Add equipement array from database */}
+                          {["","Essence", "Gazole", "Électrique", "GPL"].filter(equip => !equipList.includes(equip)).map((equip,index) => <option key={"option_select_" + index } value={equip}>{equip}</option>)}
+                          </FormElement>
+            
+                        { equipValue && <div className={"new_car_add-equipement"} onClick={handleEquipValue}>
+                            <span>Ajoute</span>
+                        </div>}
+                       
                     </div>
 
                   </div>

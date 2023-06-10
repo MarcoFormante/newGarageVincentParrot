@@ -1,6 +1,6 @@
 import React from 'react'
 
-const FormElement = ({label, input, textarea, select, required}) => {
+const FormElement = ({label, input, textarea, select, required,children}) => {
   return (
     <>
       {
@@ -31,8 +31,8 @@ const FormElement = ({label, input, textarea, select, required}) => {
         label && select &&
                   <div>
                     {label && <label htmlFor={label.for}> {label.text} {required && <span style={{color:"red"}}>*</span>}</label>}
-                    <select id={select.id} name={select.name} >
-                        {select.options.map((opt) => <option value={opt.toLowerCase()}>{opt}</option>)}
+                    <select id={select.id} name={select.name} onChange={select.onChange} value={select.value}>
+                    {children}
                     </select>
                   </div>        
       }
