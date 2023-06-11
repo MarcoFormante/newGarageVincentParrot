@@ -13,7 +13,7 @@ import { useSelector,useDispatch } from 'react-redux';
 import CheckToken from './helpers/CheckToken';
 import { add,remove } from './components/Reducers/RoleReducer';
 import AvisPage from './components/pages/avisPage/AvisPage';
-import NewCarPage from './components/pages/NewCar/NewCarPage';
+import NewCarPage from './components/pages/admin/NewCar/NewCarPage';
 
 
 

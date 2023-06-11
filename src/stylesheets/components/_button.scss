@@ -8,6 +8,7 @@
     cursor: pointer;
     box-shadow: 0 4px 10px lighten($secondary_color,40);
     display: block;
+    text-align: center;
     
 
     &--red{
@@ -16,6 +17,8 @@
         font-size: 24px;
         padding: 10px;
         cursor: pointer;
+        font-weight: 600;
+        min-width: 150px;
 
         &:hover{
             background-color: lighten($brand_color,10);
@@ -29,8 +32,10 @@
     &--white{
         background-color: $white-color;
         color:$secondary_color;
-        font-size: 16px;
-        padding: 5px;
+        font-size: 24px;
+        padding: 10px;
+        font-weight: 600;
+        min-width: 150px;
         &:hover{
             background-color: lighten($secondary_color,75);
         }

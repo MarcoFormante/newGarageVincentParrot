@@ -67,6 +67,41 @@ input[name=img-thumb]{
         }
 
     }
+
+    &_gallery{
+        margin-top: 20px;
+        margin-bottom: 50px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 30px;
+    
+        img{
+            max-width:200px;
+            min-width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border: 1px solid black;
+            min-height: 200px;
+        }
+
+        &_alert{
+            color: $brand_color;
+            font-weight: 600;
+        }
+
+        &_img_container{
+            position: relative;
+
+            .delete_icon{
+                position: absolute;
+                top: -2px;
+                right: 0px;
+                
+            }
+        }
+        
+    }
 }
 
 
@@ -77,3 +112,15 @@ input[name=img-thumb]{
     cursor: pointer;
 }
 
+
+.add_new_equipement{
+    @include flex-center(column);
+}
+
+
+label[for='galleryfileInput']{
+    @include flex-center(column);
+    .add_icon{
+        display: block
+    }
+}

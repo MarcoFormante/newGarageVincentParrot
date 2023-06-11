@@ -1,5 +1,5 @@
 import React from 'react'
-import FormElement from '../../FormElement/FormElement'
+import FormElement from '../../../FormElement/FormElement'
 
 const DetailsInputs = () => {
   return (

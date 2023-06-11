@@ -4,7 +4,7 @@
     padding-top: 80px;
 
 
-    div:not(.stars_block,.row,.grid){
+    .inputs_container{
         @include flex-center(column);
         width: fit-content;
         gap: 5px;
@@ -24,17 +24,13 @@
             }
             
         }
-
-
-           
-
         
-        label{
+        label:not(label[for="modal_input"]){
             align-self: flex-start;
             font-weight: 600;
         }
 
-        input:not(input[type="checkbox"]),textArea{
+        input:not(input[type="checkbox"],#modal_input,#galleryfileInput),textArea{
             min-width: 200px;
             width: 80vw;
             max-width: 670px;
@@ -86,7 +82,7 @@
 }
 
     & .stars_block .star{
-            padding: 10px;
+        padding: 10px;
     }
 
     .row{
