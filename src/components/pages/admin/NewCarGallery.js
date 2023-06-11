@@ -22,8 +22,8 @@ const NewCarGallery = () => {
             </div>)}
         </div>
             <div>
-                <label htmlFor='galleryfileInput'> Ajouter des images <span className='add_icon'></span></label>
-                <input type="file" hidden name="carGalleryImage" id="galleryfileInput" multiple accept='image/jpeg, image/png' onChange={(e)=> handleGallery(e)}/>
+                <label htmlFor='galleryfileInput'> <span>Ajouter des images <span className='required'>*</span></span><span className='add_icon'></span></label>
+                <input type="file" required hidden name="carGalleryImage" id="galleryfileInput" multiple accept='image/jpeg, image/png' onChange={(e)=> handleGallery(e)}/>
             </div>
     </>
   )

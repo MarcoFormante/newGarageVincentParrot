@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import ButtonCta from '../Buttons/ButtonCta'
 
-const Modal = ({ title, children, onClick, onExit,type,alertMessage }) => {
-  const [modal, setModal] = useState(false)
+const Modal = ({ title, children, onClick, onExit,type}) => {
   
   if (type === "input") {
     return (

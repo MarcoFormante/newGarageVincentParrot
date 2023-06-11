@@ -5,6 +5,7 @@ import DetailsInputs from './DetailsInputs'
 import EquipmentsInputs from './EquipmentsInputs'
 import { array } from 'prop-types'
 import NewCarGallery from '../NewCarGallery'
+import ButtonCta from '../../../Buttons/ButtonCta'
 
 
 
@@ -19,7 +20,7 @@ const NewCarPage = () => {
   return (
     <div>
         <PageTitle pageTitle={"Nouveau véhicule"} />
-            <form className='form' encType={'multipart/form-data'}>
+            <form className='form' encType={'multipart/form-data'} >
                 
                     <div className='new_car inputs_container'>
                     {/* car img-thumb  */}
@@ -27,6 +28,7 @@ const NewCarPage = () => {
                       <FormElement
                         label={{ for: "img-thumb", text: "Choisir la photo principal" }}
                         input={{ type: "file", required: true, accept: "image/jpeg , image/png", name: "img-thumb", id: "img-thumb" }}
+                        required={true}
                       />
                     </div>
           
@@ -50,8 +52,10 @@ const NewCarPage = () => {
                     <div className={'new_car_details container--pad-top inputs_container'}>
                     <span className={'new_car_details_title'}>Gallerie images</span>
                       <NewCarGallery/>
-                    </div>
                   </div>
+          
+                  </div>
+                  <input className={"cta cta--red mar-bot-20"} type="submit" value="Envois"/>
             </form>
 
     </div>

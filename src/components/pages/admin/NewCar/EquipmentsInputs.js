@@ -76,7 +76,7 @@ const EquipmentsInputs = () => {
               </div>)}
         </div>
         <div className='add_new_equipement container--marg-top'>
-              Ajouter un nouvel equipement
+                <span style={{fontWeight:"600"}}>Ajouter un nouvel equipement</span> 
               <span className='add_icon' onClick={handleModal}></span>  
         </div> 
             {

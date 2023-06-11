@@ -1312,6 +1312,9 @@ label[for=galleryfileInput] {
 label[for=galleryfileInput] .add_icon {
   display: block;
 }
+label[for=galleryfileInput] .required {
+  color: red;
+}
 
 /*
 Vendors: Normalize
@@ -1707,6 +1710,14 @@ ul li {
 
 .text-bold {
   font-weight: bold;
+}
+
+.mar-top-20 {
+  margin-top: 20px;
+}
+
+.mar-bot-20 {
+  margin-bottom: 20px;
 }
 
 html {

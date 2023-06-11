@@ -7,7 +7,7 @@ const FormElement = ({label, input, textarea, select, required,children}) => {
                 label && input &&
                 <div className='inputs_container'>
                     {label && <label htmlFor={label.for}>{label.text} {required && <span style={{color:"red"}}>*</span>}</label>}
-                    {input && <input {...input} required={required} />}
+                    {input && <input {...input} required={required}/>}
                 </div>
             }
             
