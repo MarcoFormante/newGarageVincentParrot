@@ -3,28 +3,29 @@
     gap: 16px;
     padding-top: 80px;
 
-    
-    
-    div:not(.stars_block){
+
+    div:not(.stars_block,.row,.grid){
         @include flex-center(column);
         width: fit-content;
-        margin: auto;
         gap: 5px;
 
         .row_inputs_container{
-
+            
             @media screen and (min-width:map-get($breakpoints,"medium")) {
                display: grid;
                grid-template-columns: 1fr 1fr;
                 gap: 40px;
 
                 div{
-                    input,select {
+                    input:not(input[type="checkbox"]),select {
                         width: 45vw;
                     }
-                }
+                }     
             }
-            }
+            
+        }
+
+
            
 
         
@@ -33,7 +34,7 @@
             font-weight: 600;
         }
 
-        input,textArea{
+        input:not(input[type="checkbox"]),textArea{
             min-width: 200px;
             width: 80vw;
             max-width: 670px;
@@ -73,6 +74,11 @@
                 width: 90vw;
             }
         }
+
+        input[type="checkbox"]{
+            width: 20px;
+            height: 20px;
+        }
     }
 
     & .stars_block{
@@ -83,6 +89,10 @@
             padding: 10px;
     }
 
+    .row{
+        display: flex;
+        flex-direction: row;
+    }
     
 }
 

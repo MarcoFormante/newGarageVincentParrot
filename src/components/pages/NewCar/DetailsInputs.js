@@ -13,8 +13,18 @@ const DetailsInputs = () => {
         <FormElement label={{ for: "color", text: "Couleur" }} input={{ type: "text",name:"color",id:"color",}} required={true} />
         <FormElement label={{ for: "dni", text: "Puissance DIN" }} input={{ type: "number",name:"dni",id:"dni",}} required={true} />
         <FormElement label={{ for: "fiscalPower", text: "Puissance fiscale" }} input={{ type: "number",name:"fiscalPower",id:"fiscalPower",}} required={true} />
-        <FormElement label={{ for: "gearbox", text: "Boite de vitesse" }} select={{ options: ["Manuelle","Automatique"] , name:"gearbox",id:"gearbox"}} required={true} />
-        <FormElement label={{ for: "fuel", text: "Energie" }} select={{ options: ["Essence","Gazole","Électrique","GPL"] , name:"fuel",id:"fuel"}} required={true} />
+        <FormElement label={{ for: "gearbox", text: "Boite de vitesse" }} select={{ name: "gearbox", id: "gearbox" }} required={true}>
+          <option value=""></option>
+          <option value="Manuelle">Manuelle</option>
+          <option value="Automatique">Automatique</option>
+        </FormElement>
+        <FormElement label={{ for: "fuel", text: "Energie" }} select={{name: "fuel", id: "fuel" }} required={true}>
+          <option value=""></option>
+          <option value="Essence">Essence</option>
+          <option value="Gazole">Gazole</option>
+          <option value="Électrique">Électrique</option>
+          <option value="GPL">GPL</option>
+        </FormElement>
         <FormElement label={{ for: "doors", text: "Portières" }} input={{ type: "number",name:"doors",id:"doors",}} required={true} />
         <FormElement label={{ for: "VO", text: "Numero VO" }} input={{ type: "number",name:"VO",id:"VO",}} required={true} />
         <FormElement label={{ for: "offer", text: "Offre?" }} input={{ type: "number",name:"offer",id:"offer"}} required={true} />

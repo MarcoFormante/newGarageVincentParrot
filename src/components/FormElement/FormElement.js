@@ -14,7 +14,7 @@ const FormElement = ({label, input, textarea, select, required,children}) => {
             {
                 label && textarea && 
                 <div>
-                    {label && <label htmlFor={label.for}> {label.text} {textarea.required && <span style={{color:"red"}}>*</span>}</label>}
+                    {label && <label htmlFor={label.for}> {label.text} {required && <span style={{color:"red"}}>*</span>}</label>}
                     {textarea && <textarea {...textarea} required={required} />}
                 </div>
             }
@@ -31,7 +31,7 @@ const FormElement = ({label, input, textarea, select, required,children}) => {
         label && select &&
                   <div>
                     {label && <label htmlFor={label.for}> {label.text} {required && <span style={{color:"red"}}>*</span>}</label>}
-                    <select id={select.id} name={select.name} onChange={select.onChange} value={select.value}>
+                    <select id={select.id} name={select.name} onChange={select.onChange} value={select.value} required={required}>
                     {children}
                     </select>
                   </div>        
