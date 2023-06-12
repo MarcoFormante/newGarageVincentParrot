@@ -1207,16 +1207,12 @@ label[for=img-thumb] {
   text-align: center;
   position: relative;
 }
+label[for=img-thumb]:active::after {
+  opacity: 0.5;
+}
 label[for=img-thumb]::after {
   content: "";
-  margin-top: 10px;
-  width: 300px;
-  height: 300px;
-  display: block;
-  background-color: #CBD0D4;
-}
-label[for=img-thumb]::before {
-  content: "";
+  margin-top: 40px;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -1240,6 +1236,12 @@ input[name=img-thumb] {
 }
 .new_car_img-thumb {
   position: relative;
+}
+.new_car_img-thumb_display {
+  width: 300px;
+  height: 300px;
+  background-color: #CBD0D4;
+  margin-top: 80px;
 }
 .new_car_details_title {
   padding: 20px;
