@@ -14,6 +14,7 @@ import CheckToken from './helpers/CheckToken';
 import { add,remove } from './components/Reducers/RoleReducer';
 import AvisPage from './components/pages/avisPage/AvisPage';
 import NewCarPage from './components/pages/admin/NewCar/NewCarPage';
+import Accounts from './components/pages/admin/Accounts/Accounts';
 
 
 
@@ -57,8 +58,7 @@ function App() {
           <Route path={"/admin/new-car"} element={<NewCarPage/>} />
           <Route path={"/admin/modify-car"} element={<h1>adminpage</h1>} />
           <Route path={"/admin/services"} element={<h1>adminpage</h1>} />
-          <Route path={"/admin/accounts"} element={<h1>adminpage</h1>} />
-          <Route path={"/admin/accounts"} element={<h1>adminpage</h1>} />
+          <Route path={"/admin/accounts"} element={<Accounts/>} />
           <Route path={"/admin/feedback"} element={<h1>adminpage</h1>} />
           <Route path={"/admin/time-table"} element={<h1>adminpage</h1>} />
           <Route path={"/admin/*"} element={<h1>notfound</h1>} />

@@ -22,17 +22,18 @@ const ReservedArea = ({ setLogin }) => {
     e.preventDefault();
     if (email && password) {
       CheckUser(email, password).then((response) => {
-        let isValid = response.data.status;
-        if (isValid === 1) {
-          const token = response.data.token;
-          window.localStorage.setItem("token", token);
-          setAuthToken(token);
-          dispatch(add(response.data.role))
-          setLogin(true)
-          navigate("/", { replace:true ,state:{from:location}})
-        } else {
-          setErrorMessage(response.data.message)
-        }
+        console.log(response.data);
+        // let isValid = response.data.status;
+        // if (isValid === 1) {
+        //   const token = response.data.token;
+        //   window.localStorage.setItem("token", token);
+        //   setAuthToken(token);
+        //   dispatch(add(response.data.role))
+        //   setLogin(true)
+        //   navigate("/", { replace:true ,state:{from:location}})
+        // } else {
+        //   setErrorMessage(response.data.message)
+        // }
       }
       );
     }

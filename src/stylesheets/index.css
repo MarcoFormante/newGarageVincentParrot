@@ -1722,6 +1722,20 @@ ul li {
   margin-bottom: 20px;
 }
 
+.error-message, .success-message {
+  font-weight: 600;
+  color: red;
+  display: block;
+}
+
+.success-message {
+  color: green;
+}
+
+.text-center {
+  text-align: center;
+}
+
 html {
   box-sizing: border-box;
 }
