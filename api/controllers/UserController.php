@@ -23,6 +23,16 @@ public function login(){
     }
 }
 
+
+public function checkToken(){
+    if (isset($_POST['token'])){
+        $user = new User();
+        $user->checkToken($_POST['token']);
+    }else{
+        echo json_encode(["status"=>0,"message"=> "Erreur : Vous n'avez pas les droit d'un administrateur"]);  
+    }
+}
+
 }
 
 

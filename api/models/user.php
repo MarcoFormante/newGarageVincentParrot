@@ -2,9 +2,10 @@
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 require_once("connection.php");
-require_once 'vendor/autoload.php';
+require_once '/xampp/htdocs/app/vendor/autoload.php';
 
 use \Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 Class User{
 
@@ -32,7 +33,24 @@ Class User{
         $email = filter_var($email, FILTER_VALIDATE_EMAIL);
         $pwd = filter_var($pwd,FILTER_VALIDATE_REGEXP,
         array("options"=>array("regexp"=>"/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,61}$/")));
-        return ["email"=>$email,"pwd"=>$pwd];
+        $isEmailValid = false;
+        $isPwdValid = false;
+        if ($email) {
+            $isEmailValid = true;
+        }else{
+            die("L'email est incorrect");
+        }
+        if ($pwd) {
+            $isPwdValid = true;
+
+        }else{
+            die("Le password est incorrect");
+        }
+        if ($isEmailValid && $isPwdValid) {
+            return ["email"=>$email,"pwd"=>$pwd];
+        }
+        
+      
     }
 
 
@@ -54,7 +72,7 @@ Class User{
                          echo json_encode(["status"=> 0,"message"=>"Erreur pendant l'envois des données"]);
                      }
                 } catch (Exception $e) {
-                   echo json_encode(["status"=> 0,"message"=>"Erreur dans l'envois des données, verifier que l'email n'existe deja || Error : " . $e->getMessage()]);
+                   echo json_encode(["status"=> 0,"message"=> "Erreur dans l'envois des données, verifier que l'email n'existe deja, Error : " . $e->getMessage()]);
                 }
                
          }else{
@@ -65,35 +83,56 @@ Class User{
     }
 
     public function login(string $email,string $pwd){
-        $fields = $this->filterEmailPwd($email,$pwd);
-        $email = $fields["email"];
-        $pwd = $fields["pwd"];
-
+       
         if ($email && $pwd) {
          
             if (!is_null($this->pdo)) {
-                $query = "SELECT email, password, role_id FROM Users WHERE email = :email";
+                $query = "SELECT email, password, role FROM Users INNER JOIN Roles ON role_id = Roles.id WHERE email = :email";
                 $stmt = $this->pdo->prepare($query);
                 $stmt->bindParam(":email",$email,PDO::PARAM_STR);
-               
+                
                 if ($stmt->execute()) {
+                   
                     if($row = $stmt->fetch()){
                             if(password_verify($pwd,$row["password"])){
-                                echo "siii";
+                                $role = $row["role"];
+                                $token = $this->getToken($email,$role);
+
+                                echo json_encode(["status"=> 1,"token" => $token,"role" => $role]);
+                              
                             }else{
-                                echo json_encode(["status"=> 0,"message"=> "L'email ou le password est incorrect"]);;
+                                echo json_encode(["status"=> 0,"message"=> "L'email ou le password est incorrect"]);
                             }
 
                         }else{
-                            echo "no";
+                            echo json_encode(["status"=> 0,"message"=> "L'email ou le password est incorrect"]);
                         }
+                    }else {
+                        echo json_encode(["status"=> 0,"message"=> "Probleme de connection au Server"]);
                     }
                 }
+            }else{
+                echo json_encode(["status"=> 0,"message"=> "L'email ou le password est incorrect"]);
             }
         }
 
 
-        public function getToken(){
+        public function getToken(string $email, string $role) :string{
+            $payload = array(
+                "email"=>$email,
+                "role"=>$role
+            );
+            $token = JWT::encode($payload, getenv("JWTkey"), "HS256");
+
+            return $token;
+        }
+
+
+        public function checkToken(string $token){
+            $decodeToken = JWT::decode($token, new Key(getenv("JWTkey"),"HS256"));
+            if ($decodeToken) {
+                echo json_encode(["status"=> 1,"role" => $decodeToken->role]);
+            }
 
         }
     }

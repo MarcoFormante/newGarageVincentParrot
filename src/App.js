@@ -79,17 +79,16 @@ function App() {
 
 export default App;
 
-const ProtectedRoute = ({ auth, redirectPath,login , role}) => {
+const ProtectedRoute = ({ auth, redirectPath,login}) => {
 
   const location = useLocation();
 
-  const [token,setToken]= useState("")
+
   const dispatch = useDispatch()
  
-  
   function checkStorage() {
    
-    if (token || localStorage.getItem("token")) {
+    if (localStorage.getItem("token")) {
         CheckToken(localStorage.getItem("token")).then((response) => {
          let isValid = response.data.status;
          if (isValid === 1) {
@@ -98,11 +97,10 @@ const ProtectedRoute = ({ auth, redirectPath,login , role}) => {
   
          } else {
             dispatch(remove())
-             setToken("")
+           
          }
      })
     } else {
-      setToken("token")
       dispatch(remove())
     }
   }

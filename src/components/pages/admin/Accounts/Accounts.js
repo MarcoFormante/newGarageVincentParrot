@@ -96,7 +96,7 @@ const Accounts = () => {
       </form>
       <br />
       
-      <span className={` ${serverMessage.status === 1 ? "success-message" : "error-message"}  text-center`}>{serverMessage.message}</span>
+      <span className={`${serverMessage.status === 1 ? "success-message" : "error-message"}  text-center`}>{serverMessage.message}</span>
       
     </div>
   )
