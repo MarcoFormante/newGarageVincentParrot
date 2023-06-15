@@ -148,7 +148,7 @@ Class Car {
         
         $queryGetCars="SELECT * FROM cars  
         WHERE (km > :minKm AND km < :maxKm) AND (year > :minYear AND year < :maxYear)
-        AND (price > :minPrice AND price < :maxPrice) LIMIT $page,10";
+        AND (price > :minPrice AND price < :maxPrice) LIMIT :page,10";
       
 
         if (!is_null($this->pdo)) {
@@ -160,6 +160,7 @@ Class Car {
                     $stmt2->bindValue(":$f",$v);
                 }
             }
+            $stmt2->bindValue(":page",intval($page),PDO::PARAM_INT);
          
             //execution of two stmts to get Count & filtered cars
             $exeCount = $stmt->execute([$filters["minKm"],$filters["maxKm"],$filters['minYear'],$filters['maxYear'],$filters['minPrice'],$filters['maxPrice']]);

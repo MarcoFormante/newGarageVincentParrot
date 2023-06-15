@@ -201,14 +201,15 @@ const ParcAuto = () => {
     const carAutoPath = process.env.REACT_APP_HTTP + "pages/parcAuto.php";
         axios.get(`${carAutoPath}?page=${currentPage * 10}&filters=${JSON.stringify(filters)}`)
             .then(response => {
-                console.log(response?.data);
-                setCars(response?.data?.cars)
-                setCarCount(response?.data?.count)
-                setTimeout(() => {
-                    setLoading(false);
-                }, 2000);
-               
-            }) 
+                console.log(response.statusText);
+                if (response.status === 200 && response.request.readyState === 4 ) {
+                    setCars(response?.data?.cars)
+                    setCarCount(response?.data?.count)
+                    setTimeout(() => {
+                        setLoading(false);
+                    }, 500);
+                }
+            }).catch(error=> console.log(error.data))
   },[currentPage])
     
 
@@ -233,7 +234,7 @@ const ParcAuto = () => {
             <div className='parc_auto_cars_switch_block'>
               <div className={'parc_auto_cars_section'}>   
                   {loading ? "loading..." : ""}
-                {!loading && cars.map((car, index) => <CarCard key={"parc-auto " + index + car.id} {...cars[index]} />)}
+                {cars && !loading && cars.map((car, index) => <CarCard key={"parc-auto " + index + car.id} {...cars[index]} />)}
             </div>
                   <SwitchPageBlock dataLength={carCount} handleCarPage={(page)=> handleCarPage(page)} />
             </div>
