@@ -1763,4 +1763,8 @@ h3.section_title {
   font-size: 24px;
   text-align: center;
   margin: 55px 0;
+}
+
+body {
+  min-height: 100vh;
 }/*# sourceMappingURL=index.css.map */

@@ -11,7 +11,7 @@ const CarCard = ({ id, make, model, thumbnail, km, year, offer, price }) => {
   return (
       <figure className='car_card'>
       <img src={thumbnail} alt={model} />
-       
+       {id}
               <figcaption className={"car_card_model"}>{model}</figcaption>
                 <div className={'car_card_details'}>
         
