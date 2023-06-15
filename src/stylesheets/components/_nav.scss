@@ -75,3 +75,11 @@ a.active{
     padding: 20px;
 }
 
+.nav_link_logout.active{
+    border-bottom: transparent;
+}
+
+.nav_link_logout:active{
+    border-bottom: 1px solid $white-color;
+}
+

@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import PageTitle from '../../PageTitle/PageTitle'
 import FormElement from '../../FormElement/FormElement'
-import { useNavigate, Navigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import CheckUser from '../../../helpers/CheckUser'
 import { setAuthToken } from '../../../helpers/SetAuth'
-import { add, remove } from '../../Reducers/RoleReducer'
+import { add } from '../../Reducers/RoleReducer'
 import { useDispatch } from 'react-redux'
 
 const ReservedArea = ({ setLogin }) => {
@@ -17,13 +17,11 @@ const ReservedArea = ({ setLogin }) => {
   const  dispatch = useDispatch()
 
   function handleSubmit(e) {
-   //send form data to validate admin account
-    // replace this function to axios  request when front is finished
     e.preventDefault();
     if (email && password) {
       CheckUser(email, password).then((response) => {
         let isValid = response.data.status;
-        if (isValid === 1) {
+        if (isValid === 1){
           const token = response.data.token;
           window.localStorage.setItem("token", token);
           setAuthToken(token);
@@ -32,10 +30,9 @@ const ReservedArea = ({ setLogin }) => {
           navigate("/", { replace:true ,state:{from:location}})
         } else {
           setErrorMessage(response.data.message)
-          
         }
       }
-      );
+      ).catch(error => error.data.message)
     }
   }
   
@@ -47,7 +44,7 @@ const ReservedArea = ({ setLogin }) => {
         <FormElement label={{ for: "password", text: "Password" }} input={{ type: "password", name: "password", id: "password", required: true , value: password, onChange: (e) => setPassword(e.target.value) }} />
         <FormElement input={{type:"submit",value:"Acceder"}}/>
       </form>
-      {errorMessage && <p>{errorMessage}</p>}
+      {errorMessage && <span className='error-message text-center mar-top-20'>{errorMessage}</span>}
     </div>
   )
 }

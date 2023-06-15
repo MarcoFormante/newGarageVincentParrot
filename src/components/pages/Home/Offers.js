@@ -2,13 +2,17 @@ import React,{ useState,useEffect,useRef } from 'react'
 import CarCard from '../../CarCard/CarCard'
 import ButtonCta from '../../Buttons/ButtonCta'
 import Arrows from '../../Arrows/Arrows'
-
+import axios from '../../../api/axios'
 
 const Offers = () => {
     const [arrowTarget, setArrowTarget] = useState()
-    const [carouselWidth,setCarouselWidth]=useState()
-    const [carouselX, setCarouselX] = useState()
-    const [pathName,setPathName]=useState("")
+    const [carouselWidth,setCarouselWidth]=useState(0)
+    const [carouselX, setCarouselX] = useState(0)
+    const [pathName, setPathName] = useState("")
+    const [offerCards, setofferCards] = useState([])
+    const [offerLimit, setOfferLimit] = useState(0);
+    const [isSentOffers, setIsSentOffers] = useState(false);
+    const [carCount, setcarCount] = useState(0);
     const carousel = useRef();
   
     //carousel scroll event
@@ -19,6 +23,7 @@ const Offers = () => {
                 left: direction + window.innerWidth - cardPadding,
                 behavior: "smooth"
             })
+            
         
         /** prevent multiple clicks*/
             setTimeout(() => {
@@ -28,11 +33,13 @@ const Offers = () => {
     
     useEffect(() => {
         setPathName(window.location.pathname)   
-    },[window.location.pathname])
+    }, [window.location.pathname])
+    
 
     useEffect(() => {
         setCarouselX(carousel.current.scrollLeft);
         setCarouselWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+        
         switch (arrowTarget) {
             case "left":
                 handleScrollCarousel("-")
@@ -48,13 +55,19 @@ const Offers = () => {
     
     //every tick check scrollLeft of carousel ref
     useEffect(() => {
+        setCarouselWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+        setCarouselX(carousel.current.scrollLeft);
         carousel.current.addEventListener("scroll", () => {
-            setCarouselX(carousel.current.scrollLeft)
-        })   
+            setCarouselX(carousel.current.scrollLeft);
+            setCarouselWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);  
+        })
 
         return carousel.current.removeEventListener("scroll",()=>{})
 
-    }, [])
+        }, [carouselX])
+
+    
+
     
      useEffect(() => {
          window.addEventListener("resize", () => {
@@ -72,126 +85,35 @@ const Offers = () => {
              }
         })
 
-    },[pathName])
+     }, [pathName])
+    
+    function getOfferCards() {
+       
+    
+
+    }
+    
+    useEffect(() => {
+        const offersPath = process.env.REACT_APP_HTTP + "pages/homePage.php";
+        const formData = new FormData();
+            formData.append('limit', offerLimit)
+            axios.post(offersPath, formData, {
+                headers: {"Content-Type": "application/x-www-form-urlencoded"}})
+                .then(response => {
+                    if (response.data.status !== 0) {
+                        if (response?.data?.cars?.length > 0 ) {
+                            setcarCount(response?.data?.count[0]) 
+                            setofferCards(response?.data?.cars)
+                        }
+                    } else {
+                        console.warn(response.data.message)
+                    }
+                
+                }).catch(error => console.warn(error))  
+           
+     }, [])
    
-    /* provisoire!! fetch data Count(card_offers)*/
-    const offerCards = [
-        {
-            id: 1,
-            imgPath:"/images/bkhome-mb.jpg",
-            model: "Mazda steng 98k",
-            km: 80000,
-            year: 2001,
-            offer: 1000,
-            price: 7500
-        },{
-            id: 2,
-            imgPath:"/images/bkhome-mb.jpg",
-            model: "Mazda steng 98k",
-            km: 80000,
-            year: 2001,
-            offer: 400,
-            price: 5200
-        },{
-            id: 3,
-            imgPath:"/images/bkhome-mb.jpg",
-            model: "Mazda steng 98k",
-            km: 80000,
-            year: 2001,
-            offer: 700,
-            price: 6800
-        },{
-            id: 3,
-            imgPath:"/images/bkhome-mb.jpg",
-            model: "Mazda steng 98k",
-            km: 80000,
-            year: 2001,
-            offer: 700,
-            price: 6800
-        }
-
-        ,{
-            id: 3,
-            imgPath:"/images/bkhome-mb.jpg",
-            model: "Mazda steng 98k",
-            km: 80000,
-            year: 2001,
-            offer: 700,
-            price: 6800
-        }
-
-        ,{
-            id: 3,
-            imgPath:"/images/bkhome-mb.jpg",
-            model: "Mazda steng 98k",
-            km: 80000,
-            year: 2001,
-            offer: 700,
-            price: 6800
-        }
-
-        ,{
-            id: 3,
-            imgPath:"/images/bkhome-mb.jpg",
-            model: "Mazda steng 98k",
-            km: 80000,
-            year: 2001,
-            offer: 700,
-            price: 6800
-        }
-
-        ,{
-            id: 3,
-            imgPath:"/images/bkhome-mb.jpg",
-            model: "Mazda steng 98k",
-            km: 80000,
-            year: 2001,
-            offer: 700,
-            price: 6800
-        }
-
-        ,{
-            id: 3,
-            imgPath:"/images/bkhome-mb.jpg",
-            model: "Mazda steng 98k",
-            km: 80000,
-            year: 2001,
-            offer: 700,
-            price: 6800
-        },{
-            id: 3,
-            imgPath:"/images/bkhome-mb.jpg",
-            model: "Mazda steng 98k",
-            km: 80000,
-            year: 2001,
-            offer: 700,
-            price: 6800
-        },{
-            id: 3,
-            imgPath:"/images/bkhome-mb.jpg",
-            model: "Mazda steng 98k",
-            km: 80000,
-            year: 2001,
-            offer: 700,
-            price: 6800
-        },{
-            id: 3,
-            imgPath:"/images/bkhome-mb.jpg",
-            model: "Mazda steng 98k",
-            km: 80000,
-            year: 2001,
-            offer: 700,
-            price: 6800
-        },{
-            id: 3,
-            imgPath:"/images/bkhome-mb.jpg",
-            model: "Mazda steng 98k",
-            km: 80000,
-            year: 2001,
-            offer: 700,
-            price: 6800
-        }
-    ]
+     
 
 
     return (
@@ -202,7 +124,7 @@ const Offers = () => {
         <div className={"section_page section_page--grey"}>
             <div className={'carCards_container'} ref={carousel}>
             <div className={'page_section page_section_offers card_carousel_flex'}>
-                 {offerCards.map((car, index) => <CarCard key={index + car.id } {...offerCards[index]} />)}
+            { offerCards && offerCards.map((car, index) => car.id && <CarCard key={index}  {...offerCards[index]} />) }
             </div>
               
             </div>

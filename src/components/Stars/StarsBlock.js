@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Star from './Star'
 
 //STARS BLOCK
-const StarsBlock = ({ numberOfActiveStars,clickable}) => {
+const StarsBlock = ({ numberOfActiveStars,clickable,setFeedback}) => {
     const [stars, setStars] = useState([0, 0, 0, 0, 0])
     const [activeStarsLength, setActiveStarsLength] = useState(numberOfActiveStars)
     
@@ -22,6 +22,7 @@ const StarsBlock = ({ numberOfActiveStars,clickable}) => {
             setStars([...array])
             note = array.reduce((num, i) => num + i)
             console.log(note);
+            setFeedback && setFeedback(note)
             }
         }
     

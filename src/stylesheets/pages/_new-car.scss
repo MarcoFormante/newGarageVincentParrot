@@ -1,0 +1,138 @@
+label[for=img-thumb]{
+    text-align: center;
+    position: relative;
+    
+    &:active{
+        &::after{
+           opacity: 0.5;
+        }
+    }
+    
+
+     &::after{
+        content: "";
+        margin-top: 40px;
+        position: absolute;
+        left:50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        width: 60px;
+        height: 60px;
+        background-image: url(/src/icons/edit.svg) ;
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        cursor: pointer;
+        z-index: 1;
+     }
+}
+
+
+
+input[name=img-thumb]{
+    display: none;
+}
+
+
+
+.new_car{
+    padding-bottom: 100px;
+
+    &_img-thumb{
+            position: relative; 
+
+            &_display{
+                width: 300px;
+                height: 300px;
+                background-color: $light_gray_color;
+                margin-top: 80px;
+            }
+    }
+
+
+    &_details_title{
+        padding: 20px;
+        background-color: $brand_color;
+        width: 100vw;
+        text-align: center;
+        color: $white-color;
+        font-weight: bold;
+        margin-bottom: 20px;
+
+        &--black{
+            background-color: $secondary_color;
+        }
+    }
+
+    
+    
+    &_equip_list{
+        min-width: 250px;
+        .row{
+            gap: 10px;
+        }
+
+    }
+
+    &_gallery{
+        margin-top: 20px;
+        margin-bottom: 50px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 30px;
+    
+        img{
+            max-width:200px;
+            min-width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border: 1px solid black;
+            min-height: 200px;
+        }
+
+        &_alert{
+            color: $brand_color;
+            font-weight: 600;
+        }
+
+        &_img_container{
+            position: relative;
+
+            .delete_icon{
+                position: absolute;
+                top: -2px;
+                right: 0px;
+                
+            }
+        }
+        
+    }
+}
+
+
+.add_icon{
+    width: 50px;
+    height: 50px;
+    background-image: url(/src/icons/add.svg);
+    cursor: pointer;
+}
+
+
+.add_new_equipement{
+    @include flex-center(column);
+}
+
+
+label[for='galleryfileInput']{
+    @include flex-center(column);
+    .add_icon{
+        display: block
+    }
+
+    .required{
+        color:red;
+    }
+
+    
+}

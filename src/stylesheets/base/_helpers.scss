@@ -68,6 +68,44 @@ ul{
 
 .container--center--column{
     @include flex-center(row);
+}
 
-    
+
+.container--pad-top{
+   padding-top: 80px;
+}
+
+.container--marg-top{
+    margin-top: 80px;
+ }
+
+
+
+.text-bold{
+    font-weight: bold;
+}
+
+.mar-top-20{
+    margin-top: 20px;
+}
+
+.mar-bot-20{
+    margin-bottom: 20px;
+}
+
+.error-message{
+    font-weight: 600;
+    color: red;
+    display: block;
+    max-width: 80vw;
+    margin: auto;
+}
+
+.success-message{
+    @extend .error-message;
+    color: green;
+}
+
+.text-center{
+    text-align: center;
 }

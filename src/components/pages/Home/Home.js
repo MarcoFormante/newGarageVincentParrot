@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import HeroHome from './HeroHome'
 import Offers from './Offers'
 import Services from './Services'
@@ -7,7 +7,10 @@ import PageTitle from '../../PageTitle/PageTitle'
 
 
 
-const Home = () =>{
+
+const Home = () => {
+   
+
   
   return (
     <div>

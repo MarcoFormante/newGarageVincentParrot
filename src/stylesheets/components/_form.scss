@@ -2,20 +2,35 @@
     @include flex-center(column);
     gap: 16px;
     padding-top: 80px;
-    
-    div{
+
+
+    .inputs_container{
         @include flex-center(column);
         width: fit-content;
-        margin: auto;
         gap: 5px;
-        
 
-        label{
+        .row_inputs_container{
+            
+            @media screen and (min-width:map-get($breakpoints,"medium")) {
+               display: grid;
+               grid-template-columns: 1fr 1fr;
+                gap: 40px;
+
+                div{
+                    input:not(input[type="checkbox"]),select {
+                        width: 45vw;
+                    }
+                }     
+            }
+            
+        }
+        
+        label:not(label[for="modal_input"]){
             align-self: flex-start;
             font-weight: 600;
         }
 
-        input,textArea{
+        input:not(input[type="checkbox"],#modal_input,#galleryfileInput),textArea{
             min-width: 200px;
             width: 80vw;
             max-width: 670px;
@@ -40,5 +55,40 @@
                 height: 200px;
             }
         }
+
+        select{
+            min-width: 200px;
+            width: 80vw;
+            max-width: 670px;
+            height: 42px;
+            background-color: lighten($light_gray_color,8);
+            padding: 5px;
+            border: none;
+
+            @media screen and (max-width:map-get($breakpoints,"medium")) {
+                height: 35px;
+                width: 90vw;
+            }
+        }
+
+        input[type="checkbox"]{
+            width: 20px;
+            height: 20px;
+        }
     }
+
+    & .stars_block{
+        padding: 10px;
 }
+
+    & .stars_block .star{
+        padding: 10px;
+    }
+
+    .row{
+        display: flex;
+        flex-direction: row;
+    }
+    
+}
+

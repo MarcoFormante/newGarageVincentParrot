@@ -3,15 +3,15 @@ import PropTypes from 'prop-types'
 import ButtonCta from '../Buttons/ButtonCta'
 
 
-const CarCard = ({ id, imgPath, model, km, year, offer, price }) => {
+const CarCard = ({ id, make, model, thumbnail, km, year, offer, price }) => {
   const handleSubject = (subject) => {
     sessionStorage.setItem("carSubject", subject)
-    console.log(sessionStorage.getItem("carSubject"));
   }
  
   return (
       <figure className='car_card'>
-            <img src={imgPath} alt={model}/>
+      <img src={thumbnail} alt={model} />
+       {id}
               <figcaption className={"car_card_model"}>{model}</figcaption>
                 <div className={'car_card_details'}>
         
@@ -19,7 +19,7 @@ const CarCard = ({ id, imgPath, model, km, year, offer, price }) => {
         
                 <div className={'car_card_details--left'}>
                     <span className={'car_card_details--left_km'}>{km}km</span>
-                    <span className={'car_card_details--left_year'}>Année:{year}</span>
+                    <span className={'car_card_details--left_year'}>Année: {year}</span>
                 </div>
         
                   {/*card_details_right (price)*/}
@@ -38,7 +38,7 @@ const CarCard = ({ id, imgPath, model, km, year, offer, price }) => {
       
               <div className={'car_card_buttons'}>
                   <ButtonCta className={"car_card_cta cta--red"} inner="Contacter" onClick={() => handleSubject(model)} type="link" to={"/contact"} />
-                  <ButtonCta className={"car_card_cta cta--white"} inner={"Details"} type={"link"} to={"/parc-auto/details/"+ id} state={{model,year,km,price,offer}} />
+                  <ButtonCta className={"car_card_cta cta--white"} inner={"Details"} type={"link"} to={"/parc-auto/details/"+ id} state={{id,make,thumbnail,model,year,km,price,offer}} />
               </div>
                  
       </figure>
@@ -50,7 +50,7 @@ export default CarCard
 
 CarCard.propTypes = {
     id: PropTypes.number.isRequired,
-    imgPath:PropTypes.string.isRequired,
+    thumbnail:PropTypes.string.isRequired,
     model: PropTypes.string.isRequired,
     km: PropTypes.number.isRequired,
     year: PropTypes.number.isRequired,
