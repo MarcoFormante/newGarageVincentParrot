@@ -9,7 +9,7 @@ import axios from '../../../api/axios'
 
 
 
-const Home = () => {
+const Home = ({handleOpeningTimes}) => {
 
   const [offerCards, setofferCards] = useState([])
   const [offerLimit, setOfferLimit] = useState(0);
@@ -23,6 +23,7 @@ const Home = () => {
         axios.post(homepagePath, formData, {
             headers: {"Content-Type": "application/x-www-form-urlencoded"}})
           .then(response => {
+           
             if (response?.data?.status !== 0 && response.status === 200) {
                   
                   if (response?.data?.cars[0]?.length > 0) {
@@ -32,6 +33,10 @@ const Home = () => {
                     if (response?.data?.services.length > 0) {
                       setServices(...[response?.data?.services])
                     }
+                    if (response?.data?.openingTimes.length > 0) {
+                      handleOpeningTimes([...response?.data?.openingTimes])
+                    }
+              
                   } else {
                     //create component for error page
                     console.warn(response.data.message)

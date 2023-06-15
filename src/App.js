@@ -25,13 +25,14 @@ function App() {
   const location = useLocation()
   const [hidden,setHidden] = useState([])
   const [checkTrigger,setCheckTrigger]=useState(false)
-  
+  const [openingTimes, setOpeningTimes] = useState([]);
 
   useEffect(() => {
     setHidden(["admin","area-reserve"].filter(path => location.pathname.includes(path)))
   }, [location.pathname])
   
-
+ 
+ 
  
   return (
     <div className="App">
@@ -41,7 +42,7 @@ function App() {
       <Header />
       <AdminNav role={role} checkToken={()=>setCheckTrigger(!checkTrigger)}  />
       <Routes>
-        <Route exact path='/' element={<Home />} />
+        <Route exact path='/' element={<Home handleOpeningTimes={(values)=>setOpeningTimes(values)} />} />
         <Route path='/parc-auto' element={<ParcAuto />} />
         <Route path='/parc-auto/details/:id' element={<CarDetails />} />
         <Route path="/contact" element={<Contact/>} />
@@ -67,11 +68,10 @@ function App() {
       {
         !hidden[0] &&
         <div>
-          <TimeOpeningBlock />
+          <TimeOpeningBlock openingTimes={openingTimes} />
           <Footer />
         </div>
       }
-      
     </div>
   );
 }

@@ -92,49 +92,7 @@ Class Car {
     }
 
 
-    public function getOffers($limit){
-      
-        $query = "SELECT * FROM cars WHERE offer > 0 LIMIT :limit,10";
-        $query2 = "SELECT COUNT(*) FROM cars WHERE offer > 0";
-        if (!is_null($this->pdo)) {
-        $stmt = $this->pdo->prepare($query);
-        $stmt->bindValue(':limit',$limit,PDO::PARAM_INT);
-        $stmt->setFetchMode(PDO::FETCH_ASSOC);
-        $stmt2 = $this->pdo->prepare($query2);
-       
-            $cars = [];
-
-            try {
-                if($stmt->execute()) {
-                    while($row = $stmt->fetchAll()){
-                    array_push($cars,$row);
-                }  
-
-                if($stmt2->execute()){
-                    $count = $stmt2->fetchAll();
-                       array_push($cars,$count[0][0]);
-                       return $cars;
-                
-            }else{
-                throw new Exception("Erreur pendant la recuperation des données");
-                
-                echo json_encode(["status" => 0, "message"=> "Erreur pendant la recuperation des données"] );
-            }
-                
-            }else{
-                throw new Exception("Erreur pendant la recuperation des données");
-                echo json_encode(["status" => 0, "message"=> "Erreur pendant la recuperation des données"] );
-                
-           } 
-        } catch (Exception $e) {
-            
-            echo json_encode(["status" => 0, "message"=> "Erreur pendant la recuperation des données ,"] );
-        }
-        }else{
-            throw new Exception("Erreur pendant la recuperation des données");
-            echo json_encode(["status" => 0, "message"=> "Erreur pendant la recuperation des données"] );
-        }
-    }
+    
 
     public function getAllCars($page,$filters){
         $filters = json_decode($filters,true);
@@ -168,7 +126,6 @@ Class Car {
 
             $exeCars = $stmt2->execute();
 
-            // $exeCars = $stmt2->execute([$filters["minKm"],$filters["maxKm"],$filters['minYear'],$filters['maxYear'],$filters['minPrice'],$filters['maxPrice']]);
 
             $this->pdo->rollBack();
             if($exeCount){
