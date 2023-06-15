@@ -9,6 +9,7 @@ trait Connection {
             public function __construct(){
                     try {
                         $this->pdo = new PDO("mysql:host=localhost;dbname=garage","root","");
+                     
                     }catch (PDOException $e){
                         exit("Erreur de connection : " . $e->getMessage());
                     }

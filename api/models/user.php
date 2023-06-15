@@ -33,8 +33,10 @@ Class User{
         $email = filter_var($email, FILTER_VALIDATE_EMAIL);
         $pwd = filter_var($pwd,FILTER_VALIDATE_REGEXP,
         array("options"=>array("regexp"=>"/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,61}$/")));
+
         $isEmailValid = false;
         $isPwdValid = false;
+        
         if ($email) {
             $isEmailValid = true;
         }else{
@@ -61,13 +63,16 @@ Class User{
          if ($email && $pwd) {
                 $role = 1;
                 $hashedPwd = password_hash($pwd,PASSWORD_BCRYPT);
-                $stmt = $this->pdo->prepare("INSERT INTO Users(email,password,role_id) VALUES(:email,:pwd,:roles)");
+                $stmt = $this->pdo->prepare("INSERT INTO users(email,password,role_id) VALUES(:email,:pwd,:roles)");
                 $stmt->bindParam(":email",$email,PDO::PARAM_STR);
                 $stmt->bindParam(":pwd",$hashedPwd,PDO::PARAM_STR);
                 $stmt->bindParam(":roles",$role,PDO::PARAM_INT);
+                
                 try {
                     if ($stmt->execute()) {
-                        echo json_encode(["status"=> 1,"message"=>"Le compte pour $email a été créé " ]);
+                       
+                        echo json_encode(["status"=> 1,"message"=>"Le compte pour $email a été créé"]);
+                        
                      }else{
                          echo json_encode(["status"=> 0,"message"=>"Erreur pendant l'envois des données"]);
                      }
@@ -87,12 +92,12 @@ Class User{
         if ($email && $pwd) {
          
             if (!is_null($this->pdo)) {
-                $query = "SELECT email, password, role FROM Users INNER JOIN Roles ON role_id = Roles.id WHERE email = :email";
+                $query = "SELECT email, password, role FROM users INNER JOIN Roles ON role_id = Roles.id WHERE email = :email";
                 $stmt = $this->pdo->prepare($query);
                 $stmt->bindParam(":email",$email,PDO::PARAM_STR);
                 
                 if ($stmt->execute()) {
-                   
+                  
                     if($row = $stmt->fetch()){
                             if(password_verify($pwd,$row["password"])){
                                 $role = $row["role"];

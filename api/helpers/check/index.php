@@ -9,5 +9,4 @@ $userController = new UserController();
 $userController->checkToken();
 
 
-
 ?>

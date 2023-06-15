@@ -96,7 +96,7 @@
         &--left{
             display:flex;
             flex-direction: column;
-            color: darken($light-gray-color,10);
+            color: darken($dark-gray-color,10);
             font-size: map-get($font_size,"small");
             margin: 0 12px;
             font-weight: 600;

@@ -7,11 +7,9 @@ import PageTitle from '../../PageTitle/PageTitle'
 const CarDetails = () => {
     const location = useLocation()
     
-
-   
   return (
       <div>
-           <PageTitle pageTitle={location.state.model}/>
+           <PageTitle pageTitle={location.state.make + " " +location.state.model}/>
           <CarPhotos {...location.state} />
           <Details carID={location.state.id} />
     </div>
