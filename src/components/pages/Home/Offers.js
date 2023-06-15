@@ -4,14 +4,11 @@ import ButtonCta from '../../Buttons/ButtonCta'
 import Arrows from '../../Arrows/Arrows'
 import axios from '../../../api/axios'
 
-const Offers = () => {
+const Offers = ({cars,count}) => {
     const [arrowTarget, setArrowTarget] = useState()
-    const [carouselWidth,setCarouselWidth]=useState(0)
-    const [carouselX, setCarouselX] = useState(0)
+    const [carouselWidth,setCarouselWidth]=useState()
+    const [carouselX, setCarouselX] = useState()
     const [pathName, setPathName] = useState("")
-    const [offerCards, setofferCards] = useState([])
-    const [offerLimit, setOfferLimit] = useState(0);
-    const [carCount, setcarCount] = useState(0);
     const carousel = useRef();
   
     //carousel scroll event
@@ -30,7 +27,7 @@ const Offers = () => {
     
     useEffect(() => {
         setPathName(window.location.pathname)   
-    }, [window.location.pathname])
+    }, [pathName])
     
 
     useEffect(() => {
@@ -49,22 +46,24 @@ const Offers = () => {
                 break;
         }
     }, [arrowTarget, carouselWidth])
-    
+   
     //every tick check scrollLeft of carousel ref
     useEffect(() => {
+        
         carousel.current.addEventListener("scroll", () => {
-            setCarouselX(carousel.current.scrollLeft);
+           
             setCarouselWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);  
         })
 
         return carousel.current.removeEventListener("scroll",()=>{})
 
-        }, [carouselX])
+        }, [carouselX,carouselWidth])
 
     
-     useEffect(() => {
+    useEffect(() => {
+        
          window.addEventListener("resize", () => {
-             console.log("e");
+            
             if (pathName === "/") {
                 setCarouselX(carousel.current.scrollLeft);
                 setCarouselWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
@@ -77,40 +76,17 @@ const Offers = () => {
      }, [pathName])
     
    
-    
-    useEffect(() => {
-        const homepagePath = process.env.REACT_APP_HTTP + "pages/homePage.php";
-        const formData = new FormData();
-            formData.append('limit', offerLimit)
-            axios.post(homepagePath, formData, {
-                headers: {"Content-Type": "application/x-www-form-urlencoded"}})
-                .then(response => {
-                    console.log(response.data.cars);
-                    if (response?.data?.status !== 0) {
-                        if (response?.data?.cars[0]?.length > 0 ) {
-                            setcarCount(response?.data?.cars[1]) 
-                            setofferCards(response?.data?.cars[0])
-                        }
-                    } else {
-                        console.warn(response.data.message)
-                    }
-                
-                }).catch(error => console.warn(error))  
-           
-     }, [])
-   
-     
 
 
     return (
-        <div style={offerCards.length > 0 ? {display:"block"} : {display:"none"}}>
+        <div style={cars.length > 0 ? {display:"block"} : {display:"none"}}>
             <h3 className={'section_title section_title_offres'}>Nos offres du mois</h3> 
             <Arrows carouselX={carouselX} carouselWidth={carouselWidth} onClick={(direction)=>setArrowTarget(direction)}  />
            
         <div className={"section_page section_page--grey"}>
             <div className={'carCards_container'} ref={carousel}>
             <div className={'page_section page_section_offers card_carousel_flex'}>
-            { offerCards && offerCards.map((car, index) => car.id && <CarCard key={index}  {...offerCards[index]} />) }
+            { cars && cars.map((car, index) => car.id && <CarCard key={index}  {...cars[index]} />) }
             </div>
               
             </div>

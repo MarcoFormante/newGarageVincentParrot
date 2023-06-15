@@ -2,17 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from '../../../api/axios'
 
-const Services = () => {
-  const [services, setServices] = useState([])
+const Services = ({services}) => {
   
-  useEffect(() => {
-    const servicesPath = process.env.REACT_APP_HTTP + "pages/HomePage.php";
-    axios.get(servicesPath+"?services=true")
-      .then(response => {
-        console.log(response.data);
-        setServices(response?.data?.services)
-      });
-  },[])
+ 
 
   return (
     <div className={'section_page section_page_services'}>
@@ -30,16 +22,7 @@ const Services = () => {
       </figure>
       
           <ul className={"services_list"}>
-              {/* <li>service sadjkashdkjah jjkkkkkkkknnkjk jkkk jnkjnknkkkkkkkkkkkkkkksajdkashdksahdkhaskdh</li>
-              <li>service sadjkashdkjah jjkkkkkkkknnkjk jkkk jnkjnknkkkkkkkkkkkkkkksajdkashdksahdkhaskdh</li>
-              <li>service sadjkashdkjah jjkkkkkkkknnkjk jkkk jnkjnknkkkkkkkkkkkkkkksajdkashdksahdkhaskdh</li>
-              <li>service sadjkashdkjah jjkkkkkkkknnkjk jkkk jnkjnknkkkkkkkkkkkkkkksajdkashdksahdkhaskdh</li>
-              <li>serviceasdasjdhgj asgdhjasghdasgd ashdgas</li>
-              <li>service hghyguhij jjkk</li>
-              <li>service kjnkhjgygjk jhbhjgjg</li>
-              <li>service kjjhyuguguk jhugguh</li> */}
         {services && services.map((service,index)=> <li key={"service_"+index+service.length}>{service}</li>)}
-
           </ul>
 
       <p className={'txt_services txt_services_after_list'}>N’hésitez pas à nous <Link to={"/contact"}>contacter </Link>

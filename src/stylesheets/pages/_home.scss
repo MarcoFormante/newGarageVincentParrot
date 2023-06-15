@@ -71,6 +71,7 @@
         gap: 4px;
         font-size: 18px;
         word-break: break-all;
+        font-weight: 600;
 
         @media screen and (max-width:map-get($breakpoints,"medium")) {
             padding: 5px;

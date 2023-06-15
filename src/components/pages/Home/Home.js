@@ -22,17 +22,18 @@ const Home = () => {
         formData.append('limit', offerLimit)
         axios.post(homepagePath, formData, {
             headers: {"Content-Type": "application/x-www-form-urlencoded"}})
-            .then(response => {
-                if (response?.data?.status !== 0 && response.status === 200) {
+          .then(response => {
+            if (response?.data?.status !== 0 && response.status === 200) {
+                  
                   if (response?.data?.cars[0]?.length > 0) {
-                      console.log("si");
                         setcarCount(response?.data?.cars[1]) 
                         setofferCards(response?.data?.cars[0])
                     }
                     if (response?.data?.services.length > 0) {
-                      
+                      setServices(...[response?.data?.services])
                     }
-                } else {
+                  } else {
+                    //create component for error page
                     console.warn(response.data.message)
                 }
             
@@ -46,8 +47,8 @@ const Home = () => {
     <div>
     <PageTitle pageTitle={"Garage Vincent Parrot"} />
       <HeroHome />
-      <Offers />
-      <Services />
+      <Offers cars={offerCards} count={carCount} />
+      <Services services={services} />
       <AvisSection />
     </div>
   )
