@@ -94,7 +94,7 @@ Class Car {
 
     public function getOffers($limit){
       
-        $query = "SELECT *  FROM cars WHERE offer > 0 LIMIT :limit,10";
+        $query = "SELECT * FROM cars WHERE offer > 0 LIMIT :limit,10";
         $query2 = "SELECT COUNT(*) FROM cars WHERE offer > 0";
         if (!is_null($this->pdo)) {
         $stmt = $this->pdo->prepare($query);
@@ -111,9 +111,10 @@ Class Car {
                 }  
 
                 if($stmt2->execute()){
-                    while($count = $stmt2->fetchAll()){
-                       echo json_encode(['cars'=>$cars[0],'count'=>$count[0]]);
-                }
+                    $count = $stmt2->fetchAll();
+                       array_push($cars,$count[0][0]);
+                       return $cars;
+                
             }else{
                 throw new Exception("Erreur pendant la recuperation des données");
                 

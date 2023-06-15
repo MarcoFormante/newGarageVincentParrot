@@ -11,7 +11,6 @@ const Offers = () => {
     const [pathName, setPathName] = useState("")
     const [offerCards, setofferCards] = useState([])
     const [offerLimit, setOfferLimit] = useState(0);
-    const [isSentOffers, setIsSentOffers] = useState(false);
     const [carCount, setcarCount] = useState(0);
     const carousel = useRef();
   
@@ -63,8 +62,6 @@ const Offers = () => {
         }, [carouselX])
 
     
-
-    
      useEffect(() => {
          window.addEventListener("resize", () => {
              console.log("e");
@@ -82,17 +79,17 @@ const Offers = () => {
    
     
     useEffect(() => {
-        
-        const offersPath = process.env.REACT_APP_HTTP + "pages/homePage.php";
+        const homepagePath = process.env.REACT_APP_HTTP + "pages/homePage.php";
         const formData = new FormData();
             formData.append('limit', offerLimit)
-            axios.post(offersPath, formData, {
+            axios.post(homepagePath, formData, {
                 headers: {"Content-Type": "application/x-www-form-urlencoded"}})
                 .then(response => {
-                    if (response.data.status !== 0) {
-                        if (response?.data?.cars?.length > 0 ) {
-                            setcarCount(response?.data?.count[0]) 
-                            setofferCards(response?.data?.cars)
+                    console.log(response.data.cars);
+                    if (response?.data?.status !== 0) {
+                        if (response?.data?.cars[0]?.length > 0 ) {
+                            setcarCount(response?.data?.cars[1]) 
+                            setofferCards(response?.data?.cars[0])
                         }
                     } else {
                         console.warn(response.data.message)

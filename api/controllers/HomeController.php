@@ -7,9 +7,10 @@ Class HomeController{
         $car = new Car();
         if (isset($_POST['limit'])) {
             $limit = $_POST['limit'];
-            $car->getOffers($limit);
+            return $car->getOffers($limit);
+           
         }else{
-            $car->getOffers(0);
+            return $car->getOffers(0);
         }
     }
 }
