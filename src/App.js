@@ -24,7 +24,7 @@ function App() {
   const [login, setlogin] = useState(false)
   const location = useLocation()
   const [hidden,setHidden] = useState([])
-  
+  const [checkTrigger,setCheckTrigger]=useState(false)
   
 
   useEffect(() => {
@@ -33,14 +33,13 @@ function App() {
   
 
  
- 
   return (
     <div className="App">
 
       {/*public*/}
       
       <Header />
-      <AdminNav role={role}  />
+      <AdminNav role={role} checkToken={()=>setCheckTrigger(!checkTrigger)}  />
       <Routes>
         <Route exact path='/' element={<Home />} />
         <Route path='/parc-auto' element={<ParcAuto />} />
@@ -53,7 +52,7 @@ function App() {
         {/*Protected*/}
         
         <Route element={<ProtectedRoute auth={window.localStorage.getItem("token")}
-          login={login} redirectPath={"/"} />}
+          login={login} redirectPath={"/"} checkTrigger={checkTrigger} />}
         >
           <Route path={"/admin/new-car"} element={<NewCarPage/>} />
           <Route path={"/admin/modify-car"} element={<h1>adminpage</h1>} />
@@ -79,17 +78,16 @@ function App() {
 
 export default App;
 
-const ProtectedRoute = ({ auth, redirectPath,login}) => {
+const ProtectedRoute = ({ auth, redirectPath,login,checkTrigger}) => {
 
   const location = useLocation();
 
 
   const dispatch = useDispatch()
  
-  const check = useCallback(
-    () => {
+  const checkToken = () => {
       if (localStorage.getItem("token")) {
-        console.log("ecccolo");
+        console.log("ecco");
           CheckToken(localStorage.getItem("token")).then((response) => {
            let isValid = response.data.status;
            if (isValid === 1) {
@@ -98,28 +96,23 @@ const ProtectedRoute = ({ auth, redirectPath,login}) => {
     
            } else {
               dispatch(remove())
-             
            }
        })
       } else {
         dispatch(remove())
+  
       }
-    },
-    [login],
-  )
+    }
+
 
   
-  function checkStorage() {
-   
-    
-  }
-  
+
   useEffect(() => {
-     window.addEventListener("storage",check())
+     window.addEventListener("storage",checkToken())
     
-    return window.removeEventListener("storage",check())
+    return window.removeEventListener("storage",checkToken)
     
-},[login])
+},[checkTrigger])
 
 return auth
       ?

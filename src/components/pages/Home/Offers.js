@@ -23,8 +23,6 @@ const Offers = () => {
                 left: direction + window.innerWidth - cardPadding,
                 behavior: "smooth"
             })
-            
-        
         /** prevent multiple clicks*/
             setTimeout(() => {
                 setArrowTarget("")
@@ -55,8 +53,6 @@ const Offers = () => {
     
     //every tick check scrollLeft of carousel ref
     useEffect(() => {
-        setCarouselWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
-        setCarouselX(carousel.current.scrollLeft);
         carousel.current.addEventListener("scroll", () => {
             setCarouselX(carousel.current.scrollLeft);
             setCarouselWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);  
@@ -71,6 +67,7 @@ const Offers = () => {
     
      useEffect(() => {
          window.addEventListener("resize", () => {
+             console.log("e");
             if (pathName === "/") {
                 setCarouselX(carousel.current.scrollLeft);
                 setCarouselWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
@@ -78,22 +75,14 @@ const Offers = () => {
            
         })   
 
-         return window.removeEventListener("resize", () => {
-             if (pathName === "/") {
-                 setCarouselX(carousel.current.scrollLeft);
-                 setCarouselWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
-             }
-        })
+         return window.removeEventListener("resize", () => {})
 
      }, [pathName])
     
-    function getOfferCards() {
-       
-    
-
-    }
+   
     
     useEffect(() => {
+        
         const offersPath = process.env.REACT_APP_HTTP + "pages/homePage.php";
         const formData = new FormData();
             formData.append('limit', offerLimit)

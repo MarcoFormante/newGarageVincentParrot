@@ -3,8 +3,9 @@ import { NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 
-const AdminNav = () => {
- const role = useSelector((state) => state.role.value)
+const AdminNav = ({checkToken}) => {
+    const role = useSelector((state) => state.role.value)
+    
     const adminLinks = [
         {
             to: "admin/new-car",
@@ -50,9 +51,9 @@ const AdminNav = () => {
             <div>
                 <nav className='admin_nav'>
                 {role && role === "admin"
-                ? adminLinks.map((link, index) => <NavLink  end className={`nav_link `} to={link.to} key={link.linkName + "_" + index}>{link.linkName}</NavLink>)
+                ? adminLinks.map((link, index) => <NavLink onClick={checkToken}  end className={`nav_link `} to={link.to} key={link.linkName + "_" + index}>{link.linkName}</NavLink>)
                 : role && role === "employee"
-                        ? employeeLinks.map((link, index) => <NavLink  end className={`nav_link`} to={link.to} key={link.linkName + "_" + index}>{link.linkName}</NavLink>)
+                        ? employeeLinks.map((link, index) => <NavLink  onClick={checkToken} end className={`nav_link`} to={link.to} key={link.linkName + "_" + index}>{link.linkName}</NavLink>)
                             : " "}
                     
                 </nav>
@@ -67,17 +68,3 @@ const AdminNav = () => {
 export default AdminNav
 
 
-{/* <div>
-{
- <nav className='admin_nav'>
- {role && role === "admin"
-    ? adminLinks.map((link, index) => <NavLink  end className={`nav_link `} to={link.to} key={link.linkName + "_" + index}>{link.linkName}</NavLink>)
-      : role && role === "employee"
-            ? employeeLinks.map((link, index) => <NavLink  end className={`nav_link`} to={link.to} key={link.linkName + "_" + index}>{link.linkName}</NavLink>)
-                : " "}
-          <input type="checkbox"  id="toggleEdit" onChange={setEditMode} />view mode
-    </nav>
-    
-}
-
-</div> */}
