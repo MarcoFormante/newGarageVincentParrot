@@ -6,7 +6,6 @@ Class Home{
     use Connection;
 
     public function getOffers($limit){
-      
         $query = "SELECT * FROM cars WHERE offer > 0 LIMIT :limit,10";
         $query2 = "SELECT COUNT(*) FROM cars WHERE offer > 0";
         if (!is_null($this->pdo)) {
@@ -14,21 +13,22 @@ Class Home{
         $stmt->bindValue(':limit',$limit,PDO::PARAM_INT);
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt2 = $this->pdo->prepare($query2);
-       
-            $cars = [];
-
+        $cars = [];
+        
             try {
                 if($stmt->execute()) {
-                    while($row = $stmt->fetchAll()){
-                    array_push($cars,$row);
+                    if ($stmt->rowCount() > 0) {
+                        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                         array_push($cars,$row);
+                    }
                 }  
 
                 if($stmt2->execute()){
-                    $count = $stmt2->fetchAll();
-                       array_push($cars,$count[0][0]);
-                       return $cars;
+                    $count = $stmt2->fetch(PDO::FETCH_ASSOC);
+                       return [$cars,$count];
                 
             }else{
+                return [$cars,0];
                 throw new Exception("Erreur pendant la recuperation des données");
                 
                 echo json_encode(["status" => 0, "message"=> "Erreur pendant la recuperation des données"] );
@@ -49,15 +49,19 @@ Class Home{
         }
     }
 
+
+
     public function getOpeningTimes(){
         $query="SELECT * FROM opening_times";
         if (!is_null($this->pdo)) {
             $stmt=$this->pdo->prepare($query);
 
             if ($stmt->execute()) {
-                while($row = $stmt->fetchAll(PDO::FETCH_ASSOC)){
-                    return $row;
+                $openingTimes = [];
+                while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                   array_push($openingTimes,$row);
                 }
+                return $openingTimes;
             }
         }
     }

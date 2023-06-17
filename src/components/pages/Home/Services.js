@@ -2,7 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from '../../../api/axios'
 
-const Services = ({services}) => {
+const Services = () => {
+  const [services,setServices]=useState([])
+  
+  useEffect(() => {
+    const homepagePath = process.env.REACT_APP_HTTP + "pages/homePage.php?services=true";
+    axios.get(homepagePath)
+      .then(response => { setServices(response.data.services) })
+      .catch(error=>console.warn(error.data.message))
+},[])
   
  
 
@@ -11,7 +19,8 @@ const Services = ({services}) => {
         <h3 className={'section_title section_title_services'}>Decouvrez nos services</h3> 
         <figure className={'container--flex container_services_first_block'}>
             <img src={"/images/bkhome-mb.jpg"} alt="" width={530} height={447}/>
-          <p className={'txt-services txt_services--lineheight'}>Dans notre centre,
+        <p className={'txt-services txt_services--lineheight'}>
+            Dans notre centre,
             nous nous engageons à fournir des services
             de haute qualité pour assurer que votre véhicule
             soit dans les meilleures conditions possibles.

@@ -17,6 +17,8 @@ Class HomeController{
     public function getOpeningTimes(){
         $home = new Home();
         return $home->getOpeningTimes();
+      
+       
     }
     
 }

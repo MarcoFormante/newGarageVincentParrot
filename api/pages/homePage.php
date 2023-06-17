@@ -8,12 +8,26 @@ require_once '../models/service.php';
 require_once '../controllers/ServiceController.php';
 
 $homeController = new HomeController();
+if (isset($_POST['limit'])) {
+    $offers = $homeController->getOffers();
+    echo json_encode(["cars"=>$offers]);
+}
 
-$offers = $homeController->getOffers();
-$openingTimes = $homeController->getOpeningTimes();
-$serviceController = new ServiceController();
-$services = $serviceController->getAllServices();
+if (isset($_GET['openingTimes'])) {
+    $openingTimes = $homeController->getOpeningTimes();
+    echo json_encode(["openingTimes" => $openingTimes]);
+}
+
+if (isset($_GET['services'])) {
+    $serviceController = new ServiceController();
+    $services = $serviceController->getAllServices(); 
+    echo json_encode(["services"=>$services]);
+
+}
 
 
- echo json_encode(["cars"=>$offers,"services"=>$services,"openingTimes"=>$openingTimes]);
+
+
+
+//  echo json_encode(["cars"=>$offers,"services"=>$services]);
 ?>

@@ -1,69 +1,29 @@
-import React from 'react'
-
-const TimeTables = ({openingTimes}) => {
+import React, { useEffect, useState } from 'react'
+import axios from '../../api/axios'
+const TimeTables = ({ openingTimes }) => {
+    const [openingTime,setOpeningTime] = useState([])
     const days = ["lun", "mar", "mer", "jeu", "ven", "sam", "dim"]
 
-    const timeTable = [
-        {
-            amStart: "08:30",
-            amEnd: "12:00",
-            pmStart: "08:30",
-            pmEnd: "12:00",
-            close:false
-        },
-        {
-            amStart: "08:30",
-            amEnd: "12:00",
-            pmStart: "08:30",
-            pmEnd: "12:00",
-            close:false
-        },
-        {
-            amStart: "08:30",
-            amEnd: "12:00",
-            pmStart: "08:30",
-            pmEnd: "12:00",
-            close:false
-        },
-        {
-            amStart: "08:30",
-            amEnd: "12:00",
-            amStart: "08:30",
-            amEnd: "12:00",
-            close:true
-        },
-        {
-            amStart: "08:30",
-            amEnd: "12:00",
-            pmStart: "08:30",
-            pmEnd: "12:00",
-            close:false
-        },
-        {
-            amStart: "08:30",
-            amEnd: "12:00",
-            pmStart: "08:30",
-            pmEnd: "12:00",
-            close:false
-        },
-        {
-            amStart: "08:30",
-            amEnd: "12:00",
-            pmStart: "08:30",
-            pmEnd: "12:00",
-            close:false
-            },
-    ]
+
+    useEffect(() => {
+        const homepagePath = process.env.REACT_APP_HTTP + "pages/homePage.php?openingTimes=true";
+        axios.get(homepagePath)
+            .then(response => {
+                setOpeningTime(response.data.openingTimes)
+            })
+        .catch()
+    },[])
+
     
 
   return (
-      <div>
+      openingTimes && <div>
           <h3 className={'section_title section_title_time_tables'}>Nos horaires</h3> 
           <div className='time_table_container'>
               <table>
                   <tbody>
                     <tr>
-                    {openingTimes.map((time, index) => <td key={"time_table" + index}> <TimeComponent  {...time}  day={days[index]} />   </td>)}
+                    {openingTime.map((time, index) => <td key={"time_table" + index}> <TimeComponent  {...time}  day={days[index]} />   </td>)}
                     </tr>
                     </tbody>
               </table>
