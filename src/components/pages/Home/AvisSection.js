@@ -89,8 +89,8 @@ const AvisSection = () => {
        
         window.addEventListener("resize", () => {
             if (pathName === "/") {
-                setCarouselX(carousel.current.scrollLeft);
-                setCarouselWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+                setCarouselX(carousel?.current?.scrollLeft);
+                setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);
             }
             })
 

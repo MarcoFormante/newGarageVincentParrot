@@ -71,7 +71,7 @@ const Offers = ({cars,count}) => {
            
             if (pathName === "/") {
                 setCarouselX(carousel?.current?.scrollLeft);
-                setCarouselWidth(carousel?.current?.scrollWidth - carousel.current.offsetWidth);
+                setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);
             }
            
         })   
@@ -79,7 +79,7 @@ const Offers = ({cars,count}) => {
         return window.removeEventListener("resize", () => {
             if (pathName === "/") {
                 setCarouselX(carousel?.current?.scrollLeft);
-                setCarouselWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+                setCarouselWidth(carousel.current.scrollWidth - carousel?.current?.offsetWidth);
             }
          })
 
