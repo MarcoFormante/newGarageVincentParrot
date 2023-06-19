@@ -340,18 +340,27 @@ h2.page_title_home {
   min-width: 300px;
   border: 1px solid #CBD0D4;
   border-radius: 8px;
+  max-width: 320px;
+  position: relative;
 }
 .avis_card_name {
   text-transform: capitalize;
   font-weight: bold;
   font-size: 24px;
+  position: absolute;
+  top: 10px;
 }
 .avis_card_text {
   width: 100%;
   padding: 10px;
+  position: absolute;
 }
 .avis_card .star {
   margin-left: 10px;
+}
+.avis_card .stars_block {
+  position: relative;
+  top: 110px;
 }
 
 .btn_avis {

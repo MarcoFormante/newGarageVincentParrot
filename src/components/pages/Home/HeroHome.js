@@ -1,6 +1,7 @@
 import React from 'react'
 
 const HeroHome = () => {
+  
   return (
     <div>
        <figure className='hero_home'>

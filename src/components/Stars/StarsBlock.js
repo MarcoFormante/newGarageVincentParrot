@@ -3,7 +3,7 @@ import Star from './Star'
 
 //STARS BLOCK
 const StarsBlock = ({ numberOfActiveStars,clickable,setFeedback}) => {
-    const [stars, setStars] = useState([0, 0, 0, 0, 0])
+    const [stars, setStars] = useState([0,0,0,0,0])
     const [activeStarsLength, setActiveStarsLength] = useState(numberOfActiveStars)
     
     
@@ -28,13 +28,20 @@ const StarsBlock = ({ numberOfActiveStars,clickable,setFeedback}) => {
     
   
     useEffect(() => {
-        stars.map((star, index) =>
+        console.log(activeStarsLength);
+        setActiveStarsLength(4);
+        let starsArray = [0, 0, 0, 0, 0];
+        starsArray.map((star, index) =>
             activeStarsLength -1 >= index
                 ?
-                stars[index] = 1
+                starsArray[index] = 1
                 :
-                stars[index]= 0
+                starsArray[index] = 0
         )
+        console.log(starsArray);
+        setStars(starsArray)
+       
+        
         }, [])
     
 

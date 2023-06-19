@@ -10,6 +10,7 @@
         display: flex;
         gap: 10px;
         overflow-y: hidden;
+       
     }
     
 }
@@ -24,23 +25,32 @@
     min-width: 300px;
     border: 1px solid $light-gray-color;
     border-radius: 8px;
-    
+    max-width: 320px;
+    position: relative;
 
     &_name{
         text-transform: capitalize;
         font-weight: bold;
         font-size: map-get($font_size,"medium");
+        position: absolute;
+        top:10px;
         
     }
 
     &_text{
         width: 100%;
         padding: 10px;
-        
+        position: absolute; 
     }
 
     .star{
         margin-left: 10px;
+    }
+
+
+    .stars_block{
+        position: relative;
+        top: 110px;     
     }
 }
 
@@ -62,3 +72,4 @@
     }
 
 }
+

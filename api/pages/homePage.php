@@ -6,6 +6,8 @@ require_once '../models/home.php';
 require_once '../controllers/HomeController.php';
 require_once '../models/service.php';
 require_once '../controllers/ServiceController.php';
+require_once '../models/review.php';
+require_once '../controllers/ReviewController.php';
 
 $homeController = new HomeController();
 if (isset($_POST['limit'])) {
@@ -25,9 +27,12 @@ if (isset($_GET['services'])) {
 
 }
 
+if (isset($_GET['reviewsHome'])) {
+    $ReviewController = new ReviewController();
+    $reviews = $ReviewController->getReviewsHome();
+    echo json_encode(["reviews"=>$reviews]);
+}
 
 
 
-
-//  echo json_encode(["cars"=>$offers,"services"=>$services]);
 ?>

@@ -2,40 +2,28 @@
 import React, { useEffect, useState,useRef } from 'react'
 import StarsBlock from '../../Stars/StarsBlock'
 import ButtonCta from '../../Buttons/ButtonCta'
-import Arrows from '../../Arrows/Arrows';
+import Arrows from '../../Arrows/Arrows'
+import axios from '../../../api/axios'
 
 //Section "Vos Avis" in home page
 const AvisSection = () => {
     const carousel = useRef();
-    const [arrowTarget, setArrowTarget] = useState()
-    const [carouselWidth,setCarouselWidth]=useState()
-    const [carouselX, setCarouselX] = useState()
+    const [arrowTarget, setArrowTarget] = useState(null)
+    const [carouselWidth,setCarouselWidth]=useState(null)
+    const [carouselX, setCarouselX] = useState(null)
     const [pathName,setPathName]=useState("")
-    const [avis, setAvis] = useState([{
-        name: "clement",
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum pariatur nihil animi voluptates repellat qui dicta, repudiandae vel saepe labore suscipit dolor voluptate possimus reprehenderit ducimus odit deserunt delectus distinctio?",
-        note: Math.floor(Math.random()*6)
-    },
-    {
-        name: "clement",
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum pariatur nihil animi voluptates repellat qui dicta, repudiandae vel saepe labore suscipit dolor voluptate possimus reprehenderit ducimus odit deserunt delectus distinctio?",
-        note:Math.floor(Math.random()*6)
-    },
-    {
-        name: "clement",
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum pariatur nihil animi voluptates repellat qui dicta, repudiandae vel saepe labore suscipit dolor voluptate possimus reprehenderit ducimus odit deserunt delectus distinctio?",
-        note: Math.floor(Math.random()*6)
-    },
-    {
-        name: "clement",
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum pariatur nihil animi voluptates repellat qui dicta, repudiandae vel saepe labore suscipit dolor voluptate possimus reprehenderit ducimus odit deserunt delectus distinctio?",
-        note: Math.floor(Math.random()*6)
-    },
-    {
-        name: "clement",
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum pariatur nihil animi voluptates repellat qui dicta, repudiandae vel saepe labore suscipit dolor voluptate possimus reprehenderit ducimus odit deserunt delectus distinctio?",
-        note: Math.floor(Math.random()*6)
-        }]);
+    const [avis, setAvis] = useState([]);
+    const [cardsOffsetWitdth,setCardsOffsetWidth] = useState(0)
+    
+    useEffect(() => {
+    const homepagePath = process.env.REACT_APP_HTTP + "pages/homePage.php?reviewsHome=true";
+        axios.get(homepagePath)
+            .then(response => {
+                console.log(response.data);
+                const reviews = response.data.reviews;
+                setAvis([...reviews])
+        })
+    },[])
     
     
     const handleScrollCarousel = (direction) => {
@@ -65,7 +53,7 @@ const AvisSection = () => {
     
     useEffect(() => {
      
-            setCarouselX(carousel.current.scrollLeft);
+        setCarouselX(carousel.current.scrollLeft);
         setCarouselWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
         switch (arrowTarget) {
             case "left":
@@ -82,7 +70,7 @@ const AvisSection = () => {
         
     }, [arrowTarget, carouselWidth])
 
-    
+  
 
     useEffect(() => {
        
@@ -92,7 +80,7 @@ const AvisSection = () => {
             
             })
 
-            return carousel.current.removeEventListener("scroll", () => { setCarouselX(carousel.current.scrollLeft) })
+            return carousel.current.removeEventListener("scroll", () => {})
         
     }, [])
     
@@ -106,17 +94,14 @@ const AvisSection = () => {
             }
             })
 
-        return window.removeEventListener("resize", () => {
-            if (pathName === "/") {
-                setCarouselX(carousel.current.scrollLeft);
-                setCarouselWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
-            }
-            })
+        return window.removeEventListener("resize", () => {})
         
 
     }, [pathName])
 
-   
+
+
+    
         return (
           
             
@@ -135,11 +120,11 @@ const AvisSection = () => {
                           </div>
                       </div>
                        
-                    <Arrows carouselX={carouselX} carouselWidth={carouselWidth} onClick={(direction) => setArrowTarget(direction)} />
+                    <Arrows cardsTotalWidth={avis.length * 300} carouselX={carouselX} carouselWidth={carouselWidth} onClick={(direction) => setArrowTarget(direction)} />
                 
                         <div className={"avis_cards_container"}>
-                            <div className={"avis_cards_container_inner"}  ref={carousel}>
-                              {avis.map((avis, index) => <AvisCard key={"avis_" + index +"_card" } name={avis.name}  text={avis.text} note={avis.note} />)}
+                    <div className={"avis_cards_container_inner"} style={avis.length * 300 < window.innerWidth ? { justifyContent: "center" } : {}} ref={carousel}>
+                              {avis && avis.map((avis, index) => <AvisCard key={"avis_" + index +"_card" } name={avis.name}  message={avis.message} review={avis.review} />)}
                           </div>
                           <p className='title_cta'>Votre avis nous interesse</p>
                           <ButtonCta type={"link"} to={"/avis"} inner={"Je donne mon avis"} className={"btn_avis"} />
@@ -185,18 +170,18 @@ const ScoreBar = ({scoreNum}) => {
     )
 }
 
-const AvisCard = ({name,text,note}) => {
+const AvisCard = ({name,message,review}) => {
     
     return (
-        <div>
+        <>
             <div className={'avis_card'}>
                 <span className={'avis_card_name'}>{name}</span>
-                <q className={'avis_card_text'}>{text}</q>
+                <q className={'avis_card_text'}>{message}</q>
                 <div className={'avis_card_note'}>
-                   <StarsBlock numberOfActiveStars={note} clickable={false}/> 
+                    {<StarsBlock numberOfActiveStars={review} clickable={false} />}   
                 </div>
             </div>
-        </div>
+        </>
         
     )
 }
