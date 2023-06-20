@@ -101,7 +101,7 @@ Class Car {
         if ($filters['offer'] === true) {
             $withOffer = "AND offer > 0";
         }
-        $queryCarCount= "SELECT COUNT(*)as count FROM cars 
+        $queryCarCount= "SELECT COUNT(*) as count FROM cars 
         WHERE km > ? AND km < ? AND year > ? AND year < ? 
         AND price > ? AND price < ? $withOffer";
         
@@ -123,23 +123,66 @@ Class Car {
          
             //execution of two stmts to get Count & filtered cars
             $exeCount = $stmt->execute([$filters["minKm"],$filters["maxKm"],$filters['minYear'],$filters['maxYear'],$filters['minPrice'],$filters['maxPrice']]);
-
             $exeCars = $stmt2->execute();
 
-
             $this->pdo->rollBack();
+
             if($exeCount){
                 $count = $stmt->fetch(PDO::FETCH_ASSOC);
-               
             }
             if($exeCars){
-               
                 while($cars = $stmt2->fetchAll(PDO::FETCH_ASSOC)){
                     echo json_encode(["count" => $count['count'],"cars"=>$cars]);
-                }
-                
+                }  
             }
 
+        }else{
+            throw new PDOException("Probleme pendant la recuperation des données");
+        }
+    }
+
+
+    public function getCardDetails(int $id){
+        $query = "SELECT * FROM car_details WHERE car_id = :id";
+
+        if (!is_null($this->pdo)) {
+            $this->pdo->beginTransaction();
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindValue(':id',$id,PDO::PARAM_INT);
+
+            if ($stmt->execute()) {
+                
+                $details = $stmt->fetch(PDO::FETCH_ASSOC);
+                $equipments = $this->getCarEquipments($id);
+                echo json_encode([$details,$equipments]);
+                
+            }else{
+                throw new PDOException("Probleme pendant la recuperation des données");
+            }
+
+            $this->pdo->rollBack();
+        }
+    }
+
+    public function getCarEquipments(int $id){
+        $query = "SELECT equipment FROM equipments
+        JOIN car_equipments as ce ON ce.equip_ID = equipments.id
+        where ce.car_id = :id";
+
+        if (!is_null($this->pdo)) {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindValue(':id',$id,PDO::PARAM_INT);
+
+            if ($stmt->execute()) {
+                $equipments = [];
+                while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                    $equipments[]=$row['equipment'];
+                }
+                return $equipments;
+                
+            }else{
+                throw new PDOException("Probleme pendant la recuperation des données");
+            }
         }
     }
 }

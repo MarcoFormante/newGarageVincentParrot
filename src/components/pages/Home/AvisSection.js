@@ -92,7 +92,7 @@ const AvisSection = () => {
                 setCarouselX(carousel?.current?.scrollLeft);
                 setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);
             }
-            })
+        })
 
         return window.removeEventListener("resize", () => {})
         
@@ -159,7 +159,7 @@ const ScoreBar = ({scoreNum}) => {
     return (
         <div>
             <div className={'score_bar'}>
-                <span className={'score_num_bar'}>{scoreNum + " Stars"}</span>
+                <span className={'score_num_bar'}>{scoreNum !== 5 ? scoreNum + " Stars"  : <span style={{color:"red"}}>{scoreNum + " Stars"}</span>}</span>
                 <div className={'bar_outer'}>
                     <div className={'bar_inner'}>
                         {/** dynamic bar that change the width fething dataScore from database */}

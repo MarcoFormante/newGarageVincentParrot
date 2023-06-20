@@ -1,7 +1,8 @@
 import React, { useState, useEffect,useRef} from 'react'
 import Arrows from '../../Arrows/Arrows'
-import { useLocation } from 'react-router-dom'
+import { useLocation} from 'react-router-dom'
 import PageTitle from '../../PageTitle/PageTitle'
+import axios from '../../../api/axios'
 
 
 const CarDetails = () => {
@@ -9,9 +10,9 @@ const CarDetails = () => {
     
   return (
       <div>
-           <PageTitle pageTitle={location.state.make + " " +location.state.model}/>
+            <PageTitle pageTitle={location.state.make + " " +location.state.model}/>
           <CarPhotos {...location.state} />
-          <Details carID={location.state.id} />
+          <Details {...location.state} />
     </div>
   )
 }
@@ -22,7 +23,7 @@ export default CarDetails
 
 
 // Photos of single car car Photos carousel component
-const CarPhotos = ({model,year,km,price,offer}) => {
+const CarPhotos = ({make,model,year,km,price,offer}) => {
     const [imgs, setImgs] = useState([])
     const [imgLarge, setImgLarge] = useState("")
     const [arrowTarget, setArrowTarget] = useState()
@@ -182,22 +183,58 @@ const CarPhotos = ({model,year,km,price,offer}) => {
 
 
 //car Details Component
-const Details = ({id}) => {
+const Details = ({id,make,model,year,km}) => {
     const [activeDetail, setActiveDetail] = useState(true);
     const [details, setDetails] = useState([])
-    const [equipements,setEquipements]= useState([])
-    const detailsTitles = ["Catégorie", "Année", "Kilométrage", "Boîte de vitesses", "Puissance DIN", "Puissance fiscale","Couleur","Portières","Sièges","Énergie"]
-    
+    const [equipements, setEquipements] = useState([])
+    const [Error, setError] = useState(false);
+    const detailsTitles = ["Catégorie", "Année", "Kilométrage", "Boîte de vitesses", "Puissance DIN","Nùmero VO", "Puissance fiscale","Couleur","Portières","Sièges","Énergie"]
+    console.log(id,make,model,km);
 
     useEffect(() => {
-        //fetch real details data of car id *
+        const carDetailsPath = process.env.REACT_APP_HTTP + "pages/carDetails.php"
 
-            //  !!! Important !!
+        axios.get(carDetailsPath + "?details=true&id="+id)
+            .then(response => {
+                
+                if (response.status === 200 && response.statusText === "OK") {
+
+                    const {
+                        category,
+                        gearbox,
+                        din_power,
+                        fiscal_power,
+                        color,
+                        doors,
+                        seats,
+                        vo_number,
+                        energy
+                    } = response?.data[0];
+                    
+                    const detailsArray = [
+                        category,
+                        year, km + " km",
+                        gearbox,
+                        din_power + "cv",
+                        vo_number,
+                        fiscal_power + "ch",
+                        color,
+                        doors,
+                        seats,
+                        energy
+                    ];
+                    
+                    setDetails([...detailsArray])
+                    setEquipements([...response.data[1]])
+
+                } else {
+                    setError(true);
+                }
+               
+        })
             // don't forget to add ch & cv in details value (puissence fiscal, puissence DIN)
-        const detailsArray = ["Compacte", "2019", "36654", "Manuelle", "125", "6", "Rouge", "5", "5", "Essence"];
-        const equipementsArray = ["Vitres arrière surteintées","Caméra de recul","Pack B&O","Haut parleurs","ABS","Accoudoir central AV","AFIL","Aide au démarrage en côte","Airbag conducteur","Airbag passager","Airbags latéraux AV et AR","Airbags rideaux AV et AR","Antidémarrage électronique","Appui-tête conducteur réglable hauteur","Appui-tête passager réglable en hauteur","Bacs de portes avant","Banquette 60/40","Banquette AR rabattable","Boite à gants fermée","Borne Wi-Fi","Boucliers AV et AR couleur caisse","Capteur de luminosité","Capteur de pluie","Clim automatique bi-zones","Commande du comportement dynamique","Commandes vocales","Vitres avant électriques","Volant cuir","Volant multifonction","Volant sport"]
-        setDetails([...detailsArray])
-        setEquipements([...equipementsArray])
+       
+     
         
     }, [])
     
@@ -252,7 +289,7 @@ const Details = ({id}) => {
                     {
                     activeDetail === true
                         ?
-                        detailsTitles.map((detail, index) => <li key={"detail_" + index}><span className='detail_title'>{detail} </span> <span> {details[index]}</span></li>)
+                        detailsTitles.map((detail, index) => <li key={"detail_" + index}><span className='detail_title'>{detail}{} </span> <span> {details[index]}</span></li>)
                         :
                         equipements.map((equipement, index) => <li key={"equipement_" + index}><span className='detail_title--black'>{equipement}</span></li>)
                         

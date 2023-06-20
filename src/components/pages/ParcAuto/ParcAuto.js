@@ -201,6 +201,7 @@ const ParcAuto = () => {
     const carAutoPath = process.env.REACT_APP_HTTP + "pages/parcAuto.php";
         axios.get(`${carAutoPath}?page=${currentPage * 10}&filters=${JSON.stringify(filters)}`)
             .then(response => {
+                console.log(response?.data);
                 console.log(response.statusText);
                 if (response.status === 200 && response.request.readyState === 4 ) {
                     setCars(response?.data?.cars)
@@ -210,7 +211,7 @@ const ParcAuto = () => {
                     }, 500);
                 }
             }).catch(error=> console.log(error.data))
-  },[currentPage])
+  },[currentPage,filters])
     
 
   
