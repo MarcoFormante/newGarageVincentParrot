@@ -189,7 +189,7 @@ const Details = ({id,make,model,year,km}) => {
     const [equipements, setEquipements] = useState([])
     const [Error, setError] = useState(false);
     const detailsTitles = ["Catégorie", "Année", "Kilométrage", "Boîte de vitesses", "Puissance DIN","Nùmero VO", "Puissance fiscale","Couleur","Portières","Sièges","Énergie"]
-    console.log(id,make,model,km);
+  
 
     useEffect(() => {
         const carDetailsPath = process.env.REACT_APP_HTTP + "pages/carDetails.php"
@@ -231,10 +231,7 @@ const Details = ({id,make,model,year,km}) => {
                     setError(true);
                 }
                
-        })
-            // don't forget to add ch & cv in details value (puissence fiscal, puissence DIN)
-       
-     
+            })
         
     }, [])
     
@@ -262,26 +259,27 @@ const Details = ({id,make,model,year,km}) => {
                 break;
          }
     }
-    
+    console.log(details);
 
     return (
+       ( details.length > 0 ) &&
         <div>
             <div className={'container--center--row container--center--row--flex-end'}>
-                <div
+                {!details.length < 1 && <div
                     className={'details_first_container details_container'}
                     style={activeDetail === true ? { border: "1px solid", backgroundColor: "#D64E54" } : { opacity: "0.3" }}
                     onClick={() => handleActiveDetailBlock("first")}
                 >
                     <span className={'details_title_header'}>Détails du vehicule</span>
-                </div>
+                </div>}
 
-                <div
+                {equipements.length > 0 && <div
                     className={'details_second_container details_container'}
-                    style={activeDetail === false ? { border: "1px solid", backgroundColor: "#D64E54" } : { opacity: "0.3" }}
+                    style={activeDetail === false  ? { border: "1px solid", backgroundColor: "#D64E54" } : { opacity: "0.3" }}
                     onClick={() => handleActiveDetailBlock("second")}
                 >
                     <span className={'details_title_header'}>Equipement</span>
-                </div>
+                </div>}
             </div>
 
             <div className={'detail_first_inner'}>
@@ -289,9 +287,9 @@ const Details = ({id,make,model,year,km}) => {
                     {
                     activeDetail === true
                         ?
-                        detailsTitles.map((detail, index) => <li key={"detail_" + index}><span className='detail_title'>{detail}{} </span> <span> {details[index]}</span></li>)
+                        details && detailsTitles.map((detail, index) => !details.length < 1 && <li key={"detail_" + index}><span className='detail_title'>{detail}</span> <span> {details[index]}</span></li>)
                         :
-                        equipements.map((equipement, index) => <li key={"equipement_" + index}><span className='detail_title--black'>{equipement}</span></li>)
+                        equipements && equipements.map((equipement, index) => <li key={"equipement_" + index}><span className='detail_title--black'>{equipement}</span></li>)
                         
                     }
                     </ul>
@@ -303,34 +301,3 @@ const Details = ({id,make,model,year,km}) => {
 
 
 
-
-// Vitres arrière surteintées
-// Caméra de recul
-// Pack B&O
-// Haut parleurs
-// ABS
-// Accoudoir central AV
-// AFIL
-// Aide au démarrage en côte
-// Airbag conducteur
-// Airbag passager
-// Airbags latéraux AV et AR
-// Airbags rideaux AV et AR
-// Antidémarrage électronique
-// Appui-tête conducteur réglable hauteur
-// Appui-tête passager réglable en hauteur
-// Bacs de portes avant
-// Banquette 60/40
-// Banquette AR rabattable
-// Boite à gants fermée
-// Borne Wi-Fi
-// Boucliers AV et AR couleur caisse
-// Capteur de luminosité
-// Capteur de pluie
-// Clim automatique bi-zones
-// Commande du comportement dynamique
-// Commandes vocales
-// Vitres avant électriques
-// Volant cuir
-// Volant multifonction
-// Volant sport
