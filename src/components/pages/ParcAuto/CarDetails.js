@@ -22,7 +22,7 @@ export default CarDetails
 
 
 
-// Photos of single car car Photos carousel component
+// Photos of single car ,car Photos carousel component
 const CarPhotos = ({make,model,year,km,price,offer}) => {
     const [imgs, setImgs] = useState([])
     const [imgLarge, setImgLarge] = useState("")
@@ -225,7 +225,7 @@ const Details = ({id,make,model,year,km}) => {
                     ];
                     
                     setDetails([...detailsArray])
-                    setEquipements([...response.data[1]])
+                    setEquipements([...response?.data[1]])
 
                 } else {
                     setError(true);

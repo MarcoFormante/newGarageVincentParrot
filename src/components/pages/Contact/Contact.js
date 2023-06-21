@@ -1,15 +1,18 @@
 import React from 'react'
 import PageTitle from '../../PageTitle/PageTitle'
 import FormElement from '../../FormElement/FormElement'
+import { useLocation } from 'react-router-dom'
 
 const Contact = () => {
+  const location = useLocation();
+ 
   return (
       <div>
           <PageTitle pageTitle={"Contactez-nous"} />
           
           <form className='form'>
               
-              <FormElement label={{ for: "subject", text: "Subject" }} input={{ type: "text", name: "subject", id: "subject" }} />
+              <FormElement label={{ for: "subject", text: "Subject" }} input={{ type: "text", name: "subject", id: "subject",value: location.state && `${location.state.make} ${location.state.model} , Année : ${location.state.year}, VoitureID: ${location.state.id}`}} />
               
               <FormElement label={{ for: "surname", text: "Nom" }} input={{ type: "text", name: "surname", id: "surname",required:true }} />
               
