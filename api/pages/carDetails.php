@@ -12,5 +12,11 @@ if (isset($_GET['details']) && isset($_GET['id'])) {
    $carController->getCarDetails($id);
 }
 
+if (isset($_GET['carImages']) && isset($_GET['id'])){
+    $id = htmlspecialchars($_GET['id']);
+    $carController = new CarController();
+    $carController->getCarImages($id);
+}
+
 
 ?>

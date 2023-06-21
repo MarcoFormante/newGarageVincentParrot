@@ -23,15 +23,15 @@ export default CarDetails
 
 
 // Photos of single car ,car Photos carousel component
-const CarPhotos = ({make,model,year,km,price,offer}) => {
+const CarPhotos = ({year,km,price,offer}) => {
     const [imgs, setImgs] = useState([])
     const [imgLarge, setImgLarge] = useState("")
     const [arrowTarget, setArrowTarget] = useState()
     const [carouselWidth,setCarouselWidth]=useState()
     const [carouselX, setCarouselX] = useState()
-    const [activeImg, setActiveImg] = useState();
-    const carousel = useRef();
-
+    const [activeImg, setActiveImg] = useState()
+    const carousel = useRef()
+    const location = useLocation()
   
     //carousel scroll event
     const handleScrollCarousel = (direction) => {
@@ -98,53 +98,15 @@ const CarPhotos = ({make,model,year,km,price,offer}) => {
     
     useEffect(() => {
         //fetch data imgs from img folder by backend
-        setImgs([
-            {
-                id: 0,
-                img:"/images/bkhome-mb.jpg"
-            },
-            {
-                id: 1,
-                img:"/images/bkhome-mb.jpg"
-            },
-            {
-                id: 2,
-                img:"/images/bkhome-mb.jpg"
-            },
-            {
-                id: 3,
-                img:"/images/bkhome-mb.jpg"
-            },
-            {
-                id: 3,
-                img:"/images/bkhome-mb.jpg"
-            },
-            {
-                id: 3,
-                img:"/images/bkhome-mb.jpg"
-            },
-            {
-                id: 3,
-                img:"/images/bkhome-mb.jpg"
-            },
-            {
-                id: 3,
-                img:"/images/bkhome-mb.jpg"
-            },
-            {
-                id: 3,
-                img:"/images/bkhome-mb.jpg"
-            },
-            {
-                id: 3,
-                img:"/images/bkhome-mb.jpg"
-            },
-        ])
+        const carDetailsPath = process.env.REACT_APP_HTTP + "pages/carDetails.php"
+        axios.get(carDetailsPath + "?carImages=true&id=" + location.state.id)
+        .then(response =>  setImgs([...response.data]))
+       
     },[])
    
 
     useEffect(() => {
-        setImgLarge(imgs[0]?.img) 
+        setImgLarge(imgs[0]?.path) 
         setActiveImg(imgs[0]?.id)
     }, [imgs])
     
@@ -172,7 +134,7 @@ const CarPhotos = ({make,model,year,km,price,offer}) => {
             
             <div className={'details_carousel_container'} ref={carousel}>
             <div className={'details_carousel_imgs'}>
-                    {imgs.map((img, index) => <img  className={ activeImg === img.id ? "img_carousel_details--active":"img_carousel_details"} key={"car_detail" + index } src={img.img} alt=""  width={250} height={180} onClick={() => handleOnClick(img.img,img.id) }/>)}
+                    {imgs.map((img, index) => <img  className={ activeImg === img.id ? "img_carousel_details--active":"img_carousel_details"} key={"car_detail" + index } src={img.path} alt=""  width={250} height={180} onClick={() => handleOnClick(img.path,img.id) }/>)}
             </div>
         </div>
         </div>

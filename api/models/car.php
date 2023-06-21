@@ -185,6 +185,23 @@ Class Car {
             }
         }
     }
+
+
+    public function getCarImages(int $id){
+        $query= "SELECT id,path FROM car_images WHERE car_id = :id";
+        if(!is_null($this->pdo)){
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindValue(':id',$id,PDO::PARAM_INT);
+
+            if ($stmt->execute()) {
+                $images = [];
+                while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                    $images[] = $row;
+                }
+                echo json_encode($images);
+            }
+        }
+    }
 }
 ?>
 

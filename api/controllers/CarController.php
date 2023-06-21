@@ -16,6 +16,11 @@ Class CarController{
         $car = new Car();
         $car->getCardDetails($id);
     }
+
+    public function getCarImages(int $id){
+        $car = new Car();
+        $car->getCarImages($id);
+    }
 }
 
 ?>
