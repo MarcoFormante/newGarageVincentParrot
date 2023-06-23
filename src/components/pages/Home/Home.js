@@ -4,7 +4,7 @@ import Offers from './Offers'
 import Services from './Services'
 import AvisSection from './AvisSection'
 import PageTitle from '../../PageTitle/PageTitle'
-import axios from '../../../api/axios'
+
 
 
 

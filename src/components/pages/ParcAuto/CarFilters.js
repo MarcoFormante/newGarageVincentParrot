@@ -2,8 +2,9 @@ import React, { useRef, useState, useEffect } from 'react'
 import MultiRangeSlider from './MultiRangeSlider'
 
 
-const CarFilters = () => {
+const CarFilters = ({handleChangeFilters}) => {
 
+ 
 
   return (
     <div>
@@ -13,23 +14,25 @@ const CarFilters = () => {
    
      <MultiRangeSlider
       min={0}
-      max={180000}
-        onChange={({ min, max }) => console.log(`min = ${min}, max = ${max}`)}
-        title={"Km"}
+      max={5000000}
+        onChange={({ min, max }) => handleChangeFilters({minKm:min,maxKm:max})}
+          title={"Km"}
       />
 
     <MultiRangeSlider
       min={0}
-      max={1000}
-        onChange={({ min, max }) => console.log(`min = ${min}, max = ${max}`)}
-        title={"Prix"}
+      max={5000000}
+      onChange={({ min, max }) => handleChangeFilters({minPrice:min,maxPrice:max})}
+          title={"Prix"}
+          
       />
 
     <MultiRangeSlider
       min={0}
-      max={1000}
-        onChange={({ min, max }) => console.log(`min = ${min}, max = ${max}`)}
-        title={"Annèe"}
+      max={20234}
+      onChange={({ min, max }) => handleChangeFilters({minYear:min,maxYear:max})}
+          title={"Annèe"}
+          
       />
 
       <div>

@@ -101,7 +101,8 @@ Class Review{
     }
 
     public function getReviewsHome(){
-        $query = "SELECT * from reviews WHERE is_validate = 1 LIMIT 10";
+        $query = "SELECT * from reviews WHERE is_validate = 1";
+
         if(!is_null($this->pdo)) {
             $stmt = $this->pdo->prepare($query);
             if ($stmt->execute()) {
@@ -113,6 +114,31 @@ Class Review{
             }
         }
     }
+
+
+    public function newReview(string $name, string $message, int $review){
+        $query = "INSERT INTO reviews(name,message,review) VALUES(:name,:message,:review)";
+
+        if (!is_null($this->pdo)) {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindParam(':name',$name,PDO::PARAM_STR);
+            $stmt->bindParam(':message',$message,PDO::PARAM_STR);
+            $stmt->bindParam(':review',$review,PDO::PARAM_INT);
+
+            if($stmt->execute()){
+                echo json_encode(["status"=> 1,"message"=>"Votre avis a été envoyé"]);
+            }else{
+                echo json_encode(["status"=> 0,"message"=>"Erreur dans l'envois des donnés, retentez plus tard"]);
+            }
+
+        }else{
+            echo json_encode(["status"=> 0,"message"=>"Erreur dans l'envois des donnés, retentez plus tard"]);
+        }
+    
+    }
+
+
+
 }
 
 ?>

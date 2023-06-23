@@ -24,6 +24,8 @@ Class HomeController{
         $review = new Review();
         return $review->getReviewsHome();
     }
+
+   
     
 }
 

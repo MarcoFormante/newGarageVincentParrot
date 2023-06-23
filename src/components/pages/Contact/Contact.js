@@ -8,7 +8,7 @@ const Contact = () => {
   const [formInputs, setFormInputs] = useState({subject:"",surname:"",name:"",email:"",tel:"",message:""})
   
   useEffect(() => {
-    if (location.state.id) {
+    if (location.state) {
       setFormInputs({...formInputs,subject:`${location.state.make} ${location.state.model} , Année : ${location.state.year}, VoitureID: ${location.state.id}`})
     }
   }, [])
