@@ -99,17 +99,17 @@ Class Car {
        
         $withOffer = "";
         if ($filters['offer'] === true) {
-            $withOffer = "AND offer > 0";
+            $withOffer = 'AND offer > 0';
         }
         $queryCarCount= "SELECT COUNT(*) as count FROM cars 
         WHERE km > ? AND km < ? AND year > ? AND year < ? 
-        AND price > ? AND price < ? $withOffer";
+        AND price > ? - offer AND price < ? $withOffer";
         
         $queryGetCars="SELECT * FROM cars  
         WHERE (km > :minKm AND km < :maxKm) AND (year > :minYear AND year < :maxYear)
-        AND (price > :minPrice AND price < :maxPrice) LIMIT :page,10";
+        AND (price - offer > :minPrice  AND price - offer < :maxPrice) $withOffer LIMIT :page,10";
       
-
+       
         if (!is_null($this->pdo)) {
             $this->pdo->beginTransaction();
             $stmt = $this->pdo->prepare($queryCarCount);
@@ -202,6 +202,22 @@ Class Car {
             }
         }
     }
+
+    public function getAllFilters(){
+        $query = "SELECT MIN(km)as minKm ,MAX(km) as maxKm,
+        MIN(year) as minYear, MAX(year) as maxYear,
+       (MIN(price) - MAX(offer)) as minPrice , MAX(price) as maxPrice from cars";
+
+        if(!is_null($this->pdo)) {
+        $stmt = $this->pdo->prepare($query);
+        if ($stmt->execute()) {
+            $filters = $stmt->fetch(PDO::FETCH_ASSOC);
+            echo json_encode($filters);
+        }
+        }
+    }
+
+    
 }
 ?>
 

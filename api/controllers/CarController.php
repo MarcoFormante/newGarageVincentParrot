@@ -5,11 +5,10 @@ header("Access-Control-Allow-Headers: *");
 Class CarController{
    
 
-    public function getAllCars(){
+    public function getAllCars($page,$filters){
         $car = new Car();
-        if (isset($_GET["filters"]) && isset($_GET["page"])) {
-            $car->getAllCars($_GET["page"],$_GET["filters"]);    
-        }
+        $car->getAllCars($page,$filters);    
+        
     }
 
     public function getCarDetails(int $id){
@@ -20,6 +19,11 @@ Class CarController{
     public function getCarImages(int $id){
         $car = new Car();
         $car->getCarImages($id);
+    }
+
+    public function getAllFilters(){
+        $car = new Car();
+        $car->getAllFilters();
     }
 }
 

@@ -10,21 +10,22 @@ const ParcAuto = () => {
     const [filtersToggle, setFiltersToggle] = useState(false);
     const [carCount, setCarCount] = useState(0)
     const [currentPage, setCurrentPage] = useState(0)
-    const [filters, setFilters] = useState({ minKm: 0, maxKm: 500000, minYear: 0, maxYear: 3000, minPrice: 0, maxPrice: 1000000, offer: false })
+    const [filters, setFilters] = useState({ minKm: 0, maxKm: 500000, minYear: 0, maxYear: 500000, minPrice: 0, maxPrice: 1000000, offer: false })
     const [loading, setLoading] = useState(false);
+  
     
-    
-    
+  
     function handleCarPage(page) {
         setCurrentPage(page)
-    }
-  console.log(carCount);
+  }
+  
+ console.log("damandare : ",filters);
 
     useEffect(() => {
         
             setLoading(true)
-            const carAutoPath = process.env.REACT_APP_HTTP + "pages/parcAuto.php";
-                axios.get(`${carAutoPath}?page=${currentPage * 10}&filters=${JSON.stringify(filters)}`)
+            const parcAutoPath = process.env.REACT_APP_HTTP + "pages/parcAuto.php";
+                axios.get(`${parcAutoPath}?page=${currentPage * 10}&filters=${JSON.stringify(filters)}&getFilters=${true}`)
                     .then(response => {
                         console.log(response?.data);
                         console.log(response.statusText);
@@ -35,12 +36,18 @@ const ParcAuto = () => {
                                 setLoading(false);
                             }, 500);
                         }
-                    }).catch(error=> console.log(error.data))
+                    })
+                  
+                  .catch(error => console.log(error.data))
         
    
-    }, [currentPage, filters,])
+    }, [currentPage, filters])
     
-   console.log(filters);
+  console.log(filters);
+  
+  
+
+
 
     return (
       
