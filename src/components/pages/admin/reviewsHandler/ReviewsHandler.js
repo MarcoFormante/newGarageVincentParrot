@@ -48,6 +48,7 @@ const ReviewsHandler = () => {
                 setAvis([...reviews])
             })
     }, [])
+    
 
    
     useEffect(() => {
@@ -55,7 +56,7 @@ const ReviewsHandler = () => {
         setFilterReview(5)
     }, [filters])
 
-    
+
     
     function toggleReviewValidation(avisId, av) {
         let newValidationNumber = +!av.is_validate;
