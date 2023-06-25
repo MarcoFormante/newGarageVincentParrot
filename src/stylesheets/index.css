@@ -1342,9 +1342,12 @@ table td {
 
 .reviewValidatorSwitch {
   font-weight: 600;
-  border-bottom: 1px solid;
-  display: inline;
+  border: 1px solid black;
   cursor: pointer;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 5px;
+  margin: auto;
 }
 
 /*
@@ -1755,6 +1758,10 @@ ul li {
   margin-bottom: 20px;
 }
 
+.mar-bot-50 {
+  margin-bottom: 50px;
+}
+
 .error-message, .success-message {
   font-weight: 600;
   color: red;
@@ -1779,6 +1786,10 @@ ul li {
   gap: 20px;
 }
 
+.gap-50 {
+  gap: 50px;
+}
+
 .inputs_container_filters_inner input, .inputs_container_filters_inner select {
   width: 200px;
   padding: 5px;
@@ -1796,6 +1807,23 @@ ul li {
   border-bottom: 1px solid red;
   display: inline;
   cursor: pointer;
+}
+
+.c-red {
+  color: red;
+}
+
+.c-green {
+  color: green;
+}
+
+.sticky_element {
+  position: sticky;
+  top: 100px;
+  right: 0px;
+  background-color: #e7e9eb;
+  padding: 40px;
+  z-index: 100;
 }
 
 html {

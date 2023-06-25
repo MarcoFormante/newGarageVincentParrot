@@ -83,19 +83,29 @@ ul{
     margin-top: 80px;
  }
 
-
-
 .text-bold{
     font-weight: bold;
 }
+
+
 
 .mar-top-20{
     margin-top: 20px;
 }
 
+
+
 .mar-bot-20{
     margin-bottom: 20px;
 }
+
+
+
+.mar-bot-50{
+    margin-bottom: 50px;
+}
+
+
 
 .error-message{
     font-weight: 600;
@@ -105,23 +115,37 @@ ul{
     margin: auto;
 }
 
+
 .success-message{
     @extend .error-message;
     color: green;
 }
 
+
+
 .text-center{
     text-align: center;
 }
+
+
 
 .list-flex-wrap{
     @extend .container--center--row;
     flex-wrap: wrap;
 }
 
+
+
 .gap-20{
- gap:20px;
+    gap:20px;
 }
+
+
+
+.gap-50{
+    gap:50px;
+}
+
 
 .inputs_container_filters_inner{
     @extend .container--center--row;
@@ -137,6 +161,7 @@ ul{
 }
 
 
+
 .b_bottom{
   
     &--green{
@@ -150,4 +175,24 @@ ul{
         display: inline;
         cursor: pointer;
     }
+}
+
+
+.c-red{
+    color:red;
+}
+
+
+.c-green{
+    color: green;
+}
+
+
+.sticky_element{
+    position: sticky;
+    top: 100px;
+    right: 0px;
+   background-color: lighten($light_gray_color,10);
+   padding: 40px;
+    z-index: 100;
 }

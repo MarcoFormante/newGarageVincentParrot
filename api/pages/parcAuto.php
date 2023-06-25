@@ -15,9 +15,7 @@ if (isset($_GET['page']) && isset($_GET['filters'])) {
      $carController->getAllFilters();
 }
 
-// if (isset($_GET['getFilters'])) {
-//     
-// }
+
 
 
 ?>

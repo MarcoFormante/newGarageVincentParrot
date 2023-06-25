@@ -2,6 +2,7 @@
 
 
 Class ReviewController{
+    
 
     public function getReviews(){
         $Review = new Review();
@@ -14,6 +15,12 @@ Class ReviewController{
         $Review->newReview($name,$message, $review);
           
     }   
+
+    public function reviewValidation($reviewValue, $reviewId ){
+        $Review = new Review();
+        $Review->reviewValidation($reviewValue,$reviewId);
+    }
+
 
 }
 ?>

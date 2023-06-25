@@ -1,6 +1,6 @@
 <?php
-
-require_once '../models/connection.php';
+//change path for production
+require_once '/xampp/htdocs/app/api/models/connection.php';
 
 Class Review{
     use Connection;
@@ -100,6 +100,8 @@ Class Review{
         return $this;
     }
 
+
+
     public function getReviews(){
         $query = "SELECT * from reviews";
 
@@ -138,7 +140,28 @@ Class Review{
     }
 
 
+    public function reviewValidation($reviewValue,$reviewId){
+       
+        $query = "UPDATE reviews SET is_validate = :value WHERE id = :id";
+try {
+    if (!is_null($this->pdo)) {
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue(':value',$reviewValue,PDO::PARAM_INT);
+        $stmt->bindValue(':id',$reviewId,PDO::PARAM_INT);
 
+        if ($stmt->execute()) {
+            echo json_encode(["status"=> 1 ,"message" => "Modification effectuée"]);
+        }else{
+            echo json_encode(["status"=> 0 ,"message" => "Erreur pendant la modification de la valeur"]); 
+        }
+    }else{
+        echo json_encode(["status"=> 0 ,"message" => "Erreur pendant la modification de la valeur"]);
+    }   
+} catch (Exception $e) {
+    echo $e->getMessage();
+}
+    
+}
 }
 
 ?>

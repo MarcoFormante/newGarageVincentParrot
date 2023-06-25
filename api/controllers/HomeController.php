@@ -22,7 +22,7 @@ Class HomeController{
 
     public function getReviews(){
         $review = new Review();
-        return $review->getReviewsHome();
+        return $review->getReviews();
     }
 
    
