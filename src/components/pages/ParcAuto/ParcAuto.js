@@ -29,6 +29,7 @@ const ParcAuto = () => {
                     .then(response => {
                         console.log(response?.data);
                         console.log(response.statusText);
+                      
                         if (response.status === 200 && response.request.readyState === 4 ) {
                             setCars(response?.data?.cars)
                             setCarCount(response?.data?.count)
@@ -64,7 +65,10 @@ const ParcAuto = () => {
              
                 <aside style={filtersToggle === true ? { display: "block" } : { display: "none" }}>
                     <p className='filtre_title'>Filtres</p>
-                    <CarFilters  handleChangeFilters={(value)=>setFilters({...filters,...value})}/>
+            <CarFilters handleChangeFilters={(value) => {
+              setFilters({ ...filters, ...value })
+             handleCarPage(0)
+            }} />
                 </aside>
             </div>
             <PageTitle pageTitle={"Notre Parc automobile"} />
@@ -75,7 +79,7 @@ const ParcAuto = () => {
                     {(carCount === undefined) && <div className='error-message'>0 voiture trouvé</div>}
                 {cars && !loading && cars.map((car, index) => <CarCard key={"parc-auto " + index + car.id} {...cars[index]} />)}
             </div>
-                  <SwitchPageBlock carCount={carCount} dataLength={carCount} handleCarPage={(page)=> handleCarPage(page)} />
+                  <SwitchPageBlock carCount={carCount} dataLength={carCount} currentPage={currentPage} setCurrentPage={(value)=>setCurrentPage(value)} handleCarPage={(page)=> handleCarPage(page)} />
             </div>
             
     </div>

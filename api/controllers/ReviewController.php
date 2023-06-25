@@ -3,9 +3,9 @@
 
 Class ReviewController{
 
-    public function getReviewsHome(){
+    public function getReviews(){
         $Review = new Review();
-        return $Review->getReviewsHome();
+        return $Review->getReviews();
     }
 
     public function newReview(string $name, string $message, int $review){

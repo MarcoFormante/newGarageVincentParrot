@@ -100,8 +100,8 @@ Class Review{
         return $this;
     }
 
-    public function getReviewsHome(){
-        $query = "SELECT * from reviews WHERE is_validate = 1";
+    public function getReviews(){
+        $query = "SELECT * from reviews";
 
         if(!is_null($this->pdo)) {
             $stmt = $this->pdo->prepare($query);

@@ -13,7 +13,7 @@ const Offers = ({cars,count}) => {
     const [offerCards, setofferCards] = useState([])
     const [offerLimit, setOfferLimit] = useState(0);
     const [carCount, setcarCount] = useState(0);
-    const [cardsOffsetWitdth,setCardsOffsetWidth] = useState(0)
+
  
 
     //carousel scroll event

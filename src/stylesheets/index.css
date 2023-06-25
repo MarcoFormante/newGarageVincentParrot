@@ -1328,6 +1328,25 @@ label[for=galleryfileInput] .required {
   color: red;
 }
 
+table {
+  border: 1px solid black;
+  border-collapse: collapse;
+  width: 50vw;
+  min-width: 320px;
+  text-align: center;
+}
+table td {
+  border: 1px solid black;
+  padding: 30px;
+}
+
+.reviewValidatorSwitch {
+  font-weight: 600;
+  border-bottom: 1px solid;
+  display: inline;
+  cursor: pointer;
+}
+
 /*
 Vendors: Normalize
 */
@@ -1695,7 +1714,7 @@ ul li {
   display: list-item;
 }
 
-.container--center--row {
+.container--center--row, .inputs_container_filters_inner, .list-flex-wrap {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -1707,13 +1726,17 @@ ul li {
 
 .container--center--column {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
 .container--pad-top {
   padding-top: 80px;
+}
+
+.container--pad-bottom {
+  padding-bottom: 80px;
 }
 
 .container--marg-top {
@@ -1746,6 +1769,33 @@ ul li {
 
 .text-center {
   text-align: center;
+}
+
+.list-flex-wrap {
+  flex-wrap: wrap;
+}
+
+.gap-20 {
+  gap: 20px;
+}
+
+.inputs_container_filters_inner input, .inputs_container_filters_inner select {
+  width: 200px;
+  padding: 5px;
+}
+.inputs_container_filters_inner input[type=checkbox] {
+  height: 20px;
+}
+
+.b_bottom--green {
+  border-bottom: 1px solid lightgreen;
+  display: inline;
+  cursor: pointer;
+}
+.b_bottom--red {
+  border-bottom: 1px solid red;
+  display: inline;
+  cursor: pointer;
 }
 
 html {

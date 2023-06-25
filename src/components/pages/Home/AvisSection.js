@@ -13,14 +13,20 @@ const AvisSection = () => {
     const [carouselX, setCarouselX] = useState(null)
     const [pathName,setPathName]=useState("")
     const [avis, setAvis] = useState([]);
-    const [cardsOffsetWitdth,setCardsOffsetWidth] = useState(0)
+
     
     useEffect(() => {
-    const homepagePath = process.env.REACT_APP_HTTP + "pages/homePage.php?reviewsHome=true";
+    const homepagePath = process.env.REACT_APP_HTTP + "pages/homePage.php?reviews=true";
         axios.get(homepagePath)
             .then(response => {
-                console.log(response.data);
-                const reviews = response.data.reviews;
+                console.log(response.data.reviews);
+                
+                let reviews = [];
+                response.data.reviews.forEach((review,index)=> {
+                    if (review.is_validate === 1 ) {
+                        reviews.push(response.data.reviews[index])
+                    }
+                });
                 setAvis([...reviews])
         })
     },[])
@@ -170,17 +176,24 @@ const ScoreBar = ({scoreNum}) => {
     )
 }
 
-const AvisCard = ({name,message,review}) => {
+export const AvisCard = ({name,message,review,style}) => {
     
     return (
         <>
-            <div className={'avis_card'}>
+            <div className={'avis_card'} style={style}>
+
                 <span className={'avis_card_name'}>{name}</span>
+              
                 <q className={'avis_card_text'}>{message}</q>
+              
                 <div className={'avis_card_note'}>
-                    {<StarsBlock numberOfActiveStars={review} clickable={false} />}   
+              
+                <StarsBlock numberOfActiveStars={review} clickable={false} />
+              
                 </div>
+             
             </div>
+            
         </>
         
     )

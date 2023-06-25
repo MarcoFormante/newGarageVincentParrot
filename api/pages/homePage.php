@@ -27,9 +27,9 @@ if (isset($_GET['services'])) {
 
 }
 
-if (isset($_GET['reviewsHome'])) {
+if (isset($_GET['reviews'])) {
     $ReviewController = new ReviewController();
-    $reviews = $ReviewController->getReviewsHome();
+    $reviews = $ReviewController->getReviews();
     echo json_encode(["reviews"=>$reviews]);
 }
 

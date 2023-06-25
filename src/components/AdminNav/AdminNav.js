@@ -24,7 +24,7 @@ const AdminNav = ({checkToken}) => {
             linkName : "Gestion Accounts"
         },
         {
-            to: "admin/feedback",
+            to: "admin/reviews",
             linkName : "Gestion Avis"
         },
         {
@@ -37,7 +37,7 @@ const AdminNav = ({checkToken}) => {
             linkName : "Nouveau véhicule"
         },
         {
-            to: "admin/feedback",
+            to: "admin/reviews",
             linkName : "Gestion Avis"
         },
         

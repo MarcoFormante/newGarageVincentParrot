@@ -67,13 +67,17 @@ ul{
 
 
 .container--center--column{
-    @include flex-center(row);
+    @include flex-center(column);
 }
 
 
 .container--pad-top{
    padding-top: 80px;
 }
+
+.container--pad-bottom{
+    padding-bottom: 80px;
+ }
 
 .container--marg-top{
     margin-top: 80px;
@@ -108,4 +112,42 @@ ul{
 
 .text-center{
     text-align: center;
+}
+
+.list-flex-wrap{
+    @extend .container--center--row;
+    flex-wrap: wrap;
+}
+
+.gap-20{
+ gap:20px;
+}
+
+.inputs_container_filters_inner{
+    @extend .container--center--row;
+
+    input,select{
+        width: 200px;
+        padding: 5px;
+    }
+
+    input[type="checkbox"]{
+        height: 20px;
+    }
+}
+
+
+.b_bottom{
+  
+    &--green{
+        border-bottom: 1px solid lightgreen;
+        display: inline;
+        cursor: pointer;
+    }
+  
+    &--red{
+        border-bottom: 1px solid red;
+        display: inline;
+        cursor: pointer;
+    }
 }

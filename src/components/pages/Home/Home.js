@@ -9,8 +9,9 @@ import PageTitle from '../../PageTitle/PageTitle'
 
 
 
-const Home = ({handleOpeningTimes}) => {
+const Home = () => {
   
+
   return (
     <div>
     <PageTitle pageTitle={"Garage Vincent Parrot"} />
