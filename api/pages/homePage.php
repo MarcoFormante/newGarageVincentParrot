@@ -8,6 +8,8 @@ require_once '../models/service.php';
 require_once '../controllers/ServiceController.php';
 require_once '../models/review.php';
 require_once '../controllers/ReviewController.php';
+require_once '../models/timeTable.php';
+require_once '../controllers/TimeTableController.php';
 
 $homeController = new HomeController();
 if (isset($_POST['limit'])) {
@@ -16,9 +18,11 @@ if (isset($_POST['limit'])) {
 }
 
 if (isset($_GET['openingTimes'])) {
-    $openingTimes = $homeController->getOpeningTimes();
+    $timeTableController = new TimeTableController();
+    $openingTimes = $timeTableController->getTimeTable();
     echo json_encode(["openingTimes" => $openingTimes]);
 }
+
 
 if (isset($_GET['services'])) {
     $serviceController = new ServiceController();
@@ -26,6 +30,7 @@ if (isset($_GET['services'])) {
     echo json_encode(["services"=>$services]);
 
 }
+
 
 if (isset($_GET['reviews'])) {
     $ReviewController = new ReviewController();

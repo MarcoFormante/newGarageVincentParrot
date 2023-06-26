@@ -14,12 +14,6 @@ Class HomeController{
         }
     }
 
-    public function getOpeningTimes(){
-        $home = new Home();
-        return $home->getOpeningTimes();   
-    }
-
-
     public function getReviews(){
         $review = new Review();
         return $review->getReviews();

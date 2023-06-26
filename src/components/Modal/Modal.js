@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import ButtonCta from '../Buttons/ButtonCta'
+import React from 'react'
 
-const Modal = ({ title, children, onClick, onExit,type}) => {
+
+const Modal = ({ title, children, onClick, onExit, type, buttonText }) => {
   
   if (type === "input") {
     return (
@@ -10,7 +10,7 @@ const Modal = ({ title, children, onClick, onExit,type}) => {
         <div className='modal_exit' onClick={onExit}></div>
           <span className='modal_title'>{title}</span>
           {children}
-          <div role='button'onClick={onClick} className='cta cta--red cta--padding-plus'>Ajouter</div>
+          <div role='button'onClick={onClick} className='cta cta--red cta--padding-plus'>{!buttonText ? "Ajouter" : buttonText}</div>
         </div>
       </div>
     )

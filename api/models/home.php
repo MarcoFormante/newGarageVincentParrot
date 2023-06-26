@@ -50,21 +50,6 @@ Class Home{
     }
 
 
-
-    public function getOpeningTimes(){
-        $query="SELECT * FROM opening_times";
-        if (!is_null($this->pdo)) {
-            $stmt=$this->pdo->prepare($query);
-
-            if ($stmt->execute()) {
-                $openingTimes = [];
-                while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                   array_push($openingTimes,$row);
-                }
-                return $openingTimes;
-            }
-        }
-    }
 }
 
 ?>

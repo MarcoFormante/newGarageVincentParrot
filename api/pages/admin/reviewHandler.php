@@ -2,7 +2,7 @@
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 
-include '../../models/review.php';
+require_once '../../models/review.php';
 require_once '../../controllers/ReviewController.php';
 
 if (isset($_POST['reviewValidationValue']) && isset($_POST["reviewValidationId"])) {

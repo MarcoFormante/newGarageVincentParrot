@@ -28,7 +28,7 @@ const AdminNav = ({checkToken}) => {
             linkName : "Gestion Avis"
         },
         {
-            to: "admin/time-table",
+            to: "admin/timeTable",
             linkName : "Horaires"
         }, ]
     const employeeLinks = [
