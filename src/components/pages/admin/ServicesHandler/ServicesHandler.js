@@ -1,0 +1,199 @@
+import React, { useEffect, useState } from 'react'
+import Modal from '../../../Modal/Modal'
+import axios from '../../../../api/axios'
+import PageTitle from '../../../PageTitle/PageTitle'
+import toast, { Toaster } from 'react-hot-toast';
+
+const ServicesHandler = () => {
+    const [services, setServices] = useState([])
+    const [modalToggle, setModalToggle] = useState(false)
+    const [modalTitle, setModalTitle] = useState("")
+    const [modalInptValue, setModalInptValue] = useState("")
+    const [serviceId, setServiceId] = useState(null)
+    const [serviceIndex, setServiceIndex] = useState(null);
+    const [Type, setType] = useState("");
+    const [newService, setNewService] = useState("");
+    
+    const notifySuccess = (text) => toast.success(text);
+    const notifyError = (text) => toast.error(text);
+
+    useEffect(() => {
+        const servicesPath = process.env.REACT_APP_HTTP + "pages/admin/servicesHandler.php?servicesADM=true";
+        axios.get(servicesPath)
+            .then(response => {
+                if (response.data.status === 1) {
+                    if (response.data.services) {
+                        setServices(response.data.services)
+                    } else {
+                        console.error("ERROR , Impossible de recevoir les données")
+                    }
+
+                } else {
+                    console.error("ERROR , Impossible de recevoir les données");
+                }
+                
+            }).catch(error => console.error("ERROR , Impossible de recevoir les données"))
+    }, [])
+
+
+    function handleModal(title, inptValue, id, index, editType) {
+        
+        setModalToggle(true)
+        setModalTitle(title)
+        setModalInptValue(inptValue)
+        setServiceId(id)
+        setServiceIndex(index)
+        setType(editType)
+    }
+
+
+    function resetValues() {
+        setModalToggle(false)
+        setModalTitle("")
+        setModalInptValue("")
+        setServiceId(null)
+        setServiceIndex(null)
+        setType(null)
+        setNewService("")
+    }
+
+
+
+
+    function updateService() {
+        const servicesPath = process.env.REACT_APP_HTTP + "pages/admin/servicesHandler.php";
+        if ( Type === "update" || Type === "delete") {
+            const formData = new FormData()
+            if (Type && Type === "update") {
+                formData.append("edit", "update")
+                formData.append("value",modalInptValue)
+            } else if(Type && Type === "delete") {
+                formData.append("edit", "delete")
+                formData.append("value","null")
+            }
+           
+            formData.append("id", serviceId)
+           
+            axios.post(servicesPath, formData, {
+                headers: {
+                    "Content-Type":"application/www-x-urlencodeform"
+                }
+            }).then(response => {
+                console.log(response.data);
+                if (response.data.status === 1) {
+                    if (Type === "update") {
+                        services[serviceIndex].service = modalInptValue;
+                        setServices([...services])
+                    } else if (Type === "delete") {
+                        let newServices = services.filter((s,i)=> s.id !== serviceId)
+                        setServices([...newServices])
+                    }
+                    notifySuccess(response.data.message)
+
+                } else {
+                    notifyError("Erreur pendant la modification du service, rententez. Status = 0")
+                }
+            })
+            .finally(resetValues())
+        }else{
+            notifyError("Erreur : Impossible de modifier le service sans Valeur ou ID Service")
+        }
+    }
+
+
+    function addNewService() {
+        const servicesPath = process.env.REACT_APP_HTTP + "pages/admin/servicesHandler.php";
+        if (newService) {
+            const formData = new FormData()
+            formData.append("add",true)
+            formData.append("value",newService)
+            axios.post(servicesPath, formData, {
+                headers: {
+                    "Content-Type": "application/www-x-urlencodeform"
+                }
+            }).then(response => {
+                if (response.data.status === 1) {
+                    setServices(prev => [...prev, {
+                        id: response.data.lastId,
+                        service:newService
+                    }])
+                    notifySuccess(response.data.message)
+                    setType(null);
+                    setNewService("");
+                } else {
+                    notifyError("Erreur: Impossible ajouter un nouveau service")
+                }
+            }).finally(resetValues())
+        } else {
+            notifyError("Il faut ecrir d'abord un nouveau service")
+        }
+    }
+
+    function handleNewService(type) {
+        setType(type);
+        addNewService();
+    }
+
+   
+  return (
+      <div>
+          <Toaster/>
+          {modalToggle &&
+              <Modal title={Type === "update" ? modalTitle : "Voulez-vous supprimer ce service?" } type={Type === "update" ? "input" : "alert"} buttonText={"Sauvegarder"} onExit={() => resetValues()} onClick={()=> updateService()}>
+                  <div className='container--center--column gap-20'>
+                    <label htmlFor="serviceInpt">{Type === "update" ? "Modifier" : "Service à effacer"}</label>
+                      <textarea disabled={Type === "delete"}
+                          style={{ padding: 10, width:300, height:"fit-content",maxHeight:100 }}
+                          type="text" id='serviceInpt'
+                          value={modalInptValue}
+                          onChange={(e) => setModalInptValue(e.target.value)}
+                      />
+                  </div>
+              </Modal>
+          }
+
+        <PageTitle pageTitle={"Gestion des services"} />
+          <div className='container--pad-top'>
+                <div>
+                    <input type="text" value={newService} onChange={(e)=> setNewService(e.target.value)} />
+                    <button onClick={() =>handleNewService("add")}>Ajoute</button>
+                </div>
+        <table className='mar-auto table_servicesHandler'>
+            <thead>
+                  <tr>
+                    <th>Service</th>
+                    <th>Edit</th>
+                    <th>Effacer</th>    
+                  </tr>
+            </thead>
+            <tbody>
+              
+                {services && services.map((service, index) => <tr>
+                    <td>{service.service}</td>
+                    <td>
+                        <span className='edit-icon'
+                            onClick={() => handleModal("Service", service.service, service.id,index,"update")}>
+                        </span>
+                    </td>
+                    <td>
+                        <span className='delete_icon'
+                            onClick={() => {
+                               
+                                handleModal("Service", service.service, service.id, index, "delete")
+                               
+                            }}>
+                        </span>
+                    </td>
+                </tr>
+                )}
+               
+            </tbody>
+          
+        </table>
+      
+        </div>
+    </div>
+  )
+}
+
+export default ServicesHandler

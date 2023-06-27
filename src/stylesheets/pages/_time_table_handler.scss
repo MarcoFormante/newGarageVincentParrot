@@ -6,9 +6,13 @@
     min-width: 310px;
     margin: auto;
 
-    thead,tr{
-        border-bottom: 1px solid black;
-    }
+        tr{
+            min-height: 500px;
+        }
+
+        thead,tr{
+            border-bottom: 1px solid black;
+        }
      
     }
 
@@ -16,10 +20,16 @@
         width: fit-content;
         padding: 1px;
     }
+
+
     td{
         position: relative;
         border: none;
-        padding: 10px 0px;
+        padding: 10px 10px;
+        width: 150px;
+        height: 150px;
+        display: block;
+
 
         span.edit_time{
             position: absolute;

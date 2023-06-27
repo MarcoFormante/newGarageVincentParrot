@@ -96,7 +96,8 @@ const Offers = ({cars,count}) => {
                   
                 if (response?.data?.status !== 0 && response?.status === 200) {
                       
-                      if (response?.data?.cars[0]?.length > 0) {
+                    if (response?.data?.cars[0]?.length > 0) {
+                          console.log(response.data);
                             setcarCount(response?.data?.cars[1]) 
                             setofferCards(response?.data?.cars[0])
                         }

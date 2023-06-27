@@ -19,7 +19,7 @@ const TimesOpeningHandler = () => {
   const [InputType, setInputType] = useState("")
   
   const notifySuccess = (text) => toast.success(text);
-    const notifyError = (text) => toast.error(text);
+  const notifyError = (text) => toast.error(text);
     
     useEffect(() => {
         const timeTablePath = process.env.REACT_APP_HTTP + "pages/admin/timeTableHandler.php"  

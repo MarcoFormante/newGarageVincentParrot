@@ -531,6 +531,16 @@ h2.page_title_home {
   cursor: pointer;
 }
 
+.edit-icon {
+  width: 30px;
+  height: 30px;
+  display: block;
+  background-image: url(/src/icons/edit.svg);
+  background-position: center;
+  background-size: cover;
+  cursor: pointer;
+}
+
 .modal {
   position: fixed;
   top: 0;
@@ -1328,18 +1338,6 @@ label[for=galleryfileInput] .required {
   color: red;
 }
 
-table {
-  border: 1px solid black;
-  border-collapse: collapse;
-  width: 50vw;
-  min-width: 320px;
-  text-align: center;
-}
-table td {
-  border: 1px solid black;
-  padding: 30px;
-}
-
 .reviewValidatorSwitch {
   font-weight: 600;
   border: 1px solid black;
@@ -1356,6 +1354,9 @@ table td {
   min-width: 310px;
   margin: auto;
 }
+.table_timeTableHandler_container tr {
+  min-height: 500px;
+}
 .table_timeTableHandler_container thead, .table_timeTableHandler_container tr {
   border-bottom: 1px solid black;
 }
@@ -1367,7 +1368,10 @@ table td {
 .table_timeTableHandler td {
   position: relative;
   border: none;
-  padding: 10px 0px;
+  padding: 10px 10px;
+  width: 150px;
+  height: 150px;
+  display: block;
 }
 .table_timeTableHandler td span.edit_time {
   position: absolute;
@@ -1383,6 +1387,19 @@ table td {
 }
 .table_timeTableHandler td, .table_timeTableHandler th {
   border: 1px solid black;
+}
+
+.table_servicesHandler {
+  border-collapse: collapse;
+  padding: 20px;
+}
+.table_servicesHandler td {
+  border: 1px solid black;
+  padding: 20px;
+}
+.table_servicesHandler td .edit-icon {
+  width: 40px;
+  height: 40px;
 }
 
 /*

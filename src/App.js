@@ -17,6 +17,7 @@ import NewCarPage from './components/pages/admin/NewCar/NewCarPage';
 import Accounts from './components/pages/admin/Accounts/Accounts';
 import ReviewsHandler from './components/pages/admin/reviewsHandler/ReviewsHandler';
 import TimesOpeningHandler from './components/pages/admin/TimesOpeningHandler/TimesOpeningHandler';
+import ServicesHandler from './components/pages/admin/ServicesHandler/ServicesHandler';
 
 
 
@@ -59,7 +60,7 @@ function App() {
         >
           <Route path={"/admin/new-car"} element={<NewCarPage/>} />
           <Route path={"/admin/modify-car"} element={<h1>adminpage</h1>} />
-          <Route path={"/admin/services"} element={<h1>adminpage</h1>} />
+          <Route path={"/admin/services"} element={<ServicesHandler/>} />
           <Route path={"/admin/accounts"} element={<Accounts/>} />
           <Route path={"/admin/reviews"} element={<ReviewsHandler/>} />
           <Route path={"/admin/timeTable"} element={<TimesOpeningHandler/>} />
