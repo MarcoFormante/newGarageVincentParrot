@@ -111,12 +111,17 @@
   
 
   .range_slider_block{
+    position: absolute;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 80px;
-    margin-top: 50px;
+    align-items: center;
+    gap: 58px;
+    margin-top: 18px;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    left: 50%;
   }
 
   .filtre_title{

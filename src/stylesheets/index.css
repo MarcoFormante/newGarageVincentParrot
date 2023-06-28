@@ -113,10 +113,12 @@ components: button
   }
   .nav--open {
     width: 100vw;
+    z-index: 10;
   }
   .nav--open > .nav_container {
     opacity: 1;
     transform: translateX(0);
+    position: relative;
   }
   .nav_container {
     display: flex;
@@ -605,13 +607,21 @@ h2.page_title_home {
   font-weight: 600;
 }
 
+.reset_icon {
+  background-image: url(/src/icons/reset_icon.svg);
+  background-size: cover;
+  background-position: center;
+  display: block;
+  cursor: pointer;
+}
+
 /*
 layout: header
 */
 .header_outer {
   transition: all 1s ease;
   top: 0;
-  z-index: 10;
+  z-index: 11;
 }
 
 header {
@@ -924,15 +934,14 @@ pages: home
 }
 
 .parc_auto_cars_section {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: none;
-  gap: 10px;
-  flex-wrap: wrap;
-  padding-top: 80px;
+  display: grid;
+  padding-top: 20px;
   max-width: 80vw;
+  grid-template-columns: repeat(auto-fill, 320px);
+  gap: 30px;
   margin: auto;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 .switch_page_block {
@@ -980,16 +989,23 @@ pages: home
   transform: rotateY(180deg);
 }
 
-.parc-auto_page aside {
-  padding: 50px;
-  padding-top: 100px;
+.filters_window {
+  width: 300px;
+  padding: 20px;
   background-color: #353535;
   position: fixed;
   min-width: inherit;
   top: 0px;
   color: #FFFFFF;
   height: 100vh;
-  z-index: 0;
+  z-index: 10;
+  left: -100%;
+  transition: 0.4s all ease;
+}
+@media screen and (max-width: 768px) {
+  .filters_window {
+    width: 250px;
+  }
 }
 
 input[type=checkbox] {
@@ -1002,19 +1018,46 @@ input[type=checkbox] {
 }
 
 .filters_btn_toggle {
-  position: absolute;
-  z-index: 2;
   margin-left: 20px;
-  top: 30px;
   font-weight: bold;
   color: #D64E54;
   font-size: 30px;
   cursor: pointer;
+  padding-top: 50px;
 }
 .filters_btn_toggle--active {
   margin: 0;
   right: 2px;
   top: 5px;
+}
+
+.filter_window--active {
+  left: 0;
+  z-index: 9;
+}
+
+.filters_icon {
+  width: 40px;
+  height: 40px;
+  background-image: url(/src/icons//filters_icon.svg);
+}
+
+#offre {
+  width: 18px;
+  height: 18px;
+  margin-left: 5px;
+}
+
+.reset {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.reset_icon_filters {
+  width: 30px;
+  height: 30px;
 }
 
 .car_details_top_carousel_container {

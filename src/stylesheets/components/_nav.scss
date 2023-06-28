@@ -15,10 +15,12 @@
     //nav if menu is opened
         &--open{
             width: 100vw;
-            
+            z-index: 10;
             & > .nav_container{
                 opacity: 1;
                 transform: translateX(0);
+              position: relative;
+              
             }
 
             

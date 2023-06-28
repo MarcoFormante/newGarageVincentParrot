@@ -77,7 +77,9 @@ const CarPhotos = ({year,km,price,offer}) => {
             setCarouselX(carousel.current.scrollLeft)
         })   
 
-        return carousel.current.removeEventListener("scroll",()=>{})
+        return carousel.current.removeEventListener("scroll", () => {
+            setCarouselX(carousel.current.scrollLeft)
+        })
 
     }, [])
 

@@ -1,14 +1,15 @@
 .parc_auto_cars_section{
-   @include flex(row,center,none,10px);
-    flex-wrap: wrap;
-    padding-top: 80px;
+   display: grid;
+    padding-top: 20px;
     max-width: 80vw;
+    grid-template-columns: repeat(auto-fill,320px);
+    gap: 30px;
     margin: auto;
+    width: fit-content;
 }
 
 .switch_page_block{
     @include flex(row,space-evenly,center,10px);
-    
     padding-top: 80px;
     font-size: map-get($font_size,"small");
     width: fit-content;
@@ -20,6 +21,7 @@
     @media screen and (max-width:map-get($breakpoints,"medium")) {
         max-width: 95vw;
     }
+
 
     &_numbers{
         @include flex(row,center,center,20px);
@@ -49,16 +51,23 @@
 }
 
 
-.parc-auto_page aside{
- padding: 50px;
- padding-top: 100px;
+ .filters_window{
+ width: 300px;
+ padding: 20px;
  background-color: $secondary_color;
  position: fixed; 
  min-width: inherit;
  top: 0px;
  color: $white-color;
  height: 100vh;
- z-index: 0;
+ z-index: 10;
+left: -100%;
+transition: 0.4s all ease;
+
+
+    @media screen and (max-width:map-get($breakpoints,"medium")) {
+        width: 250px;
+    }
 }
 
 input[type="checkbox"]{
@@ -71,18 +80,46 @@ input[type="checkbox"]{
 }
 
 .filters_btn_toggle{
-    position: absolute;
-    z-index: 2;
-   margin-left: 20px;
-    top: 30px;
+    margin-left: 20px;
     font-weight: bold;
     color: $brand_color;
     font-size: 30px;
     cursor: pointer;
-
+    padding-top: 50px;
         &--active{
             margin: 0 ;
             right: 2px;
             top: 5px;
         }
 }
+
+
+
+.filter_window--active{
+    left: 0;
+    z-index: 9;
+}
+
+.filters_icon{
+    width: 40px;
+    height: 40px;
+    background-image: url(/src/icons//filters_icon.svg);
+}
+
+#offre{
+    width: 18px;
+    height: 18px;
+    margin-left: 5px;
+}
+
+
+.reset{
+    margin-top: 20px;
+    @include flex-center(row);
+
+    &_icon_filters{
+        width: 30px;
+        height: 30px;
+    }
+}
+

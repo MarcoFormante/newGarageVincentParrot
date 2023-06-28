@@ -4,6 +4,8 @@ import CarCard from '../../CarCard/CarCard'
 import SwitchPageBlock from '../../SwitchPageBlock/SwitchPageBlock'
 import CarFilters from './CarFilters'
 import axios from '../../../api/axios'
+import ButtonCta from '../../Buttons/ButtonCta'
+import toast, { Toaster } from 'react-hot-toast';
 
 const ParcAuto = () => {
   const [cars, setCars] = useState([])
@@ -13,13 +15,26 @@ const ParcAuto = () => {
     const [filters, setFilters] = useState({ minKm: 0, maxKm: 500000, minYear: 0, maxYear: 500000, minPrice: 0, maxPrice: 1000000, offer: false })
     const [loading, setLoading] = useState(false);
   
-    
+    const notifySuccess = (text) => toast.success(text);
+    const notifyError = (text) => toast.error(text);
   
-    function handleCarPage(page) {
+  function handleCarPage(page) {
         setCurrentPage(page)
   }
+
+  useEffect(() => {
+    if (filtersToggle) {
+      if (carCount === undefined) {
+        notifyError("0 voitures trouvées")
+      } else if(carCount > 0) {
+        notifySuccess(carCount + " voitures trouvées")
+      }
+    }
+   
+    
+  },[carCount])
   
- console.log("damandare : ",filters);
+ 
 
     useEffect(() => {
         
@@ -44,39 +59,41 @@ const ParcAuto = () => {
    
     }, [currentPage, filters])
     
-  console.log(filters);
   
   
-
-
 
     return (
       
-        <div className='parc-auto_page'>
-           
+      <div className='parc-auto_page'>
+         <Toaster/>
           <div className='filters_container'>
-         
-                <div
-                  className={filtersToggle ? "filters_btn_toggle filters_btn_toggle--active" : 'filters_btn_toggle'}
+            <div className={`${filtersToggle ?  "filter_window--active filters_window " : "filters_window "}`}>
+            <p className='filtre_title'>Filtres</p>
+            
+            <CarFilters closeButton={
+                  <ButtonCta
+                  type={"button"}
+                  inner={"Fermer"}
+                  className={"cta cta--red  mar-auto"}
                   onClick={() => setFiltersToggle(!filtersToggle)}
-                >
-                  {filtersToggle ? "X" : "Filters"}
-                </div>
-             
-                <aside style={filtersToggle === true ? { display: "block" } : { display: "none" }}>
-                    <p className='filtre_title'>Filtres</p>
-            <CarFilters handleChangeFilters={(value) => {
-              setFilters({ ...filters, ...value })
-             handleCarPage(0)
-            }} />
-                </aside>
+                  />}
+              
+                handleChangeFilters={
+                (value) => {
+                  setFilters({ ...filters, ...value })
+                  handleCarPage(0)
+                }}
+            />
             </div>
+          </div>
             <PageTitle pageTitle={"Notre Parc automobile"} />
           
+            <div className={'filters_btn_toggle'} onClick={() => setFiltersToggle(!filtersToggle)}>
+                <div className='filters_icon'></div>
+            </div>
             <div className='parc_auto_cars_switch_block'>
               <div className={'parc_auto_cars_section'}>   
                     {loading ? "loading..." : ""}
-                    {(carCount === undefined) && <div className='error-message'>0 voiture trouvé</div>}
                 {cars && !loading && cars.map((car, index) => <CarCard key={"parc-auto " + index + car.id} {...cars[index]} />)}
             </div>
                   <SwitchPageBlock carCount={carCount} dataLength={carCount} currentPage={currentPage} setCurrentPage={(value)=>setCurrentPage(value)} handleCarPage={(page)=> handleCarPage(page)} />
