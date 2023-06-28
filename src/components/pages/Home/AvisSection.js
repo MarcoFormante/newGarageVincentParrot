@@ -13,14 +13,14 @@ const AvisSection = () => {
     const [carouselX, setCarouselX] = useState(null)
     const [pathName,setPathName]=useState("")
     const [avis, setAvis] = useState([]);
+    const [reviewsAverage, setReviewsAverage] = useState(0)
+    const [totalStarsLength,setTotalStarsLength] = useState([])
 
     
     useEffect(() => {
     const homepagePath = process.env.REACT_APP_HTTP + "pages/homePage.php?reviews=true";
         axios.get(homepagePath)
             .then(response => {
-                console.log(response.data.reviews);
-                
                 let reviews = [];
                 response.data.reviews.forEach((review,index)=> {
                     if (review.is_validate === 1 && review.review >= 4 ) {
@@ -29,7 +29,23 @@ const AvisSection = () => {
                 });
                 setAvis([...reviews])
         })
-    },[])
+    }, [])
+
+    function TotalReviewsCalculate(reviews) {
+        const { total,stars1, stars2, stars3, stars4, stars5 } = reviews;
+        const reviewsSum = stars1 + stars2 + stars3 + stars4 + stars5;
+        const avarage = (reviewsSum / total) * 5;
+        setReviewsAverage(avarage.toFixed(1));
+        setTotalStarsLength([stars1/1,stars2/2, stars3/3, stars4/4, stars5/5])
+    }
+    
+    useEffect(() => {
+        const homepagePath = process.env.REACT_APP_HTTP + "pages/homePage.php?totalReviews=true";
+            axios.get(homepagePath)
+                .then(response => {
+                   TotalReviewsCalculate(response.data.total[0]);
+            })
+        },[])
     
     
     const handleScrollCarousel = (direction) => {
@@ -78,66 +94,66 @@ const AvisSection = () => {
 
   
 
-    useEffect(() => {
+    // useEffect(() => {
        
-        carousel.current.addEventListener("scroll", () => {
+    //     carousel.current.addEventListener("scroll", () => {
             
-                setCarouselX(carousel.current.scrollLeft)
+    //             setCarouselX(carousel.current.scrollLeft)
             
-            })
+    //         })
 
-            return carousel.current.removeEventListener("scroll", () => {})
+    //     return carousel.current.removeEventListener("scroll", () => {
+    //         setCarouselX(carousel.current.scrollLeft)
+    //         })
         
-    }, [])
+    // }, [])
     
     
+    
+
+
     useEffect(() => {
-       
-        window.addEventListener("resize", () => {
-            if (pathName === "/") {
-                setCarouselX(carousel?.current?.scrollLeft);
-                setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);
-            }
+        
+        carousel.current.addEventListener("scroll", () => {
+            setCarouselX(carousel?.current?.scrollLeft)
+            setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);  
         })
 
-        return window.removeEventListener("resize", () => {})
-        
+        return carousel.current.removeEventListener("scroll", () => {
+            setCarouselX(carousel?.current?.scrollLeft)
+            setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);  
+            
+        })
 
-    }, [pathName])
-
+        }, [carouselX,carouselWidth])
 
 
     
         return (
-          
-            
             <div className={'section_avis'} style={!avis.length > 0 ? {display:"none"} : {display:"block"}}>
-             
-                    <h3 className={'section_title section_title_avis'}>Vos avis</h3> 
-
-                    <div className={"section_page section_page--grey"}>
-                        <div className={'avis_score'}>
-                              <div className={"avis_score_stars"}>
-                                  {/** stars block set "clickable" for avis page */}
-                                  <StarsBlock numberOfActiveStars={5} clickable={false}/>
-                                  <span className={'score'}>4,7/5</span>
-                              </div>
-                              <ScoreBarsBlock />
-                          </div>
-                      </div>
-                       
-                    <Arrows cardsTotalWidth={avis.length * 300} carouselX={carouselX} carouselWidth={carouselWidth} onClick={(direction) => setArrowTarget(direction)} />
-                
-                        <div className={"avis_cards_container"}>
-                    <div className={"avis_cards_container_inner"} style={avis.length * 300 < window.innerWidth ? { justifyContent: "center" } : {}} ref={carousel}>
-                              {avis && avis.map((avis, index) => <AvisCard key={"avis_" + index +"_card" } name={avis.name}  message={avis.message} review={avis.review} />)}
-                          </div>
-                          <p className='title_cta'>Votre avis nous interesse</p>
-                          <ButtonCta type={"link"} to={"/avis"} inner={"Je donne mon avis"} className={"cta cta--red cta--wh-70vw cta_avis"} />
+                <h3 className={'section_title section_title_avis'}>Vos avis</h3> 
+                <div className={"section_page section_page--grey"}>
+                    <div className={'avis_score'}>
+                        <div className={"avis_score_stars"}>
+                              {/** stars block set "clickable" for avis page */}
+                              <StarsBlock numberOfActiveStars={5} clickable={false}/>
+                              <span className={'score'}>{reviewsAverage}/5</span>
                         </div>
-                
-                
+                        <ScoreBarsBlock totalStarsLength={totalStarsLength} />
+                    </div>
                 </div>
+   
+                <Arrows cardsTotalWidth={avis.length * 250} carouselX={carouselX} carouselWidth={carouselWidth} onClick={(direction) => setArrowTarget(direction)} />
+                
+                <div className={"avis_cards_container"}>
+                    <div className={"avis_cards_container_inner"} style={avis.length * 250 < window.innerWidth ? { justifyContent: "center" } : {}} ref={carousel}>
+                        {avis && avis.map((avis, index) => <AvisCard key={"avis_" + index +"_card" } name={avis.name}  message={avis.message} review={avis.review} />)}
+                    </div>
+                    <p className='title_cta'>Votre avis nous interesse</p>
+                    <ButtonCta type={"link"} to={"/avis"} inner={"Je donne mon avis"} className={"cta cta--red cta--wh-70vw cta_avis"} />
+                </div>
+                
+            </div>
         )
 
      
@@ -149,25 +165,50 @@ const AvisSection = () => {
 export default AvisSection
 
 
-const ScoreBarsBlock = () => {
+const ScoreBarsBlock = ({totalStarsLength}) => {
     const bars = [1, 2, 3, 4, 5];
-
+  
 
     return (
     <div>
-            {bars.map((bar, index) => <ScoreBar key={"scorebar_" + Math.floor(Math.random()*100 ) + "_bar" + bar} scoreNum={bar}/>)}
+            {bars.map((bar, index) =>
+                <ScoreBar key={"scorebar_" + Math.floor(Math.random() * 100) + "_bar" + bar}
+                    totalStarsLength={totalStarsLength[index]}
+                    scoreNum={bar}
+                />
+            )}
     </div>
     )
 }
 
 
-const ScoreBar = ({scoreNum}) => {
+const ScoreBar = ({ scoreNum, totalStarsLength}) => {
+    
+    const [barWidth, setBarWidth] = useState(477)
+    const width = React.useRef()
+
+    useEffect(() => {
+        if (width?.current) {
+            setBarWidth(width?.current?.offsetWidth)
+        }
+    },[])
+   
+    useEffect(() => {
+        window.addEventListener("resize", () => {
+            setBarWidth(width?.current?.offsetWidth)
+        })
+
+        window.removeEventListener("resize", () => {
+            setBarWidth(width?.current?.offsetWidth)
+        })
+    },[])
+   
     return (
         <div>
-            <div className={'score_bar'}>
+            <div className={'score_bar'} >
                 <span className={'score_num_bar'}>{scoreNum !== 5 ? scoreNum + " Stars"  : <span style={{color:"red"}}>{scoreNum + " Stars"}</span>}</span>
-                <div className={'bar_outer'}>
-                    <div className={'bar_inner'}>
+                <div className={'bar_outer'} ref={width}>
+                    <div className={'bar_inner'} style={ (totalStarsLength && barWidth && width!==null)  ? { width: (((totalStarsLength * (barWidth  * 4 ))) / 100), maxWidth:  barWidth } : {width:0}}>
                         {/** dynamic bar that change the width fething dataScore from database */}
                     </div>
                 </div>

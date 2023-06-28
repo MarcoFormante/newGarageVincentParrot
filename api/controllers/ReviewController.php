@@ -21,6 +21,11 @@ Class ReviewController{
         $Review->reviewValidation($reviewValue,$reviewId);
     }
 
+    public function getTotalReviews(){
+        $review = new Review();
+        $review->getTotalReviews();
+    }
+
 
 }
 ?>

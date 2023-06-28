@@ -38,6 +38,11 @@ if (isset($_GET['reviews'])) {
     echo json_encode(["reviews"=>$reviews]);
 }
 
+if (isset($_GET['totalReviews'])) {
+    $ReviewController = new ReviewController();
+    $ReviewController->getTotalReviews();
+}
+
 
 
 

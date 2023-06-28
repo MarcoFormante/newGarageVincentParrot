@@ -936,6 +936,7 @@ pages: home
 .score_bar .bar_inner {
   background-color: #D64E54;
   width: 80%;
+  max-width: 477px;
 }
 
 .title_cta {

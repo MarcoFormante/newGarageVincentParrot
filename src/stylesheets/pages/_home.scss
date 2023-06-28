@@ -193,7 +193,8 @@ span{
         background-color: $brand_color;
         @extend .bar_outer;
         width: 80%;
-     
+        max-width: 477px;
+       
     }
 }
 

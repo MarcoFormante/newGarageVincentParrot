@@ -17,7 +17,7 @@ const Offers = ({cars,count}) => {
  
 
     //carousel scroll event
-    const handleScrollCarousel = (direction) => {
+    const handleScrollCarousel = React.useCallback((direction) => {
         const cardPadding = 20;
             carousel.current.scrollBy({
                 left: direction + window.innerWidth - cardPadding,
@@ -27,7 +27,9 @@ const Offers = ({cars,count}) => {
             setTimeout(() => {
                 setArrowTarget("")
             }, 500) 
-    }
+    }, [])
+    
+ 
     
     useEffect(() => {
         setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);
@@ -36,7 +38,7 @@ const Offers = ({cars,count}) => {
 
     useEffect(() => {
         setCarouselX(carousel.current.scrollLeft);
-        setCarouselWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+        setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);
         
         switch (arrowTarget) {
             case "left":
@@ -49,20 +51,21 @@ const Offers = ({cars,count}) => {
             default:
                 break;
         }
-    }, [arrowTarget, carouselWidth])
+    }, [arrowTarget, carouselWidth, handleScrollCarousel])
+    
     //every tick check scrollLeft of carousel ref
-    useEffect(() => {
+    // useEffect(() => {
         
-        carousel.current.addEventListener("scroll", () => {
-            setCarouselX(carousel?.current?.scrollLeft)
-            setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);  
-        })
+    //     carousel.current.addEventListener("scroll", () => {
+    //         setCarouselX(carousel?.current?.scrollLeft)
+    //         setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);  
+    //     })
 
-        return carousel.current.removeEventListener("scroll", () => {
-            setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);  
-        })
+    //     return carousel.current.removeEventListener("scroll", () => {
+    //         setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);  
+    //     })
 
-        }, [carouselX,carouselWidth,carousel?.current?.offsetWidth])
+    //     }, [carouselX,carouselWidth,carousel?.current?.offsetWidth])
 
     
     useEffect(() => {
@@ -79,7 +82,7 @@ const Offers = ({cars,count}) => {
         return window.removeEventListener("resize", () => {
             if (pathName === "/") {
                 setCarouselX(carousel?.current?.scrollLeft);
-                setCarouselWidth(carousel.current.scrollWidth - carousel?.current?.offsetWidth);
+                setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);
             }
          })
 
@@ -97,7 +100,7 @@ const Offers = ({cars,count}) => {
                 if (response?.data?.status !== 0 && response?.status === 200) {
                       
                     if (response?.data?.cars[0]?.length > 0) {
-                          console.log(response.data);
+                        
                             setcarCount(response?.data?.cars[1]) 
                             setofferCards(response?.data?.cars[0])
                         }
@@ -110,7 +113,7 @@ const Offers = ({cars,count}) => {
                 }).catch(error => console.warn(error))  
            
      }, [])
-       
+     
    
 
 
