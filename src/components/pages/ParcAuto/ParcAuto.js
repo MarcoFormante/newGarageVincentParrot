@@ -89,7 +89,7 @@ const ParcAuto = () => {
             <PageTitle pageTitle={"Notre Parc automobile"} />
           
             <div className={'filters_btn_toggle'} onClick={() => setFiltersToggle(!filtersToggle)}>
-                <div className='filters_icon'></div>
+                <div className={filtersToggle === false ? "filters_icon" : "filter_icon--active"}></div>
             </div>
             <div className='parc_auto_cars_switch_block'>
               <div className={'parc_auto_cars_section'}>   

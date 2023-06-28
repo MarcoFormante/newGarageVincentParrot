@@ -23,7 +23,7 @@ const AvisSection = () => {
                 
                 let reviews = [];
                 response.data.reviews.forEach((review,index)=> {
-                    if (review.is_validate === 1 ) {
+                    if (review.is_validate === 1 && review.review >= 4 ) {
                         reviews.push(response.data.reviews[index])
                     }
                 });
@@ -133,7 +133,7 @@ const AvisSection = () => {
                               {avis && avis.map((avis, index) => <AvisCard key={"avis_" + index +"_card" } name={avis.name}  message={avis.message} review={avis.review} />)}
                           </div>
                           <p className='title_cta'>Votre avis nous interesse</p>
-                          <ButtonCta type={"link"} to={"/avis"} inner={"Je donne mon avis"} className={"btn_avis"} />
+                          <ButtonCta type={"link"} to={"/avis"} inner={"Je donne mon avis"} className={"cta cta--red cta--wh-70vw cta_avis"} />
                         </div>
                 
                 

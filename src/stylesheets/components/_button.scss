@@ -1,7 +1,6 @@
 .cta{
-   
-    padding: 5px;
-    border-radius: 4px;
+    padding: 7px;
+    border-radius: 25px;
     border: 2px solid $secondary_color;
     font-size: map-get($font_size,"small");
     min-width: 87px;
@@ -9,6 +8,8 @@
     box-shadow: 0 4px 10px lighten($secondary_color,40);
     display: block;
     text-align: center;
+    
+     
     
 
     &--red{
@@ -46,15 +47,28 @@
     }
 
     &_offers{
-       
         padding-left: 20px;
         padding-right: 20px;
         margin:  95px auto;
     }
 
+    &_avis{
+        padding-left: 20px;
+        padding-right: 20px;
+        margin:  20px auto;
+    }
+
     &--padding-plus{
         padding-left: 20px;
         padding-right: 20px;
+    }
+
+    &--wh-70vw{
+          min-width: 250px;
+        @media screen and (max-width:630px) {
+            width: 70vw;
+           
+       }
     }
 }
 

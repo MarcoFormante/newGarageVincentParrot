@@ -23,7 +23,7 @@ const FormElement = ({label, input, textarea, select, required,children}) => {
             {
                 !label && input.type === "submit" &&
             
-                <input type="submit" name="submit" value={input.value} className='cta cta--red' style={{padding:"8px 30px",marginTop:"20px"}} />
+                <input type="submit" name="submit" value={input.value} className='cta cta--red cta--wh-70vw' style={{padding:"8px 30px",marginTop:"20px"}} />
                 
           }
       

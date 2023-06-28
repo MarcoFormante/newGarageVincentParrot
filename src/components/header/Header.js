@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import Nav from './Nav'
 import MenuButton from './MenuButton';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const [menuToggle, setMenuToggle] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [isSticky, setIsSticky] = useState(false);
   const [lastScrollY, setLastScrolly] = useState(0);
+  const navigate = useNavigate()
 
   //menu Toggle function (used by menuButton and nav_links)
   const handleMenu = () => {
@@ -32,6 +34,10 @@ const Header = () => {
       
       }
     }, [])
+  
+  function returnToHome() {
+    navigate('/')
+  }
 
  
 
@@ -39,7 +45,7 @@ const Header = () => {
       <div className={'header_outer'} style={isSticky && menuToggle === false ? { position: "sticky" } : { position: "relative" }}>
     
         <header>
-          <div className={"brand_logo"}>
+          <div className={"brand_logo"} onClick={()=>returnToHome()}>
             <img src={"/images/brand-logo.png"} alt={"Garage Vincent Parrot"} />
           </div>
   

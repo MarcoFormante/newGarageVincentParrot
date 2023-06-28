@@ -8,8 +8,8 @@ Abstract: mixins,variables
 components: button
 */
 .cta, .car_card_buttons .car_card_cta {
-  padding: 5px;
-  border-radius: 4px;
+  padding: 7px;
+  border-radius: 25px;
   border: 2px solid #353535;
   font-size: 16px;
   min-width: 87px;
@@ -52,9 +52,22 @@ components: button
   padding-right: 20px;
   margin: 95px auto;
 }
+.cta_avis {
+  padding-left: 20px;
+  padding-right: 20px;
+  margin: 20px auto;
+}
 .cta--padding-plus {
   padding-left: 20px;
   padding-right: 20px;
+}
+.cta--wh-70vw {
+  min-width: 250px;
+}
+@media screen and (max-width: 630px) {
+  .cta--wh-70vw {
+    width: 70vw;
+  }
 }
 
 .menu_button {
@@ -1018,7 +1031,9 @@ input[type=checkbox] {
 }
 
 .filters_btn_toggle {
-  margin-left: 20px;
+  margin-right: 25px;
+  display: flex;
+  justify-content: right;
   font-weight: bold;
   color: #D64E54;
   font-size: 30px;
@@ -1030,6 +1045,11 @@ input[type=checkbox] {
   right: 2px;
   top: 5px;
 }
+@media screen and (min-width: 1024px) {
+  .filters_btn_toggle {
+    margin-right: 150px;
+  }
+}
 
 .filter_window--active {
   left: 0;
@@ -1040,6 +1060,12 @@ input[type=checkbox] {
   width: 40px;
   height: 40px;
   background-image: url(/src/icons//filters_icon.svg);
+}
+
+.filter_icon--active {
+  width: 40px;
+  height: 40px;
+  background-image: url(/src/icons//filters_icon_red.svg);
 }
 
 #offre {

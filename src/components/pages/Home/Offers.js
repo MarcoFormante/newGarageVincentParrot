@@ -117,18 +117,17 @@ const Offers = ({cars,count}) => {
     return (
         <div style={offerCards && offerCards?.length > 0 ? {display:"block"} : {display:"none"}}>
             <h3 className={'section_title section_title_offres'}>Nos offres du mois</h3> 
-            <Arrows cardsTotalWidth={offerCards.length * 300} carouselX={carouselX} carouselWidth={carouselWidth} onClick={(direction)=>setArrowTarget(direction)}  />
+            <Arrows cardsTotalWidth={offerCards.length * 250} carouselX={carouselX} carouselWidth={carouselWidth} onClick={(direction)=>setArrowTarget(direction)}  />
            
         <div className={"section_page section_page--grey"}>
             <div className={'carCards_container'} ref={carousel}>
-            <div className={'page_section page_section_offers card_carousel_flex'} style={offerCards.length * 300 < window.innerWidth ? { justifyContent: "center" } : {}}>
-                {/* { offerCards && offerCards?.map((car, index) => car.id && <CarCard key={index}  {...cars[index]} />) } */}
-                { offerCards && offerCards?.map((car, index) => car.id && <CarCard key={index}  {...offerCards[index]} />) }
+            <div className={'page_section page_section_offers card_carousel_flex'} style={offerCards.length * 250 < window.innerWidth ? { justifyContent: "center" } : {}}>
+                { offerCards && offerCards?.map((car, index) => car.id  && <CarCard key={index}  {...offerCards[index]} />) }
             </div>
               
             </div>
             <div className={"container_full--flex"}>
-                <ButtonCta className={"cta cta--red cta_offers"} inner={"Tous nos vèhicules"} type={"link"} to={"/parc-auto"} />
+                <ButtonCta className={"cta cta--red cta_offers cta--wh-70vw"} inner={"Tous nos vèhicules"} type={"link"} to={"/parc-auto"} />
             </div>
         </div>
         </div>
