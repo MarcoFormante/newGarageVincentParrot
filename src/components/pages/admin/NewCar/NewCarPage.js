@@ -1,22 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import PageTitle from '../../../PageTitle/PageTitle'
 import FormElement from '../../../FormElement/FormElement'
 import DetailsInputs from './DetailsInputs'
 import EquipmentsInputs from './EquipmentsInputs'
-import { array } from 'prop-types'
+
 import NewCarGallery from './NewCarGallery'
-import ButtonCta from '../../../Buttons/ButtonCta'
+
 
 
 
 
 const NewCarPage = () => {
   const [thumb, setThumb] = useState();
+  const [formValues,setFormValues] = useState({})
 
-
- 
-  
-  
   return (
     <div>
         <PageTitle pageTitle={"Nouveau véhicule"} />
@@ -27,7 +24,7 @@ const NewCarPage = () => {
                     <div className='new_car_img-thumb '>
                       <FormElement
                         label={{ for: "img-thumb", text: "Choisir la photo principal"}} 
-                        input={{ type: "file", required: true, accept: "image/jpeg , image/png", name: "img-thumb", id: "img-thumb" ,onChange:(e)=> setThumb(e.target.files[0])}}
+                        input={{ type: "file", required: true, accept: "image/jpeg , image/png", name: "img-thumb", id: "img-thumb" , onChange:(e)=> setThumb(e.target.files[0])}}
                         required={true}
                       />
                     </div>
@@ -38,7 +35,7 @@ const NewCarPage = () => {
                     <div className='new_car_details container--pad-top inputs_container'>
                         <span className='new_car_details_title'>Détails du vehicule</span>
                         <div className='row_inputs_container inputs_container' >
-                          <DetailsInputs/>
+                          <DetailsInputs setFormValues={(values)=>setFormValues({...formValues,...values})}/>
                         </div>
                     </div>
           
