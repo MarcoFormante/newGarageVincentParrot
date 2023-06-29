@@ -1423,6 +1423,7 @@ label[for=galleryfileInput] .required {
   font-size: clamp(10px, 1.8vw, 16px);
   min-width: 310px;
   margin: auto;
+  border-collapse: collapse;
 }
 .table_timeTableHandler_container tr {
   min-height: 500px;
@@ -1439,9 +1440,9 @@ label[for=galleryfileInput] .required {
   position: relative;
   border: none;
   padding: 10px 10px;
-  width: 150px;
-  height: 150px;
-  display: block;
+  width: 100px;
+  height: 50px;
+  text-align: center;
 }
 .table_timeTableHandler td span.edit_time {
   position: absolute;
@@ -1847,6 +1848,9 @@ ul li {
 }
 .container--center--row--flex-end {
   align-items: flex-end;
+}
+.container--center--row--spaceB {
+  justify-content: space-between;
 }
 
 .container--center--column {

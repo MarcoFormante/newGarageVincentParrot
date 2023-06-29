@@ -5,6 +5,7 @@ import Modal from '../../../Modal/Modal'
 import toast, { Toaster } from 'react-hot-toast';
 
 
+
 const TimesOpeningHandler = () => {
   const [timeTable, setTimeTable] = useState([])
   const days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
@@ -17,6 +18,7 @@ const TimesOpeningHandler = () => {
   const [isValid, setIsValid] = useState(null)
   const [isClose, setIsClose] = useState(false);
   const [InputType, setInputType] = useState("")
+  const [isInContinue,setIsInContinue] = useState(false)
   
   const notifySuccess = (text) => toast.success(text);
   const notifyError = (text) => toast.error(text);
@@ -46,6 +48,7 @@ const TimesOpeningHandler = () => {
     setModalValueColumn(column)
     setIsClose(!close)
     setInputType(type)
+    setIsInContinue(value ==="NC")
   }
 
 
@@ -59,6 +62,7 @@ const TimesOpeningHandler = () => {
     setIsValid(null)
     setIsClose(false)
     setInputType("input")
+    setIsInContinue(false)
   }
 
   function saveTimeValue() {
@@ -66,7 +70,7 @@ const TimesOpeningHandler = () => {
     const formData = new FormData(); 
     formData.append("id", modalInputId);
     formData.append("column", modalValueColumn);
-    formData.append("value", modalInputValue);
+    formData.append("value",isInContinue ? "NC" : modalInputValue);
     if (isClose) {
       formData.append("close",0)
     } else {
@@ -117,11 +121,13 @@ const TimesOpeningHandler = () => {
           break;
         
           case "day_end_am":
-            timeTable[modalInputIndex].day_end_am =  modalInputValue;
+          timeTable[modalInputIndex].day_end_am = isInContinue ? "NC" : modalInputValue;
+        
           break;
         
           case "day_start_pm":
-            timeTable[modalInputIndex].day_start_pm =  modalInputValue;
+          timeTable[modalInputIndex].day_start_pm = isInContinue ? "NC" : modalInputValue;
+         
           break;
         
           case "day_end_pm":
@@ -131,6 +137,16 @@ const TimesOpeningHandler = () => {
         default:
           break;
       }
+  }
+
+  const styleSheet = {
+    td_red: {
+      color: "red",
+      fontWeight:600
+    },
+    td_big:{
+      fontWeight:600
+    }
   }
  
   
@@ -151,7 +167,14 @@ const TimesOpeningHandler = () => {
                   <input type="time" id="time" value={modalInputValue} onChange={(e) => {
                   setModalInputValue(e.target.value)
                   }}
-                />
+                  />
+                  {(modalValueColumn === "day_end_am" || modalValueColumn === "day_start_pm")
+                    &&
+                    <div>
+                      <label htmlFor="close">En Continue</label>
+                      <input type="checkbox" id="close" checked={modalInputValue === "NC" ? isInContinue :  isInContinue} onChange={() => setIsInContinue(!isInContinue)} />
+                    </div>
+                    }
                 </>
               )
               :
@@ -173,7 +196,7 @@ const TimesOpeningHandler = () => {
               <th>Fermeture matin</th>
               <th>Ouverture aprem</th>
               <th>Fermeture aprem</th>
-              <th>Fermé</th>
+              <th>Fermé / Ouvert</th>
             </tr>
           </thead>
 
@@ -182,9 +205,9 @@ const TimesOpeningHandler = () => {
             
               <tr key={"time_table_" + index + Math.random()}>
 
-                <td style={!t.close ? {color:"red",fontWeight:"600"} : {}}> {days[t.id]} </td>
+                <td style={!t.close ? styleSheet.td_red : {}}> {days[t.id]} </td>
 
-                <td style={!t.close ? {color:"red",fontWeight:"600"} : {}}>
+                <td style={!t.close ? styleSheet.td_red : {}}>
                   {t.day_start_am }
                   <span
                     className='edit_time'
@@ -194,7 +217,7 @@ const TimesOpeningHandler = () => {
                   </span>
                 </td>
 
-                <td style={!t.close ? {color:"red",fontWeight:"600"} : {}}>
+                <td style={!t.close  ? styleSheet.td_red : t.day_end_am === "NC" ? styleSheet.td_big : {}}>
                   { t.day_end_am }
                   <span
                     className='edit_time'
@@ -204,7 +227,7 @@ const TimesOpeningHandler = () => {
                   </span>
                 </td>
 
-                <td style={!t.close ? {color:"red",fontWeight:"600"} : {}}>
+                <td style={!t.close  ? styleSheet.td_red : t.day_start_pm === "NC" ? styleSheet.td_big : {}}>
                   { t.day_start_pm }
                   <span
                     className='edit_time'
@@ -214,7 +237,7 @@ const TimesOpeningHandler = () => {
                   </span>
                 </td>
 
-                <td style={!t.close ? {color:"red",fontWeight:"600"} : {}}>
+                <td style={!t.close ? styleSheet.td_red : {}}>
                   { t.day_end_pm }
                   <span
                     className='edit_time'
@@ -224,7 +247,7 @@ const TimesOpeningHandler = () => {
                   </span>
                 </td>
 
-                <td style={!t.close ? {color:"red",fontWeight:"600"} : {color:"green"}}>
+                <td style={!t.close ? styleSheet.td_red : {color:"green"}}>
                   {!t.close ? "Fermé" : "Ouvert"}
                   <span
                     className='edit_time'

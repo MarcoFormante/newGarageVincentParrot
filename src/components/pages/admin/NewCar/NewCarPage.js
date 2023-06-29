@@ -4,7 +4,7 @@ import FormElement from '../../../FormElement/FormElement'
 import DetailsInputs from './DetailsInputs'
 import EquipmentsInputs from './EquipmentsInputs'
 import { array } from 'prop-types'
-import NewCarGallery from '../NewCarGallery'
+import NewCarGallery from './NewCarGallery'
 import ButtonCta from '../../../Buttons/ButtonCta'
 
 

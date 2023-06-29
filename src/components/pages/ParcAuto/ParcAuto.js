@@ -40,7 +40,7 @@ const ParcAuto = () => {
         
             setLoading(true)
             const parcAutoPath = process.env.REACT_APP_HTTP + "pages/parcAuto.php";
-                axios.get(`${parcAutoPath}?page=${currentPage * 10}&filters=${JSON.stringify(filters)}&getFilters=${true}`)
+                axios.get(`${parcAutoPath}?page=${currentPage * 10}&filters=${JSON.stringify(filters)}&getFilters=true`)
                     .then(response => {
                         console.log(response?.data);
                         console.log(response.statusText);
@@ -83,6 +83,8 @@ const ParcAuto = () => {
                   setFilters({ ...filters, ...value })
                   handleCarPage(0)
                 }}
+              
+              setFiltersToggle={()=>setFiltersToggle(!filtersToggle)}
             />
             </div>
           </div>

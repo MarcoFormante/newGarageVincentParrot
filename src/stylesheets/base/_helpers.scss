@@ -63,6 +63,10 @@ ul{
     &--flex-end{
         align-items: flex-end;
     }
+
+    &--spaceB{
+        justify-content: space-between;
+    }
 }
 
 

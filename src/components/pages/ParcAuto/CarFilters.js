@@ -2,7 +2,7 @@ import React, {useState, useEffect } from 'react'
 import MultiRangeSlider from './MultiRangeSlider'
 import axios from '../../../api/axios'
 
-const CarFilters = ({handleChangeFilters,closeButton}) => {
+const CarFilters = ({handleChangeFilters,closeButton,setFiltersToggle}) => {
   const [offer, setOffer] = useState(false)
   const [filters, setFilters] = useState({})
   const [baseFilters,setBaseFilters] = useState({})
@@ -25,15 +25,13 @@ const CarFilters = ({handleChangeFilters,closeButton}) => {
         setFilters({ ...response?.data })
         setBaseFilters({...response?.data})
       })
-  },[])
+  },[filters])
   
 
-  useEffect(() => {
-    setFilters(baseFilters)
-  },[filters,baseFilters])
+  
   
  
-  console.log(baseFilters);
+  
   return (
   <div>
       
@@ -68,9 +66,9 @@ const CarFilters = ({handleChangeFilters,closeButton}) => {
             <input id={"offre"} type="checkbox" checked={offer} onChange={handleOfferChange}/>
           </div>
           <div className='reset container--center--row'>Reset <span className='reset_icon_filters reset_icon' onClick={() => {
-            setFilters({baseFilters })
-            setOffer(false)
-            handleChangeFilters({ minKm: 0, maxKm: 50000000000, minYear: 0, maxYear: 50000000, minPrice: 0, maxPrice: 500000000, offer: false })
+              setOffer(false)
+              handleChangeFilters({ minKm: 0, maxKm: 50000000000, minYear: 0, maxYear: 50000000, minPrice: 0, maxPrice: 500000000, offer: false })
+              setFilters({baseFilters})
           }}></span></div>
         </div>
        
