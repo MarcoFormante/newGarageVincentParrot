@@ -6,6 +6,7 @@ import CarFilters from './CarFilters'
 import axios from '../../../api/axios'
 import ButtonCta from '../../Buttons/ButtonCta'
 import toast, { Toaster } from 'react-hot-toast';
+import Loading from '../../Loading/Loading'
 
 const ParcAuto = () => {
   const [cars, setCars] = useState([])
@@ -65,6 +66,7 @@ const ParcAuto = () => {
     return (
       
       <div className='parc-auto_page'>
+        <Loading isLoading={loading}/>
          <Toaster/>
           <div className='filters_container'>
             <div className={`${filtersToggle ?  "filter_window--active filters_window " : "filters_window "}`}>
@@ -95,7 +97,7 @@ const ParcAuto = () => {
             </div>
             <div className='parc_auto_cars_switch_block'>
               <div className={'parc_auto_cars_section'}>   
-                    {loading ? "loading..." : ""}
+                  
                 {cars && !loading && cars.map((car, index) => <CarCard key={"parc-auto " + index + car.id} {...cars[index]} />)}
             </div>
                   <SwitchPageBlock carCount={carCount} dataLength={carCount} currentPage={currentPage} setCurrentPage={(value)=>setCurrentPage(value)} handleCarPage={(page)=> handleCarPage(page)} />
