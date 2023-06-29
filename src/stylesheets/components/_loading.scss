@@ -4,39 +4,46 @@
     height: 100vh;
     @include flex-center(row);
     background-color: white;
-    z-index: 1000;
+    z-index: 9;
     top: 0;
     left: 0;
 
     &_circle{
         width: 200px;
         height: 200px;
-        border-width: 10px;
         border-radius: 50%;
-        border-top: 20px solid rgb(255, 30, 0) ;
-        border-left: 0px solid red;
-        border-right: 0px solid rgb(245, 143, 84) ;
-        border-bottom: 20px solid red;
-        animation: loading infinite 1s ease ;
+        border-left: 30px solid  $brand_color;
+        border-bottom: 10px solid $secondary_color;
+        box-shadow: 0 0 10px black;
+        animation: loading infinite 1s cubic-bezier(0.34, 1.03, 0.79, 0.4);
+       
     }
 
     &_text{
-        color: rgb(255, 59, 59);
+        @include flex-center(column);
+        border-radius: 50%;
+        width: 200px;
+        height: 200px;
+        border: 5px solid $secondary_color;
+        color: rgb(231, 49, 49);
         font-size: 20px;
         font-weight: 600;
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%,-50%);
+       
     }
 }
 
 @keyframes loading {
     0%{
         transform: rotate(0deg);
+     
     }
-
+    
     100%{
         transform: rotate(359deg);
+        box-shadow: 0 0 20px black;
     }
 }

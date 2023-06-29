@@ -16,7 +16,6 @@ const ParcAuto = () => {
     const [currentPage, setCurrentPage] = useState(0)
     const [filters, setFilters] = useState({ minKm: 0, maxKm: 500000, minYear: 0, maxYear: 500000, minPrice: 0, maxPrice: 1000000, offer: false })
     const [loading, setLoading] = useState(false)
-    const navigate = useNavigate()
     const notifySuccess = (text) => toast.success(text)
     const notifyError = (text) => toast.error(text)
   
@@ -49,7 +48,7 @@ const ParcAuto = () => {
                     setCars(response?.data?.cars)
                       setCarCount(response?.data?.count)
                       setTimeout(() => {
-                        setLoading(true);
+                        setLoading(false);
                     }, 500);
                   }
               })
@@ -58,19 +57,13 @@ const ParcAuto = () => {
     }, [currentPage, filters])
     
   
-  useEffect(() => {
-    if (loading) {
-      setTimeout(() => {
-        navigate('/error')
-      }, 10000);
-    }
-  },[loading])
+  
   
 
     return (
       
       <div className='parc-auto_page'>
-        <Loading isLoading={loading || !loading}/>
+        <Loading isLoading={loading}/>
          <Toaster/>
           <div className='filters_container'>
             <div className={`${filtersToggle ?  "filter_window--active filters_window " : "filters_window "}`}>

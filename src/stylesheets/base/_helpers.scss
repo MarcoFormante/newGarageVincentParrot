@@ -192,15 +192,6 @@ ul{
 }
 
 
-.sticky_element{
-    position: sticky;
-    top: 100px;
-    right: 0px;
-   background-color: lighten($light_gray_color,10);
-   padding: 40px;
-    z-index: 100;
-}
-
 
 .mar-auto{
     margin: auto;
@@ -210,4 +201,10 @@ ul{
 
 .p-20{
     padding: 20px;
+}
+
+
+.input_center_handler{
+    background-color: $light-gray-color;
+    padding: 30px;
 }

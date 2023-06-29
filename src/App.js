@@ -43,31 +43,33 @@ function App() {
       {/*public*/}
       
       <Header />
-      <AdminNav role={role} checkToken={()=>setCheckTrigger(!checkTrigger)}  />
-      <Routes>
-        <Route exact path='/' element={<Home handleOpeningTimes={(values)=>setOpeningTimes(values)} />} />
-        <Route path='/parc-auto' element={<ParcAuto />} />
-        <Route path='/parc-auto/details/:id' element={<CarDetails />} />
-        <Route path="/contact" element={<Contact/>} />
-        <Route path="/area-reserve" element={<ReservedArea setLogin={(value) => setlogin(value)} />} />
-        <Route path="/avis" element={<AvisPage/>} />
-        <Route path='*' element={"NOT FOUND 404"} />
-    
-        {/*Protected*/}
-        
-        <Route element={<ProtectedRoute auth={window.localStorage.getItem("token")}
-          login={login} redirectPath={"/"} checkTrigger={checkTrigger} />}
-        >
-          <Route path={"/admin/new-car"} element={<NewCarPage/>} />
-          <Route path={"/admin/modify-car"} element={<h1>adminpage</h1>} />
-          <Route path={"/admin/services"} element={<ServicesHandler/>} />
-          <Route path={"/admin/accounts"} element={<Accounts/>} />
-          <Route path={"/admin/reviews"} element={<ReviewsHandler/>} />
-          <Route path={"/admin/timeTable"} element={<TimesOpeningHandler/>} />
-          <Route path={"/admin/*"} element={<h1>notfound</h1>} />
-        </Route>
-        
-      </Routes>
+      <AdminNav role={role} checkToken={() => setCheckTrigger(!checkTrigger)} />
+      <main>
+        <Routes>
+          <Route exact path='/' element={<Home handleOpeningTimes={(values)=>setOpeningTimes(values)} />} />
+          <Route path='/parc-auto' element={<ParcAuto />} />
+          <Route path='/parc-auto/details/:id' element={<CarDetails />} />
+          <Route path="/contact" element={<Contact/>} />
+          <Route path="/area-reserve" element={<ReservedArea setLogin={(value) => setlogin(value)} />} />
+          <Route path="/avis" element={<AvisPage/>} />
+          <Route path='*' element={"NOT FOUND 404"} />
+      
+          {/*Protected*/}
+          
+          <Route element={<ProtectedRoute auth={window.localStorage.getItem("token")}
+            login={login} redirectPath={"/"} checkTrigger={checkTrigger} />}
+          >
+            <Route path={"/admin/new-car"} element={<NewCarPage/>} />
+            <Route path={"/admin/modify-car"} element={<h1>adminpage</h1>} />
+            <Route path={"/admin/services"} element={<ServicesHandler/>} />
+            <Route path={"/admin/accounts"} element={<Accounts/>} />
+            <Route path={"/admin/reviews"} element={<ReviewsHandler/>} />
+            <Route path={"/admin/timeTable"} element={<TimesOpeningHandler/>} />
+            <Route path={"/admin/*"} element={<h1>notfound</h1>} />
+          </Route>
+          
+        </Routes>
+      </main>
       {
         !hidden[0] &&
         <div>

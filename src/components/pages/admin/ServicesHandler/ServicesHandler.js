@@ -154,11 +154,12 @@ const ServicesHandler = () => {
 
         <PageTitle pageTitle={"Gestion des services"} />
           <div className='container--pad-top'>
-                <div>
-                    <input type="text" value={newService} onChange={(e)=> setNewService(e.target.value)} />
-                    <button onClick={() =>handleNewService("add")}>Ajoute</button>
+              <div className='input_center_handler container--center--column gap-20 mar-bot-20' >
+                  <label htmlFor="newService" className='text-bold'>Nouveau service :</label>
+                    <textarea type="text" placeholder='Ecrir ici le nouveau service' value={newService} id='newService' onChange={(e)=> setNewService(e.target.value)} style={{minWidth:300,paddingLeft:5,minHeight:80,paddingTop:4}} />
+                    <button className='cta cta--red'  onClick={() =>handleNewService("add")}>Ajoute</button>
                 </div>
-        <table className='mar-auto table_servicesHandler'>
+        <table className='table_servicesHandler'>
             <thead>
                   <tr>
                     <th>Service</th>
@@ -176,7 +177,7 @@ const ServicesHandler = () => {
                         </span>
                     </td>
                     <td>
-                        <span className='delete_icon'
+                        <span className='delete-icon'
                             onClick={() => {
                                
                                 handleModal("Service", service.service, service.id, index, "delete")

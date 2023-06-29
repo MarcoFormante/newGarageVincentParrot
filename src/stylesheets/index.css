@@ -536,7 +536,7 @@ h2.page_title_home {
   flex-direction: row;
 }
 
-.delete_icon {
+.delete-icon {
   width: 30px;
   height: 30px;
   background-image: url(/src/icons/delete.svg);
@@ -637,23 +637,29 @@ h2.page_title_home {
   justify-content: center;
   align-items: center;
   background-color: white;
-  z-index: 1000;
+  z-index: 9;
   top: 0;
   left: 0;
 }
 .loading_circle {
   width: 200px;
   height: 200px;
-  border-width: 10px;
   border-radius: 50%;
-  border-top: 20px solid rgb(255, 30, 0);
-  border-left: 0px solid red;
-  border-right: 0px solid rgb(245, 143, 84);
-  border-bottom: 20px solid red;
-  animation: loading infinite 1s ease;
+  border-left: 30px solid #D64E54;
+  border-bottom: 10px solid #353535;
+  box-shadow: 0 0 10px black;
+  animation: loading infinite 1s cubic-bezier(0.34, 1.03, 0.79, 0.4);
 }
 .loading_text {
-  color: rgb(255, 59, 59);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  border: 5px solid #353535;
+  color: rgb(231, 49, 49);
   font-size: 20px;
   font-weight: 600;
   position: absolute;
@@ -668,6 +674,7 @@ h2.page_title_home {
   }
   100% {
     transform: rotate(359deg);
+    box-shadow: 0 0 20px black;
   }
 }
 /*
@@ -1505,15 +1512,24 @@ label[for=galleryfileInput] .required {
 
 .table_servicesHandler {
   border-collapse: collapse;
-  padding: 20px;
+  margin: 40px auto;
+  min-width: 60vw;
 }
 .table_servicesHandler td {
   border: 1px solid black;
-  padding: 20px;
+  padding: 10px;
+  max-width: 60vw;
 }
 .table_servicesHandler td .edit-icon {
   width: 40px;
   height: 40px;
+  margin: auto;
+}
+.table_servicesHandler td .delete-icon {
+  display: block;
+  margin: auto;
+  width: 35px;
+  height: 35px;
 }
 
 /*
@@ -1986,15 +2002,6 @@ ul li {
   color: green;
 }
 
-.sticky_element {
-  position: sticky;
-  top: 100px;
-  right: 0px;
-  background-color: #e7e9eb;
-  padding: 40px;
-  z-index: 100;
-}
-
 .mar-auto {
   margin: auto;
   width: -moz-fit-content;
@@ -2003,6 +2010,11 @@ ul li {
 
 .p-20 {
   padding: 20px;
+}
+
+.input_center_handler {
+  background-color: #CBD0D4;
+  padding: 30px;
 }
 
 html {
@@ -2032,6 +2044,6 @@ h3.section_title {
   margin: 55px 0;
 }
 
-body {
-  min-height: 100vh;
+main {
+  min-height: 35vh;
 }/*# sourceMappingURL=index.css.map */

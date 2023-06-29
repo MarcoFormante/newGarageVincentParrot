@@ -103,7 +103,7 @@ const ReviewsHandler = () => {
                 <div className='mar-top-20 mar-bot-50'>
                     <p className='text-center'>Dans cette page vous pouvez <span className='c-red text-bold'>Moderer</span> ou <span className='c-green text-bold'>Valider</span> les Avis</p>
                 </div>
-                <div className='sticky_element'>
+                <div className='input_center_handler'>
                     <div className='container--center--column inputs_container_filters_inner '>
                         <label htmlFor="gestionReviewFilters">Filtrer par</label>
                         <select type="text" id='gestionReviewFilters' onChange={(e)=> setFilters(e.target.value)}>

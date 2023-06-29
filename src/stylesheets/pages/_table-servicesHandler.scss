@@ -1,13 +1,25 @@
 .table_servicesHandler{
     border-collapse: collapse;
-    padding: 20px;
+    margin: 40px auto;
+    min-width: 60vw;
+ 
     td{
         border: 1px solid black;
-        padding: 20px;
+        padding: 10px;
+        max-width: 60vw;
+
 
         .edit-icon{
             width: 40px;
             height: 40px;
+            margin: auto;
+        }
+
+        .delete-icon{
+            display: block;
+            margin: auto;
+            width: 35px;
+            height: 35px;
         }
     }
 
