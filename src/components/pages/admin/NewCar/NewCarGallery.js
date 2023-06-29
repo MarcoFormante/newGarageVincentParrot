@@ -1,24 +1,28 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-const NewCarGallery = () => {
+const NewCarGallery = ({formValues,setFormValues}) => {
     const [gallery, setGallery] = useState([])
    
+  
     function handleGallery(e) {  
     setGallery([...gallery, ...e.target.files]) 
 }
         
-    
-    
-    function deleteImg(img) {
-        setGallery(gallery.filter(image => image !== img))
-    }
+
+  function deleteImg(img) {
+      setGallery(gallery.filter(image => image !== img))
+  }
+  
+  useEffect(() => {
+    setFormValues({...formValues,gallery:[...gallery]})
+  },[gallery])
 
   return (
     <>
         <div className='new_car_gallery'>
             {gallery?.map((img, index) => <div key={"gallery_img_" + index + img.name} className='new_car_gallery_img_container'>
               <img src={URL.createObjectURL(img)} alt="" />
-              <div className='delete_icon' onClick={() => deleteImg(img)}></div>
+              <div className='delete-icon ' style={{display:"block",margin:"auto"}} onClick={() => deleteImg(img)}></div>
             </div>)}
         </div>
             <div>

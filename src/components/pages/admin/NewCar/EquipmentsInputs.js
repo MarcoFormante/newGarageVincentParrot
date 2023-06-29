@@ -34,10 +34,11 @@ const equipArray=[
 "Volant sport"
 ]
 
-const EquipmentsInputs = () => {
+const EquipmentsInputs = ({formValues,setFormValues}) => {
     const [equipments, setEquipments] = useState([])
     const [modal, setModal] = useState(false)
     const [modalInput, setModalInput] = useState("")
+    const [equipValues,setEquipValues] = useState([])
     
     function addEquipement() {
         if (modalInput) {
@@ -46,7 +47,8 @@ const EquipmentsInputs = () => {
         }
        
     }
-    
+
+
     function handleModal() {
         setModal(!modal);
     }
@@ -55,6 +57,20 @@ const EquipmentsInputs = () => {
         //fetch equipments from database
         setEquipments([...equipArray])
     }, [])
+
+    function handleValue(isChecked, id,value) {
+        if (isChecked === true) {
+            setEquipValues(prev => [...prev, id])
+        } else {
+            setEquipValues(prev => [...prev.filter((eqID, i) => id !== eqID)]) 
+        }
+    }
+
+    useEffect(() => {
+        setFormValues({...formValues,equipmentValues:[...equipValues]})
+    },[equipValues])
+
+
     
     return (
       <>
@@ -65,7 +81,10 @@ const EquipmentsInputs = () => {
                     <div>
                         <input type="checkbox"
                             name={`equipments[${index}]`}
-                            id={`equipments[${index}]`} />
+                            id={`equipments[${index}]`}
+                            onChange={(e)=> handleValue(e.target.checked,index,equip)}
+                      />
+                         
                         <label
                             htmlFor={`equipments[${index}]`}
                             style={{marginLeft:"10px"}}

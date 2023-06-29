@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import FormElement from '../../../FormElement/FormElement'
 
-const DetailsInputs = ({ setFormValues }) => {
+const DetailsInputs = ({ formValues ,setFormValues }) => {
 
   const [detailValues, setDetailValues] = useState(
     {
@@ -21,6 +21,10 @@ const DetailsInputs = ({ setFormValues }) => {
       offer: ""
     })
 
+  
+  useEffect(() => {
+    setFormValues({...formValues,detailValues:{...detailValues}})
+  },[detailValues])
 
   return (
       <>

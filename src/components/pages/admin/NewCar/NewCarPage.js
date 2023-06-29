@@ -1,19 +1,25 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PageTitle from '../../../PageTitle/PageTitle'
 import FormElement from '../../../FormElement/FormElement'
 import DetailsInputs from './DetailsInputs'
 import EquipmentsInputs from './EquipmentsInputs'
-
 import NewCarGallery from './NewCarGallery'
 
 
 
 
-
 const NewCarPage = () => {
-  const [thumb, setThumb] = useState();
-  const [formValues,setFormValues] = useState({})
+  const [thumb, setThumb] = useState(null);
+  const [formValues, setFormValues] = useState({ detailValues: {}, equipmentValues:[],thumbnail:{}, gallery:[]})
+  console.log(thumb);
+  console.log(formValues);
+  
 
+  useEffect(() => {
+    setFormValues({...formValues,thumbnail:thumb})
+  }, [thumb])
+  
+  
   return (
     <div>
         <PageTitle pageTitle={"Nouveau véhicule"} />
@@ -35,7 +41,7 @@ const NewCarPage = () => {
                     <div className='new_car_details container--pad-top inputs_container'>
                         <span className='new_car_details_title'>Détails du vehicule</span>
                         <div className='row_inputs_container inputs_container' >
-                          <DetailsInputs setFormValues={(values)=>setFormValues({...formValues,...values})}/>
+                          <DetailsInputs formValues={formValues} setFormValues={(values)=>setFormValues({...formValues,...values})}/>
                         </div>
                     </div>
           
@@ -43,14 +49,14 @@ const NewCarPage = () => {
                     <div className={'new_car_details container--pad-top inputs_container'}>
                         <span className={'new_car_details_title new_car_details_title--black'}>Equipements</span>
                         <div className={"new_car_equip_list inputs_container"} >
-                         <EquipmentsInputs />
+                          <EquipmentsInputs formValues={formValues} setFormValues={(values) => setFormValues({ ...formValues, ...values })} />
                         </div>
                     </div>
           
                     {/* car gallery */}
                     <div className={'new_car_details container--pad-top inputs_container'}>
                     <span className={'new_car_details_title'}>Gallerie images</span>
-                      <NewCarGallery/>
+                      <NewCarGallery formValues={formValues} setFormValues={(values) => setFormValues({ ...formValues, ...values })}/>
                   </div>
           
                   </div>
