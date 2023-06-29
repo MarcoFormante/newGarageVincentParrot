@@ -3,12 +3,14 @@ import axios from '../../../../api/axios'
 import PageTitle from '../../../PageTitle/PageTitle'
 import { AvisCard } from '../../Home/AvisSection'
 import toast, { Toaster } from 'react-hot-toast';
+import Loading from '../../../Loading/Loading';
 
 const ReviewsHandler = () => {
     const [avis,setAvis]=useState([])
     const [filters, setFilters] = useState("");
     const [filterName, setFilterName] = useState("");
     const [filterReview, setFilterReview] = useState(5);
+    const [loading,setLoading]=useState(false)
   
 
 
@@ -38,14 +40,23 @@ const ReviewsHandler = () => {
   
 
     useEffect(() => {
+        setLoading(true)
         const homepagePath = process.env.REACT_APP_HTTP + "pages/homePage.php?reviews=true";
             axios.get(homepagePath)
-            .then(response => {
-                let reviews = [];
-                response.data.reviews.forEach((review,index)=> {
-                        reviews.push(response.data.reviews[index])
-                });
-                setAvis([...reviews])
+                .then(response => {
+                if (response.data.status === 1) {
+                    let reviews = [];
+                    response.data.reviews.forEach((review,index)=> {
+                            reviews.push(response.data.reviews[index])
+                    });
+                    setAvis([...reviews])
+
+                    setTimeout(() => {
+                        setLoading(false)
+                    }, 500);
+                }
+                
+
             })
     }, [])
     
@@ -84,7 +95,8 @@ const ReviewsHandler = () => {
     return (
       
         <div>
-             <Toaster />
+            <Toaster />
+            <Loading isLoading={loading}/>
             <PageTitle pageTitle={"Gestion des avis "} />
            
             <div className='container--pad-top ' >

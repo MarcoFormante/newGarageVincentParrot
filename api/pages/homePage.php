@@ -35,7 +35,7 @@ if (isset($_GET['services'])) {
 if (isset($_GET['reviews'])) {
     $ReviewController = new ReviewController();
     $reviews = $ReviewController->getReviews();
-    echo json_encode(["reviews"=>$reviews]);
+    echo json_encode(["status"=> 1, "reviews"=> $reviews]);
 }
 
 if (isset($_GET['totalReviews'])) {

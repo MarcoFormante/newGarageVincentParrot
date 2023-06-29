@@ -7,17 +7,18 @@ import axios from '../../../api/axios'
 import ButtonCta from '../../Buttons/ButtonCta'
 import toast, { Toaster } from 'react-hot-toast';
 import Loading from '../../Loading/Loading'
+import { useNavigate } from 'react-router-dom'
 
 const ParcAuto = () => {
-  const [cars, setCars] = useState([])
-    const [filtersToggle, setFiltersToggle] = useState(false);
+    const [cars, setCars] = useState([])
+    const [filtersToggle, setFiltersToggle] = useState(false)
     const [carCount, setCarCount] = useState(0)
     const [currentPage, setCurrentPage] = useState(0)
     const [filters, setFilters] = useState({ minKm: 0, maxKm: 500000, minYear: 0, maxYear: 500000, minPrice: 0, maxPrice: 1000000, offer: false })
-    const [loading, setLoading] = useState(false);
-  
-    const notifySuccess = (text) => toast.success(text);
-    const notifyError = (text) => toast.error(text);
+    const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
+    const notifySuccess = (text) => toast.success(text)
+    const notifyError = (text) => toast.error(text)
   
   function handleCarPage(page) {
         setCurrentPage(page)
@@ -31,42 +32,45 @@ const ParcAuto = () => {
         notifySuccess(carCount + " voitures trouvées")
       }
     }
-   
-    
   },[carCount])
   
  
 
     useEffect(() => {
         
-            setLoading(true)
-            const parcAutoPath = process.env.REACT_APP_HTTP + "pages/parcAuto.php";
-                axios.get(`${parcAutoPath}?page=${currentPage * 10}&filters=${JSON.stringify(filters)}&getFilters=true`)
-                    .then(response => {
-                        console.log(response?.data);
-                        console.log(response.statusText);
-                      
-                        if (response.status === 200 && response.request.readyState === 4 ) {
-                            setCars(response?.data?.cars)
-                            setCarCount(response?.data?.count)
-                            setTimeout(() => {
-                                setLoading(false);
-                            }, 500);
-                        }
-                    })
-                  
-                  .catch(error => console.log(error.data))
-        
-   
+      setLoading(true)
+      const parcAutoPath = process.env.REACT_APP_HTTP + "pages/parcAuto.php";
+          axios.get(`${parcAutoPath}?page=${currentPage * 10}&filters=${JSON.stringify(filters)}&getFilters=true`)
+              .then(response => {
+                  console.log(response?.data);
+                  console.log(response.statusText);
+                
+                  if(response.status === 200 && response.request.readyState === 4 ) {
+                    setCars(response?.data?.cars)
+                      setCarCount(response?.data?.count)
+                      setTimeout(() => {
+                        setLoading(true);
+                    }, 500);
+                  }
+              })
+            
+            .catch(error => console.log(error.data))
     }, [currentPage, filters])
     
   
+  useEffect(() => {
+    if (loading) {
+      setTimeout(() => {
+        navigate('/error')
+      }, 10000);
+    }
+  },[loading])
   
 
     return (
       
       <div className='parc-auto_page'>
-        <Loading isLoading={loading}/>
+        <Loading isLoading={loading || !loading}/>
          <Toaster/>
           <div className='filters_container'>
             <div className={`${filtersToggle ?  "filter_window--active filters_window " : "filters_window "}`}>

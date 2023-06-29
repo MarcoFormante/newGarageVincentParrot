@@ -179,7 +179,7 @@ Class Review{
                 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
                     $total[]=$row;
                 }
-                echo json_encode(["status"=>1 , "total"=>$total]);
+                echo json_encode(["status"=> 1 , "total"=>$total]);
             }else{
                 echo json_encode(["status"=> 0 ,"message" => "Erreur pendant recuperation des données(totalReviews)"]);
             }
