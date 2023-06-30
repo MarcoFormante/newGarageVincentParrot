@@ -1,38 +1,124 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import PageTitle from '../../../PageTitle/PageTitle'
 import FormElement from '../../../FormElement/FormElement'
 import DetailsInputs from './DetailsInputs'
 import EquipmentsInputs from './EquipmentsInputs'
 import NewCarGallery from './NewCarGallery'
 import axios from '../../../../api/axios'
+import Resizer from "react-image-file-resizer";
 
 
 
 
 const NewCarPage = () => {
   const [thumb, setThumb] = useState(null);
+
+  const [resizedGallery,setResizedGallery] = useState([])
   const [formValues, setFormValues] = useState({ detailValues: {}, equipmentValues:[],thumbnail:{}, gallery:[]})
-  console.log(thumb);
-  console.log(formValues);
+ 
   
 
   useEffect(() => {
     setFormValues({...formValues,thumbnail:thumb})
   }, [thumb])
 
-  function handleSubmit() {
-    const formData = new FormData();
-    const resizedThumbnail = "";
-    formData.append("thumbnail",resizedThumbnail)
-    axios.post(process.env.REACT_APP_HTTP + "pages/admin/carHandler.php")
+  async function handleSubmit(e) {
+    e.preventDefault();
+    
+    let thumbnailIsValid = false;
+    let galleryIsValid = false;
+    let detailsAreValids = false;
+
+
+
+    if (thumb) {
+      thumbnailIsValid = true;
+    }
+
+    if (formValues.gallery[0]) {
+        galleryIsValid = true;
+    } 
+
+    for (const key in formValues.detailValues) {
+      if (formValues.detailValues[key] === "") {
+          console.log("beh");
+      } 
+    }
+
+
+    const resizedThumbnail = await resizeThumb(thumb);
+    const resizedGallery = await resizeGalleryImages(formValues.gallery);
+   
+    
+
+    
+
+    let allInputsAreValid = thumbnailIsValid;
+
+    console.log("ee");
+    // if (resizedGallery && resizedThumbnail) {
+    
+    // }
+    // const formData = new FormData();
+    // formData.append("thumbnail",resizedThumbnail)
+    // axios.post(process.env.REACT_APP_HTTP + "pages/admin/carHandler.php")
   }
+
+
+  const resizeFile = (file) =>
+  new Promise((resolve) => {
+    Resizer.imageFileResizer(
+      file,
+      600,
+      400,
+      "JPEG",
+        75,
+      0,
+      (uri) => {
+        resolve(uri);
+      },
+      "file",
+      600,
+      400
+    );
+  });
+
+  const resizeThumb = async (file) => {
+    try {
+      const image = await resizeFile(file)
+      return await image
+    } catch (error) {
+      console.log(error);
+      return
+    }
+  } 
+    
+  
+
+  const resizeGalleryImages = async (images) => {
+    let a = [];
+    try {
+      for (let i = 0; i < images.length; i++) {
+        a.push(await resizeFile(images[i]));
+      }
+      return  a
+    } catch (error) {
+      console.log(error);
+      return
+    }
+   
+  } 
+  
+
+
+  
   
   
   return (
-    <div>
+    <div>    
         <PageTitle pageTitle={"Nouveau véhicule"} />
             <form className='form' encType={'multipart/form-data'} onSubmit={handleSubmit} >
-                
+              {resizedGallery && resizedGallery.map(img => <img src={img} alt=''></img>)}
                     <div className='new_car inputs_container'>
                     {/* car img-thumb  */}
                     <div className='new_car_img-thumb '>
@@ -68,7 +154,7 @@ const NewCarPage = () => {
                   </div>
           
                   </div>
-                  <input className={"cta cta--red mar-bot-20"} type="submit" value="Envois"/>
+                  <input className={"cta cta--red mar-bot-20"} type="submit" onClick={handleSubmit} value="Envois"/>
             </form>
 
     </div>

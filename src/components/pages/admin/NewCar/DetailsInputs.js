@@ -18,7 +18,7 @@ const DetailsInputs = ({ formValues ,setFormValues }) => {
       fuel: "",
       doors: "",
       VO: "",
-      offer: ""
+      offer: "0"
     })
 
   
