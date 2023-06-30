@@ -4,6 +4,7 @@ import FormElement from '../../../FormElement/FormElement'
 import DetailsInputs from './DetailsInputs'
 import EquipmentsInputs from './EquipmentsInputs'
 import NewCarGallery from './NewCarGallery'
+import axios from '../../../../api/axios'
 
 
 
@@ -18,12 +19,19 @@ const NewCarPage = () => {
   useEffect(() => {
     setFormValues({...formValues,thumbnail:thumb})
   }, [thumb])
+
+  function handleSubmit() {
+    const formData = new FormData();
+    const resizedThumbnail = "";
+    formData.append("thumbnail",resizedThumbnail)
+    axios.post(process.env.REACT_APP_HTTP + "pages/admin/carHandler.php")
+  }
   
   
   return (
     <div>
         <PageTitle pageTitle={"Nouveau véhicule"} />
-            <form className='form' encType={'multipart/form-data'} >
+            <form className='form' encType={'multipart/form-data'} onSubmit={handleSubmit} >
                 
                     <div className='new_car inputs_container'>
                     {/* car img-thumb  */}

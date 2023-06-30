@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Modal from '../../../Modal/Modal'
+import axios from '../../../../api/axios';
 
 const equipArray=[
 "Vitres arrière surteintées",
@@ -54,8 +55,15 @@ const EquipmentsInputs = ({formValues,setFormValues}) => {
     }
 
     useEffect(() => {
-        //fetch equipments from database
-        setEquipments([...equipArray])
+        const carHandlerPage = process.env.REACT_APP_HTTP + "pages/admin/carHandler.php?getAllEquipments=true"
+        axios.get(carHandlerPage)
+            .then(response => {
+            if (response.data.status === 1 ) {
+                const data = response.data.equipments
+                setEquipments([...data])
+            }
+        })
+      
     }, [])
 
     function handleValue(isChecked, id,value) {
@@ -66,6 +74,8 @@ const EquipmentsInputs = ({formValues,setFormValues}) => {
         }
     }
 
+    console.log(equipments);
+
     useEffect(() => {
         setFormValues({...formValues,equipmentValues:[...equipValues]})
     },[equipValues])
@@ -75,21 +85,21 @@ const EquipmentsInputs = ({formValues,setFormValues}) => {
     return (
       <>
         <div className={'row_inputs_container'}>
-        {/* change with object {equipName,id}  from database*/}
+       
           {equipments && equipments.map((equip, index) =>
               <div className='row' style={{ justifyContent: "space-between" }} key={"equip_" + index + equip}>
                     <div>
                         <input type="checkbox"
                             name={`equipments[${index}]`}
-                            id={`equipments[${index}]`}
-                            onChange={(e)=> handleValue(e.target.checked,index,equip)}
+                            id={`equipments[${equip.id}]`}
+                            onChange={(e)=> handleValue(e.target.checked,equip.id,equip.equipment)}
                       />
                          
                         <label
                             htmlFor={`equipments[${index}]`}
                             style={{marginLeft:"10px"}}
                         >
-                        {equip}   
+                        {equip.equipment}   
                         </label>
                         </div>
               </div>)}
