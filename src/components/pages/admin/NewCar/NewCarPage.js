@@ -16,46 +16,53 @@ const NewCarPage = () => {
   const [resizedGallery,setResizedGallery] = useState([])
   const [formValues, setFormValues] = useState({ detailValues: {}, equipmentValues:[],thumbnail:{}, gallery:[]})
  
-  
 
   useEffect(() => {
     setFormValues({...formValues,thumbnail:thumb})
   }, [thumb])
 
   async function handleSubmit(e) {
+
     e.preventDefault();
-    
+    let formIsValid = false;
     let thumbnailIsValid = false;
     let galleryIsValid = false;
     let detailsAreValids = false;
 
-
-
     if (thumb) {
       thumbnailIsValid = true;
     }
-
+    
     if (formValues.gallery[0]) {
         galleryIsValid = true;
     } 
 
+    let detailsCheck = [];
     for (const key in formValues.detailValues) {
       if (formValues.detailValues[key] === "") {
-          console.log("beh");
-      } 
+          detailsCheck.push("");
+      } else {
+        detailsCheck.push("valid");
+      }
     }
 
+    if (detailsCheck.every(d => d === "valid")) {
+      detailsAreValids = true;
+    }
+
+    formIsValid = detailsAreValids && thumbnailIsValid && galleryIsValid;
+
+    if (formIsValid) {
+      console.log("form is valid");
+    } else {
+      console.log("not valid");
+    }
 
     const resizedThumbnail = await resizeThumb(thumb);
     const resizedGallery = await resizeGalleryImages(formValues.gallery);
-   
-    
 
-    
 
-    let allInputsAreValid = thumbnailIsValid;
 
-    console.log("ee");
     // if (resizedGallery && resizedThumbnail) {
     
     // }
