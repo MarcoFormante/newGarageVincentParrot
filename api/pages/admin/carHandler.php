@@ -10,9 +10,25 @@ require_once '../../controllers/CarHandlerController.php';
 if (isset($_GET['getAllEquipments'])) {
     $CarHandlerController = new CarHandlerController();
     $CarHandlerController->getAllEquipments();
-}else{
-    echo "Vous n'etes pas authorisé à acceder à ces données";
 }
+
+
+if (isset($_FILES['thumbnail']) && isset($_FILES['gallery']) && isset($_POST['details']) && isset($_POST['equipments'])) {
+
+    $thumbnail = $_FILES['thumbnail'];
+    $gallery = $_FILES['gallery'];
+    $details = $_POST['details'];
+    $equipments = $_POST['equipments'];
+
+    $CarHandlerController = new CarHandlerController();
+    $CarHandlerController->createNewCar($thumbnail,$gallery,$details,$equipments);
+}
+
+
+
+
+
+
 
 
 

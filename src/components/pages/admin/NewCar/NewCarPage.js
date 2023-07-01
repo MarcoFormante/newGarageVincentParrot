@@ -12,7 +12,6 @@ import Resizer from "react-image-file-resizer";
 
 const NewCarPage = () => {
   const [thumb, setThumb] = useState(null);
-
   const [resizedGallery,setResizedGallery] = useState([])
   const [formValues, setFormValues] = useState({ detailValues: {}, equipmentValues:[],thumbnail:{}, gallery:[]})
  
@@ -20,6 +19,8 @@ const NewCarPage = () => {
   useEffect(() => {
     setFormValues({...formValues,thumbnail:thumb})
   }, [thumb])
+
+
 
   async function handleSubmit(e) {
 
@@ -29,7 +30,7 @@ const NewCarPage = () => {
     let galleryIsValid = false;
     let detailsAreValids = false;
 
-    if (thumb) {
+    if (formValues.thumbnail) {
       thumbnailIsValid = true;
     }
     
@@ -53,22 +54,22 @@ const NewCarPage = () => {
     formIsValid = detailsAreValids && thumbnailIsValid && galleryIsValid;
 
     if (formIsValid) {
-      console.log("form is valid");
+      const resizedThumbnail= await resizeFile(formValues.thumbnail);
+      const resizedGallery = await resizeGalleryImages(formValues.gallery);
+
+      if (resizedThumbnail && resizedGallery) {
+
+      const formData = new FormData();
+      prepareFormData(formData, resizedGallery,resizedThumbnail)
+      axios.post(process.env.REACT_APP_HTTP + "pages/admin/carHandler.php", formData, {
+            headers: {
+              "Content-Type":"multipart/form-data"
+            }
+        }).then(response => console.log(response.data))
+      }
     } else {
       console.log("not valid");
     }
-
-    const resizedThumbnail = await resizeThumb(thumb);
-    const resizedGallery = await resizeGalleryImages(formValues.gallery);
-
-
-
-    // if (resizedGallery && resizedThumbnail) {
-    
-    // }
-    // const formData = new FormData();
-    // formData.append("thumbnail",resizedThumbnail)
-    // axios.post(process.env.REACT_APP_HTTP + "pages/admin/carHandler.php")
   }
 
 
@@ -84,19 +85,57 @@ const NewCarPage = () => {
       (uri) => {
         resolve(uri);
       },
-      "file",
-      600,
-      400
+      "file"
     );
   });
+
+
+
+  function prepareFormData(formData, gallery,thumbnail) {
+    prepareDetailsToFormData(formData)
+    prepareEquipmentsToFormData(formData)
+    prepareGalleryToFormData(formData,gallery)
+    formData.append("thumbnail",thumbnail)
+  }
+
+
+
+  function prepareDetailsToFormData(formData) {
+    for (const key in formValues.detailValues) {
+      if (Object.hasOwnProperty.call(formValues.detailValues, key)) {
+        const detail = formValues.detailValues[key];
+          formData.append("details[]", detail)
+      }
+    }
+  }
+
+
+    
+  function prepareEquipmentsToFormData(formData) {
+    formValues.equipmentValues.forEach(equip => {
+      formData.append("equipments[]",equip)
+    });
+  }
+  
+  
+  function prepareGalleryToFormData(formData,gallery) {
+    gallery.forEach(image => {
+      formData.append("gallery[]", image)
+    });
+  }
+
+
+
+  
+
 
   const resizeThumb = async (file) => {
     try {
       const image = await resizeFile(file)
-      return await image
+      return  image
     } catch (error) {
       console.log(error);
-      return
+      return 
     }
   } 
     
@@ -116,15 +155,11 @@ const NewCarPage = () => {
    
   } 
   
-
-
-  
-  
   
   return (
     <div>    
         <PageTitle pageTitle={"Nouveau véhicule"} />
-            <form className='form' encType={'multipart/form-data'} onSubmit={handleSubmit} >
+            <form className='form' encType={'multipart/form-data'} onSubmit={(e)=>handleSubmit(e)} >
               {resizedGallery && resizedGallery.map(img => <img src={img} alt=''></img>)}
                     <div className='new_car inputs_container'>
                     {/* car img-thumb  */}
