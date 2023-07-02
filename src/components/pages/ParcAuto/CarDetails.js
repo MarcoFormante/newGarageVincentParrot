@@ -23,7 +23,7 @@ export default CarDetails
 
 
 // Photos of single car ,car Photos carousel component
-const CarPhotos = ({year,km,price,offer}) => {
+const CarPhotos = ({thumbnail,year,km,price,offer}) => {
     const [imgs, setImgs] = useState([])
     const [imgLarge, setImgLarge] = useState("")
     const [arrowTarget, setArrowTarget] = useState()
@@ -102,15 +102,20 @@ const CarPhotos = ({year,km,price,offer}) => {
         //fetch data imgs from img folder by backend
         const carDetailsPath = process.env.REACT_APP_HTTP + "pages/carDetails.php"
         axios.get(carDetailsPath + "?carImages=true&id=" + location.state.id)
-        .then(response =>  setImgs([...response.data]))
+            .then(response => {
+                setImgs([{id:"",path:thumbnail}])
+                setImgs(prev => [...prev,...response.data])
+            })
        
     },[])
    
+   
 
     useEffect(() => {
-        setImgLarge(imgs[0]?.path) 
+        setImgLarge("/images/uploads/" + imgs[0]?.path) 
         setActiveImg(imgs[0]?.id)
     }, [imgs])
+    
     
 
     return (
@@ -135,8 +140,8 @@ const CarPhotos = ({year,km,price,offer}) => {
             <Arrows carouselX={carouselX} carouselWidth={carouselWidth} onClick={(direction) => setArrowTarget(direction)} />
             
             <div className={'details_carousel_container'} ref={carousel}>
-            <div className={'details_carousel_imgs'}>
-                    {imgs.map((img, index) => <img  className={ activeImg === img.id ? "img_carousel_details--active":"img_carousel_details"} key={"car_detail" + index } src={img.path} alt=""  width={250} height={180} onClick={() => handleOnClick(img.path,img.id) }/>)}
+                <div className={'details_carousel_imgs'}>
+                {imgs.map((img, index) => <img  className={ activeImg === img.id ? "img_carousel_details--active":"img_carousel_details"} key={"car_detail" + index } src={"/images/uploads/" + img.path} alt=""  width={250} height={180} onClick={() => handleOnClick("/images/uploads/" +img.path,img.id) }/>)}
             </div>
         </div>
         </div>

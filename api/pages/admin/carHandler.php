@@ -13,12 +13,18 @@ if (isset($_GET['getAllEquipments'])) {
 }
 
 
-if (isset($_FILES['thumbnail']) && isset($_FILES['gallery']) && isset($_POST['details']) && isset($_POST['equipments'])) {
+if (isset($_FILES['thumbnail']) && isset($_FILES['gallery']) && isset($_POST['details'])) {
 
     $thumbnail = $_FILES['thumbnail'];
     $gallery = $_FILES['gallery'];
     $details = $_POST['details'];
-    $equipments = $_POST['equipments'];
+
+    if (isset($_POST['equipments'])) {
+        $equipments = $_POST['equipments'];
+    }else{
+        $equipments = [];
+    }
+    
 
     $CarHandlerController = new CarHandlerController();
     $CarHandlerController->createNewCar($thumbnail,$gallery,$details,$equipments);

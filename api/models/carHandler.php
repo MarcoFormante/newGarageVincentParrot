@@ -68,7 +68,7 @@ Class carHandler{
                 //EQUIPMENTS
                 $queryCarEquipments = "INSERT INTO car_equipments(car_id,equip_id) VALUES";
                 $hasEquipments = count($equipments) > 0;
-                if ($hasEquipments) {
+                if ($hasEquipments ===  true) {
                     foreach ($equipments as $key => $value) {
                         if($key !== count($equipments) - 1){
                             $queryCarEquipments .="(:car_id$key,:equip_id$value),";
@@ -101,7 +101,6 @@ Class carHandler{
             $this->pdo->beginTransaction();
           
          try {
-
             $carId = "";
            if ($stmtCarCard->execute()) {
             echo "card eseguito";
@@ -126,19 +125,22 @@ Class carHandler{
                 }
             }
 
-
-            if ( $stmtCarEquipments->execute()) {
-                echo "carEquipments eseguito";
-            } else{
-                throw new Exception("Error Processing Request", 1);
-                
+            if ($hasEquipments === true) {
+                if ( $stmtCarEquipments->execute()) {
+                    echo "carEquipments eseguito";
+                } else{
+                    throw new Exception("Error Processing Request", 1);
+                    
+                }
+    
+            }else{
+                $stmtCarEquipments = null;
             }
-
+           
 
             foreach ($galleryPathArray as $key => $value) {
                 $stmtCarGallery->bindValue(":path$key",$value,PDO::PARAM_STR);
                 $stmtCarGallery->bindValue(":car_id$key",$carId,PDO::PARAM_INT);
-
             }
 
             if ($stmtCarGallery->execute()) {

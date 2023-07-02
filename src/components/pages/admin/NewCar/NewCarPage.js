@@ -77,10 +77,10 @@ const NewCarPage = () => {
   new Promise((resolve) => {
     Resizer.imageFileResizer(
       file,
-      600,
-      400,
+      1280,
+      853,
       "JPEG",
-        75,
+        80,
       0,
       (uri) => {
         resolve(uri);
