@@ -107,7 +107,7 @@ Class Car {
         
         $queryGetCars="SELECT * FROM cars  
         WHERE (km > :minKm AND km < :maxKm) AND (year > :minYear AND year < :maxYear)
-        AND (price - offer > :minPrice  AND price - offer < :maxPrice) $withOffer LIMIT :page,10";
+        AND (price - offer > :minPrice  AND price - offer < :maxPrice) $withOffer LIMIT :page,9";
       
        
         if (!is_null($this->pdo)) {

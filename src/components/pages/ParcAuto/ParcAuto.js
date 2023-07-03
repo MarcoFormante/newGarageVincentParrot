@@ -39,9 +39,9 @@ const ParcAuto = () => {
         
       setLoading(true)
       const parcAutoPath = process.env.REACT_APP_HTTP + "pages/parcAuto.php";
-          axios.get(`${parcAutoPath}?page=${currentPage * 10}&filters=${JSON.stringify(filters)}&getFilters=true`)
+          axios.get(`${parcAutoPath}?page=${currentPage * 9}&filters=${JSON.stringify(filters)}&getFilters=true`)
               .then(response => {
-                  console.log(response?.data);
+                  console.log(response.data);
                   console.log(response.statusText);
                 
                   if(response.status === 200 && response.request.readyState === 4 ) {
