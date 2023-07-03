@@ -3,18 +3,36 @@ import Arrows from '../../Arrows/Arrows'
 import { useLocation} from 'react-router-dom'
 import PageTitle from '../../PageTitle/PageTitle'
 import axios from '../../../api/axios'
+import Loading from '../../Loading/Loading'
 
 
 const CarDetails = () => {
     const location = useLocation()
+    const [loadingComponent,setLoadingComponent] = useState(null)
+    const [detailsInLoading, setDetailsInLoading] = useState(true);
+    const [carPhotosInLoading, setCarPhotosInLoading] = useState(true);
+
+    useEffect(() => {
+        if (detailsInLoading && carPhotosInLoading) {
+            setLoadingComponent(<Loading isLoading={true}/>)
+        } else {
+            setTimeout(() => {
+                setLoadingComponent(<Loading isLoading={false}/>)
+            }, 800);
+        }
+       
+   },[detailsInLoading,carPhotosInLoading])
     
   return (
       <div>
-            <PageTitle pageTitle={location.state.make + " " +location.state.model}/>
-          <CarPhotos {...location.state} />
-          <Details {...location.state} />
+            {loadingComponent}
+            <PageTitle pageTitle={location.state.make + " " + location.state.model}/>
+            <CarPhotos {...location.state} setCarPhotosInLoading={(value)=>setCarPhotosInLoading(value)}  />
+            <Details {...location.state}   setDetailsInLoading={(value)=>setDetailsInLoading(value)} />
     </div>
-  )
+    )
+        
+
 }
 
 export default CarDetails
@@ -23,7 +41,7 @@ export default CarDetails
 
 
 // Photos of single car ,car Photos carousel component
-const CarPhotos = ({thumbnail,year,km,price,offer}) => {
+const CarPhotos = ({thumbnail,year,km,price,offer,setCarPhotosInLoading}) => {
     const [imgs, setImgs] = useState([])
     const [imgLarge, setImgLarge] = useState("")
     const [arrowTarget, setArrowTarget] = useState()
@@ -104,7 +122,8 @@ const CarPhotos = ({thumbnail,year,km,price,offer}) => {
         axios.get(carDetailsPath + "?carImages=true&id=" + location.state.id)
             .then(response => {
                 setImgs([{id:"",path:thumbnail}])
-                setImgs(prev => [...prev,...response.data])
+                setImgs(prev => [...prev, ...response.data])
+                setCarPhotosInLoading(false);
             })
        
     },[])
@@ -152,16 +171,15 @@ const CarPhotos = ({thumbnail,year,km,price,offer}) => {
 
 
 //car Details Component
-const Details = ({id,year,km}) => {
+const Details = ({id,year,km,setDetailsInLoading}) => {
     const [activeDetail, setActiveDetail] = useState(true);
     const [details, setDetails] = useState([])
     const [equipements, setEquipements] = useState([])
-    const [Error, setError] = useState(false);
     const detailsTitles = ["Année", "Kilométrage", "Boîte de vitesses", "Puissance DIN","Nùmero VO", "Puissance fiscale","Couleur","Portières","Sièges","Énergie"]
   
 
     useEffect(() => {
-        const carDetailsPath = process.env.REACT_APP_HTTP + "pages/carDetails.php"
+        const carDetailsPath = process.env.REACT_APP_HTTP + "pages/carDetails.php";
 
         axios.get(carDetailsPath + "?details=true&id="+id)
             .then(response => {
@@ -193,9 +211,9 @@ const Details = ({id,year,km}) => {
                     
                     setDetails([...detailsArray])
                     setEquipements([...response?.data[1]])
-
+                    setDetailsInLoading(false);
                 } else {
-                    setError(true);
+                    console.error("Erreur:Impossible de recuperer les données(details voiture)");
                 }
                
             })
