@@ -53,22 +53,26 @@ const CarPhotos = ({thumbnail,year,km,price,offer,setCarPhotosInLoading}) => {
   
     //carousel scroll event
     const handleScrollCarousel = (direction) => {
+            setArrowTarget("")
             carousel.current.scrollBy({
                 top: 0,
                 left: direction + document.querySelector(".img_carousel_details").width,
                 behavior: "smooth"
             })
-        
         /** prevent multiple clicks*/
-            setTimeout(() => {
-                setArrowTarget("")
-            }, 500) 
+           
     }
 
     const handleOnClick = (imgPath,imgId) => {
         setImgLarge(imgPath);
         setActiveImg(imgId);
     }
+
+    useEffect(() => {
+        setTimeout(() => {
+            setArrowTarget("")
+        }, 300) 
+    },[arrowTarget])
     
     
 
@@ -110,7 +114,7 @@ const CarPhotos = ({thumbnail,year,km,price,offer,setCarPhotosInLoading}) => {
 
          return window.removeEventListener("resize", () => {
             setCarouselX(carousel?.current?.scrollLeft !== null && carousel?.current?.scrollLeft)
-                 setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);
+            setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);
         })
 
     },[])
@@ -156,7 +160,7 @@ const CarPhotos = ({thumbnail,year,km,price,offer,setCarPhotosInLoading}) => {
                 </div> 
             </div>
             {/**Carousel car details */}
-            <Arrows carouselX={carouselX} carouselWidth={carouselWidth} onClick={(direction) => setArrowTarget(direction)} />
+            <Arrows  cardsTotalWidth={imgs.length * 250 } carouselX={carouselX} carouselWidth={carouselWidth} onClick={(direction) => setArrowTarget(direction)} />
             
             <div className={'details_carousel_container'} ref={carousel}>
                 <div className={'details_carousel_imgs'}>
@@ -244,7 +248,7 @@ const Details = ({id,year,km,setDetailsInLoading}) => {
                 break;
          }
     }
-    console.log(details);
+
 
     return (
        ( details.length > 0 ) &&

@@ -53,19 +53,19 @@ const Offers = ({cars,count}) => {
         }
     }, [arrowTarget, carouselWidth, handleScrollCarousel])
     
-    //every tick check scrollLeft of carousel ref
-    // useEffect(() => {
+    // every tick check scrollLeft of carousel ref
+    useEffect(() => {
         
-    //     carousel.current.addEventListener("scroll", () => {
-    //         setCarouselX(carousel?.current?.scrollLeft)
-    //         setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);  
-    //     })
+        carousel.current.addEventListener("scroll", () => {
+            setCarouselX(carousel?.current?.scrollLeft)
+            setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);  
+        })
 
-    //     return carousel.current.removeEventListener("scroll", () => {
-    //         setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);  
-    //     })
+        return carousel.current.removeEventListener("scroll", () => {
+            setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);  
+        })
 
-    //     }, [carouselX,carouselWidth,carousel?.current?.offsetWidth])
+        }, [carouselX,carouselWidth,carousel?.current?.offsetWidth])
 
     
     useEffect(() => {
