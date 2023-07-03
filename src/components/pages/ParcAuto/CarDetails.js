@@ -152,12 +152,12 @@ const CarPhotos = ({thumbnail,year,km,price,offer}) => {
 
 
 //car Details Component
-const Details = ({id,make,model,year,km}) => {
+const Details = ({id,year,km}) => {
     const [activeDetail, setActiveDetail] = useState(true);
     const [details, setDetails] = useState([])
     const [equipements, setEquipements] = useState([])
     const [Error, setError] = useState(false);
-    const detailsTitles = ["Catégorie", "Année", "Kilométrage", "Boîte de vitesses", "Puissance DIN","Nùmero VO", "Puissance fiscale","Couleur","Portières","Sièges","Énergie"]
+    const detailsTitles = ["Année", "Kilométrage", "Boîte de vitesses", "Puissance DIN","Nùmero VO", "Puissance fiscale","Couleur","Portières","Sièges","Énergie"]
   
 
     useEffect(() => {
@@ -169,7 +169,6 @@ const Details = ({id,make,model,year,km}) => {
                 if (response.status === 200 && response.statusText === "OK") {
 
                     const {
-                        category,
                         gearbox,
                         din_power,
                         fiscal_power,
@@ -181,7 +180,6 @@ const Details = ({id,make,model,year,km}) => {
                     } = response?.data[0];
                     
                     const detailsArray = [
-                        category,
                         year, km + " km",
                         gearbox,
                         din_power + "cv",
