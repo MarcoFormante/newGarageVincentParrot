@@ -73,8 +73,8 @@ const CarPhotos = ({thumbnail,year,km,price,offer,setCarPhotosInLoading}) => {
     
 
     useEffect(() => {
-        setCarouselX(carousel.current.scrollLeft);
-        setCarouselWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+        setCarouselX(carousel?.current?.scrollLeft !== null && carousel?.current?.scrollLeft)
+        setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);
         switch (arrowTarget) {
             case "left":
                 handleScrollCarousel("-")
@@ -86,17 +86,17 @@ const CarPhotos = ({thumbnail,year,km,price,offer,setCarPhotosInLoading}) => {
             default:
                 break;
         }
-    }, [arrowTarget, carouselWidth])
+    }, [arrowTarget, carouselWidth,carouselX])
 
     
     //every tick check scrollLeft of carousel ref
     useEffect(() => {
-        carousel.current.addEventListener("scroll", () => {
-            setCarouselX(carousel.current.scrollLeft)
+        carousel?.current?.addEventListener("scroll", () => {
+            setCarouselX(carousel?.current?.scrollLeft !== null && carousel?.current?.scrollLeft)
         })   
 
-        return carousel.current.removeEventListener("scroll", () => {
-            setCarouselX(carousel.current.scrollLeft)
+        return carousel?.current?.removeEventListener("scroll", () => {
+            setCarouselX(carousel?.current?.scrollLeft !== null && carousel?.current?.scrollLeft)
         })
 
     }, [])
@@ -104,13 +104,13 @@ const CarPhotos = ({thumbnail,year,km,price,offer,setCarPhotosInLoading}) => {
     
      useEffect(() => {
          window.addEventListener("resize", () => {
-                setCarouselX(carousel.current.scrollLeft);
-                setCarouselWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+                setCarouselX(carousel?.current?.scrollLeft !== null && carousel?.current?.scrollLeft)
+                setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);
         })   
 
          return window.removeEventListener("resize", () => {
-                 setCarouselX(carousel.current.scrollLeft);
-                 setCarouselWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+            setCarouselX(carousel?.current?.scrollLeft !== null && carousel?.current?.scrollLeft)
+                 setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);
         })
 
     },[])
