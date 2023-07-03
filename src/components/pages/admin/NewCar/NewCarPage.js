@@ -6,15 +6,17 @@ import EquipmentsInputs from './EquipmentsInputs'
 import NewCarGallery from './NewCarGallery'
 import axios from '../../../../api/axios'
 import Resizer from "react-image-file-resizer";
-
+import toast, { Toaster } from 'react-hot-toast';
 
 
 
 const NewCarPage = () => {
   const [thumb, setThumb] = useState(null);
-  const [resizedGallery,setResizedGallery] = useState([])
-  const [formValues, setFormValues] = useState({ detailValues: {}, equipmentValues:[],thumbnail:{}, gallery:[]})
- 
+  const [formValues, setFormValues] = useState({ detailValues: {}, equipmentValues: [], thumbnail: {}, gallery: [] })
+  const [newCarCreated, setNewCarCreated] = useState(false);
+  const notifySuccess = (text) => toast.success(text)
+  const notifyError = (text) => toast.error(text)
+
 
   useEffect(() => {
     setFormValues({...formValues,thumbnail:thumb})
@@ -65,7 +67,28 @@ const NewCarPage = () => {
             headers: {
               "Content-Type":"multipart/form-data"
             }
-        }).then(response => console.log(response.data))
+      }).then(response => {
+          if (response.statusText === "OK" && response.data.status === 1) {
+            notifySuccess(response.data.message);
+            setNewCarCreated(true)
+
+          } else {
+            setNewCarCreated(false)
+            if (response.data.message.includes("vo_number")) {
+              notifyError("Erreur: le 'numero VO' existe deja");
+            } else {
+              notifyError(response.data.message);
+            }
+          
+          }
+      }).finally(response => {
+        if (newCarCreated === true) {
+          setTimeout(() => {
+            setNewCarCreated(false);
+          }, 500);
+         
+        }
+      })
       }
     } else {
       console.log("not valid");
@@ -89,6 +112,7 @@ const NewCarPage = () => {
     );
   });
 
+ 
 
 
   function prepareFormData(formData, gallery,thumbnail) {
@@ -97,6 +121,13 @@ const NewCarPage = () => {
     prepareGalleryToFormData(formData,gallery)
     formData.append("thumbnail",thumbnail)
   }
+
+  useEffect(() => {
+    if (newCarCreated) {
+      setFormValues({ detailValues: {}, equipmentValues: [], thumbnail: {}, gallery: [] })
+      setThumb(null)
+    }
+  },[newCarCreated])
 
 
 
@@ -125,8 +156,6 @@ const NewCarPage = () => {
   }
 
 
-
-  
 
 
   const resizeThumb = async (file) => {
@@ -158,9 +187,10 @@ const NewCarPage = () => {
   
   return (
     <div>    
+        <Toaster/>
         <PageTitle pageTitle={"Nouveau véhicule"} />
             <form className='form' encType={'multipart/form-data'} onSubmit={(e)=>handleSubmit(e)} >
-              {resizedGallery && resizedGallery.map(img => <img src={img} alt=''></img>)}
+              
                     <div className='new_car inputs_container'>
                     {/* car img-thumb  */}
                     <div className='new_car_img-thumb '>
@@ -177,7 +207,7 @@ const NewCarPage = () => {
                     <div className='new_car_details container--pad-top inputs_container'>
                         <span className='new_car_details_title'>Détails du vehicule</span>
                         <div className='row_inputs_container inputs_container' >
-                          <DetailsInputs formValues={formValues} setFormValues={(values)=>setFormValues({...formValues,...values})}/>
+                          <DetailsInputs formIsValid={newCarCreated} formValues={formValues} setFormValues={(values)=>setFormValues({...formValues,...values})}/>
                         </div>
                     </div>
           
@@ -185,14 +215,14 @@ const NewCarPage = () => {
                     <div className={'new_car_details container--pad-top inputs_container'}>
                         <span className={'new_car_details_title new_car_details_title--black'}>Equipements</span>
                         <div className={"new_car_equip_list inputs_container"} >
-                          <EquipmentsInputs formValues={formValues} setFormValues={(values) => setFormValues({ ...formValues, ...values })} />
+                          <EquipmentsInputs formIsValid={newCarCreated} formValues={formValues} setFormValues={(values) => setFormValues({ ...formValues, ...values })} />
                         </div>
                     </div>
           
                     {/* car gallery */}
                     <div className={'new_car_details container--pad-top inputs_container'}>
                     <span className={'new_car_details_title'}>Gallerie images</span>
-                      <NewCarGallery formValues={formValues} setFormValues={(values) => setFormValues({ ...formValues, ...values })}/>
+                      <NewCarGallery formIsValid={newCarCreated} formValues={formValues} setFormValues={(values) => setFormValues({ ...formValues, ...values })}/>
                   </div>
           
                   </div>

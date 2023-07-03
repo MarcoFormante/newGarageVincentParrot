@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import FormElement from '../../../FormElement/FormElement'
 
-const DetailsInputs = ({ formValues ,setFormValues }) => {
+const DetailsInputs = ({ formValues ,setFormValues,formIsValid }) => {
 
   const [detailValues, setDetailValues] = useState(
     {
@@ -24,7 +24,29 @@ const DetailsInputs = ({ formValues ,setFormValues }) => {
   
   useEffect(() => {
     setFormValues({...formValues,detailValues:{...detailValues}})
-  },[detailValues])
+  }, [detailValues])
+  
+  useEffect(() => {
+      if (formIsValid) {
+        setDetailValues({
+          make: "",
+          model: "",
+          price: "",
+          year: "",
+          km: "",
+          seats: "",
+          color: "",
+          dni: "",
+          fiscalPower: "",
+          gearbox: "",
+          fuel: "",
+          doors: "",
+          VO: "",
+          offer: "0"
+        })
+    }
+    document.querySelectorAll("select").forEach(inpt => inpt.value = "")
+  },[formIsValid])
 
   return (
       <>

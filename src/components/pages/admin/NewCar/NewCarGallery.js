@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-const NewCarGallery = ({formValues,setFormValues}) => {
+const NewCarGallery = ({formValues,setFormValues,formIsValid}) => {
     const [gallery, setGallery] = useState([])
    
   
@@ -15,7 +15,13 @@ const NewCarGallery = ({formValues,setFormValues}) => {
   
   useEffect(() => {
     setFormValues({...formValues,gallery:[...gallery]})
-  },[gallery])
+  }, [gallery])
+  
+  useEffect(() => {
+    if (formIsValid) {
+      setGallery([])
+    }
+  },[formIsValid])
 
   return (
     <>

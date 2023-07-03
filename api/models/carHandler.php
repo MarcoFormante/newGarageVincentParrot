@@ -98,25 +98,15 @@ Class carHandler{
                
 
 
-            $this->pdo->beginTransaction();
+        $this->pdo->beginTransaction();
           
-         try {
+        try {
             $carId = "";
-           if ($stmtCarCard->execute()) {
-            echo "card eseguito";
+            $stmtCarCardExecuted = $stmtCarCard->execute();
             $carId = $this->pdo->lastInsertId();
-           } else{
-            throw new Error("Erreur pendant l'envois des données, rententez");
-           }
-          
-            $stmtCarDetails->bindValue(':car_id',$carId,PDO::PARAM_INT);
 
-            if ( $stmtCarDetails->execute()) {
-                echo "carDetails eseguito";
-            } else{
-                throw new Exception("Error Processing Request", 1);
-                
-            }
+            $stmtCarDetails->bindValue(':car_id',$carId,PDO::PARAM_INT);
+            $stmtCarDetailsExecuted = $stmtCarDetails->execute();
 
             if ($hasEquipments) {
                 foreach ($equipments as $key => $value) {
@@ -126,15 +116,10 @@ Class carHandler{
             }
 
             if ($hasEquipments === true) {
-                if ( $stmtCarEquipments->execute()) {
-                    echo "carEquipments eseguito";
-                } else{
-                    throw new Exception("Error Processing Request", 1);
-                    
-                }
-    
+              $stmtCarEquipmentsExecuted = $stmtCarEquipments->execute(); 
             }else{
                 $stmtCarEquipments = null;
+                $stmtCarEquipmentsExecuted = false;
             }
            
 
@@ -143,33 +128,35 @@ Class carHandler{
                 $stmtCarGallery->bindValue(":car_id$key",$carId,PDO::PARAM_INT);
             }
 
-            if ($stmtCarGallery->execute()) {
-             echo "carGalleryOK";
-            }else{
-                echo "noCarGallery";
+            $stmtCarGalleryExecuted = $stmtCarGallery->execute();
+
+            if ($stmtCarCardExecuted && $stmtCarDetailsExecuted && $stmtCarGalleryExecuted ) {
+               
+                    if ($hasEquipments && $stmtCarEquipmentsExecuted) {
+                        uploadThumbnail($thumbnail,$path,$thumbnailName);
+                        uploadGalleryImages($gallery,$path,$galleryPathArray);
+                        echo json_encode(["status"=> 1, "message"=>"Nouvelle voiture creé avec succès"]);
+                    }else if (!$hasEquipments) {
+                        uploadThumbnail($thumbnail,$path,$thumbnailName);
+                        uploadGalleryImages($gallery,$path,$galleryPathArray);
+                        echo json_encode(["status"=> 1, "message"=>"Nouvelle voiture creé avec succès"]);
+                    }    
             }
 
-
          
-         } catch (PDOException $e) {
-            echo "error:".$e->getMessage();
-           $this->pdo->rollBack();
-           return ;
-         }
+        } catch (PDOException $e) {
+          $this->pdo->rollBack();
+          echo json_encode(["status"=>0,"message"=>"error" . $e->getMessage()]);
+          return ;
+        }
 
                
          $this->pdo->commit();
                     
-        uploadThumbnail($thumbnail,$path,$thumbnailName);
-        uploadGalleryImages($gallery,$path,$galleryPathArray);
-                
-                
        
-          
+
     }
 
-        // uploadThumbnail($thumbnail,$path,$thumbnailName);
-        // uploadGalleryImages($gallery,$path,$galleryPathArray);
 
 
     }

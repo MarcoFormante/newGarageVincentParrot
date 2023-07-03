@@ -35,7 +35,7 @@ const equipArray=[
 "Volant sport"
 ]
 
-const EquipmentsInputs = ({formValues,setFormValues}) => {
+const EquipmentsInputs = ({formValues,setFormValues,formIsValid}) => {
     const [equipments, setEquipments] = useState([])
     const [modal, setModal] = useState(false)
     const [modalInput, setModalInput] = useState("")
@@ -74,12 +74,20 @@ const EquipmentsInputs = ({formValues,setFormValues}) => {
         }
     }
 
-    console.log(equipments);
+ 
 
     useEffect(() => {
         setFormValues({...formValues,equipmentValues:[...equipValues]})
-    },[equipValues])
+    }, [equipValues])
 
+    
+    useEffect(() => {
+        if (formIsValid) {
+            setEquipValues([])
+            document.querySelectorAll('input[type=checkbox]').forEach(inpt => inpt.checked = false)
+        }
+      },[formIsValid])
+     
 
     
     return (
@@ -89,7 +97,8 @@ const EquipmentsInputs = ({formValues,setFormValues}) => {
           {equipments && equipments.map((equip, index) =>
               <div className='row' style={{ justifyContent: "space-between" }} key={"equip_" + index + equip}>
                     <div>
-                        <input type="checkbox"
+                      <input type="checkbox"
+                           
                             name={`equipments[${index}]`}
                             id={`equipments[${equip.id}]`}
                             onChange={(e)=> handleValue(e.target.checked,equip.id,equip.equipment)}
