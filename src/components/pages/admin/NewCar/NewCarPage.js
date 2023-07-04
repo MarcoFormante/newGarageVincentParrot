@@ -1,21 +1,23 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PageTitle from '../../../PageTitle/PageTitle'
 import FormElement from '../../../FormElement/FormElement'
 import DetailsInputs from './DetailsInputs'
 import EquipmentsInputs from './EquipmentsInputs'
 import NewCarGallery from './NewCarGallery'
 import axios from '../../../../api/axios'
-import Resizer from "react-image-file-resizer";
-import toast, { Toaster } from 'react-hot-toast';
-
+import Resizer from "react-image-file-resizer"
+import toast, { Toaster } from 'react-hot-toast'
+import Loading from '../../../Loading/Loading'
 
 
 const NewCarPage = () => {
   const [thumb, setThumb] = useState(null);
-  const [formValues, setFormValues] = useState({ detailValues: {}, equipmentValues: [], thumbnail: {}, gallery: [] })
-  const [newCarCreated, setNewCarCreated] = useState(false);
+  const [formValues, setFormValues] = useState({ detailValues: {}, equipmentValues: [], thumbnail: "", gallery: [] })
+  const [newCarCreated, setNewCarCreated] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const notifySuccess = (text) => toast.success(text)
   const notifyError = (text) => toast.error(text)
+
 
 
   useEffect(() => {
@@ -25,7 +27,7 @@ const NewCarPage = () => {
 
 
   async function handleSubmit(e) {
-
+    
     e.preventDefault();
     let formIsValid = false;
     let thumbnailIsValid = false;
@@ -56,11 +58,12 @@ const NewCarPage = () => {
     formIsValid = detailsAreValids && thumbnailIsValid && galleryIsValid;
 
     if (formIsValid) {
+      setIsLoading(true);
       const resizedThumbnail= await resizeFile(formValues.thumbnail);
       const resizedGallery = await resizeGalleryImages(formValues.gallery);
 
       if (resizedThumbnail && resizedGallery) {
-
+      
       const formData = new FormData();
       prepareFormData(formData, resizedGallery,resizedThumbnail)
       axios.post(process.env.REACT_APP_HTTP + "pages/admin/carHandler.php", formData, {
@@ -71,27 +74,40 @@ const NewCarPage = () => {
           if (response.statusText === "OK" && response.data.status === 1) {
             notifySuccess(response.data.message);
             setNewCarCreated(true)
+          
 
           } else {
             setNewCarCreated(false)
             if (response.data.message.includes("vo_number")) {
               notifyError("Erreur: le 'numero VO' existe deja");
+
             } else {
               notifyError(response.data.message);
             }
           
           }
       }).finally(response => {
-        if (newCarCreated === true) {
-          setTimeout(() => {
-            setNewCarCreated(false);
-          }, 500);
+        setTimeout(() => {
+          setIsLoading(false)
+        }, 500);
          
-        }
       })
-      }
+    }
+
     } else {
-      console.log("not valid");
+        if (!detailsAreValids) {
+          notifyError("Erreur: Les champs 'details du vehicule' sont obligatoires");
+        }
+      
+        if (!formValues.thumbnail) {
+          notifyError("Erreur: Le champ 'photo principale est obligatoires'");
+        }
+      
+        if (!galleryIsValid) {
+          notifyError("Erreur: Ajoutez au moins une image pour le champ 'Gallerie d'images");
+        }
+    
+   
     }
   }
 
@@ -126,8 +142,11 @@ const NewCarPage = () => {
 
   useEffect(() => {
     if (newCarCreated) {
-      setFormValues({ detailValues: {}, equipmentValues: [], thumbnail: {}, gallery: [] })
+      setFormValues({ detailValues: {}, equipmentValues: [], thumbnail: "", gallery: [] })
       setThumb(null)
+      window.scrollTo({
+        top:0
+      })
     }
   },[newCarCreated])
 
@@ -188,7 +207,8 @@ const NewCarPage = () => {
   
   
   return (
-    <div>    
+    <div>  
+      <Loading isLoading={isLoading}/>
         <Toaster/>
         <PageTitle pageTitle={"Nouveau véhicule"} />
             <form className='form' encType={'multipart/form-data'} onSubmit={(e)=>handleSubmit(e)} >
@@ -203,7 +223,7 @@ const NewCarPage = () => {
                       />
                     </div>
                     <div className='new_car_img-thumb_display'>
-                      <img style={{objectFit:"cover",margin:"auto"}} src={thumb && URL.createObjectURL(thumb)} width={300} height={300} alt='' />
+                    { thumb &&  <img style={{objectFit:"cover",margin:"auto"}} src={URL.createObjectURL(thumb)} width={300} height={300} alt='' />}
                     </div>
                   {/* car details */}
                     <div className='new_car_details container--pad-top inputs_container'>

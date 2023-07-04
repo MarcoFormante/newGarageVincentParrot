@@ -267,7 +267,7 @@ const Details = ({id,year,km,setDetailsInLoading}) => {
                     style={activeDetail === false  ? { border: "1px solid", backgroundColor: "#D64E54" } : { opacity: "0.3" }}
                     onClick={() => handleActiveDetailBlock("second")}
                 >
-                    <span className={'details_title_header'}>Equipement</span>
+                    <span className={'details_title_header'}>Equipements</span>
                 </div>}
             </div>
 
