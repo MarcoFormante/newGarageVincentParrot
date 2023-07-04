@@ -125,15 +125,19 @@ Class Car {
             $exeCount = $stmt->execute([$filters["minKm"],$filters["maxKm"],$filters['minYear'],$filters['maxYear'],$filters['minPrice'],$filters['maxPrice']]);
             $exeCars = $stmt2->execute();
 
-            $this->pdo->rollBack();
+           
 
             if($exeCount){
                 $count = $stmt->fetch(PDO::FETCH_ASSOC);
+            }else{
+                $this->pdo->rollBack();
             }
             if($exeCars){
                 while($cars = $stmt2->fetchAll(PDO::FETCH_ASSOC)){
                     echo json_encode(["count" => $count['count'],"cars"=>$cars]);
                 }  
+            }else{
+                $this->pdo->rollBack();
             }
 
         }else{
@@ -158,9 +162,10 @@ Class Car {
                 
             }else{
                 throw new PDOException("Probleme pendant la recuperation des données");
+                $this->pdo->rollBack();
             }
 
-            $this->pdo->rollBack();
+           
         }
     }
 
@@ -210,10 +215,10 @@ Class Car {
 
         if(!is_null($this->pdo)) {
         $stmt = $this->pdo->prepare($query);
-        if ($stmt->execute()) {
-            $filters = $stmt->fetch(PDO::FETCH_ASSOC);
-            echo json_encode($filters);
-        }
+            if ($stmt->execute()) {
+                $filters = $stmt->fetch(PDO::FETCH_ASSOC);
+                echo json_encode($filters);
+            }
         }
     }
 
