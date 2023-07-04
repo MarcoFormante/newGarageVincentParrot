@@ -102,13 +102,15 @@ const NewCarPage = () => {
       file,
       1280,
       853,
-      "JPEG",
+      "WEBP",
         80,
       0,
       (uri) => {
         resolve(uri);
       },
-      "file"
+      "file",
+      246,
+      199
     );
   });
 

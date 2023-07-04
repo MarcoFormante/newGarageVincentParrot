@@ -24,7 +24,7 @@ const Contact = () => {
           
           <form className='form'>
               
-              <FormElement label={{ for: "subject", text: "Subject" }}  input={{ type: "text", name: "subject", id: "subject", value:formInputs.subject, onChange:(e)=> handleChange(e.target.name,e.target.value)}} />
+        <FormElement label={{ for: "subject", text: "Subject" }} input={{ type: "text", name: "subject", id: "subject", onChange: (e) => handleChange(e.target.name, e.target.value) }} value={formInputs.subject} />
               
               <FormElement label={{ for: "surname", text: "Nom" }} input={{ type: "text", name: "surname", id: "surname",required:true,value:formInputs.surname, onChange:(e)=> handleChange(e.target.name,e.target.value) }} />
               
