@@ -33,10 +33,19 @@ public function checkToken(){
     }
 }
 
+public function getAllAccounts(){
+    $user = new User();
+    $user->getAllAccounts();
 }
 
 
+public function deleteUser(int $id){
+    $user = new User();
+    $user->deleteUser($id);
+}
 
+
+}
 
 
 ?>

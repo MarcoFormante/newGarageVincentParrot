@@ -74,7 +74,7 @@ const ReviewsHandler = () => {
         const formData = new FormData();
         formData.append("reviewValidationValue", newValidationNumber);
         formData.append("reviewValidationId", avisId);
-        axios.post(process.env.REACT_APP_HTTP + "pages/admin/reviewHandler.php", formData, {
+        axios.post("pages/admin/reviewHandler.php", formData, {
 
             headers: {
                     "Content-Type": "application/www-x-urlencodeform"

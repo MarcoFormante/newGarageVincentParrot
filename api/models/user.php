@@ -71,7 +71,7 @@ Class User{
                 try {
                     if ($stmt->execute()) {
                        
-                        echo json_encode(["status"=> 1,"message"=>"Le compte pour $email a été créé"]);
+                        echo json_encode(["status"=> 1,"message"=>"Le compte pour $email a été créé","userId" => $this->pdo->lastInsertId()]);
                         
                      }else{
                          echo json_encode(["status"=> 0,"message"=>"Erreur pendant l'envois des données"]);
@@ -138,9 +138,45 @@ Class User{
             if ($decodeToken) {
                 echo json_encode(["status"=> 1,"role" => $decodeToken->role]);
             }
+        }
 
+
+        public function getAllAccounts(){
+            $query = "SELECT id,email FROM users WHERE role_id = 1";
+
+            if (!is_null($this->pdo)) {
+                $stmt = $this->pdo->prepare($query);
+                if ($stmt->execute()) {
+                    $users = [];
+                    while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                        $users[] = $row;
+                    }
+                    echo json_encode(["status"=>1,"users"=>$users]);
+                }else{
+                    echo json_encode(["status"=>0,"message"=>"Erreur: impossible de recuperer les données (accounts)"]);
+                }
+                
+            }
+        }
+
+
+        public function deleteUser(int $id){
+            $query = "DELETE FROM users WHERE id = :id";
+
+            if (!is_null($this->pdo)) {
+                $stmt = $this->pdo->prepare($query);
+                $stmt->bindValue(':id',$id,PDO::PARAM_INT);
+                if ($stmt->execute()) {
+                    echo json_encode(["status"=> 1,"message"=>"Supprimé avec succès"]);
+                }else{
+                    echo json_encode(["status"=> 0,"message"=>"Erreur: impossible de supprimer ce compte"]);
+                }
+                
+            }
         }
     }
+
+   
 
 
 

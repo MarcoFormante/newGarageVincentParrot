@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import PageTitle from '../../../PageTitle/PageTitle'
 import FormElement from '../../../../components/FormElement/FormElement'
 import axios from '../../../../api/axios'
+import ListAllAccounts from './ListAllAccounts'
 
 
 const Accounts = () => {
@@ -9,7 +10,8 @@ const Accounts = () => {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [serverMessage, setServerMessage] = useState({status:"",message:""});
+  const [serverMessage, setServerMessage] = useState({ status: "", message: "" });
+  const [newUser, setNewUser] = useState({});
   
 
   function handleEmail(e) {
@@ -25,6 +27,8 @@ const Accounts = () => {
     setPassword(passwordInput);
     setPasswordError("");
   }
+
+  
 
   function checkInputs(email, password) {
     let isEmailValid = email.match(/([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?(\.[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?)+/)
@@ -65,6 +69,7 @@ const Accounts = () => {
       ).then(response => {
         setServerMessage(response.data)
         if (response.data.status === 1) {
+          setNewUser({id:response.data.userId, email:email})
           setTimeout(() => {
             setServerMessage("");
           }, 5000)
@@ -76,19 +81,21 @@ const Accounts = () => {
     }
 }
   
+ 
   return (
+    <div>
     <div>
       <PageTitle pageTitle={"Créer un nouvel account"}/>
       <form className='form' onSubmit={handleSubmit}>
         <FormElement
           label={{ for: "email", text: "Email" }}
-          input={{ type: "text", name: "email", id: "email", value: email, onChange: (e) => handleEmail(e), maxLength:60 }} required={true}
+          input={{ type: "text", name: "email", id: "email",  onChange: (e) => handleEmail(e), maxLength:60 }} value={email} required={true}
         />
         <span className='error-message text-center'>{emailError}</span>
 
         <FormElement
           label={{ for: "password", text: "Password" }}
-          input={{ type: "password", name: "password", id: "password", value: password, onChange: (e) => handlePassword(e),maxLength:60 }} required={true}
+          input={{ type: "password", name: "password", id: "password", onChange: (e) => handlePassword(e),maxLength:60 }}  value={password} required={true}
         />
         <span className='error-message text-center'>{passwordError}</span>
         <input type="submit" className='cta cta--red mar-top-20' value={"Crèer"} />
@@ -98,7 +105,11 @@ const Accounts = () => {
       
       <span className={`${serverMessage.status === 1 ? "success-message" : "error-message"}  text-center`}>{serverMessage.message}</span>
       
-    </div>
+      </div>
+
+      {/* List of all account */}
+      <ListAllAccounts  newUser={newUser} />
+      </div>
   )
 }
 
