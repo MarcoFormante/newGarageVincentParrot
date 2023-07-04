@@ -59,9 +59,9 @@ const ReviewsHandler = () => {
 
             })
     }, [])
-    
 
-   
+
+
     useEffect(() => {
         setFilterName("");
         setFilterReview(5)
@@ -107,10 +107,10 @@ const ReviewsHandler = () => {
                     <div className='container--center--column inputs_container_filters_inner '>
                         <label htmlFor="gestionReviewFilters">Filtrer par</label>
                         <select type="text" id='gestionReviewFilters' onChange={(e)=> setFilters(e.target.value)}>
-                            <option value=""></option>
+                            <option value="validate">A' valider</option>
                             <option value="prenom">Prènom</option>
                             <option value="review">Note</option>
-                            <option value="validate">A' valider</option>
+                           
                         </select>
                     </div>      
                 
@@ -123,19 +123,19 @@ const ReviewsHandler = () => {
             <div className='list-flex-wrap container--pad-bottom gap-50' style={{padding:50}}>
                 {!filters
                     ?
-                    avis.map((av, index) => <div> <div style={av.is_validate ? {backgroundColor:"red",color:"white"} : {backgroundColor:"lightgreen",color:"black"}} onClick={()=>toggleReviewValidation(av.id,av)} className='reviewValidatorSwitch'>{av.is_validate ? "Moderer" : "Valider"} </div> <AvisCard key={"avis_" + index + "_card"} name={av.name} message={av.message} review={av.review} style={av.is_validate === 1 ? {border: "2px solid lightgreen" } : { border: "2px solid red" }} /> </div>)
+                    avis.map((av, index) => <div key={`avis_ADM${av.id}`}> <div style={av.is_validate ? {backgroundColor:"red",color:"white"} : {backgroundColor:"lightgreen",color:"black"}} onClick={()=>toggleReviewValidation(av.id,av)} className='reviewValidatorSwitch'>{av.is_validate ? "Moderer" : "Valider"} </div> <AvisCard key={"avis_" + index + "_card"} name={av.name} message={av.message} review={av.review} style={av.is_validate === 1 ? {border: "2px solid lightgreen" } : { border: "2px solid red" }} /> </div>)
                     :
                     filters === "prenom" 
                         ?
-                        avis.map((av, index) => { return av.name.toLowerCase().includes(filterName.toLowerCase()) && <div> <div style={av.is_validate ? {backgroundColor:"red",color:"white"} : {backgroundColor:"lightgreen",color:"black"}} onClick={()=>toggleReviewValidation(av.id,av)} className='reviewValidatorSwitch'>{av.is_validate ? "Moderer" : "Valider"} </div> <AvisCard key={"avis_" + index + "_card"} name={av.name} message={av.message} review={av.review} style={av.is_validate === 1 ? {border: "2px solid lightgreen" } : { border: "2px solid red" }} /> </div>})
+                        avis.map((av, index) => { return av.name.toLowerCase().includes(filterName.toLowerCase()) && <div key={`avis_ADM${av.id}`}> <div style={av.is_validate ? {backgroundColor:"red",color:"white"} : {backgroundColor:"lightgreen",color:"black"}} onClick={()=>toggleReviewValidation(av.id,av)} className='reviewValidatorSwitch'>{av.is_validate ? "Moderer" : "Valider"} </div> <AvisCard key={"avis_" + index + "_card"} name={av.name} message={av.message} review={av.review} style={av.is_validate === 1 ? {border: "2px solid lightgreen" } : { border: "2px solid red" }} /> </div>})
                         :
                         filters === "review" 
                             ?
-                            avis.map((av, index) => { return av.review === filterReview && <div> <div style={av.is_validate ? {backgroundColor:"red",color:"white"} : {backgroundColor:"lightgreen",color:"black"}} onClick={()=>toggleReviewValidation(av.id,av)} className='reviewValidatorSwitch'>{av.is_validate ? "Moderer" : "Valider"} </div> <AvisCard key={"avis_" + index + "_card"} name={av.name} message={av.message} review={av.review} style={av.is_validate === 1 ? {border: "2px solid lightgreen" } : { border: "2px solid red" }} /> </div>})
+                            avis.map((av, index) => { return av.review === filterReview && <div key={`avis_ADM${av.id}`}> <div style={av.is_validate ? {backgroundColor:"red",color:"white"} : {backgroundColor:"lightgreen",color:"black"}} onClick={()=>toggleReviewValidation(av.id,av)} className='reviewValidatorSwitch'>{av.is_validate ? "Moderer" : "Valider"} </div> <AvisCard key={"avis_" + index + "_card"} name={av.name} message={av.message} review={av.review} style={av.is_validate === 1 ? {border: "2px solid lightgreen" } : { border: "2px solid red" }} /> </div>})
                             :
                             filters === "validate" 
                             ?
-                            avis.map((av, index) => { return av.is_validate === 0 &&<div> <div style={av.is_validate ? {backgroundColor:"red",color:"white"} : {backgroundColor:"lightgreen",color:"black"}} onClick={()=>toggleReviewValidation(av.id,av)} className='reviewValidatorSwitch'>{av.is_validate ? "Moderer" : "Valider"} </div> <AvisCard key={"avis_" + index + "_card"} name={av.name} message={av.message} review={av.review} style={av.is_validate === 1 ? {border: "2px solid lightgreen" } : { border: "2px solid red" }} /> </div>    })
+                            avis.map((av, index) => { return av.is_validate === 0 &&<div key={`avis_ADM${av.id}`}> <div style={av.is_validate ? {backgroundColor:"red",color:"white"} : {backgroundColor:"lightgreen",color:"black"}} onClick={()=>toggleReviewValidation(av.id,av)} className='reviewValidatorSwitch'>{av.is_validate ? "Moderer" : "Valider"} </div> <AvisCard key={"avis_" + index + "_card"} name={av.name} message={av.message} review={av.review} style={av.is_validate === 1 ? {border: "2px solid lightgreen" } : { border: "2px solid red" }} /> </div>    })
                             :
                             "" 
                 }

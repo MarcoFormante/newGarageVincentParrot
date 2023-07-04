@@ -169,7 +169,8 @@ const ServicesHandler = () => {
             </thead>
             <tbody>
               
-                {services && services.map((service, index) => <tr>
+                      {services && services.map((service, index) =>
+                <tr key={`service_row${service.id}`}>
                     <td>{service.service}</td>
                     <td>
                         <span className='edit-icon'

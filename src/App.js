@@ -92,7 +92,6 @@ const ProtectedRoute = ({ auth, redirectPath,login,checkTrigger}) => {
  
   const checkToken = () => {
       if (localStorage.getItem("token")) {
-        console.log("ecco");
           CheckToken(localStorage.getItem("token")).then((response) => {
            let isValid = response.data.status;
            if (isValid === 1) {

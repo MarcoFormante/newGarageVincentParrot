@@ -169,7 +169,7 @@ Class Review{
         COUNT(IF(review = 3,1,NULL))*3 AS stars3,
         COUNT(IF(review = 4,1,NULL))*4 AS stars4,
         COUNT(IF(review = 5,1,NULL) ) * 5 AS stars5 
-        from reviews";
+        from reviews WHERE is_validate = 1";
 
         if (!is_null($this->pdo)) {
             $stmt = $this->pdo->prepare($query);
@@ -179,7 +179,7 @@ Class Review{
                 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
                     $total[]=$row;
                 }
-                echo json_encode(["status"=> 1 , "total"=>$total]);
+                echo json_encode(["status"=> 1 ,"total"=>$total]);
             }else{
                 echo json_encode(["status"=> 0 ,"message" => "Erreur pendant recuperation des données(totalReviews)"]);
             }
