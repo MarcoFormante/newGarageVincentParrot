@@ -24,12 +24,20 @@ if (isset($_FILES['thumbnail']) && isset($_FILES['gallery']) && isset($_POST['de
     }else{
         $equipments = [];
     }
-    
 
     $CarHandlerController = new CarHandlerController();
     $CarHandlerController->createNewCar($thumbnail,$gallery,$details,$equipments);
+
 }
 
+
+
+if (isset($_POST['newEquipment'])) {
+   $equipment = htmlspecialchars($_POST['newEquipment']);
+    $CarHandlerController = new CarHandlerController();
+    $CarHandlerController->addNewEquipment($equipment);
+    
+}
 
 
 

@@ -95,8 +95,6 @@ Class carHandler{
 
             $stmtCarGallery = $this->pdo->prepare($queryCarGallery);
 
-               
-
 
         $this->pdo->beginTransaction();
           
@@ -116,13 +114,13 @@ Class carHandler{
             }
 
             if ($hasEquipments === true) {
-              $stmtCarEquipmentsExecuted = $stmtCarEquipments->execute(); 
+                $stmtCarEquipmentsExecuted = $stmtCarEquipments->execute(); 
+
             }else{
                 $stmtCarEquipments = null;
                 $stmtCarEquipmentsExecuted = false;
             }
            
-
             foreach ($galleryPathArray as $key => $value) {
                 $stmtCarGallery->bindValue(":path$key",$value,PDO::PARAM_STR);
                 $stmtCarGallery->bindValue(":car_id$key",$carId,PDO::PARAM_INT);
@@ -132,18 +130,16 @@ Class carHandler{
 
             if ($stmtCarCardExecuted && $stmtCarDetailsExecuted && $stmtCarGalleryExecuted ) {
                
-                    if ($hasEquipments && $stmtCarEquipmentsExecuted) {
-                        uploadThumbnail($thumbnail,$path,$thumbnailName);
-                        uploadGalleryImages($gallery,$path,$galleryPathArray);
-                        echo json_encode(["status"=> 1, "message"=>"Nouvelle voiture creé avec succès"]);
-                    }else if (!$hasEquipments) {
-                        uploadThumbnail($thumbnail,$path,$thumbnailName);
-                        uploadGalleryImages($gallery,$path,$galleryPathArray);
-                        echo json_encode(["status"=> 1, "message"=>"Nouvelle voiture creé avec succès"]);
-                    }    
+                if ($hasEquipments && $stmtCarEquipmentsExecuted) {
+                    uploadThumbnail($thumbnail,$path,$thumbnailName);
+                    uploadGalleryImages($gallery,$path,$galleryPathArray);
+                    echo json_encode(["status"=> 1, "message"=>"Nouvelle voiture creé avec succès"]);
+                }else if (!$hasEquipments) {
+                    uploadThumbnail($thumbnail,$path,$thumbnailName);
+                    uploadGalleryImages($gallery,$path,$galleryPathArray);
+                    echo json_encode(["status"=> 1, "message"=>"Nouvelle voiture creé avec succès"]);
+                }    
             }
-
-         
         } catch (PDOException $e) {
           $this->pdo->rollBack();
           echo json_encode(["status"=>0,"message"=>"error" . $e->getMessage()]);
@@ -152,14 +148,26 @@ Class carHandler{
 
                
          $this->pdo->commit();
-                    
-       
-
     }
+}
 
 
+public function addNewEquipment(string $equipment){
+    $query = "INSERT INTO equipments(equipment) VALUE(:equipment)";
 
+    if (!is_null($this->pdo)) {
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue(":equipment",$equipment);
+
+        if ($stmt->execute()) {
+            echo json_encode(["status"=> 1, "message"=>"Nouvel equipment ajouté avec succès","equipId"=>$this->pdo->lastInsertId()]);
+        }else{
+            echo json_encode(["status"=> 0,'message'=>"Erreur: un problème est survenu, rententez"]);
+        }
+    }else{
+        echo json_encode(["status"=> 0,'message'=>"Erreur: un problème est survenu, rententez"]);
     }
+}
 
 }
 

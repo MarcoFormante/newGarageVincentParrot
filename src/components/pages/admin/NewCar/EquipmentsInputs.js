@@ -1,50 +1,78 @@
 import React, { useEffect, useState } from 'react'
 import Modal from '../../../Modal/Modal'
 import axios from '../../../../api/axios';
+import toast, { Toaster } from 'react-hot-toast';
 
-const equipArray=[
-"Vitres arrière surteintées",
-"Caméra de recul",
-"Pack B&O",
-"Haut parleurs",
-"ABS",
-"Accoudoir central AV",
-"AFIL",
-"Aide au démarrage en côte",
-"Airbag conducteur",
-"Airbag passager",
-"Airbags latéraux AV et AR",
-"Airbags rideaux AV et AR",
-"Antidémarrage électronique",
-"Appui-tête conducteur réglable hauteur",
-"Appui-tête passager réglable en hauteur",
-"Bacs de portes avant",
-"Banquette 60/40",
-"Banquette AR rabattable",
-"Boite à gants fermée",
-"Borne Wi-Fi",
-"Boucliers AV et AR couleur caisse",
-"Capteur de luminosité",
-"Capteur de pluie",
-"Clim automatique bi-zones",
-"Commande du comportement dynamique",
-"Commandes vocales",
-"Vitres avant électriques",
-"Volant cuir",
-"Volant multifonction",
-"Volant sport"
-]
+
+// const equipArray=[
+// "Vitres arrière surteintées",
+// "Caméra de recul",
+// "Pack B&O",
+// "Haut parleurs",
+// "ABS",
+// "Accoudoir central AV",
+// "AFIL",
+// "Aide au démarrage en côte",
+// "Airbag conducteur",
+// "Airbag passager",
+// "Airbags latéraux AV et AR",
+// "Airbags rideaux AV et AR",
+// "Antidémarrage électronique",
+// "Appui-tête conducteur réglable hauteur",
+// "Appui-tête passager réglable en hauteur",
+// "Bacs de portes avant",
+// "Banquette 60/40",
+// "Banquette AR rabattable",
+// "Boite à gants fermée",
+// "Borne Wi-Fi",
+// "Boucliers AV et AR couleur caisse",
+// "Capteur de luminosité",
+// "Capteur de pluie",
+// "Clim automatique bi-zones",
+// "Commande du comportement dynamique",
+// "Commandes vocales",
+// "Vitres avant électriques",
+// "Volant cuir",
+// "Volant multifonction",
+// "Volant sport"
+// ]
 
 const EquipmentsInputs = ({formValues,setFormValues,formIsValid}) => {
     const [equipments, setEquipments] = useState([])
     const [modal, setModal] = useState(false)
     const [modalInput, setModalInput] = useState("")
-    const [equipValues,setEquipValues] = useState([])
+    const [equipValues, setEquipValues] = useState([])
+
+    const notifySuccess = (text) => toast.success(text);
+    const notifyError = (text) => toast.error(text);
+    
     
     function addEquipement() {
         if (modalInput) {
-            setEquipments([...equipments, modalInput]);
-            setModal(false)
+            const carHandlerPage = "pages/admin/carHandler.php"
+            const formData = new FormData()
+            formData.append("newEquipment",modalInput)
+            axios.post(carHandlerPage, formData, {
+                headers: {
+                    "Content-Type":"application/x-www-form-urlencoded"
+                }
+            }).then(response => {
+                
+                if (response.data.status === 1) {
+                    setEquipments([...equipments,{id: response.data.equipId, equipment: modalInput }])
+                    notifySuccess(response.data.message)
+                    handleModal()
+                    setModalInput("")
+                } else {
+                    if (response.data.includes("Duplicate entry")) {
+                        notifyError("Erreur: Cet équipement existe déjà")
+                    } else {
+                        notifyError("Erreur: Un problème est survenu, rententez")
+                    }
+                   
+
+                }
+            })
         }
        
     }
@@ -54,17 +82,21 @@ const EquipmentsInputs = ({formValues,setFormValues,formIsValid}) => {
         setModal(!modal);
     }
 
+
+
     useEffect(() => {
-        const carHandlerPage = process.env.REACT_APP_HTTP + "pages/admin/carHandler.php?getAllEquipments=true"
+        const carHandlerPage ="pages/admin/carHandler.php?getAllEquipments=true"
         axios.get(carHandlerPage)
             .then(response => {
-            if (response.data.status === 1 ) {
-                const data = response.data.equipments
-                setEquipments([...data])
+                if (response.data.status === 1) {
+                    const data = response.data.equipments
+                    setEquipments([...data])
             }
         })
       
     }, [])
+
+
 
     function handleValue(isChecked, id,value) {
         if (isChecked === true) {
