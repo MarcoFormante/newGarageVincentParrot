@@ -32,7 +32,7 @@ Class carHandler{
         $galleryPathArray = [];
 
         foreach ($_FILES['gallery']['tmp_name'] as $key => $value) {
-            $fileName =  uniqid() . uniqid().".jpg";
+            $fileName =  (uniqid() . random_int(20,999))  . uniqid().".jpg";
             $galleryPathArray[$key] = $fileName; 
         }
 
@@ -169,6 +169,9 @@ public function addNewEquipment(string $equipment){
     }
 }
 
+
+
+
 public function getAllCars( int $currentPage){
     $query = "SELECT id,make,model,thumbnail,year,km,price,offer,created_at,cd.vo_number 
     FROM cars INNER JOIN car_details as cd ON cd.car_id = cars.id
@@ -194,12 +197,63 @@ public function getAllCars( int $currentPage){
         echo json_encode(["status"=> 1, "cars"=>$cars,"count"=>$count]);
             
         } catch (PDOException $e) {
+
             echo json_encode(["status"=> 0, "message"=>"Erreur: Un problème est survenu, impossible de recuperer les voitures /" . $e->getMessage()]);
         }
         
       }else{
         echo json_encode(["status"=> 0, "message"=>"Erreur: Un problème est survenu, impossible de recuperer les voitures"]);
       }
+    }
+
+
+
+
+    public function deleteCar(int $id, string $thumbnail){
+        $queryDeleteCar = "DELETE FROM cars WHERE id = :id";
+        $queryGetImagesPath = "SELECT path FROM car_images WHERE car_id =  :id";
+
+        if (!is_null($this->pdo)) {
+            $stmtImages = $this->pdo->prepare($queryGetImagesPath);
+            $stmtImages->bindValue(":id",$id,PDO::PARAM_INT);
+
+            $stmt = $this->pdo->prepare($queryDeleteCar);
+            $stmt->bindValue(":id",$id,PDO::PARAM_INT);
+
+        $this->pdo->beginTransaction();
+            try {
+               
+                $stmtImages->execute();
+                $imagesArray = [];
+                while ($row = $stmtImages->fetch(PDO::FETCH_COLUMN)) {
+                   $imagesArray[]= $row;
+                }
+              
+                if (count($imagesArray) > 0) {
+                    
+                    if ($stmt->execute()) {
+                    
+                        $imagesArray[] = $thumbnail;
+                        deleteAllImagesFromFolder($imagesArray) ;     
+                    }else{
+                        echo json_encode(["status"=> 0, "message"=>"Erreur: Un problème est survenu, impossible de supprimer la voiture"]);
+                    }
+
+                }else{
+                    $stmt->execute();
+                }
+
+            }catch (Exception $e) {
+                $this->pdo->rollBack();
+                echo json_encode(["status"=> 0, "message"=>"Erreur: Un problème est survenu, impossible de supprimer la voiture"]);
+            }
+     
+  
+        }else{
+            echo json_encode(["status"=> 0, "message"=>"Erreur: Un problème connection, impossible de supprimer la voiture"]);
+        }
+
+        $this->pdo->commit();
     }
 
 }
@@ -217,4 +271,14 @@ function uploadGalleryImages($gallery,$path,$galleryPathArray){
     foreach ($gallery['tmp_name'] as $key => $imgTmp) {
        move_uploaded_file($imgTmp, $path . $galleryPathArray[$key]);
     } 
+}
+
+
+function deleteAllImagesFromFolder($images){
+    $path = $_SERVER['DOCUMENT_ROOT'] ."/app/public/images/uploads/" ;
+    foreach ($images as $key => $value) {
+        unlink($path . $value);
+    }
+    echo json_encode(["status"=> 1, "message"=>"Voiture supprimé avec succès"]);
+   
 }

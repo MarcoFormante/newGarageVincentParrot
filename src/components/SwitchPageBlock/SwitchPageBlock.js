@@ -31,7 +31,8 @@ const SwitchPageBlock = (props) => {
     useEffect(() => {
         props.handleCarPage(props.currentPage);
         window.scrollTo({
-            top:0,
+            top: 0,
+            left:0,
             behavior:"smooth"
         })
     }, [props.currentPage])

@@ -9,7 +9,6 @@ Class CarHandlerController{
         $carHandler->getAllEquipments();
     }
 
-
     public function createNewCar($thumbnail,$gallery,$details,$equipments){
         $carHandler = new carHandler();
         $carHandler->createNewCar($thumbnail,$gallery,$details,$equipments);
@@ -24,5 +23,11 @@ Class CarHandlerController{
     public function getAllCars(int $currentPage){
         $carHandler = new carHandler();
         $carHandler->getAllCars($currentPage);
+    }
+
+
+    public function deleteCar(int $id, string $thumbnail){
+        $carHandler = new carHandler();
+        $carHandler->deleteCar($id,$thumbnail);
     }
 }

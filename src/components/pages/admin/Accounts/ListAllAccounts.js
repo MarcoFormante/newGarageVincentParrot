@@ -69,7 +69,6 @@ const ListAllAccounts = ({newUser}) => {
                     setModalToggle(false)
                     setAccountTarget({})
                 }}
-                
                     onClick={()=> deleteUser(accountTarget.id)}
                 >
                    <b>{accountTarget.email}</b>

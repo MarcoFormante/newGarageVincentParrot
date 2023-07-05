@@ -71,6 +71,7 @@ const NewCarPage = () => {
               "Content-Type":"multipart/form-data"
             }
       }).then(response => {
+        console.log(response.data);
           if (response.statusText === "OK" && response.data.status === 1) {
             notifySuccess(response.data.message);
             setNewCarCreated(true)
@@ -177,18 +178,6 @@ const NewCarPage = () => {
   }
 
 
-
-
-  const resizeThumb = async (file) => {
-    try {
-      const image = await resizeFile(file)
-      return  image
-    } catch (error) {
-      console.log(error);
-      return 
-    }
-  } 
-    
   
 
   const resizeGalleryImages = async (images) => {

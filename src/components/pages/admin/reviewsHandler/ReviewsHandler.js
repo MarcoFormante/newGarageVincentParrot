@@ -12,8 +12,6 @@ const ReviewsHandler = () => {
     const [filterReview, setFilterReview] = useState(5);
     const [loading,setLoading]=useState(false)
   
-
-
     const notifySuccess = (text) => toast.success(text);
     const notifyError = (text) => toast.error(text);
 
