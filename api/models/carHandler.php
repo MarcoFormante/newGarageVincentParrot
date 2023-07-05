@@ -169,7 +169,42 @@ public function addNewEquipment(string $equipment){
     }
 }
 
+public function getAllCars( int $currentPage){
+    $query = "SELECT id,make,model,thumbnail,year,km,price,offer,created_at,cd.vo_number 
+    FROM cars INNER JOIN car_details as cd ON cd.car_id = cars.id
+    ORDER BY cars.created_at ASC
+    LIMIT :currentPage,9";
+
+    $queryCountCars = "SELECT count(*) as count FROM cars";
+
+    if (!is_null($this->pdo)) {
+      $stmt = $this->pdo->prepare($query);
+      $stmt->bindValue(":currentPage",$currentPage,PDO::PARAM_INT);
+      $stmtCount = $this->pdo->prepare($queryCountCars);
+      $this->pdo->beginTransaction();
+      
+    try{
+        $stmt->execute();
+        $stmtCount->execute();
+        $cars = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $cars[] = $row;
+        }
+        $count = $stmtCount->fetch(PDO::FETCH_COLUMN);
+        echo json_encode(["status"=> 1, "cars"=>$cars,"count"=>$count]);
+            
+        } catch (PDOException $e) {
+            echo json_encode(["status"=> 0, "message"=>"Erreur: Un problème est survenu, impossible de recuperer les voitures /" . $e->getMessage()]);
+        }
+        
+      }else{
+        echo json_encode(["status"=> 0, "message"=>"Erreur: Un problème est survenu, impossible de recuperer les voitures"]);
+      }
+    }
+
 }
+
+
 
 
 function uploadThumbnail($image,$path,$imageName){

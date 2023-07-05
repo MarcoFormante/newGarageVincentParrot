@@ -4,38 +4,7 @@ import axios from '../../../../api/axios';
 import toast, { Toaster } from 'react-hot-toast';
 
 
-// const equipArray=[
-// "Vitres arrière surteintées",
-// "Caméra de recul",
-// "Pack B&O",
-// "Haut parleurs",
-// "ABS",
-// "Accoudoir central AV",
-// "AFIL",
-// "Aide au démarrage en côte",
-// "Airbag conducteur",
-// "Airbag passager",
-// "Airbags latéraux AV et AR",
-// "Airbags rideaux AV et AR",
-// "Antidémarrage électronique",
-// "Appui-tête conducteur réglable hauteur",
-// "Appui-tête passager réglable en hauteur",
-// "Bacs de portes avant",
-// "Banquette 60/40",
-// "Banquette AR rabattable",
-// "Boite à gants fermée",
-// "Borne Wi-Fi",
-// "Boucliers AV et AR couleur caisse",
-// "Capteur de luminosité",
-// "Capteur de pluie",
-// "Clim automatique bi-zones",
-// "Commande du comportement dynamique",
-// "Commandes vocales",
-// "Vitres avant électriques",
-// "Volant cuir",
-// "Volant multifonction",
-// "Volant sport"
-// ]
+
 
 const EquipmentsInputs = ({formValues,setFormValues,formIsValid}) => {
     const [equipments, setEquipments] = useState([])

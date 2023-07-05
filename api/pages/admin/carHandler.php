@@ -33,11 +33,19 @@ if (isset($_FILES['thumbnail']) && isset($_FILES['gallery']) && isset($_POST['de
 
 
 if (isset($_POST['newEquipment'])) {
-   $equipment = htmlspecialchars($_POST['newEquipment']);
+    $equipment = htmlspecialchars($_POST['newEquipment']);
     $CarHandlerController = new CarHandlerController();
     $CarHandlerController->addNewEquipment($equipment);
-    
 }
+
+
+if (isset($_POST['currentPage']) && isset($_POST['getAllCars'])) {
+    $CarHandlerController = new CarHandlerController();
+    $CarHandlerController->getAllCars($_POST['currentPage']);
+}
+
+// formData.append("currentPage", currentPage)
+// formData.append("getAllCars",true)
 
 
 

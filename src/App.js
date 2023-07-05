@@ -18,6 +18,7 @@ import Accounts from './components/pages/admin/Accounts/Accounts';
 import ReviewsHandler from './components/pages/admin/reviewsHandler/ReviewsHandler';
 import TimesOpeningHandler from './components/pages/admin/TimesOpeningHandler/TimesOpeningHandler';
 import ServicesHandler from './components/pages/admin/ServicesHandler/ServicesHandler';
+import CarsHandler from './components/pages/admin/CarsHandler/CarsHandler';
 
 
 
@@ -60,7 +61,7 @@ function App() {
             login={login} redirectPath={"/"} checkTrigger={checkTrigger} />}
           >
             <Route path={"/admin/new-car"} element={<NewCarPage/>} />
-            <Route path={"/admin/modify-car"} element={<h1>adminpage</h1>} />
+            <Route path={"/admin/carsHandler"} element={<CarsHandler/>} />
             <Route path={"/admin/services"} element={<ServicesHandler/>} />
             <Route path={"/admin/accounts"} element={<Accounts/>} />
             <Route path={"/admin/reviews"} element={<ReviewsHandler/>} />
@@ -83,7 +84,11 @@ function App() {
 
 export default App;
 
-const ProtectedRoute = ({ auth, redirectPath,login,checkTrigger}) => {
+
+
+
+
+const ProtectedRoute = ({ auth, redirectPath,checkTrigger}) => {
 
   const location = useLocation();
 
@@ -104,7 +109,6 @@ const ProtectedRoute = ({ auth, redirectPath,login,checkTrigger}) => {
        })
       } else {
         dispatch(remove())
-  
       }
     }
 

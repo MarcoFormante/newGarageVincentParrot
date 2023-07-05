@@ -19,6 +19,10 @@ Class CarHandlerController{
     public function addNewEquipment(string $equipment){
         $carHandler = new carHandler();
         $carHandler->addNewEquipment($equipment);
-        
+    }
+
+    public function getAllCars(int $currentPage){
+        $carHandler = new carHandler();
+        $carHandler->getAllCars($currentPage);
     }
 }

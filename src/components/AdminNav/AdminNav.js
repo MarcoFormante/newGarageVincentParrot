@@ -12,7 +12,7 @@ const AdminNav = ({checkToken}) => {
             linkName : "Nouveau véhicule"
         },
         {
-            to: "admin/modify-car",
+            to: "admin/carsHandler",
             linkName : "Gestion vehicules"
         },
         {

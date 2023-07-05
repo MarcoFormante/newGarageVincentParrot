@@ -15,8 +15,9 @@ const SwitchPageBlock = (props) => {
         if (dataLength > maxCarsforPage) {
             const pagesLength = Math.floor(dataLength / maxCarsforPage); 
             let pagesArray = [];
+            console.log(pagesLength);
         
-            for (let i = 0; i <= pagesLength; i++) {
+            for (let i = 0; i <= pagesLength ; i++) {
                 pagesArray[i] = i ;
             }
                 setPages([...pagesArray])
@@ -39,7 +40,7 @@ const SwitchPageBlock = (props) => {
     
 
   return (
-      <div   className={'switch_page_block'}>
+      <div className={'switch_page_block'}>
            <Link onClick={props.currentPage > 0 ? () => props.setCurrentPage(prev => (prev - 1)) : ""}  style={pages[0] === props.currentPage ? {opacity:"0.2"} : {}} className={"switch_page_block_arrow switch_page_block_arrow--left "}></Link>
             <div  className={'switch_page_block_numbers'}>
               {pages.map((page, index) => <Link key={"page_" + index} className={"page_number"} to={""} style={page === props.currentPage ? { textDecoration: "underline" } : {}} onClick={() => props.setCurrentPage(page)}>{page}</Link>)}
