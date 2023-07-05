@@ -250,10 +250,93 @@ public function getAllCars( int $currentPage){
      
   
         }else{
-            echo json_encode(["status"=> 0, "message"=>"Erreur: Un problème connection, impossible de supprimer la voiture"]);
+            echo json_encode(["status"=> 0, "message"=>"Erreur: problème de connection, impossible de supprimer la voiture"]);
         }
 
         $this->pdo->commit();
+    }
+
+
+
+    public function updateCar(string $table ,string $column, $value, int $id){
+
+        if (!is_null($this->pdo)) {
+            $query = "UPDATE :table SET :column = :value WHERE";
+            $stmt= $this->pdo->prepare($query);
+            $stmt->bindValue(":table",$table,PDO::PARAM_STR);
+            $stmt->bindValue(":column",$column,PDO::PARAM_STR);
+            $stmt->bindValue(":id",$id,PDO::PARAM_INT);
+
+            switch ($table) {
+            case 'carCard':
+                $query .= "id = :id";
+               
+                if (preg_match('/make|model|thumbnail/i',$column)) {
+                    $stmt->bindValue(':value',$value,PDO::PARAM_STR);
+                }else{
+                    $stmt->bindValue(":value",$value,PDO::PARAM_INT);
+                }
+                break;
+
+            case 'details' :
+                $query .= "car_id = :id";
+                if (preg_match('/vo_number|gearbox|din_power|fiscal_power|color|energy/i',$column)) {
+                    $stmt->bindValue(":value",$value,PDO::PARAM_STR);
+                }else{
+                    $stmt->bindValue(":value",$value,PDO::PARAM_INT);
+                }
+               
+                break;
+
+            case 'equipments':
+                $query .= "car_id = :id";
+                $stmt->bindValue(":value",$value,PDO::PARAM_INT);
+                break;
+
+
+            case 'gallery':
+                $query .= "car_id = :id";
+                $stmt->bindValue(":value",$value,PDO::PARAM_STR);
+            
+                break;
+
+                if (preg_match("/thumbnail|path",$column)) {
+                    if ($stmt->execute()) {
+                        $imageDeleted= unlink($_SERVER['DOCUMENT_ROOT'] . "/app/public/images/upload/" . $value );
+                        if ($imageDeleted) {
+                          echo json_encode(["status"=> 1, "message"=>"Modifié avec succès"]); 
+                          
+                        }else{
+                            echo json_encode(["status"=> 0, "message"=>"Erreur: Impossible modifier l'image, rententez"]);
+                        }
+
+                    }else{
+                        echo json_encode(["status"=> 0, "message"=>"Erreur: Impossible modifier la valeur"]);
+                    }
+
+                }else{
+                    if ($stmt->execute()) {
+                        echo json_encode(["status"=> 1, "message"=>"Modifié avec succès"]); 
+                    }else{
+                        echo json_encode(["status"=> 0, "message"=>"Erreur: Impossible modifier la valeur"]);
+                    }
+                }
+
+            
+            default:
+               
+                break;
+           }
+
+
+            
+        
+        
+
+        }else{
+            echo json_encode(["status"=> 0, "message"=>"Erreur: problème de connection au DataBase "]);
+        }
+       
     }
 
 }

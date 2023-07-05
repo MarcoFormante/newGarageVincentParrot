@@ -30,4 +30,10 @@ Class CarHandlerController{
         $carHandler = new carHandler();
         $carHandler->deleteCar($id,$thumbnail);
     }
+
+
+    public function updateCar(string $table ,string $column, $value, int $id){
+        $carHandler = new carHandler();
+        $carHandler->updateCar($table,$column,$value,$id);
+    }
 }

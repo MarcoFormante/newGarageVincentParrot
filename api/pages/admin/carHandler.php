@@ -55,6 +55,10 @@ switch ($requestMethod) {
         break;
 
     case 'PUT':
+        if (isset($_POST['table']) && isset($_POST['column']) && isset($_POST['value']) && isset($_POST['id'])) {
+            $CarHandlerController = new CarHandlerController();
+            $CarHandlerController->updateCar($_POST['table'],$_POST['column'],$_POST['value'],$_POST['id']);
+        }
 
         break;
 

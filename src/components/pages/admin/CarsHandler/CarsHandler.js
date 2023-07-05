@@ -10,7 +10,8 @@ const CarsHandler = () => {
     const [cars, setCars] = useState([])
     const [carsCount, seCarsCount] = useState(0)
     const [modalToggle, setModalToggle] = useState(false)
-    const [carTarget,setCarTarget] = useState(null)
+    const [carTarget, setCarTarget] = useState(null)
+    const [dataToUpdate,setDataToUpdate] = useState(null)
     const table = React.useRef()
 
     const notifySuccess = (text) => toast.success(text);
@@ -64,26 +65,65 @@ const CarsHandler = () => {
             }
         })
     }
-    
 
+
+    useEffect(() => {
+        if (dataToUpdate !== null) {
+            setModalToggle(true);
+        }
+       
+    },[dataToUpdate])
+
+    function updateCar() {
+        
+    }
+
+console.log(dataToUpdate);
     
     return (
         <div>
             <Toaster />
-            {modalToggle === true && <Modal type={"alert"} title={"Vous êtes sûr de vouloir supprimer cette voiture?"} onExit={() => {
+            {(modalToggle && dataToUpdate === null) ?
+                <Modal type={"alert"} title={"Vous êtes sûr de vouloir supprimer cette voiture?"} onExit={() => {
                     setModalToggle(false)
                     setCarTarget(null)
                 }}
                     onClick={()=> deleteCar(carTarget.id,carTarget.thumbnail)}
                 >
-                <div className='text-center container--center--column pad-20'>
-                    <p><b>Numero Vo:</b></p>
-                    <p>{carTarget.vo}</p>
-                    <p className='mar-top-20'><b>Voiture:</b></p>
-                    <p>{carTarget.make}, {carTarget.model}</p>
-                </div>
+                    <div className='text-center container--center--column pad-20'>
+                        <p><b>Numero Vo:</b></p>
+                        <p>{carTarget.vo}</p>
+                        <p className='mar-top-20'><b>Voiture:</b></p>
+                        <p>{carTarget.make}, {carTarget.model}</p>
+                    </div>
                     
-                </Modal>}
+                </Modal>
+                :
+                modalToggle && dataToUpdate !== null ?
+                <Modal type={"input"} title={"Modifier"}
+                    onExit={() => {
+                    setModalToggle(false);
+                    setDataToUpdate(null);
+                }}
+                    onClick={() => {
+                        updateCar()
+                    }}
+                    >
+                        <span><b>{dataToUpdate.column[1]}</b></span>
+
+                        {dataToUpdate.type !== "file"
+                            ?
+                            <input type={dataToUpdate.type} value={dataToUpdate.value} onChange={(e) => setDataToUpdate({ ...dataToUpdate, value: e.target.value })} />
+                            
+                            :
+
+                            <input type="file" name='file' accept='image/jpeg, image/png'/>
+                        }
+                    </Modal>
+                    :
+
+                    null
+                }
 
             <PageTitle pageTitle={"Gestion vehicules"}/>
       <div className='container--pad-top'>
@@ -91,7 +131,7 @@ const CarsHandler = () => {
                 <div ref={table} className='table_handler container--pad-top' style={{overflowY:"hidden",padding:20}}>
               <table className='mar-auto  table_handler_container ' style={{overflowY:"hidden",minWidth:1000,textAlign:"center"}}>
                   <thead >
-                      <tr >
+                      <tr>
                           <th>CarID</th>
                           <th>Brand</th>
                           <th>Model</th>
@@ -110,14 +150,14 @@ const CarsHandler = () => {
                         {cars && cars.map((car, index) =>
                         <tr key={"carsHandler_" + car.id} >
                                 <td>{car.id}</td>
-                                <td>{car.make}</td>
-                                <td>{car.model}</td>
-                                <td><img src={"/images/uploads/"+ car.thumbnail} alt="" width={30} height={30} style={{ objectFit: "cover" }} /></td>
-                                <td>{car.year}</td>
-                                <td>{car.km}</td>
-                                <td>{car.price}</td>
-                                <td>{car.offer}</td>
-                                <td>{car.vo_number}</td>
+                                <td onClick={() => setDataToUpdate({table:"carCard",id:car.id,column:["make","Brand"],value:car.make,type:"text"})}>{car.make}</td>
+                                <td onClick={() => setDataToUpdate({table:"carCard",id:car.id,column:["model","Model"],value:car.model,type:"text"})}>{car.model}</td>
+                                <td onClick={() => setDataToUpdate({table:"carCard",id:car.id,column:["thumbnail","Image Card"],value:car.thumbnail,type:"file"})}><img src={"/images/uploads/"+ car.thumbnail} alt="" width={30} height={30} style={{ objectFit: "cover" }} /></td>
+                                <td onClick={() => setDataToUpdate({table:"carCard",id:car.id,column:["year","Année"],value:car.year,type:"number"})}>{car.year}</td>
+                                <td onClick={() => setDataToUpdate({table:"carCard",id:car.id,column:["km","Kilometre"],value:car.km,type:"number"})}>{car.km}</td>
+                                <td onClick={() => setDataToUpdate({table:"carCard",id:car.id,column:["price","Prix"],value:car.price,type:"number"})}>{car.price}</td>
+                                <td onClick={() => setDataToUpdate({table:"carCard",id:car.id,column:["offer","Offre"],value:car.offer,type:"number"})}>{car.offer}</td>
+                                <td onClick={() => setDataToUpdate({table:"details",id:car.id,column:["vo_number","Numero VO"],value:car.vo_number,type:"number"})}>{car.vo_number}</td>
                                 <td>{car.created_at}</td>
                                 <td> <span className='delete-icon' style={{ margin: "auto" }} onClick={() => {
                                     setCarTarget({id:car.id,thumbnail:car.thumbnail, vo:car.vo_number, make:car.make, model:car.model})
