@@ -151,8 +151,7 @@ const TimesOpeningHandler = () => {
  
   
 
-  console.log("value",modalInputValue);
-  console.log("close",isClose);
+
   return (
     <div>
       <Toaster/>
@@ -179,7 +178,7 @@ const TimesOpeningHandler = () => {
               )
               :
               <>
-                <label htmlFor="close">Fermé </label>
+                <label htmlFor="close">Fermé</label>
                 <input type="checkbox"  id="close" checked={isClose} onChange={()=>setIsClose(!isClose)} />
               </>
           }
@@ -187,8 +186,8 @@ const TimesOpeningHandler = () => {
         
       </Modal>}
       <PageTitle pageTitle={"Gestion des horaires d'ouverture"} />
-      <div className='container--pad-top table_timeTableHandler'>
-        <table className='table_timeTableHandler_container'>
+      <div className='container--pad-top table_handler'>
+        <table className='table_handler_container'>
           <thead >
             <tr >
               <th>Jour</th>
@@ -207,56 +206,38 @@ const TimesOpeningHandler = () => {
 
                 <td style={!t.close ? styleSheet.td_red : {}}> {days[t.id]} </td>
 
-                <td style={!t.close ? styleSheet.td_red : {}}>
-                  {t.day_start_am }
-                  <span
-                    className='edit_time'
-                    onClick={() => handleModal("input",days[t.id] + " / Ouverture matin", t.id, t.day_start_am, index, "day_start_am", t.close)}
-                  >
-                    
-                  </span>
+                <td style={!t.close ? styleSheet.td_red : {}}
+                  onClick={() => handleModal("input", days[t.id] + " / Ouverture matin", t.id, t.day_start_am, index, "day_start_am", t.close)}
+                >
+                  {t.day_start_am }                 
                 </td>
 
-                <td style={!t.close  ? styleSheet.td_red : t.day_end_am === "NC" ? styleSheet.td_big : {}}>
-                  { t.day_end_am }
-                  <span
-                    className='edit_time'
-                    onClick={() => handleModal("input",days[t.id] + " / Fermeture matin", t.id, t.day_end_am, index, "day_end_am", t.close)}
-                  >
-                    
-                  </span>
+                <td style={!t.close ? styleSheet.td_red : t.day_end_am === "NC" ? styleSheet.td_big : {}}
+                  onClick={() => handleModal("input", days[t.id] + " / Fermeture matin", t.id, t.day_end_am, index, "day_end_am", t.close)}
+                >
+                  { t.day_end_am } 
                 </td>
 
-                <td style={!t.close  ? styleSheet.td_red : t.day_start_pm === "NC" ? styleSheet.td_big : {}}>
+                <td style={!t.close ? styleSheet.td_red : t.day_start_pm === "NC" ? styleSheet.td_big : {}}
+                  onClick={() => handleModal("input", days[t.id] + " / Ouverture Aprem", t.id, t.day_start_pm, index, "day_start_pm", t.close)}
+                >
                   { t.day_start_pm }
-                  <span
-                    className='edit_time'
-                    onClick={() => handleModal("input",days[t.id] + " / Ouverture Aprem", t.id, t.day_start_pm, index, "day_start_pm", t.close)}
-                  >
-                    
-                  </span>
                 </td>
 
-                <td style={!t.close ? styleSheet.td_red : {}}>
+                <td style={!t.close ? styleSheet.td_red : {}}
+                  onClick={() => handleModal("input",days[t.id] + " / Ouverture Aprem", t.id, t.day_end_pm, index, "day_end_pm", t.close)}
+                >
                   { t.day_end_pm }
-                  <span
-                    className='edit_time'
-                    onClick={() => handleModal("input",days[t.id] + " / Ouverture Aprem", t.id, t.day_end_pm, index, "day_end_pm", t.close)}
-                  >
-                   
-                  </span>
                 </td>
 
-                <td style={!t.close ? styleSheet.td_red : {color:"green"}}>
+                <td style={!t.close ? styleSheet.td_red : { color: "green" }}
+                  onClick={() => handleModal("checkbox",days[t.id] + " / Ouverture Aprem", t.id, t.day_end_pm, index, "day_end_pm", t.close)}
+                >
                   {!t.close ? "Fermé" : "Ouvert"}
-                  <span
-                    className='edit_time'
-                    onClick={() => handleModal("checkbox",days[t.id] + " / Ouverture Aprem", t.id, t.day_end_pm, index, "day_end_pm", t.close)}
-                  >
-                   
-                  </span>
                 </td>
-              </tr>)}
+
+              </tr>
+            )}
           </tbody>
         </table>
        

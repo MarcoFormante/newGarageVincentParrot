@@ -33,11 +33,13 @@ const CarsHandler = () => {
         
     }
 
-  return (
-      <div>
-          <PageTitle pageTitle={"Gestion vehicules"}/>
-          <div className='table_carHandler' style={{overflowY:"hidden",padding:20}}>
-              <table className='mar-auto container--pad-top' style={{overflowY:"hidden", minWidth:800,textAlign:"center"}}>
+    return (
+        <div>
+            <PageTitle pageTitle={"Gestion vehicules"}/>
+      <div className='container--pad-top'>
+       
+          <div className='table_handler container--pad-top' style={{overflowY:"hidden",padding:20}}>
+              <table className='mar-auto  table_handler_container ' style={{overflowY:"hidden",minWidth:1000,textAlign:"center"}}>
                   <thead >
                       <tr >
                           <th>CarID</th>
@@ -60,7 +62,7 @@ const CarsHandler = () => {
                                 <td>{car.id}</td>
                                 <td>{car.make}</td>
                                 <td>{car.model}</td>
-                                <td><img src={"/images/Maps.jpg"} alt="" width={50} height={50} style={{ objectFit: "cover" }} /></td>
+                                <td><img src={"/images/Maps.jpg"} alt="" width={30} height={30} style={{ objectFit: "cover" }} /></td>
                                 <td>{car.year}</td>
                                 <td>{car.km}</td>
                                 <td>{car.price}</td>
@@ -71,11 +73,15 @@ const CarsHandler = () => {
                         </tr>
                         )}
                   </tbody>
-              </table>
-
-              <SwitchPageBlock currentPage={ currentPage} setCurrentPage={(value)=>setCurrentPage(value)} handleCarPage={(value)=>handleCarPage(value)} dataLength={carsCount} />
+                </table>
+                    
+                <div style={{position:"fixed",bottom: 0 ,left:"50%",transform:"translateX(-50%)"}}>
+                <SwitchPageBlock currentPage={ currentPage} setCurrentPage={(value)=>setCurrentPage(value)} handleCarPage={(value)=>handleCarPage(value)} dataLength={carsCount} />
+                </div>
           </div>
      
+        </div>
+            
     </div>
   )
 }

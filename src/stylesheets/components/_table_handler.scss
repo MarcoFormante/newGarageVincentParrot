@@ -1,9 +1,9 @@
-.table_timeTableHandler{
+.table_handler{
 
     &_container{
     width: 90vw;
-    font-size: clamp(10px,1.8vw,16px);
-    min-width: 310px;
+    font-size: clamp(14px,1.8vw,16px);
+    min-width: 500px;
     margin: auto;
     border-collapse: collapse;
 
@@ -26,25 +26,18 @@
     td{
         position: relative;
         border: none;
-        padding: 10px 10px;
+        padding: 5px 5px;
         width: 100px;
         height: 50px;
         text-align: center;
-
-
-        span.edit_time{
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-            color: black;
-
-            &:hover{
-                border: 1px solid red;
-            }
+        cursor: pointer;   
+       
+        &:hover{
+            border: 2px solid red;
+            z-index: 100;
         }
+        
+        
     }
 
     td,th{

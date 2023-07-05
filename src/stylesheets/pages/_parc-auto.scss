@@ -10,12 +10,13 @@
 
 .switch_page_block{
     @include flex(row,space-evenly,center,10px);
-    padding-top: 80px;
+    padding-top: 30px;
     font-size: map-get($font_size,"small");
     width: fit-content;
-    min-width: 30vw;
+    min-width: 195px;
     margin:  20px auto  40px auto;
     max-width: 90vw;
+
    
 
     @media screen and (max-width:map-get($breakpoints,"medium")) {
@@ -27,6 +28,7 @@
         @include flex(row,center,center,20px);
         flex-wrap: wrap;
         padding: 20px;
+        min-width: 195px;
     }
    
     & a{
