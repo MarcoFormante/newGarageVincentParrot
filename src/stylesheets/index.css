@@ -69,6 +69,9 @@ components: button
     width: 70vw;
   }
 }
+.cta-small {
+  font-size: 20px;
+}
 
 .menu_button {
   height: 70%;
@@ -654,6 +657,7 @@ h2.page_title_home {
   height: 50px;
   text-align: center;
   cursor: pointer;
+  min-width: 100px;
 }
 .table_handler td:hover:not(.no-event) {
   border: 2px solid red;

@@ -10,8 +10,6 @@
     text-align: center;
     
      
-    
-
     &--red{
         background-color: $brand_color;
         color:$white-color;
@@ -69,6 +67,10 @@
             width: 70vw;
            
        }
+    }
+
+    &-small{
+        font-size: 20px;
     }
 }
 

@@ -39,6 +39,9 @@ const CarsHandler = () => {
                 seCarsCount(response.data.count)
                 table.current.scrollLeft = 0
                 setmodalFilterValue("")
+                if (response.data.cars.length < 1) {
+                    notifyError("Aucune voiture trouvée")
+                }
             } else {
                 notifyError(response.data.message)
             }
@@ -228,7 +231,7 @@ const CarsHandler = () => {
                                         onChange={(e) => setmodalFilterValue(e.target.value)}
                                     />
                                     <button type='button'
-                                        className='cta cta--red'
+                                        className='cta cta--red cta-small'
                                         onClick={modalFilterValue !== "" ? () => getCars() : null}>Filtrer</button>
                                 </div>
                                 :
