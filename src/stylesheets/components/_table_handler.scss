@@ -32,10 +32,11 @@
         text-align: center;
         cursor: pointer;   
        
-        &:hover{
+        &:hover:not(.no-event){
             border: 2px solid red;
             z-index: 100;
         }
+
         
         
     }
@@ -43,4 +44,11 @@
     td,th{
         border: 1px solid black;
     }
+}
+
+
+td.view_icon{
+    background-image: url(/src/icons/view.svg);
+    background-position: center;
+    background-repeat: no-repeat;
 }

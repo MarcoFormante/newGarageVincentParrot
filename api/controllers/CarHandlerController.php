@@ -20,9 +20,9 @@ Class CarHandlerController{
         $carHandler->addNewEquipment($equipment);
     }
 
-    public function getAllCars(int $currentPage){
+    public function getAllCars(int $currentPage, string $filters, $filterValue){
         $carHandler = new carHandler();
-        $carHandler->getAllCars($currentPage);
+        $carHandler->getAllCars($currentPage,$filters,$filterValue);
     }
 
 
@@ -32,8 +32,9 @@ Class CarHandlerController{
     }
 
 
-    public function updateCar(string $table ,string $column, $value, int $id){
+    public function updateCar(string $table ,string $column, $value, int $id ,string $imageData = null){
+        $imageData = htmlspecialchars($imageData);
         $carHandler = new carHandler();
-        $carHandler->updateCar($table,$column,$value,$id);
+        $carHandler->updateCar($table,$column,$value,$id,$imageData);
     }
 }

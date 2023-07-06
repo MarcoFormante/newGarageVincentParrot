@@ -1,5 +1,7 @@
 <?php
 
+use function PHPSTORM_META\type;
+
 require_once 'connection.php';
 
 
@@ -131,11 +133,11 @@ Class carHandler{
             if ($stmtCarCardExecuted && $stmtCarDetailsExecuted && $stmtCarGalleryExecuted ) {
                
                 if ($hasEquipments && $stmtCarEquipmentsExecuted) {
-                    uploadThumbnail($thumbnail,$path,$thumbnailName);
+                    uploadImage($thumbnail,$path,$thumbnailName);
                     uploadGalleryImages($gallery,$path,$galleryPathArray);
                     echo json_encode(["status"=> 1, "message"=>"Nouvelle voiture creé avec succès"]);
                 }else if (!$hasEquipments) {
-                    uploadThumbnail($thumbnail,$path,$thumbnailName);
+                    uploadImage($thumbnail,$path,$thumbnailName);
                     uploadGalleryImages($gallery,$path,$galleryPathArray);
                     echo json_encode(["status"=> 1, "message"=>"Nouvelle voiture creé avec succès"]);
                 }    
@@ -172,20 +174,91 @@ public function addNewEquipment(string $equipment){
 
 
 
-public function getAllCars( int $currentPage){
-    $query = "SELECT id,make,model,thumbnail,year,km,price,offer,created_at,cd.vo_number 
-    FROM cars INNER JOIN car_details as cd ON cd.car_id = cars.id
-    ORDER BY cars.created_at ASC
-    LIMIT :currentPage,9";
-
-    $queryCountCars = "SELECT count(*) as count FROM cars";
-
+public function getAllCars( int $currentPage,string $filters,$filterValue){
     if (!is_null($this->pdo)) {
-      $stmt = $this->pdo->prepare($query);
-      $stmt->bindValue(":currentPage",$currentPage,PDO::PARAM_INT);
-      $stmtCount = $this->pdo->prepare($queryCountCars);
-      $this->pdo->beginTransaction();
-      
+   
+    switch ($filters) {
+        case 'Tout':
+        
+        $query = "SELECT id,make,model,thumbnail,year,km,price,offer,created_at,cd.vo_number 
+            FROM cars  JOIN car_details as cd ON cd.car_id = cars.id 
+            ORDER BY cars.created_at ASC
+            LIMIT :currentPage,9";
+
+            $queryCountCars = "SELECT count(*) as count FROM cars ";
+                    
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindValue(":currentPage",$currentPage,PDO::PARAM_INT);
+          
+            $stmtCount = $this->pdo->prepare($queryCountCars);
+          
+        
+    break;
+
+        case 'Numero VO':
+            $query = "SELECT id,make,model,thumbnail,year,km,price,offer,created_at,cd.vo_number 
+            FROM cars INNER JOIN car_details as cd ON cd.car_id = cars.id  WHERE cd.vo_number = :filterValue 
+            ORDER BY cars.created_at ASC
+            LIMIT 1";
+            $queryCountCars = "SELECT 0 as count FROM cars ";
+                    
+            $stmt = $this->pdo->prepare($query);
+          
+            $stmt->bindValue(":filterValue",$filterValue,PDO::PARAM_INT);
+            $stmtCount = $this->pdo->prepare($queryCountCars);
+
+           
+    break;
+        case 'ID':
+            $query = "SELECT id,make,model,thumbnail,year,km,price,offer,created_at,cd.vo_number 
+            FROM cars  JOIN car_details as cd ON cd.car_id = cars.id WHERE cars.id = :filterValue
+            ORDER BY cars.created_at ASC
+            LIMIT 1";
+            $queryCountCars = "SELECT 0 as count FROM cars ";
+                    
+            $stmt = $this->pdo->prepare($query);
+           
+            $stmt->bindValue(":filterValue",$filterValue,PDO::PARAM_INT);
+            $stmtCount = $this->pdo->prepare($queryCountCars);
+    break;
+        case 'Brand':
+            $query = "SELECT  id,make,model,thumbnail,year,km,price,offer,created_at,cd.vo_number 
+            FROM cars  JOIN car_details as cd ON cd.car_id = cars.id WHERE make = :filterValue
+            ORDER BY cars.created_at ASC
+            LIMIT :currentPage,9";
+
+            $queryCountCars = "SELECT count(*) as count FROM cars WHERE make = :filterValue ";
+                    
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindValue(":currentPage",$currentPage,PDO::PARAM_INT);
+            $stmt->bindValue(":filterValue",$filterValue,PDO::PARAM_STR);
+
+            $stmtCount = $this->pdo->prepare($queryCountCars);
+            $stmtCount->bindValue(":filterValue",$filterValue,PDO::PARAM_STR);
+    break;
+        case 'Model':
+            $query = "SELECT  id,make,model,thumbnail,year,km,price,offer,created_at,cd.vo_number 
+            FROM cars  JOIN car_details as cd ON cd.car_id = cars.id WHERE model = :filterValue
+            ORDER BY cars.created_at ASC
+            LIMIT :currentPage,9";
+
+            $queryCountCars = "SELECT count(*) as count FROM cars WHERE model = :filterValue ";
+                    
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindValue(":currentPage",$currentPage,PDO::PARAM_INT);
+            $stmt->bindValue(":filterValue",$filterValue,PDO::PARAM_STR);
+
+            $stmtCount = $this->pdo->prepare($queryCountCars);
+            $stmtCount->bindValue(":filterValue",$filterValue,PDO::PARAM_STR);
+    break;
+        
+        default:
+            # code...
+            break;
+    }
+    
+
+  
     try{
         $stmt->execute();
         $stmtCount->execute();
@@ -197,21 +270,23 @@ public function getAllCars( int $currentPage){
         echo json_encode(["status"=> 1, "cars"=>$cars,"count"=>$count]);
             
         } catch (PDOException $e) {
-
+           
             echo json_encode(["status"=> 0, "message"=>"Erreur: Un problème est survenu, impossible de recuperer les voitures /" . $e->getMessage()]);
         }
         
-      }else{
+    }else{
         echo json_encode(["status"=> 0, "message"=>"Erreur: Un problème est survenu, impossible de recuperer les voitures"]);
       }
+      
     }
+    
 
 
 
 
     public function deleteCar(int $id, string $thumbnail){
         $queryDeleteCar = "DELETE FROM cars WHERE id = :id";
-        $queryGetImagesPath = "SELECT path FROM car_images WHERE car_id =  :id";
+        $queryGetImagesPath = "SELECT path FROM car_images WHERE car_id = :id";
 
         if (!is_null($this->pdo)) {
             $stmtImages = $this->pdo->prepare($queryGetImagesPath);
@@ -258,85 +333,66 @@ public function getAllCars( int $currentPage){
 
 
 
-    public function updateCar(string $table ,string $column, $value, int $id){
-
+    public function updateCar(string $table ,string $column, $value, int $id,string $imageData = null){
         if (!is_null($this->pdo)) {
-            $query = "UPDATE :table SET :column = :value WHERE";
-            $stmt= $this->pdo->prepare($query);
-            $stmt->bindValue(":table",$table,PDO::PARAM_STR);
-            $stmt->bindValue(":column",$column,PDO::PARAM_STR);
-            $stmt->bindValue(":id",$id,PDO::PARAM_INT);
+            $valueIsImage = is_array($value);
+            $idTarget = $table === "cars" ? "id" : "car_id";
+           
+            if (!$valueIsImage) {
+                $query = "UPDATE $table SET $column = :value WHERE $idTarget = :id ";
+                $stmt = $this->pdo->prepare($query);
 
-            switch ($table) {
-            case 'carCard':
-                $query .= "id = :id";
-               
-                if (preg_match('/make|model|thumbnail/i',$column)) {
-                    $stmt->bindValue(':value',$value,PDO::PARAM_STR);
-                }else{
+                if (is_int($value)) {
                     $stmt->bindValue(":value",$value,PDO::PARAM_INT);
-                }
-                break;
-
-            case 'details' :
-                $query .= "car_id = :id";
-                if (preg_match('/vo_number|gearbox|din_power|fiscal_power|color|energy/i',$column)) {
+                }else{
                     $stmt->bindValue(":value",$value,PDO::PARAM_STR);
-                }else{
-                    $stmt->bindValue(":value",$value,PDO::PARAM_INT);
                 }
-               
-                break;
 
-            case 'equipments':
-                $query .= "car_id = :id";
-                $stmt->bindValue(":value",$value,PDO::PARAM_INT);
-                break;
-
-
-            case 'gallery':
-                $query .= "car_id = :id";
-                $stmt->bindValue(":value",$value,PDO::PARAM_STR);
+                $stmt->bindValue(":id",$id,PDO::PARAM_INT);
+                if ($stmt->execute()) {
+                    echo json_encode(["status"=> 1, "message"=>"Modifié avec succès"]);
+                }else{
+                    echo json_encode(["status"=> 0, "message"=>"Erreur: Un probleme est survenu , impossible de effectuer la modification"]);
+                }
             
-                break;
+            }else{
 
-                if (preg_match("/thumbnail|path",$column)) {
-                    if ($stmt->execute()) {
-                        $imageDeleted= unlink($_SERVER['DOCUMENT_ROOT'] . "/app/public/images/upload/" . $value );
-                        if ($imageDeleted) {
-                          echo json_encode(["status"=> 1, "message"=>"Modifié avec succès"]); 
-                          
-                        }else{
-                            echo json_encode(["status"=> 0, "message"=>"Erreur: Impossible modifier l'image, rententez"]);
+                $fileExtention = explode("/",mime_content_type($value['tmp_name']))[1];
+                if (!preg_match("/jpeg|png|jpg/i",$fileExtention)) {
+                    echo json_encode(["status"=> 0, "message"=>"Erreur: les types d'images acceptés sont jpeg et png"]);
+                    return;
+                }
+
+                $imageName =  uniqid() . uniqid().".jpg";
+                $query = "UPDATE $table SET $column = :value WHERE $idTarget = :id ";
+                $stmt = $this->pdo->prepare($query);
+                $stmt->bindValue(":value",$imageName,PDO::PARAM_STR);
+                $stmt->bindValue(":id",$id,PDO::PARAM_INT);
+
+                $this->pdo->beginTransaction();
+                try {
+                   $stmtExecuted = $stmt->execute();
+                   if ($stmtExecuted) {
+                    $path = $_SERVER['DOCUMENT_ROOT'] ."/app/public/images/uploads/" ;
+                   
+                    $imageMovedInFolder = move_uploaded_file($value["tmp_name"],$path . $imageName);
+                    if ($imageMovedInFolder) {
+                        if (unlink($path . $imageData)) {
+                            echo json_encode(["status"=> 1, "message"=>"Modifcation effectué avec succès","imageData" => $imageName]);
                         }
-
-                    }else{
-                        echo json_encode(["status"=> 0, "message"=>"Erreur: Impossible modifier la valeur"]);
-                    }
-
-                }else{
-                    if ($stmt->execute()) {
-                        echo json_encode(["status"=> 1, "message"=>"Modifié avec succès"]); 
-                    }else{
-                        echo json_encode(["status"=> 0, "message"=>"Erreur: Impossible modifier la valeur"]);
                     }
                 }
+                        
+                } catch (Exception $e) {
+                  $this->pdo->rollBack();
+                  echo $e->getMessage();
+                  echo json_encode(["status"=> 0, "message"=>"Erreur: Un probleme est survenu , impossible de effectuer la modification"]);
+                }
 
-            
-            default:
-               
-                break;
-           }
-
-
-            
+                $this->pdo->commit();
+            }
         
-        
-
-        }else{
-            echo json_encode(["status"=> 0, "message"=>"Erreur: problème de connection au DataBase "]);
         }
-       
     }
 
 }
@@ -344,7 +400,7 @@ public function getAllCars( int $currentPage){
 
 
 
-function uploadThumbnail($image,$path,$imageName){
+function uploadImage($image,$path,$imageName){
     move_uploaded_file($image['tmp_name'], $path . $imageName);
 }
 

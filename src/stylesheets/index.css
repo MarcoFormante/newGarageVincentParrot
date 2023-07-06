@@ -655,12 +655,18 @@ h2.page_title_home {
   text-align: center;
   cursor: pointer;
 }
-.table_handler td:hover {
+.table_handler td:hover:not(.no-event) {
   border: 2px solid red;
   z-index: 100;
 }
 .table_handler td, .table_handler th {
   border: 1px solid black;
+}
+
+td.view_icon {
+  background-image: url(/src/icons/view.svg);
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .loading {

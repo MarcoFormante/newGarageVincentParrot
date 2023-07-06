@@ -164,7 +164,17 @@ const CarPhotos = ({thumbnail,year,km,price,offer,setCarPhotosInLoading}) => {
             
             <div className={'details_carousel_container'} ref={carousel}>
                 <div className={'details_carousel_imgs'}>
-                {imgs.map((img, index) => <img  className={ activeImg === img.id ? "img_carousel_details--active":"img_carousel_details"} key={"car_detail" + index } src={"/images/uploads/" + img.path} alt=""  width={250} height={180} onClick={() => handleOnClick("/images/uploads/" +img.path,img.id) }/>)}
+
+                    {imgs.map((img, index) => img.path !== ""
+                        &&
+                        <img className={activeImg === img.id ?
+                        "img_carousel_details--active" : "img_carousel_details"}
+                        key={"car_detail" + index} src={"/images/uploads/" + img.path}
+                        alt={""} width={250} height={180} onClick={() =>
+                            handleOnClick("/images/uploads/" + img.path, img.id)
+                        }
+                    />
+                )}
             </div>
         </div>
         </div>
@@ -181,7 +191,6 @@ const Details = ({id,year,km,setDetailsInLoading}) => {
     const [equipements, setEquipements] = useState([])
     const detailsTitles = ["Année", "Kilométrage", "Boîte de vitesses", "Puissance DIN","Nùmero VO", "Puissance fiscale","Couleur","Portières","Sièges","Énergie"]
   
-
     useEffect(() => {
         const carDetailsPath = process.env.REACT_APP_HTTP + "pages/carDetails.php";
 

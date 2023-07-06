@@ -38,11 +38,15 @@ switch ($requestMethod) {
             }
             $CarHandlerController = new CarHandlerController();
             $CarHandlerController->createNewCar($thumbnail,$gallery,$details,$equipments);
+
+            break;
         }
 
-        if (isset($_POST['currentPage']) && isset($_POST['getAllCars'])) {
+        if (isset($_POST['currentPage']) && isset($_POST['getAllCars']) && isset($_POST['filters']) && isset($_POST["filterValue"])) {
+            
             $CarHandlerController = new CarHandlerController();
-            $CarHandlerController->getAllCars($_POST['currentPage']);
+            $CarHandlerController->getAllCars($_POST['currentPage'],$_POST['filters'],$_POST['filterValue']);
+            break;
         }
 
 
@@ -50,17 +54,23 @@ switch ($requestMethod) {
             $equipment = htmlspecialchars($_POST['newEquipment']);
             $CarHandlerController = new CarHandlerController();
             $CarHandlerController->addNewEquipment($equipment);
+            break;
         }
 
-        break;
 
-    case 'PUT':
-        if (isset($_POST['table']) && isset($_POST['column']) && isset($_POST['value']) && isset($_POST['id'])) {
+        if (isset($_POST['table']) && isset($_POST['column']) && isset($_POST['id'])) {
             $CarHandlerController = new CarHandlerController();
-            $CarHandlerController->updateCar($_POST['table'],$_POST['column'],$_POST['value'],$_POST['id']);
+            if ($_FILES) {
+                $CarHandlerController->updateCar($_POST['table'],$_POST['column'],$_FILES['value'],$_POST['id'],$_POST['imageData']);
+            }else{
+                $CarHandlerController->updateCar($_POST['table'],$_POST['column'],$_POST['value'],$_POST['id']);
+            } 
+
+            break;
         }
 
-        break;
+
+       
 
     case 'DELETE':
        
