@@ -4,44 +4,25 @@ import PageTitle from '../../../PageTitle/PageTitle'
 import { AvisCard } from '../../Home/AvisSection'
 import toast, { Toaster } from 'react-hot-toast';
 import Loading from '../../../Loading/Loading';
+import SwitchPageBlock from '../../../SwitchPageBlock/SwitchPageBlock';
 
 const ReviewsHandler = () => {
     const [avis,setAvis]=useState([])
-    const [filters, setFilters] = useState("");
-    const [filterName, setFilterName] = useState("");
-    const [filterReview, setFilterReview] = useState(5);
-    const [loading,setLoading]=useState(false)
+    const [filters, setFilters] = useState(0);
+    const [loading, setLoading] = useState(false)
+    const [currentPage,setCurrentPage] = useState(0)
   
     const notifySuccess = (text) => toast.success(text);
     const notifyError = (text) => toast.error(text);
 
-    const filterPrenom = (
-        <>
-            <label htmlFor="gestionReviewNameFilter">Filtrer par prènom</label>
-            <input type="text" value={filterName}  onChange={(e)=> setFilterName(e.target.value)} id='gestionReviewNameFilter' />
-        </>
-    );
-    
-    const filterNote =(
-        <>
-            <label htmlFor="gestionReviewAvisFilter">Filtrer par Note</label>
-            <select type="text"  id='gestionReviewAvisFilter' value={filterReview} onChange={(e)=> setFilterReview(+e.target.value)}>
-                <option value="5">5</option>
-                <option value="4">4</option>
-                <option value="3">3</option>
-                <option value="2">2</option>
-                <option value="1">1</option>
-            </select>
-        </>
-    )
-    
-  
 
+    
     useEffect(() => {
         setLoading(true)
-        const homepagePath = process.env.REACT_APP_HTTP + "pages/homePage.php?reviews=true";
+        const homepagePath = process.env.REACT_APP_HTTP + `pages/admin/reviewHandler.php?currentPage=${currentPage * 9}&filter=${filters}`;
             axios.get(homepagePath)
                 .then(response => {
+                    console.log(response.data);
                 if (response.data.status === 1) {
                     let reviews = [];
                     response.data.reviews.forEach((review,index)=> {
@@ -56,14 +37,9 @@ const ReviewsHandler = () => {
                 
 
             })
-    }, [])
+    }, [filters,currentPage])
 
 
-
-    useEffect(() => {
-        setFilterName("");
-        setFilterReview(5)
-    }, [filters])
 
 
     
@@ -105,39 +81,50 @@ const ReviewsHandler = () => {
                     <div className='container--center--column inputs_container_filters_inner '>
                         <label htmlFor="gestionReviewFilters">Filtrer par</label>
                         <select type="text" id='gestionReviewFilters' onChange={(e)=> setFilters(e.target.value)}>
-                            <option value="validate">A' valider</option>
-                            <option value="prenom">Prènom</option>
-                            <option value="review">Note</option>
-                           
+                            <option value="0">A' valider</option>
+                            <option value="1">Tout</option>
                         </select>
                     </div>      
-                
-                    <div className='inputs_container_filters_inner'>
-                        <div className='mar-top-20 container--center--column '>{filters === "prenom" ? filterPrenom : filters === "review" ? filterNote : ""}</div>
-                    </div>
                 </div>
             </div>
                 
             <div className='list-flex-wrap container--pad-bottom gap-50' style={{padding:50}}>
-                {!filters
-                    ?
-                    avis.map((av, index) => <div key={`avis_ADM${av.id}`}> <div style={av.is_validate ? {backgroundColor:"red",color:"white"} : {backgroundColor:"lightgreen",color:"black"}} onClick={()=>toggleReviewValidation(av.id,av)} className='reviewValidatorSwitch'>{av.is_validate ? "Moderer" : "Valider"} </div> <AvisCard key={"avis_" + index + "_card"} name={av.name} message={av.message} review={av.review} style={av.is_validate === 1 ? {border: "2px solid lightgreen" } : { border: "2px solid red" }} /> </div>)
-                    :
-                    filters === "prenom" 
+                {
+                    filters === "1" 
                         ?
-                        avis.map((av, index) => { return av.name.toLowerCase().includes(filterName.toLowerCase()) && <div key={`avis_ADM${av.id}`}> <div style={av.is_validate ? {backgroundColor:"red",color:"white"} : {backgroundColor:"lightgreen",color:"black"}} onClick={()=>toggleReviewValidation(av.id,av)} className='reviewValidatorSwitch'>{av.is_validate ? "Moderer" : "Valider"} </div> <AvisCard key={"avis_" + index + "_card"} name={av.name} message={av.message} review={av.review} style={av.is_validate === 1 ? {border: "2px solid lightgreen" } : { border: "2px solid red" }} /> </div>})
-                        :
-                        filters === "review" 
-                            ?
-                            avis.map((av, index) => { return av.review === filterReview && <div key={`avis_ADM${av.id}`}> <div style={av.is_validate ? {backgroundColor:"red",color:"white"} : {backgroundColor:"lightgreen",color:"black"}} onClick={()=>toggleReviewValidation(av.id,av)} className='reviewValidatorSwitch'>{av.is_validate ? "Moderer" : "Valider"} </div> <AvisCard key={"avis_" + index + "_card"} name={av.name} message={av.message} review={av.review} style={av.is_validate === 1 ? {border: "2px solid lightgreen" } : { border: "2px solid red" }} /> </div>})
-                            :
-                            filters === "validate" 
-                            ?
-                            avis.map((av, index) => { return av.is_validate === 0 &&<div key={`avis_ADM${av.id}`}> <div style={av.is_validate ? {backgroundColor:"red",color:"white"} : {backgroundColor:"lightgreen",color:"black"}} onClick={()=>toggleReviewValidation(av.id,av)} className='reviewValidatorSwitch'>{av.is_validate ? "Moderer" : "Valider"} </div> <AvisCard key={"avis_" + index + "_card"} name={av.name} message={av.message} review={av.review} style={av.is_validate === 1 ? {border: "2px solid lightgreen" } : { border: "2px solid red" }} /> </div>    })
-                            :
-                            "" 
+                        avis.map((av, index) =>
+                            <div key={`avis_ADM${av.id}`}>
+                                <div style={av.is_validate ? { backgroundColor: "red", color: "white" } : { backgroundColor: "lightgreen", color: "black" }}
+                                    onClick={() => toggleReviewValidation(av.id, av)}
+                                    className='reviewValidatorSwitch'>{av.is_validate ? "Moderer" : "Valider"}
+                                </div> <AvisCard key={"avis_" + index + "_card"}
+                                    name={av.name}
+                                    message={av.message}
+                                    review={av.review}
+                                    style={av.is_validate === 1 ? { border: "2px solid lightgreen" } : { border: "2px solid red" }}
+                                />
+                            </div>
+                        )                        
+                        : 
+                        avis.map((av, index) => {
+                            return av.is_validate === 0 &&
+                                <div key={`avis_ADM${av.id}`}>
+                                    <div style={av.is_validate ? { backgroundColor: "red", color: "white" } : { backgroundColor: "lightgreen", color: "black" }}
+                                        onClick={() => toggleReviewValidation(av.id, av)}
+                                        className='reviewValidatorSwitch'>{av.is_validate ? "Moderer" : "Valider"}
+                                    </div> <AvisCard key={"avis_" + index + "_card"}
+                                        name={av.name}
+                                        message={av.message}
+                                        review={av.review}
+                                        style={av.is_validate === 1 ? { border: "2px solid lightgreen" } : { border: "2px solid red" }}
+                                    />
+                                </div>
+                        })
+                           
                 }
+               
             </div>
+            <SwitchPageBlock handleCarPage={()=>{} } currentPage={currentPage} setCurrentPage={(value)=>setCurrentPage(value)} dataLength={avis[0]?.count} />
     </div>
      
   )

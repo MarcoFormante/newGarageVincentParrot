@@ -103,7 +103,8 @@ Class Review{
 
 
     public function getReviews(){
-        $query = "SELECT * from reviews";
+        $query = "SELECT * FROM reviews
+         LIMIT 0,9";
 
         if(!is_null($this->pdo)) {
             $stmt = $this->pdo->prepare($query);
@@ -184,6 +185,43 @@ Class Review{
                 echo json_encode(["status"=> 0 ,"message" => "Erreur pendant recuperation des données(totalReviews)"]);
             }
         }
+    }
+
+
+    public function getReviewsToValidate(int $currentPage,int $filter){
+        if (!is_null($this->pdo)) {
+            if ($filter === 0) {
+                $query = "SELECT *, (SELECT count(*) FROM reviews WHERE is_validate = 0) as count FROM reviews
+                WHERE is_validate = 0 LIMIT :currentPage,9";
+                $stmt = $this->pdo->prepare($query);
+                $stmt->bindValue(':currentPage',$currentPage,PDO::PARAM_INT);
+
+            }else{
+                $query = "SELECT *, (SELECT count(*) FROM reviews) as count FROM reviews LIMIT :currentPage,9";
+                $stmt = $this->pdo->prepare($query);
+                $stmt->bindValue(':currentPage',$currentPage,PDO::PARAM_INT);
+            }
+    
+
+            if ($stmt->execute()) {
+                $reviews = [];
+                while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                    $reviews[] = $row;
+                }
+                echo json_encode(["status"=> 1 ,'reviews'=>$reviews]);
+            }
+    
+            
+
+         
+
+        }else{
+            throw new Exception("Erreur de connection au Database", 1);
+        }
+        
+        
+        
+       
     }
 
 }

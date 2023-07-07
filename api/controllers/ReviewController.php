@@ -26,6 +26,11 @@ Class ReviewController{
         $review->getTotalReviews();
     }
 
+    public function getReviewsToValidate(int $currentPage,int $filter){
+        $review = new Review();
+        $review->getReviewsToValidate($currentPage,$filter);
+    }
+
 
 }
 ?>
