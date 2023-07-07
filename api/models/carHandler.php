@@ -30,11 +30,11 @@ Class carHandler{
     public function createNewCar($thumbnail,$gallery,$details,$equipments){
 
         $path = $_SERVER['DOCUMENT_ROOT'] ."/app/public/images/uploads/" ;
-        $thumbnailName =  uniqid() . uniqid().".jpg";
+        $thumbnailName =  uniqid() . uniqid().".webp";
         $galleryPathArray = [];
 
         foreach ($_FILES['gallery']['tmp_name'] as $key => $value) {
-            $fileName =  (uniqid() . random_int(20,999))  . uniqid().".jpg";
+            $fileName =  (uniqid() . random_int(20,999))  . uniqid().".webp";
             $galleryPathArray[$key] = $fileName; 
         }
 
@@ -358,12 +358,12 @@ public function getAllCars( int $currentPage,string $filters,$filterValue){
             }else{
 
                 $fileExtention = explode("/",mime_content_type($value['tmp_name']))[1];
-                if (!preg_match("/jpeg|png|jpg/i",$fileExtention)) {
+                if (!preg_match("/jpeg|png|jpg|webp/i",strtolower($fileExtention))) {
                     echo json_encode(["status"=> 0, "message"=>"Erreur: les types d'images acceptés sont jpeg et png"]);
                     return;
                 }
 
-                $imageName =  uniqid() . uniqid().".jpg";
+                $imageName =  uniqid() . uniqid().".webp";
                 $query = "UPDATE $table SET $column = :value WHERE $idTarget = :id ";
                 $stmt = $this->pdo->prepare($query);
                 $stmt->bindValue(":value",$imageName,PDO::PARAM_STR);

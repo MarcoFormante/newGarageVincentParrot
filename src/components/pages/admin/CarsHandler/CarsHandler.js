@@ -4,6 +4,7 @@ import PageTitle from '../../../PageTitle/PageTitle'
 import SwitchPageBlock from '../../../SwitchPageBlock/SwitchPageBlock'
 import toast, { Toaster } from 'react-hot-toast';
 import Modal from '../../../Modal/Modal';
+import Resizer from "react-image-file-resizer"
 
 const CarsHandler = () => {
     const [currentPage, setCurrentPage] = useState(0)
@@ -94,25 +95,47 @@ const CarsHandler = () => {
       
     }, [dataToUpdate])
 
+
+    const resizeFile = (file) =>
+  new Promise((resolve) => {
+    Resizer.imageFileResizer(
+      file,
+      1280,
+      853,
+      "WEBP",
+        80,
+      0,
+      (uri) => {
+        resolve(uri);
+      },
+      "file",
+      246,
+      199
+    );
+  });
+
    
 
-    function updateCar() {
+    async function updateCar() {
         if (dataToUpdate.table && dataToUpdate.column && dataToUpdate.value && dataToUpdate.type) {
             const path = "pages/admin/carHandler.php"
             const formData = new FormData()
             formData.append("table", dataToUpdate.table)
             formData.append("column", dataToUpdate.column[0])
             formData.append("id", dataToUpdate.id)
-            formData.append("value", dataToUpdate.value)
+           
             if (dataImageToUpdate) {
-                if (typeof(dataToUpdate.value) === "object") {
-                    formData.append("imageData", dataImageToUpdate ? dataImageToUpdate : 0)
+                if (typeof (dataToUpdate.value) === "object") {
+                    console.log(await resizeFile(dataToUpdate.value));
+                     formData.append("value", await resizeFile(dataToUpdate.value))
+                    await formData.append("imageData", dataImageToUpdate ? dataImageToUpdate : 0)
                 } else {
                     notifyError("Choisissez une image")
                     return
                 }
             }
-               
+           
+           
            
             axios.post(path, formData, {
                 headers: {
@@ -151,7 +174,8 @@ const CarsHandler = () => {
             setModalToggle(false)
             getCars()
         }
-    },[filters])
+    }, [filters])
+    
 
 
     console.log(dataToUpdate?.value);
@@ -160,10 +184,12 @@ const CarsHandler = () => {
             <Toaster />
             {(modalToggle && dataToUpdate === null && carTarget) ?
                 <Modal type={"alert"} title={"Vous êtes sûr de vouloir supprimer cette voiture?"} onExit={() => {
-                    setModalToggle(false)
+                    setModalToggle(modalToggle)
                     setCarTarget(null)
+                   
                 }}
                     onClick={() => deleteCar(carTarget.id, carTarget.thumbnail)}
+                    isModalOn={true}
                 >
                     <div className='text-center container--center--column pad-20'>
                         <p><b>Numero Vo:</b></p>
@@ -183,10 +209,12 @@ const CarsHandler = () => {
                             setModalToggle(false);
                             setDataToUpdate(null);
                             setDataImageToUpdate("");
+                           
                         }}
                         onClick={() => {
                             updateCar()
                         }}
+                        isModalOn={modalToggle}
                     >
                         <span><b>{dataToUpdate.column[1]}</b></span>
 
