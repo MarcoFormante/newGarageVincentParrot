@@ -4,103 +4,7 @@ require_once '/xampp/htdocs/app/api/models/connection.php';
 
 Class Review{
     use Connection;
-    private int $id;
-    private string $name;
-    private string $message;
-    private int $is_validate;
-    private int $review;
-
-    /**
-     * Get the value of id
-     */ 
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Get the value of name
-     */ 
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Get the value of message
-     */ 
-    public function getMessage()
-    {
-        return $this->message;
-    }
-
-    /**
-     * Get the value of is_validate
-     */ 
-    public function getIs_validate()
-    {
-        return $this->is_validate;
-    }
-
-    /**
-     * Set the value of id
-     *
-     * @return  self
-     */ 
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * Set the value of name
-     *
-     * @return  self
-     */ 
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Set the value of is_validate
-     *
-     * @return  self
-     */ 
-    public function setIs_validate($is_validate)
-    {
-        $this->is_validate = $is_validate;
-
-        return $this;
-    }
-
    
-
-    /**
-     * Get the value of review
-     */ 
-    public function getReview()
-    {
-        return $this->review;
-    }
-
-    /**
-     * Set the value of review
-     *
-     * @return  self
-     */ 
-    public function setReview($review)
-    {
-        $this->review = $review;
-
-        return $this;
-    }
-
-
 
     public function getReviews(){
         $query = "SELECT * FROM reviews
@@ -196,7 +100,7 @@ Class Review{
                 $stmt = $this->pdo->prepare($query);
                 $stmt->bindValue(':currentPage',$currentPage,PDO::PARAM_INT);
 
-            }else{
+            }elseif($filter === 1){
                 $query = "SELECT *, (SELECT count(*) FROM reviews) as count FROM reviews LIMIT :currentPage,9";
                 $stmt = $this->pdo->prepare($query);
                 $stmt->bindValue(':currentPage',$currentPage,PDO::PARAM_INT);
@@ -208,12 +112,8 @@ Class Review{
                 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
                     $reviews[] = $row;
                 }
-                echo json_encode(["status"=> 1 ,'reviews'=>$reviews]);
+                echo json_encode(["status"=> 1 ,'reviews'=>$reviews,'filter'=>$filter]);
             }
-    
-            
-
-         
 
         }else{
             throw new Exception("Erreur de connection au Database", 1);

@@ -11,33 +11,41 @@ const ReviewsHandler = () => {
     const [filters, setFilters] = useState(0);
     const [loading, setLoading] = useState(false)
     const [currentPage,setCurrentPage] = useState(0)
-  
     const notifySuccess = (text) => toast.success(text);
     const notifyError = (text) => toast.error(text);
 
-
     
+    console.log(filters);
     useEffect(() => {
-        setLoading(true)
-        const homepagePath = process.env.REACT_APP_HTTP + `pages/admin/reviewHandler.php?currentPage=${currentPage * 9}&filter=${filters}`;
+        
+            setLoading(true)
+            const homepagePath = process.env.REACT_APP_HTTP + `pages/admin/reviewHandler.php?currentPage=${currentPage}&filter=${filters}`;
             axios.get(homepagePath)
                 .then(response => {
                     console.log(response.data);
-                if (response.data.status === 1) {
-                    let reviews = [];
-                    response.data.reviews.forEach((review,index)=> {
+                    if (response.data.status === 1) {
+                        let reviews = [];
+                        response.data.reviews.forEach((review, index) => {
                             reviews.push(response.data.reviews[index])
-                    });
-                    setAvis([...reviews])
-
-                    setTimeout(() => {
-                        setLoading(false)
-                    }, 500);
-                }
-                
-
-            })
-    }, [filters,currentPage])
+                        });
+                        setAvis([...reviews])
+                        setTimeout(() => {
+                            setLoading(false)
+                            const reviewCount = response.data.reviews[0]?.count === undefined || response.data.reviews[0]?.count === null ? 0 : response.data.reviews[0]?.count
+                            if (response?.data?.filter === 0) {
+                                notifySuccess(`Avis à valider : ${reviewCount}`)
+                            } else {
+                                notifySuccess(`Nombre d'avis : ${reviewCount}`)
+                            }
+                         
+                        }, 500);
+                    } else {
+                        notifyError("Un erreur est survenu")
+                    }
+                })
+        
+            
+    }, [currentPage,filters])
 
 
 
