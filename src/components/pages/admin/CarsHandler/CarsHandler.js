@@ -5,6 +5,7 @@ import SwitchPageBlock from '../../../SwitchPageBlock/SwitchPageBlock'
 import toast, { Toaster } from 'react-hot-toast';
 import Modal from '../../../Modal/Modal';
 import Resizer from "react-image-file-resizer"
+import CarHandlerDetails from './CarHandlerDetails';
 
 const CarsHandler = () => {
     const [currentPage, setCurrentPage] = useState(0)
@@ -18,6 +19,8 @@ const CarsHandler = () => {
     const [isDetailsPage, setIsDetailsPage] = useState(false)
     const [isEquipmentsPage, setIsEquipmentsPage] = useState(false)
     const [modalFilterValue, setmodalFilterValue] = useState("");
+    const [carID, setCarID] = useState(null)
+    
     const table = React.useRef()
 
     const notifySuccess = (text) => toast.success(text);
@@ -123,7 +126,6 @@ const CarsHandler = () => {
             formData.append("table", dataToUpdate.table)
             formData.append("column", dataToUpdate.column[0])
             formData.append("id", dataToUpdate.id)
-           
             if (dataImageToUpdate) {
                 if (typeof (dataToUpdate.value) === "object") {
                     console.log(await resizeFile(dataToUpdate.value));
@@ -133,8 +135,9 @@ const CarsHandler = () => {
                     notifyError("Choisissez une image")
                     return
                 }
+            } else {
+                formData.append("value", dataToUpdate.value)
             }
-           
            
            
             axios.post(path, formData, {
@@ -178,10 +181,12 @@ const CarsHandler = () => {
     
 
 
-    console.log(dataToUpdate?.value);
+  
     return (
         <div>
+          
             <Toaster />
+            <CarHandlerDetails carID={carID} setCarID={(value)=>setCarID(value)} dataToUpdate={dataToUpdate} setDataToUpdate={(value)=>setDataToUpdate(value)}/>
             {(modalToggle && dataToUpdate === null && carTarget) ?
                 <Modal type={"alert"} title={"Vous êtes sûr de vouloir supprimer cette voiture?"} onExit={() => {
                     setModalToggle(modalToggle)
@@ -218,15 +223,46 @@ const CarsHandler = () => {
                     >
                         <span><b>{dataToUpdate.column[1]}</b></span>
 
-                        {dataToUpdate.type !== "file"
+                        {dataToUpdate.type !== "file"  &&  dataToUpdate.type !== "select"
                             ?
                             <input type={dataToUpdate.type} value={dataToUpdate.value}
                                 onChange={(e) =>
                                     setDataToUpdate({
                                         ...dataToUpdate,
-                                        value: e.target.value.match("e") || e.target.value < 0 ? "" : e.target.value
+                                        value: dataToUpdate.type === "text" ? e.target.value : dataToUpdate.type === "number" && (e.target.value.match("e") || e.target.value < 0 ) ? "" : e.target.value 
                                     })} />
                             :
+                            dataToUpdate.type === "select"
+                                
+                                ?
+                                <select name="details_carHandler" id="detail_carHandler" onChange={(e)=>setDataToUpdate({...dataToUpdate,value: e.target.value})}>
+                                    {
+                                    dataToUpdate.column[0] === "gearbox"
+                                        ?
+                                    <>
+                                        <option value=""></option>
+                                        <option value="Manuelle">Manuelle</option>
+                                        <option value="Automatique">Automatique</option>
+                                    </>
+                                        : 
+                                            dataToUpdate.column[0] === "energy"
+                                                
+                                        ?
+                                    <>
+                                    <option value=""></option>
+                                    <option value="Essence">Essence</option>
+                                    <option value="Gazole">Gazole</option>
+                                    <option value="Électrique">Électrique</option>
+                                    <option value="GPL">GPL</option>
+                                    </>
+                                        :
+                                        null
+                                            
+                                    }
+                                </select>
+
+                                :
+                                
                             <div className='container--center--column gap-20'>
                                 {typeof (dataToUpdate.value) !== "object"
                                     ?
@@ -238,6 +274,8 @@ const CarsHandler = () => {
                             <input hidden type="file" name='file'id='new_image_toModify' accept='image/jpeg, image/png'
                                     onChange={(e) => setDataToUpdate({ ...dataToUpdate, value: e.target.files[0] })} />
                             </div>
+                            
+                             
                         }
                     </Modal>
                     :
@@ -247,8 +285,8 @@ const CarsHandler = () => {
             
 
             <PageTitle pageTitle={"Gestion vehicules"}/>
-      <div className='container--pad-top'>
-      <div className='input_center_handler'>
+            <div className='container--pad-top'>
+                <div className='input_center_handler'>
                     <div className='container--center--column inputs_container_filters_inner '>
                         <label htmlFor="gestionFilterCars">Filtrer par</label>
                         <select type="text" id='gestionFilterCars' onChange={(e) => setFilters(e.target.value)}>
@@ -317,7 +355,9 @@ const CarsHandler = () => {
                                 <td onClick={() => setDataToUpdate({index,table:"car_details",id:car.id,column:["vo_number","Numero VO"],value:car.vo_number,type:"number"})}>{car.vo_number}</td>
                                 <td  className='no-event'>{car.created_at}</td>
                                
-                                <td className='view_icon'></td>
+                                <td className='view_icon' onClick={() => {
+                                    setCarID(car.id)
+                                }}></td>
                                 <td className='view_icon'></td>
                                 <td className='no-event'> <span className='delete-icon' style={{ margin: "auto" }} onClick={() => {
                                     setCarTarget({id:car.id,thumbnail:car.thumbnail, vo:car.vo_number, make:car.make, model:car.model})
@@ -329,7 +369,7 @@ const CarsHandler = () => {
                 </table>
                     
                 <div style={{position:"absolute",left:"50%",transform:"translateX(-50%)"}}>
-                <SwitchPageBlock currentPage={ currentPage} setCurrentPage={(value)=>setCurrentPage(value)} handleCarPage={()=>{}} dataLength={carsCount} />
+                    <SwitchPageBlock currentPage={currentPage} setCurrentPage={(value) => setCurrentPage(value)} handleCarPage={() => { }} dataLength={carsCount} /> 
                 </div>
           </div>
      

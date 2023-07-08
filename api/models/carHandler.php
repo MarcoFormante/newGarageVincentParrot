@@ -34,18 +34,25 @@ Class carHandler{
         $galleryPathArray = [];
 
         foreach ($_FILES['gallery']['tmp_name'] as $key => $value) {
-            $fileExtention = explode("/",mime_content_type($_FILES['gallery']['tmp_name']))[1];
+            $fileExtention = explode("/",mime_content_type($value))[1];
             if (preg_match("/webp|jpeg|jpg|png/",$fileExtention)) {
                 $fileName =  (uniqid() . random_int(20,999))  . uniqid().".webp";
                 $galleryPathArray[$key] = $fileName; 
             }else{
                 throw new Exception("Erreur: le types de images acceptès sont webp,jpeg,png", 1);
-                
+                die();
             }
-           
+        }
+        $fileExtentionThumb = explode("/",mime_content_type($thumbnail['tmp_name']))[1];
+        if (preg_match("/webp|jpeg|jpg|png/",$fileExtentionThumb)) {
+          $thumbnailValid = true;
+        }else{
+            $thumbnailValid = false;
+            throw new Exception("Erreur: le types de images acceptès sont webp,jpeg,png , verifiez la photo principale (thumbnail)", 1);
+            die();
         }
 
-        if (!is_null($this->pdo)) {
+        if (!is_null($this->pdo) && $thumbnailValid === true) {
        //CAR CARD
         $carCardParams = [":make"=>$details[0],":model" =>$details[1],":thumbnail"=>$thumbnailName,":year"=>$details[3], ":km"=>$details[4] , ":price"=>$details[2],":offer"=>$details[13]];
         $queryCarCard = "INSERT INTO cars(make,model,thumbnail,year,km,price,offer) VALUES(:make,:model,:thumbnail,:year,:km,:price,:offer)";
