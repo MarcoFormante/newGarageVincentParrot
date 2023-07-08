@@ -7,8 +7,9 @@ Class Review{
    
 
     public function getReviews(){
-        $query = "SELECT * FROM reviews
-         LIMIT 0,9";
+        $query = "SELECT * FROM reviews WHERE review > 3
+         ORDER BY id DESC 
+         LIMIT 0,20";
 
         if(!is_null($this->pdo)) {
             $stmt = $this->pdo->prepare($query);
@@ -117,11 +118,7 @@ Class Review{
 
         }else{
             throw new Exception("Erreur de connection au Database", 1);
-        }
-        
-        
-        
-       
+        }   
     }
 
 }

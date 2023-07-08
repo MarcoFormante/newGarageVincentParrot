@@ -34,8 +34,15 @@ Class carHandler{
         $galleryPathArray = [];
 
         foreach ($_FILES['gallery']['tmp_name'] as $key => $value) {
-            $fileName =  (uniqid() . random_int(20,999))  . uniqid().".webp";
-            $galleryPathArray[$key] = $fileName; 
+            $fileExtention = explode("/",mime_content_type($_FILES['gallery']['tmp_name']))[1];
+            if (preg_match("/webp|jpeg|jpg|png/",$fileExtention)) {
+                $fileName =  (uniqid() . random_int(20,999))  . uniqid().".webp";
+                $galleryPathArray[$key] = $fileName; 
+            }else{
+                throw new Exception("Erreur: le types de images acceptès sont webp,jpeg,png", 1);
+                
+            }
+           
         }
 
         if (!is_null($this->pdo)) {
@@ -142,7 +149,7 @@ Class carHandler{
                     echo json_encode(["status"=> 1, "message"=>"Nouvelle voiture creé avec succès"]);
                 }    
             }
-        } catch (PDOException $e) {
+        } catch (Exception $e) {
           $this->pdo->rollBack();
           echo json_encode(["status"=>0,"message"=>"error" . $e->getMessage()]);
           return ;

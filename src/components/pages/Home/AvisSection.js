@@ -22,12 +22,14 @@ const AvisSection = () => {
         axios.get(homepagePath)
             .then(response => {
                 let reviews = [];
-                response.data.reviews.forEach((review,index)=> {
-                    if (review.is_validate === 1 && review.review >= 4 ) {
-                        reviews.push(response.data.reviews[index])
-                    }
-                });
-                setAvis([...reviews])
+                if (response.data.reviews && response.data.reviews.length > 0) {
+                    response?.data?.reviews?.forEach((review,index)=> {
+                        if (review.is_validate === 1 && review.review >= 4 ) {
+                            reviews.push(response.data.reviews[index])
+                        }
+                    });
+                    setAvis([...reviews])
+                }   
         })
     }, [])
 
