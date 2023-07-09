@@ -13,8 +13,6 @@ const CarDetails = () => {
     const [loadingComponent,setLoadingComponent] = useState(null)
     const [detailsInLoading, setDetailsInLoading] = useState(true);
     const [carPhotosInLoading, setCarPhotosInLoading] = useState(true);
-    const [currentPage, setCurrentPage] = useState(0)
-    const [lastLocation,setLastLocation] = useState("")
 
     useEffect(() => {
         if (detailsInLoading && carPhotosInLoading) {
@@ -27,14 +25,6 @@ const CarDetails = () => {
        
     }, [detailsInLoading, carPhotosInLoading])
     
-    useEffect(() => {
-        if (location.state?.currentPage) {
-            setCurrentPage(location.state?.currentPage)
-        }
-        if (location.state?.lastLocation) {
-            setLastLocation(location.state?.lastLocation)
-        }
-    }, [location.state])
     
     
     

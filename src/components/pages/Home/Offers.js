@@ -123,8 +123,8 @@ const Offers = ({cars,count}) => {
             <Arrows cardsTotalWidth={offerCards.length * 250} carouselX={carouselX} carouselWidth={carouselWidth} onClick={(direction)=>setArrowTarget(direction)}  />
            
         <div className={"section_page section_page--grey"}>
-            <div className={'carCards_container'} ref={carousel}>
-            <div className={'page_section page_section_offers card_carousel_flex'} style={offerCards.length * 250 < window.innerWidth ? { justifyContent: "center" } : {}}>
+            <div className={'carCards_container'} ref={carousel} style={{overflowY:"hidden"}}>
+            <div className={'page_section page_section_offers card_carousel_flex'} style={offerCards.length * 320 < window.innerWidth ? { justifyContent: "center",} : {}}>
                 { offerCards && offerCards?.map((car, index) => car.id  && <CarCard lastlocation={"home"} key={index}  {...offerCards[index]} />) }
             </div>
               

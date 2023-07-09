@@ -85,29 +85,31 @@ const ParcAuto = () => {
       <div className='parc-auto_page'>
         <Loading isLoading={loading}/>
          <Toaster/>
-          <div className='filters_container'>
-            <div className={`${filtersToggle ?  "filter_window--active filters_window " : "filters_window "}`}>
-            <p className='filtre_title'>Filtres</p>
+        
+          <div className='filters_container' style={!filtersToggle ? {visibility:"hidden"} : {}}>
+            <div className={`${filtersToggle ? "filter_window--active filters_window " : "filters_window "}`}>
+              <p className='filtre_title'>Filtres</p>
             
-            <CarFilters closeButton={
-                  <ButtonCta
+              <CarFilters closeButton={
+                <ButtonCta
                   type={"button"}
                   inner={"Filtrer"}
                   className={"cta cta--red  mar-auto"}
                   onClick={() => loadFilteredCars()}
-                  />}
+                />}
               
                 handleChangeFilters={
-                (value) => {
-                  setFilters({ ...filters, ...value })
-                  handleCarPage(0)
-                }}
+                  (value) => {
+                    setFilters({ ...filters, ...value })
+                    handleCarPage(0)
+                  }}
               
-              setFiltersToggle={() => setFiltersToggle(!filtersToggle)}
-              loadFilteredCars={()=>loadFilteredCars()}
-            />
+                setFiltersToggle={() => setFiltersToggle(!filtersToggle)}
+                loadFilteredCars={() => loadFilteredCars()}
+              />
             </div>
           </div>
+        
             <PageTitle pageTitle={"Notre Parc automobile"} />
           
             <div className={'filters_btn_toggle'} onClick={() => setFiltersToggle(!filtersToggle)}>
