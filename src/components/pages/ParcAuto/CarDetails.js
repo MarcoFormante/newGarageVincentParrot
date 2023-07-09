@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef} from 'react'
 import Arrows from '../../Arrows/Arrows'
-import { useLocation, useNavigate,Link} from 'react-router-dom'
+import { useLocation, useNavigate,Link, Navigate} from 'react-router-dom'
 import PageTitle from '../../PageTitle/PageTitle'
 import axios from '../../../api/axios'
 import Loading from '../../Loading/Loading'
@@ -36,10 +36,9 @@ const CarDetails = () => {
         }
     }, [location.state])
     
-    console.log(location.state);
-    console.log(currentPage,lastLocation);
     
-  return location.state &&  (
+    
+  return location.state?.make ?  (
       <div>
         {loadingComponent}
           <PageTitle pageTitle={location.state.make + " " + location.state.model} />
@@ -53,6 +52,8 @@ const CarDetails = () => {
         <Details {...location.state}   setDetailsInLoading={(value)=>setDetailsInLoading(value)} />
     </div>
     )
+        :
+      <Navigate to={"/"}/>
         
 
 }
