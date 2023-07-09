@@ -688,7 +688,8 @@ td.view_icon {
 .carHandler_details--active {
   left: 0%;
 }
-.carHandler_details_exitBtn {
+
+.exitBtn {
   position: absolute;
   top: 80px;
   left: 20px;
@@ -1143,7 +1144,7 @@ pages: home
 }
 @media screen and (max-width: 768px) {
   .filters_window {
-    width: 250px;
+    width: 100vw;
   }
 }
 
@@ -1210,6 +1211,20 @@ input[type=checkbox] {
 .reset_icon_filters {
   width: 30px;
   height: 30px;
+}
+
+.carCard_details_window {
+  padding-top: 80px;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 100%;
+  background-color: white;
+  transition: left 0.3s ease-in-out;
+}
+.carCard_details_window--active {
+  left: 0%;
 }
 
 .car_details_top_carousel_container {

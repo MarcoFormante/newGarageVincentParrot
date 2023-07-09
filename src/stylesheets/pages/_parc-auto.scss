@@ -54,21 +54,21 @@
 
 
  .filters_window{
- width: 300px;
- padding: 20px;
- background-color: $secondary_color;
- position: fixed; 
- min-width: inherit;
- top: 0px;
- color: $white-color;
- height: 100vh;
- z-index: 10;
+width: 300px;
+padding: 20px;
+background-color: $secondary_color;
+position: fixed; 
+min-width: inherit;
+top: 0px;
+color: $white-color;
+height: 100vh;
+z-index: 10;
 left: -100%;
 transition: 0.4s all ease;
 
 
     @media screen and (max-width:map-get($breakpoints,"medium")) {
-        width: 250px;
+        width: 100vw;
     }
 }
 

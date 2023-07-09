@@ -189,7 +189,7 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
                     </select>
                 </Modal>
             }
-            <div className='carHandler_details_exitBtn' onClick={() => setCarID()} />
+            <div className='exitBtn' onClick={() => setCarID()}></div>
             <PageTitle pageTitle={"Details Voiture"}/>
             {/* Car Details */}
             

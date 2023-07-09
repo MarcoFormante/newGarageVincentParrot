@@ -1,9 +1,11 @@
-import React, { useState, useEffect,useRef} from 'react'
+import React, { useState, useEffect, useRef} from 'react'
 import Arrows from '../../Arrows/Arrows'
-import { useLocation} from 'react-router-dom'
+import { useLocation, useNavigate,Link} from 'react-router-dom'
 import PageTitle from '../../PageTitle/PageTitle'
 import axios from '../../../api/axios'
 import Loading from '../../Loading/Loading'
+import ButtonCta from '../../Buttons/ButtonCta'
+
 
 
 const CarDetails = () => {
@@ -11,6 +13,8 @@ const CarDetails = () => {
     const [loadingComponent,setLoadingComponent] = useState(null)
     const [detailsInLoading, setDetailsInLoading] = useState(true);
     const [carPhotosInLoading, setCarPhotosInLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(0)
+    const [lastLocation,setLastLocation] = useState("")
 
     useEffect(() => {
         if (detailsInLoading && carPhotosInLoading) {
@@ -21,14 +25,32 @@ const CarDetails = () => {
             }, 800);
         }
        
-   },[detailsInLoading,carPhotosInLoading])
+    }, [detailsInLoading, carPhotosInLoading])
     
-  return (
+    useEffect(() => {
+        if (location.state?.currentPage) {
+            setCurrentPage(location.state?.currentPage)
+        }
+        if (location.state?.lastLocation) {
+            setLastLocation(location.state?.lastLocation)
+        }
+    }, [location.state])
+    
+    console.log(location.state);
+    console.log(currentPage,lastLocation);
+    
+  return location.state &&  (
       <div>
-            {loadingComponent}
-            <PageTitle pageTitle={location.state.make + " " + location.state.model}/>
-            <CarPhotos {...location.state} setCarPhotosInLoading={(value)=>setCarPhotosInLoading(value)}  />
-            <Details {...location.state}   setDetailsInLoading={(value)=>setDetailsInLoading(value)} />
+        {loadingComponent}
+          <PageTitle pageTitle={location.state.make + " " + location.state.model} />
+          {location.state.lastlocation === "parcAuto" 
+              ?
+              <Link className={"exitBtn"} to={"/parc-auto/"} state={{ currentPage : location.state.currentPage }} />
+              :
+              <Link className={"exitBtn"} to={"/"} />
+  }
+        <CarPhotos {...location.state} setCarPhotosInLoading={(value)=>setCarPhotosInLoading(value)}  />
+        <Details {...location.state}   setDetailsInLoading={(value)=>setDetailsInLoading(value)} />
     </div>
     )
         
@@ -145,7 +167,8 @@ const CarPhotos = ({thumbnail,year,km,price,offer,setCarPhotosInLoading}) => {
         <div className={'car_details_top_carousel_container'}>
            
             <div className={'img_show_large'}>
-            <div className={'car_details_base'}>
+                <div className={'car_details_base'}>
+                
                     <div>
                         <span>Année: {year} </span>
                         <span>Km: {km} </span>
@@ -175,7 +198,8 @@ const CarPhotos = ({thumbnail,year,km,price,offer,setCarPhotosInLoading}) => {
                         }
                     />
                 )}
-            </div>
+                </div>
+             
         </div>
         </div>
     )

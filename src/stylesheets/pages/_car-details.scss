@@ -1,3 +1,22 @@
+.carCard_details_window{
+padding-top: 80px;
+position: absolute;
+width: 100vw;
+height: 100vh;
+top: 0;
+left: 100%;
+background-color: white;
+transition: left 0.3s  ease-in-out;
+
+&--active{
+    left:0%;
+}
+}
+
+
+
+
+
 .car_details_top_carousel_container{
     // background-color: $light_gray_color;
     border-bottom: 1px solid $secondary_color;

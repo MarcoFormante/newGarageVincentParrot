@@ -125,7 +125,7 @@ const Offers = ({cars,count}) => {
         <div className={"section_page section_page--grey"}>
             <div className={'carCards_container'} ref={carousel}>
             <div className={'page_section page_section_offers card_carousel_flex'} style={offerCards.length * 250 < window.innerWidth ? { justifyContent: "center" } : {}}>
-                { offerCards && offerCards?.map((car, index) => car.id  && <CarCard key={index}  {...offerCards[index]} />) }
+                { offerCards && offerCards?.map((car, index) => car.id  && <CarCard lastlocation={"home"} key={index}  {...offerCards[index]} />) }
             </div>
               
             </div>
