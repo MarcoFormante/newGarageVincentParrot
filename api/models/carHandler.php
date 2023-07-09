@@ -26,6 +26,23 @@ Class carHandler{
         }
     }
 
+    public function addEquipment(int $carID ,int $equipID){
+        if (!is_null($this->pdo)) {
+            $query = "INSERT INTO car_equipments(car_id,equip_id) VALUES(:carID,:equipID)";
+            $stmt= $this->pdo->prepare($query);
+            $stmt->bindValue(":carID",$carID,PDO::PARAM_INT);
+            $stmt->bindValue(":equipID",$equipID,PDO::PARAM_INT);
+
+            if ($stmt->execute()) {
+                echo json_encode(["status"=>1,"message"=>"Equipement ajoutè avec succès"]);
+            }else{
+                echo json_encode(["status"=>0,"message"=>"Erreur pendant l'ajoute de l'equipment"]);
+            }
+        }else{
+            echo json_encode(["status"=>0,"message"=>"Erreur pendant l'ajoute de l'equipment"]);
+        }
+    }
+
 
     public function createNewCar($thumbnail,$gallery,$details,$equipments){
 
@@ -406,6 +423,24 @@ public function getAllCars( int $currentPage,string $filters,$filterValue){
                 $this->pdo->commit();
             }
         
+        }
+    }
+
+
+    public function deleteEquipment(int $carID, int $equipID){
+        if (!is_null($this->pdo)) {
+           $query= "DELETE FROM car_equipments WHERE car_id = :carID AND equip_id = :equipID";
+           $stmt = $this->pdo->prepare($query);
+           $stmt->bindValue(":carID",$carID,PDO::PARAM_INT);
+           $stmt->bindValue(":equipID",$equipID,PDO::PARAM_INT);
+
+           if ($stmt->execute()) {
+                echo json_encode(["status"=> 1, "message"=>"Supprimè avec succès"]);
+           }else{
+                echo json_encode(["status"=> 0, "message"=>"Erreur prendant la suppression de l'equipment , retentez"]);
+           }
+        }else{
+            echo json_encode(["status"=> 0, "message"=>"Erreur : probleme de connection au Database"]);
         }
     }
 

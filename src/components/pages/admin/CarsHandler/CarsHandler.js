@@ -16,10 +16,12 @@ const CarsHandler = () => {
     const [dataToUpdate, setDataToUpdate] = useState(null)
     const [dataImageToUpdate,setDataImageToUpdate] = useState("")
     const [filters, setFilters] = useState("Tout")
-    const [isDetailsPage, setIsDetailsPage] = useState(false)
-    const [isEquipmentsPage, setIsEquipmentsPage] = useState(false)
     const [modalFilterValue, setmodalFilterValue] = useState("");
+    const [newCarDetailsArray,setNewCarDetailsArray] = useState([])
     const [carID, setCarID] = useState(null)
+    const [isDetailUpdate, setIsDetailUpdate] = useState(false);
+
+
     
     const table = React.useRef()
 
@@ -153,6 +155,9 @@ const CarsHandler = () => {
                     } else {
                         setCars([...cars, { ...cars[dataToUpdate.index][dataToUpdate.column[0]] = dataToUpdate.value }])
                     }
+                    if (dataToUpdate.table === "car_details") {
+                        setIsDetailUpdate(true);
+                    }
                    
                     setCars([...cars])
                     setDataImageToUpdate("");
@@ -180,13 +185,21 @@ const CarsHandler = () => {
     }, [filters])
     
 
-
   
     return (
         <div>
           
             <Toaster />
-            <CarHandlerDetails carID={carID} setCarID={(value)=>setCarID(value)} dataToUpdate={dataToUpdate} setDataToUpdate={(value)=>setDataToUpdate(value)}/>
+            <CarHandlerDetails carID={carID}
+                setCarID={(value) => setCarID(value)}
+                dataToUpdate={dataToUpdate}
+                setDataToUpdate={(value) => setDataToUpdate(value)}
+                newCarDetailsArray={[...newCarDetailsArray]}
+                setNewCarDetailsArray={(value) => setNewCarDetailsArray(value)}
+                isDetailUpdate={isDetailUpdate}
+                setIsDetailUpdate={(value)=>setIsDetailUpdate(value)}
+            />
+
             {(modalToggle && dataToUpdate === null && carTarget) ?
                 <Modal type={"alert"} title={"Vous êtes sûr de vouloir supprimer cette voiture?"} onExit={() => {
                     setModalToggle(modalToggle)
@@ -284,7 +297,7 @@ const CarsHandler = () => {
             
             
 
-            <PageTitle pageTitle={"Gestion vehicules"}/>
+            {!carID && <><PageTitle pageTitle={"Gestion vehicules"}/>
             <div className='container--pad-top'>
                 <div className='input_center_handler'>
                     <div className='container--center--column inputs_container_filters_inner '>
@@ -330,7 +343,6 @@ const CarsHandler = () => {
                           <th>Numero VO</th>
                           <th>Date creation</th>
                           <th>Details</th>
-                          <th>Equipment</th>
                           <th>Effacer</th>
                       </tr>
                   </thead>
@@ -358,7 +370,6 @@ const CarsHandler = () => {
                                 <td className='view_icon' onClick={() => {
                                     setCarID(car.id)
                                 }}></td>
-                                <td className='view_icon'></td>
                                 <td className='no-event'> <span className='delete-icon' style={{ margin: "auto" }} onClick={() => {
                                     setCarTarget({id:car.id,thumbnail:car.thumbnail, vo:car.vo_number, make:car.make, model:car.model})
                                 }}></span>
@@ -370,10 +381,12 @@ const CarsHandler = () => {
                     
                 <div style={{position:"absolute",left:"50%",transform:"translateX(-50%)"}}>
                     <SwitchPageBlock currentPage={currentPage} setCurrentPage={(value) => setCurrentPage(value)} handleCarPage={() => { }} dataLength={carsCount} /> 
-                </div>
+                </div> 
           </div>
      
-        </div>
+                </div>
+                </> 
+        }
             
     </div>
   )

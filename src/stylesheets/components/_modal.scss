@@ -10,7 +10,7 @@
 
     &_container{
         background-color: rgb(231, 233, 231);
-        position: absolute;
+        position: fixed;
         @include flex-spaceB;
         flex-direction: column;
         gap:20px;

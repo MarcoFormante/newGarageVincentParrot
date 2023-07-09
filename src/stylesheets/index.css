@@ -574,7 +574,7 @@ h2.page_title_home {
 }
 .modal_container {
   background-color: rgb(231, 233, 231);
-  position: absolute;
+  position: fixed;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -679,7 +679,7 @@ td.view_icon {
   width: 100vw;
   height: 100vh;
   background-color: rgb(255, 255, 255);
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 100%;
   transition: left 0.3s ease-in-out;
@@ -1179,7 +1179,7 @@ input[type=checkbox] {
 
 .filter_window--active {
   left: 0;
-  z-index: 9;
+  z-index: 12;
 }
 
 .filters_icon {

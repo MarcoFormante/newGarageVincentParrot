@@ -19,6 +19,12 @@ switch ($requestMethod) {
         if (isset($_GET['getAllEquipments'])) {
             $CarHandlerController = new CarHandlerController();
             $CarHandlerController->getAllEquipments();
+        }elseif(isset($_GET['car_id']) && isset($_GET['equip_id'])){
+            $carID = htmlspecialchars($_GET['car_id']);
+            $equipID = htmlspecialchars($_GET['equip_id']);
+                $CarHandlerController = new CarHandlerController();
+                $CarHandlerController->addEquipment($carID,$equipID);
+          
         }else{
             echo "YOU HAVEN'T AUTHORIZATION";
         }
@@ -80,7 +86,13 @@ switch ($requestMethod) {
                 $thumbnail = htmlentities($_GET['thumbnail']);
                 $CarHandlerController = new CarHandlerController();
                 $CarHandlerController->deleteCar($id,$thumbnail);
-        
+        }
+
+        if (isset($_GET["car_id"]) && isset($_GET['equip_id'])) {
+           $carID = htmlspecialchars($_GET["car_id"]);
+           $equipID = htmlspecialchars($_GET['equip_id']);
+           $CarHandlerController = new CarHandlerController();
+           $CarHandlerController->deleteEquipment($carID,$equipID);
         }
 
         break;

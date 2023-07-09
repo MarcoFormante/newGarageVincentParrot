@@ -9,6 +9,11 @@ Class CarHandlerController{
         $carHandler->getAllEquipments();
     }
 
+    public function addEquipment(int $carID ,int $equipID){
+        $carHandler = new carHandler();
+        $carHandler->addEquipment($carID,$equipID);
+    }
+
     public function createNewCar($thumbnail,$gallery,$details,$equipments){
         $carHandler = new carHandler();
         $carHandler->createNewCar($thumbnail,$gallery,$details,$equipments);
@@ -36,5 +41,10 @@ Class CarHandlerController{
         $imageData = htmlspecialchars($imageData);
         $carHandler = new carHandler();
         $carHandler->updateCar($table,$column,$value,$id,$imageData);
+    }
+
+    public function deleteEquipment( int $carID, int $equipID){
+        $carHandler = new carHandler();
+        $carHandler->deleteEquipment($carID,$equipID);
     }
 }

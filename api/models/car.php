@@ -150,7 +150,7 @@ Class Car {
         $query = "SELECT * FROM car_details WHERE car_id = :id";
 
         if (!is_null($this->pdo)) {
-            $this->pdo->beginTransaction();
+           
             $stmt = $this->pdo->prepare($query);
             $stmt->bindValue(':id',$id,PDO::PARAM_INT);
 
@@ -158,11 +158,11 @@ Class Car {
                 
                 $details = $stmt->fetch(PDO::FETCH_ASSOC);
                 $equipments = $this->getCarEquipments($id);
-                echo json_encode([$details,$equipments]);
+                echo json_encode(["status"=>1,"details"=> $details,"equipements"=>$equipments]);
                 
             }else{
-                throw new PDOException("Probleme pendant la recuperation des données");
-                $this->pdo->rollBack();
+              
+                echo json_encode(["status"=>0,"message"=>"Probleme pendant la recuperation des données"]);
             }
 
            
@@ -170,7 +170,7 @@ Class Car {
     }
 
     public function getCarEquipments(int $id){
-        $query = "SELECT equipment FROM equipments
+        $query = "SELECT equipment , ce.equip_id FROM equipments
         JOIN car_equipments as ce ON ce.equip_ID = equipments.id
         where ce.car_id = :id";
 
@@ -181,7 +181,7 @@ Class Car {
             if ($stmt->execute()) {
                 $equipments = [];
                 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                    $equipments[]=$row['equipment'];
+                    $equipments[]=$row;
                 }
                 return $equipments;
                 

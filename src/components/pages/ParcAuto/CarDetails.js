@@ -196,6 +196,7 @@ const Details = ({id,year,km,setDetailsInLoading}) => {
 
         axios.get(carDetailsPath + "?details=true&id="+id)
             .then(response => {
+                console.log(response.data);
                 
                 if (response.status === 200 && response.statusText === "OK") {
 
@@ -208,7 +209,7 @@ const Details = ({id,year,km,setDetailsInLoading}) => {
                         seats,
                         vo_number,
                         energy
-                    } = response?.data[0];
+                    } = response?.data.details;
                     
                     const detailsArray = [
                         year, km + " km",
@@ -223,7 +224,7 @@ const Details = ({id,year,km,setDetailsInLoading}) => {
                     ];
                     
                     setDetails([...detailsArray])
-                    setEquipements([...response?.data[1]])
+                    setEquipements([...response?.data.equipements])
                     setDetailsInLoading(false);
                 } else {
                     console.error("Erreur:Impossible de recuperer les données(details voiture)");
@@ -287,7 +288,7 @@ const Details = ({id,year,km,setDetailsInLoading}) => {
                         ?
                         details && detailsTitles.map((detail, index) => !details.length < 1 && <li key={"detail_" + index}><span className='detail_title'>{detail}</span> <span> {details[index]}</span></li>)
                         :
-                        equipements && equipements.map((equipement, index) => <li key={"equipement_" + index}><span className='detail_title--black'>{equipement}</span></li>)
+                        equipements && equipements.map((equip, index) => <li key={"equipement_" + index}><span className='detail_title--black'>{equip.equipment}</span></li>)
                         
                     }
                     </ul>
