@@ -53,6 +53,7 @@ ul{
    
     li{
         display: list-item;
+        
     }
 }
 
@@ -218,7 +219,7 @@ ul{
     border-collapse: collapse;
     min-width: 318px;
     padding: 20px;
-    min-width: 300px;
+    min-width: 50vw;
     margin-bottom: 50px;
     text-align: center;
     
@@ -238,12 +239,12 @@ ul{
         margin: auto;
         padding: 10px;
         position: relative;
+
         .delete-icon_container{
             display: flex;
             justify-content: center;
             align-items: center;
             margin: auto;
-            
         }
         .delete-icon{
            
@@ -251,4 +252,9 @@ ul{
         }
     }
     
+}
+
+
+.hidden-scrollbar::-webkit-scrollbar{
+    display: none;
 }

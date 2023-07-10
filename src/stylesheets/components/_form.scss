@@ -18,7 +18,7 @@
 
                 div{
                     input:not(input[type="checkbox"]),select {
-                        width: 45vw;
+                        width: 40vw;
                     }
                 }     
             }
@@ -31,8 +31,6 @@
         }
 
         input:not(input[type="checkbox"],#modal_input,#galleryfileInput),textArea{
-            min-width: 200px;
-            width: 80vw;
             max-width: 670px;
             height: 42px;
             background-color: lighten($light_gray_color,8);
@@ -40,9 +38,11 @@
             appearance: none;
             border: none;
 
+
             @media screen and (max-width:map-get($breakpoints,"medium")) {
                 height: 35px;
                 width: 90vw;
+               
             }
         }
 
@@ -92,3 +92,12 @@
     
 }
 
+
+.new_car_details{
+    .inputs_container{
+        input{
+            width: 100px;
+        }
+      
+    }
+}

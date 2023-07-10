@@ -111,13 +111,13 @@ const Accounts = () => {
       <form className='form' onSubmit={handleSubmit}>
         <FormElement
           label={{ for: "email", text: "Email" }}
-          input={{ type: "text", name: "email", id: "email",  onChange: (e) => handleEmail(e), maxLength:60 }} value={email} required={true}
+          input={{ type: "text", name: "email", id: "email",  style : {width:"80vw"},  onChange: (e) => handleEmail(e), maxLength:60 }} value={email} required={true}
         />
         <span className='error-message text-center'>{emailError}</span>
 
         <FormElement
           label={{ for: "password", text: "Password" }}
-          input={{ type: "password", name: "password", id: "password", onChange: (e) => handlePassword(e),maxLength:60 }}  value={password} required={true}
+          input={{ type: "password", name: "password", id: "password", style : {width:"80vw"}, onChange: (e) => handlePassword(e),maxLength:60}}   value={password} required={true}
         />
         <span className='error-message text-center'>{passwordError}</span>
         <input type="submit" className='cta cta--red mar-top-20' value={"Crèer"} />

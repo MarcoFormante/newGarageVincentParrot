@@ -223,7 +223,7 @@ export const AvisCard = ({name,message,review,style}) => {
     
     return (
         <>
-            <div className={'avis_card'} style={style}>
+            <div className={'avis_card'}  style={style}>
 
                 <span className={'avis_card_name'}>{name}</span>
               

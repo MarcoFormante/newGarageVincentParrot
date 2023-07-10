@@ -220,10 +220,6 @@ h2.page_title_home {
   gap: 10px;
 }
 
-::-webkit-scrollbar {
-  display: none;
-}
-
 .arrows_container {
   display: flex;
   justify-content: end;
@@ -474,7 +470,7 @@ h2.page_title_home {
     gap: 40px;
   }
   .form .inputs_container .row_inputs_container div input:not(input[type=checkbox]), .form .inputs_container .row_inputs_container div select {
-    width: 45vw;
+    width: 40vw;
   }
 }
 .form .inputs_container label:not(label[for=modal_input]) {
@@ -482,8 +478,6 @@ h2.page_title_home {
   font-weight: 600;
 }
 .form .inputs_container input:not(input[type=checkbox], #modal_input, #galleryfileInput), .form .inputs_container textArea {
-  min-width: 200px;
-  width: 80vw;
   max-width: 670px;
   height: 42px;
   background-color: #e1e4e6;
@@ -537,6 +531,10 @@ h2.page_title_home {
 .form .row {
   display: flex;
   flex-direction: row;
+}
+
+.new_car_details .inputs_container input {
+  width: 100px;
 }
 
 .delete-icon {
@@ -1494,6 +1492,7 @@ input[name=img-thumb] {
 }
 .new_car_equip_list .row {
   gap: 10px;
+  margin-top: 20px;
 }
 .new_car_gallery {
   margin-top: 20px;
@@ -2077,7 +2076,7 @@ ul li {
   border-collapse: collapse;
   min-width: 318px;
   padding: 20px;
-  min-width: 300px;
+  min-width: 50vw;
   margin-bottom: 50px;
   text-align: center;
 }
@@ -2105,6 +2104,10 @@ ul li {
 }
 .table_simple td .delete-icon {
   margin: auto;
+}
+
+.hidden-scrollbar::-webkit-scrollbar, .avis_cards_container_inner::-webkit-scrollbar, .details_carousel_container::-webkit-scrollbar {
+  display: none;
 }
 
 html {
@@ -2136,4 +2139,8 @@ h3.section_title {
 
 main {
   min-height: 35vh;
+}
+
+body {
+  overflow-x: hidden;
 }/*# sourceMappingURL=index.css.map */

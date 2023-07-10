@@ -105,6 +105,7 @@ transition: left 0.3s  ease-in-out;
     overflow-y: hidden;
     width: 90vw;
     margin: auto;
+    @extend .hidden-scrollbar;
 
     @media screen and (max-width:map-get($breakpoints,"medium")) {
         width: 100vw;
