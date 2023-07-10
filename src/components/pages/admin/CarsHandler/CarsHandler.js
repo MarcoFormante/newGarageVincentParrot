@@ -6,6 +6,10 @@ import toast, { Toaster } from 'react-hot-toast';
 import Modal from '../../../Modal/Modal';
 import Resizer from "react-image-file-resizer"
 import CarHandlerDetails from './CarHandlerDetails';
+import CheckToken from '../../../../helpers/CheckToken';
+import { useNavigate } from 'react-router-dom';
+import { remove } from '../../../Reducers/RoleReducer';
+import notAuth from '../../../../helpers/NotAuth';
 
 const CarsHandler = () => {
     const [currentPage, setCurrentPage] = useState(0)
@@ -20,7 +24,7 @@ const CarsHandler = () => {
     const [newCarDetailsArray,setNewCarDetailsArray] = useState([])
     const [carID, setCarID] = useState(null)
     const [isDetailUpdate, setIsDetailUpdate] = useState(false);
-
+    const navigate = useNavigate()
 
     
     const table = React.useRef()
@@ -29,29 +33,40 @@ const CarsHandler = () => {
     const notifyError = (text) => toast.error(text);
 
     function getCars() {
-        const path = "pages/admin/carHandler.php" 
-        const formData = new FormData()
-        formData.append("currentPage", currentPage * 9)
-        formData.append("getAllCars", true)
-        formData.append("filters", filters)
-        formData.append("filterValue",modalFilterValue)
-        axios.post(path, formData, {
-            headers: {
-                "Content-Type":"application/x-www-form-urlencoded"
-            }
-        }).then(response => {
-            if (response.data.status === 1) {
-                setCars([...response.data.cars])
-                seCarsCount(response.data.count)
-                table.current.scrollLeft = 0
-                setmodalFilterValue("")
-                if (response.data.cars.length < 1) {
-                    notifyError("Aucune voiture trouvée")
+        if (localStorage.getItem("token")) {
+            CheckToken(localStorage.getItem("token"))
+                .then(response => {
+                if (response.data.role === "admin" || response.data.role === "employee") {
+                    const path = "pages/admin/carHandler.php" 
+                    const formData = new FormData()
+                    formData.append("currentPage", currentPage * 9)
+                    formData.append("getAllCars", true)
+                    formData.append("filters", filters)
+                    formData.append("filterValue",modalFilterValue)
+                    axios.post(path, formData, {
+                        headers: {
+                            "Content-Type":"application/x-www-form-urlencoded"
+                        }
+                    }).then(response => {
+                        if (response.data.status === 1) {
+                            setCars([...response.data.cars])
+                            seCarsCount(response.data.count)
+                            table.current.scrollLeft = 0
+                            setmodalFilterValue("")
+                            if (response.data.cars.length < 1) {
+                                notifyError("Aucune voiture trouvée")
+                            }
+                        } else {
+                            notifyError(response.data.message)
+                        }
+                    })
+                } else {
+                    notAuth()
+                    navigate("/")
                 }
-            } else {
-                notifyError(response.data.message)
-            }
-        })
+            })
+        }
+       
     }
 
 

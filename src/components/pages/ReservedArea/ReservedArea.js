@@ -44,7 +44,7 @@ const ReservedArea = ({ setLogin }) => {
         <FormElement label={{ for: "password", text: "Password" }} input={{ type: "password", name: "password", id: "password", required: true , value: password, onChange: (e) => setPassword(e.target.value) }} />
         <FormElement input={{type:"submit",value:"Acceder"}}/>
       </form>
-      {errorMessage && <span className='error-message text-center mar-top-20'>{errorMessage}</span>}
+      {errorMessage && <span className='error-message text-center pad-top-20'>{errorMessage}</span>}
     </div>
   )
 }

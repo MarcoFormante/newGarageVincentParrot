@@ -26,6 +26,7 @@ public function login(){
 
 public function checkToken(){
     if (isset($_POST['token'])){
+        
         $user = new User();
         $user->checkToken($_POST['token']);
     }else{

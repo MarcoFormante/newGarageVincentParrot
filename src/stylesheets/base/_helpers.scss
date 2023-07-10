@@ -91,6 +91,10 @@ ul{
     font-weight: bold;
 }
 
+.pad-top-20{
+    padding-top: 20px;
+}
+
 
 
 .mar-top-20{
@@ -207,4 +211,44 @@ ul{
 .input_center_handler{
     background-color: $light-gray-color;
     padding: 30px;
+}
+
+
+.table_simple{
+    border-collapse: collapse;
+    min-width: 318px;
+    padding: 20px;
+    min-width: 300px;
+    margin-bottom: 50px;
+    text-align: center;
+    
+    
+    tr,th{
+        padding: 5px;
+        border: 1px solid black;
+    }
+
+    td{
+        @media screen and (max-width:420px) {
+            max-width: 110px;
+        }
+      
+        word-wrap: break-word;
+        border: 1px solid black;
+        margin: auto;
+        padding: 10px;
+        position: relative;
+        .delete-icon_container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: auto;
+            
+        }
+        .delete-icon{
+           
+           margin: auto;
+        }
+    }
+    
 }

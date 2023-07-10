@@ -1075,7 +1075,7 @@ pages: home
 .parc_auto_cars_section {
   display: grid;
   padding-top: 20px;
-  max-width: 80vw;
+  max-width: 92vw;
   grid-template-columns: repeat(auto-fill, 320px);
   gap: 30px;
   margin: auto;
@@ -1260,13 +1260,17 @@ input[type=checkbox] {
   width: 600px;
   max-height: 400px;
   border: 1px solid #353535;
-  -o-object-fit: cover;
-     object-fit: cover;
   box-shadow: 0 0 10px black;
   padding: 2px;
   background-color: black;
   border-radius: 4px;
   margin-top: 20px;
+  min-width: 600px;
+  min-height: 400px;
+  -o-object-position: center;
+     object-position: center;
+  -o-object-fit: fill;
+     object-fit: fill;
 }
 @media screen and (max-width: 768px) {
   .img_show_large img {
@@ -1983,6 +1987,10 @@ ul li {
   font-weight: bold;
 }
 
+.pad-top-20 {
+  padding-top: 20px;
+}
+
 .mar-top-20 {
   margin-top: 20px;
 }
@@ -2065,6 +2073,40 @@ ul li {
   padding: 30px;
 }
 
+.table_simple {
+  border-collapse: collapse;
+  min-width: 318px;
+  padding: 20px;
+  min-width: 300px;
+  margin-bottom: 50px;
+  text-align: center;
+}
+.table_simple tr, .table_simple th {
+  padding: 5px;
+  border: 1px solid black;
+}
+.table_simple td {
+  word-wrap: break-word;
+  border: 1px solid black;
+  margin: auto;
+  padding: 10px;
+  position: relative;
+}
+@media screen and (max-width: 420px) {
+  .table_simple td {
+    max-width: 110px;
+  }
+}
+.table_simple td .delete-icon_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+.table_simple td .delete-icon {
+  margin: auto;
+}
+
 html {
   box-sizing: border-box;
 }
@@ -2089,7 +2131,7 @@ h1 {
 h3.section_title {
   font-size: 24px;
   text-align: center;
-  margin: 55px 0;
+  margin: 40px 0 40px 0;
 }
 
 main {

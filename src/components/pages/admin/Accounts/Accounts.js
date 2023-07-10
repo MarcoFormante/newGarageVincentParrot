@@ -3,6 +3,8 @@ import PageTitle from '../../../PageTitle/PageTitle'
 import FormElement from '../../../../components/FormElement/FormElement'
 import axios from '../../../../api/axios'
 import ListAllAccounts from './ListAllAccounts'
+import CheckToken from '../../../../helpers/CheckToken'
+import toast,{Toaster} from 'react-hot-toast'
 
 
 const Accounts = () => {
@@ -12,6 +14,10 @@ const Accounts = () => {
   const [passwordError, setPasswordError] = useState("");
   const [serverMessage, setServerMessage] = useState({ status: "", message: "" });
   const [newUser, setNewUser] = useState({});
+  
+  
+  const notifySuccess = (text) => toast.success(text);
+  const notifyError = (text) => toast.error(text);
   
 
   function handleEmail(e) {
@@ -50,41 +56,57 @@ const Accounts = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    
     if (checkInputs(email, password)) {
     let formData = new FormData();
     formData.append("email", email);
-    formData.append("password",password)
-      axios.post('pages/admin/accounts.php',
-        {
-          email: email,
-          password: password
-        },
-        {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
+    formData.append("password", password)
+      let isRoleValid = false
+      if (localStorage.getItem("token")) {
+        CheckToken(localStorage.getItem("token"))
+          .then(response => {
+            isRoleValid = response.data.role === "admin"
+            if (isRoleValid) {
+              axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("token")}`;
+              axios.post('pages/admin/accounts.php',
+                {
+                  email: email,
+                  password: password
+                },
+                {
+                  headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                  }
+                }
+                
+              ).then(response => {
+               
+                setServerMessage(response.data)
+                if (response.data.status === 1) {
+                  setNewUser({id:response.data.userId, email:email})
+                  notifySuccess("Ajoutè avec succès")
+                  setEmail("");
+                  setPassword("");
+                } else {
+                  notifyError("Erreur: un probleme est survenu , impossible de ajouter un nouveau compte")
+                }
+              })
+                .catch(error => {
+                  setServerMessage(error.data)
+                  notifyError("Erreur: un probleme est survenu , impossible de ajouter un nouveau compte")
+                })
+              }
+          })
+       
         }
-        
-      ).then(response => {
-        setServerMessage(response.data)
-        if (response.data.status === 1) {
-          setNewUser({id:response.data.userId, email:email})
-          setTimeout(() => {
-            setServerMessage("");
-          }, 5000)
-          setEmail("");
-          setPassword("");
-        }
-      })
-      .catch(error =>  setServerMessage(error.data))
+       
     }
 }
   
  
   return (
     <div>
-    <div>
+      <div>
+        <Toaster/>
       <PageTitle pageTitle={"Créer un nouvel account"}/>
       <form className='form' onSubmit={handleSubmit}>
         <FormElement
@@ -102,8 +124,7 @@ const Accounts = () => {
        
       </form>
       <br />
-      
-      <span className={`${serverMessage.status === 1 ? "success-message" : "error-message"}  text-center`}>{serverMessage.message}</span>
+      <br />
       
       </div>
 

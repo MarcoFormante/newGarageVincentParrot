@@ -40,8 +40,8 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
                         
                         const detailsArray = [
                             gearbox,
-                            din_power + "cv",
-                            fiscal_power + "ch",
+                            din_power ,
+                            fiscal_power,
                             color,
                             doors,
                             seats,

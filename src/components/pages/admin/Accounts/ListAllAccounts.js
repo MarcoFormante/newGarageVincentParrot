@@ -2,6 +2,8 @@ import React, { useEffect, useInsertionEffect, useState } from 'react'
 import axios from '../../../../api/axios'
 import toast, { Toaster } from 'react-hot-toast';
 import Modal from '../../../Modal/Modal';
+import CheckToken from '../../../../helpers/CheckToken';
+
 
 const ListAllAccounts = ({newUser}) => {
     const [accountList, setAccountList] = useState([])
@@ -13,43 +15,66 @@ const ListAllAccounts = ({newUser}) => {
     const notifyError = (text) => toast.error(text);
 
     useEffect(() => {
-        const path = "pages/admin/accounts.php?getAllAccounts=true";
-        axios.get(path, {
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-            .then(response => {
-                
-                if (response.data.status === 1) {
-                    setAccountList([...response.data.users])
-                } else {
-                    notifyError("Erreur: impossible de recuperer les comptes")
+        if (localStorage.getItem("token")) {
+            CheckToken(localStorage.getItem("token"))
+                .then(response => {
+                    let isRoleValid = response.data.role === "admin"
+                    if (isRoleValid) {
+                        axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("token")}`;
+                        const path = "pages/admin/accounts.php?getAllAccounts=true";
+                        axios.get(path, {
+                            headers: {
+                                "Content-Type": "application/json"
+                            }
+                        })
+                        .then(response => {
+                            console.log(response.data);
+                            if (response.data.status === 1) {
+                                setAccountList([...response.data.users])
+                            } else {
+                                notifyError("Erreur: impossible de recuperer les comptes")
+                            }
+                        })
+                    }
                 }
-            })
+            )
+            
+        }
+       
     }, [])
 
 
     
 
     function deleteUser(id) {
-        const path = "pages/admin/accounts.php"
-        const formData = new FormData()
-        formData.append("id", id)
-        axios.post(path, formData, {
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            }
-        }).then(response => {
-            if (response.data.status === 1) {
-                notifySuccess(response.data.message)
-                setAccountList([...accountList.filter(user => user.id !== id)])
-                setModalToggle(false)
-                setAccountTarget({})
-            } else {
-                notifyError("Erreur: un problème est survenu, impossible de supprimer ce compte,rententez!")
-            }
-        })
+        if (localStorage.getItem("token")) {
+            CheckToken(localStorage.getItem("token"))
+                .then(response => {
+                    let isRoleValid = response.data.role === "admin"
+                    if (isRoleValid) { 
+                        axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("token")}`;
+                        const path = "pages/admin/accounts.php"
+                        const formData = new FormData()
+                        formData.append("id", id)
+                        axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("token")}`;
+                        axios.post(path, formData, {
+                            headers: {
+                                "Content-Type": "application/x-www-form-urlencoded",
+                            }
+                        }).then(response => {
+                            if (response.data.status === 1) {
+                                notifySuccess(response.data.message)
+                                setAccountList([...accountList.filter(user => user.id !== id)])
+                                setModalToggle(false)
+                                setAccountTarget({})
+                            } else {
+                                notifyError("Erreur: un problème est survenu, impossible de supprimer ce compte,rententez!")
+                            }
+                        })
+                    }
+                })
+               
+        }
     }
 
     useEffect(() => {
@@ -57,8 +82,6 @@ const ListAllAccounts = ({newUser}) => {
     },[newUser])
 
 
-    
-    console.log(accountTarget);
 
    
         return (
@@ -73,26 +96,28 @@ const ListAllAccounts = ({newUser}) => {
                 >
                    <b>{accountTarget.email}</b>
                 </Modal>}
-                <table>
+                
+                <table  className={"table_simple"} style={{borderCollapse:"collapse",textAlign:"center"}}>
                     <thead>
                         <tr>
                             <th>Index</th>
                             <th>Email</th>
-                            <th>Supprimer</th>
+                           
+                            
                         </tr>
                     </thead>
                     <tbody>
-                        
                         {accountList.map((user, index) =>
-                            <tr key={"user_account_" + index}>
+                            <tr key={"user_account_" + index} style={{border:"1px solid black"}}>
                                 <td>{index}</td>
                                 <td>{user.email}</td>
-                                <td className='delete-icon'
+                                <td  className='delete-icon_container'
                                     onClick={() => {
                                         setAccountTarget({ id: user.id, email: user.email })
                                         setModalToggle(true)
-                                    }}>
-                                    
+                                    }}
+                                >
+                                    <span className='delete-icon' ></span>
                                 </td>
                             </tr>
                         )

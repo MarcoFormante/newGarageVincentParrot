@@ -36,8 +36,6 @@ function App() {
   }, [location.pathname])
   
  
- 
- 
   return (
     <div className="App">
 
@@ -88,39 +86,36 @@ export default App;
 
 
 
-const ProtectedRoute = ({ auth, redirectPath,checkTrigger}) => {
+const ProtectedRoute = ({ auth, redirectPath, checkTrigger }) => {
 
   const location = useLocation();
-
-
   const dispatch = useDispatch()
  
-  const checkToken = () => {
-      if (localStorage.getItem("token")) {
-          CheckToken(localStorage.getItem("token")).then((response) => {
-           let isValid = response.data.status;
-           if (isValid === 1) {
-               const userRole = response.data.role; 
-                dispatch(add(userRole))
-    
-           } else {
-              dispatch(remove())
-           }
-       })
-      } else {
-        dispatch(remove())
-      }
+  const checkToken = useCallback(() => {
+    if (localStorage.getItem("token")) {
+      CheckToken(auth).then((response) => {
+        let isValid = response.data.status;
+        if (isValid === 1) {
+          const userRole = response.data.role;
+          dispatch(add(userRole))
+        } else {
+          dispatch(remove())
+         
+        }
+      })
+    } else {
+      dispatch(remove())
     }
+  },[dispatch,auth])
+    
 
-
-  
 
   useEffect(() => {
      window.addEventListener("storage",checkToken())
     
-    return window.removeEventListener("storage",checkToken)
+    return window.removeEventListener("storage",checkToken())
     
-},[checkTrigger])
+},[checkTrigger,checkToken])
 
 return auth
       ?

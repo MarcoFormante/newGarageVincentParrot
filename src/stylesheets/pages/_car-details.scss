@@ -47,13 +47,16 @@ transition: left 0.3s  ease-in-out;
     img{
         width: 600px;
         max-height: 400px;
-        border: 1px solid $secondary_color;
-        object-fit: cover;
+        border: 1px solid #353535;
         box-shadow: 0 0 10px black;
         padding: 2px;
         background-color: black;
-        border-radius: 4px; 
+        border-radius: 4px;
         margin-top: 20px;
+        min-width: 600px;
+        min-height: 400px;
+        object-position: center;
+        object-fit: fill;
 
         @media screen and (max-width:(map-get($breakpoints,"medium"))) {
             display: none;
