@@ -1,7 +1,7 @@
 .header_outer{
    transition: all 1s ease;
-    top: 0;
     z-index: 11;
+    display: unset;
 }
 
 header{
@@ -9,6 +9,7 @@ header{
     background-color: $brand_color;
     @include flex_spaceB;
     position:sticky;
+    top: 0;
    
     @media screen and (min-width:769px) {
         height:$header_height;

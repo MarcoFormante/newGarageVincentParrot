@@ -101,11 +101,12 @@ const ReviewsHandler = () => {
                     filters === "1" 
                         ?
                         avis.map((av, index) =>
-                            <div key={`avis_ADM${av.id}`}>
+                            <div key={`avis_ADM${av.id}`} className='review_card_container'>
                                 <div style={av.is_validate ? { backgroundColor: "red", color: "white" } : { backgroundColor: "lightgreen", color: "black" }}
                                     onClick={() => toggleReviewValidation(av.id, av)}
                                     className='reviewValidatorSwitch'>{av.is_validate ? "Moderer" : "Valider"}
-                                </div> <AvisCard key={"avis_" + index + "_card"}
+                                </div>
+                                <AvisCard key={"avis_" + index + "_card"}
                                     name={av.name}
                                     message={av.message}
                                     review={av.review}
@@ -116,11 +117,12 @@ const ReviewsHandler = () => {
                         : 
                         avis.map((av, index) => {
                             return av.is_validate === 0 &&
-                                <div key={`avis_ADM${av.id}`}>
+                                <div key={`avis_ADM${av.id}`} className='review_card_container'>
                                     <div style={av.is_validate ? { backgroundColor: "red", color: "white" } : { backgroundColor: "lightgreen", color: "black" }}
                                         onClick={() => toggleReviewValidation(av.id, av)}
                                         className='reviewValidatorSwitch'>{av.is_validate ? "Moderer" : "Valider"}
-                                    </div> <AvisCard key={"avis_" + index + "_card"}
+                                    </div>
+                                    <AvisCard key={"avis_" + index + "_card"}
                                         name={av.name}
                                         message={av.message}
                                         review={av.review}

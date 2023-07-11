@@ -16,14 +16,12 @@
         &--open{
             width: 100vw;
             z-index: 10;
-            & > .nav_container{
-                opacity: 1;
-                transform: translateX(0);
-              position: relative;
-              
-            }
 
-            
+                & > .nav_container{
+                    opacity: 1;
+                    transform: translateX(0);
+                    position: relative;
+                }
         }
     //nav-container (childs:nav_link)
         &_container{
@@ -75,6 +73,14 @@ a.active{
     @include flex_center(row);
     gap: 30px;
     padding: 20px;
+    position: sticky;
+    z-index: 10;
+    top: 60px;
+
+    @media screen and (max-width:map-get($breakpoints,"medium")) {
+        top: 50px;
+        padding: 10px;
+    }
 }
 
 .nav_link_logout.active{

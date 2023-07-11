@@ -1,7 +1,7 @@
 import React from 'react'
 import fbIcon from '../../icons/facebook.svg'
 import instagramIcon from '../../icons/instagram.svg'
-import twitterIcon from '../../icons/facebook.svg'
+import twitterIcon from '../../icons/twitter.svg'
 
 const Footer = () => {
   return (
@@ -10,7 +10,7 @@ const Footer = () => {
         {/* telephone , email*/}
           <div className='footer_first_block footer_items_block'>
               <span className={"icon_footer_info tel"}>+334058876541</span>
-              <a className={'icon_footer_info mail'} href="mailto:garageVP@gmail.com">garageVP@gmail.com</a>
+              <a className={'icon_footer_info mail'} href="mailto:garageVP@gmail.com">garagevincentparrot@gmail.com</a>
           </div>
 
             {/* social media, politique de confidentialité*/}

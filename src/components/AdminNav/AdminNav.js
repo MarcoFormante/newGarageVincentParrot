@@ -48,7 +48,7 @@ const AdminNav = ({checkToken}) => {
 
        role
             ? 
-            <div>
+            <div style={{display:"unset"}}>
                 <nav className='admin_nav'>
                 {role && role === "admin"
                 ? adminLinks.map((link, index) => <NavLink onClick={checkToken}  end className={`nav_link `} to={link.to} key={link.linkName + "_" + index}>{link.linkName}</NavLink>)

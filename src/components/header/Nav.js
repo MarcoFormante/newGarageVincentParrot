@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useSelector,useDispatch } from 'react-redux'
 import { remove } from '../Reducers/RoleReducer'
@@ -27,11 +27,9 @@ const Nav = ({menuToggle,handleMenu}) => {
         },
     ]
 
-    //check if Menu is Open (menuToggle active) then play transition(sass)
-    let menuisOpen = menuToggle ? " nav--open" :"";
 
   return (
-      <nav className={'nav' + menuisOpen }>
+      <nav className={`nav ${menuToggle ? "nav--open" : ""}`}>
           <div className='nav_container'>
               {/**dynamic NavLinks */}
             {publicLinks.map((link, index) =>

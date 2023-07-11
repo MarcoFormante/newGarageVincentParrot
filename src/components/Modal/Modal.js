@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 
 const Modal = ({ title, children, onClick, onExit, type, buttonText}) => {
 
- 
 
   if (type === "input") {
     return (
@@ -33,8 +32,7 @@ const Modal = ({ title, children, onClick, onExit, type, buttonText}) => {
         </div>
       </div>
     )
-  }
-  
+  } 
 }
 
 export default Modal

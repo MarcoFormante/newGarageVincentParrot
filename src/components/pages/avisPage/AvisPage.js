@@ -45,12 +45,11 @@ const AvisPage = () => {
 
   return (
     <div>
-    
       <PageTitle pageTitle={"Votre avis nous interesse"} />
       <Toaster/>
       <form className='form' onSubmit={handleSubmit} >
-            <FormElement label={{ for: "name", text: "Prénom" }} input={{  type: "text", name: "name", id: "name", onChange:(e)=> setName(e.target.value) }} value={name} required={true} />
-            <FormElement label={{ for: "message", text: "Commentaire" }} textarea={{ name: "message", id: "message",  onChange: (e) => setMessage(e.target.value) }}  value={message} required={true}/>
+            <FormElement label={{ for: "name", text: "Prénom" }} input={{className:"width-formInpt_noFlex", type: "text", name: "name", id: "name", onChange:(e)=> setName(e.target.value) }} value={name} required={true} />
+            <FormElement label={{ for: "message", text: "Commentaire" }} textarea={{className:"width-formInpt_noFlex", name: "message", id: "message",  onChange: (e) => setMessage(e.target.value) }}  value={message} required={true}/>
               <span style={{fontSize:"20px"}}>Laissez une note</span>
               <StarsBlock numberOfActiveStars={5} clickable={true} setReview={(value) => setReview(value)} />
               <FormElement input={{type:"submit",value:"Envoyer"}}/>
