@@ -938,12 +938,17 @@ pages: home
   margin-top: 50px;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 50px;
+  gap: 35px;
   margin-bottom: 30px;
 }
 @media screen and (max-width: 1024px) {
   .services_list {
-    margin-left: 5px;
+    margin-left: 40px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .services_list {
+    margin-left: 10px;
   }
 }
 @media screen and (min-width: 1025px) {
@@ -952,7 +957,7 @@ pages: home
     width: -moz-fit-content;
     width: fit-content;
     padding: 50px;
-    gap: 80px 100px;
+    gap: 60px 42px;
     width: fit-content;
     margin: auto;
     padding-left: 7vw;
@@ -970,6 +975,7 @@ pages: home
   .services_list li {
     padding: 5px;
     font-size: 16px;
+    word-break: break-word;
   }
 }
 .services_list li::before {
@@ -1559,6 +1565,8 @@ label[for=galleryfileInput] .required {
   width: fit-content;
   padding: 5px;
   margin: auto;
+  position: absolute;
+  bottom: 2px;
 }
 
 .table_servicesHandler {
@@ -1914,15 +1922,15 @@ code {
   .container--flex.container_services_first_block {
     flex-direction: row;
     margin: auto;
-    gap: 10vw;
+    gap: 5vw;
   }
   .container--flex.container_services_first_block img {
     width: 35vw;
     height: 300px;
-    min-width: 400px;
+    min-width: 300px;
   }
   .container--flex.container_services_first_block .txt-services {
-    width: 25%;
+    width: 20%;
     min-width: 300px;
   }
 }
@@ -2074,11 +2082,17 @@ ul li {
 
 .table_simple {
   border-collapse: collapse;
-  min-width: 318px;
+  min-width: 80vw;
   padding: 20px;
   min-width: 50vw;
   margin-bottom: 50px;
   text-align: center;
+}
+@media screen and (min-width: 768px) {
+  .table_simple {
+    width: 60vw;
+    max-width: 600px;
+  }
 }
 .table_simple tr, .table_simple th {
   padding: 5px;
@@ -2093,7 +2107,7 @@ ul li {
 }
 @media screen and (max-width: 420px) {
   .table_simple td {
-    max-width: 110px;
+    max-width: 210px;
   }
 }
 .table_simple td .delete-icon_container {
@@ -2106,8 +2120,12 @@ ul li {
   margin: auto;
 }
 
-.hidden-scrollbar::-webkit-scrollbar, .avis_cards_container_inner::-webkit-scrollbar, .details_carousel_container::-webkit-scrollbar {
+.hidden-scrollbar::-webkit-scrollbar, .carCards_container::-webkit-scrollbar, .avis_cards_container_inner::-webkit-scrollbar, .details_carousel_container::-webkit-scrollbar {
   display: none;
+}
+
+.width-formInpt_noFlex {
+  width: 75vw;
 }
 
 html {

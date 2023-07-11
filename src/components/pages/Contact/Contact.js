@@ -24,17 +24,17 @@ const Contact = () => {
           
           <form className='form'>
               
-        <FormElement label={{ for: "subject", text: "Subject" }} input={{ type: "text", name: "subject", id: "subject", onChange: (e) => handleChange(e.target.name, e.target.value) }} value={formInputs.subject} />
+              <FormElement label={{ for: "subject", text: "Subject" }} input={{ className:"width-formInpt_noFlex", type: "text", name: "subject", id: "subject", onChange: (e) => handleChange(e.target.name, e.target.value) }} value={formInputs.subject} />
               
-              <FormElement label={{ for: "surname", text: "Nom" }} input={{ type: "text", name: "surname", id: "surname",required:true,value:formInputs.surname, onChange:(e)=> handleChange(e.target.name,e.target.value) }} />
+              <FormElement label={{ for: "surname", text: "Nom" }} input={{className:"width-formInpt_noFlex", type: "text", name: "surname", id: "surname",required:true,value:formInputs.surname, onChange:(e)=> handleChange(e.target.name,e.target.value) }} />
               
-              <FormElement label={{ for: "name", text: "Prénom" }} input={{ type: "text", name: "name", id: "name",required:true,value:formInputs.name, onChange:(e)=> handleChange(e.target.name,e.target.value) }} />
+              <FormElement label={{ for: "name", text: "Prénom" }} input={{className:"width-formInpt_noFlex", type: "text", name: "name", id: "name",required:true,value:formInputs.name, onChange:(e)=> handleChange(e.target.name,e.target.value) }} />
               
-              <FormElement label={{for:"email",text:"Email"}} input={{type:"email",name:"email",id:"email",required:true,value:formInputs.email, onChange:(e)=> handleChange(e.target.name,e.target.value)}} />
+              <FormElement label={{for:"email",text:"Email"}} input={{className:"width-formInpt_noFlex", type:"email",name:"email",id:"email",required:true,value:formInputs.email, onChange:(e)=> handleChange(e.target.name,e.target.value)}} />
               
-              <FormElement label={{for:"tel",text:"Telephone"}} input={{type:"tel",name:"tel",id:"tel",required:true,value:formInputs.tel, onChange:(e)=> handleChange(e.target.name,e.target.value)}}/>
+              <FormElement label={{for:"tel",text:"Telephone"}} input={{className:"width-formInpt_noFlex" , type:"tel",name:"tel",id:"tel",required:true,value:formInputs.tel, onChange:(e)=> handleChange(e.target.name,e.target.value)}}/>
 
-              <FormElement label={{for:"message",text:"Message"}} textarea={{name:"message",id:"message",required:true,value:formInputs.message, onChange:(e)=> handleChange(e.target.name,e.target.value)}} />
+              <FormElement label={{for:"message",text:"Message"}} textarea={{className:"width-formInpt_noFlex",  name:"message",id:"message",required:true,value:formInputs.message, onChange:(e)=> handleChange(e.target.name,e.target.value)}} />
              
               <FormElement input={{type:"submit",value:"Envoyer"}}/>
               

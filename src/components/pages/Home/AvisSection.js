@@ -174,7 +174,7 @@ const ScoreBarsBlock = ({totalStarsLength}) => {
     return (
     <div>
             {bars.map((bar, index) =>
-                <ScoreBar key={"scorebar_" + Math.floor(Math.random() * 100) + "_bar" + bar}
+                <ScoreBar key={"scorebar_bar" + bar + index}
                     totalStarsLength={totalStarsLength[index]}
                     scoreNum={bar}
                 />
@@ -193,7 +193,7 @@ const ScoreBar = ({ scoreNum, totalStarsLength}) => {
         if (width?.current) {
             setBarWidth(width?.current?.offsetWidth)
         }
-    },[])
+    },[totalStarsLength])
    
     useEffect(() => {
         window.addEventListener("resize", () => {

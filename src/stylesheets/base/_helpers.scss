@@ -10,16 +10,16 @@
         @media screen and (min-width:1025px){
             flex-direction: row;
             margin: auto;
-            gap: 10vw;
+            gap: 5vw;
 
             img{
                 width: 35vw;
                 height: 300px;
-                min-width: 400px;
+                min-width: 300px;
             }
 
             .txt-services{
-                width: 25%;
+                width: 20%;
                 min-width: 300px;
             }
         }
@@ -217,11 +217,17 @@ ul{
 
 .table_simple{
     border-collapse: collapse;
-    min-width: 318px;
+    min-width: 80vw;
+  
     padding: 20px;
     min-width: 50vw;
     margin-bottom: 50px;
     text-align: center;
+
+    @media screen and (min-width:map-get($breakpoints,"medium")) {
+        width: 60vw;
+        max-width: 600px;
+    }
     
     
     tr,th{
@@ -231,9 +237,8 @@ ul{
 
     td{
         @media screen and (max-width:420px) {
-            max-width: 110px;
+            max-width: 210px;
         }
-      
         word-wrap: break-word;
         border: 1px solid black;
         margin: auto;
@@ -247,7 +252,6 @@ ul{
             margin: auto;
         }
         .delete-icon{
-           
            margin: auto;
         }
     }
@@ -257,4 +261,9 @@ ul{
 
 .hidden-scrollbar::-webkit-scrollbar{
     display: none;
+}
+
+
+.width-formInpt_noFlex{
+    width: 75vw;
 }

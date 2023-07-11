@@ -49,7 +49,7 @@ const Header = () => {
             <img src={"/images/brand-logo.png"} alt={"Garage Vincent Parrot"} />
           </div>
   
-          <Nav menuToggle={menuToggle} handleMenu={handleMenu} />
+          <Nav menuToggle={menuToggle ? menuToggle : null} handleMenu={handleMenu} />
           <MenuButton className={`menu_button ${menuToggle ? "menu_button--open " : ""} `} onClick={handleMenu} />
         </header>
       </div>

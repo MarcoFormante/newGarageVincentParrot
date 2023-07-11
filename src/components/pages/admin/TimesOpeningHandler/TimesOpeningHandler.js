@@ -48,7 +48,7 @@ const TimesOpeningHandler = () => {
     setModalValueColumn(column)
     setIsClose(!close)
     setInputType(type)
-    setIsInContinue(value ==="NC")
+    setIsInContinue(value ==="HC")
   }
 
 
@@ -70,7 +70,7 @@ const TimesOpeningHandler = () => {
     const formData = new FormData(); 
     formData.append("id", modalInputId);
     formData.append("column", modalValueColumn);
-    formData.append("value",isInContinue ? "NC" : modalInputValue);
+    formData.append("value",isInContinue ? "HC" : modalInputValue);
     if (isClose) {
       formData.append("close",0)
     } else {
@@ -121,12 +121,12 @@ const TimesOpeningHandler = () => {
           break;
         
           case "day_end_am":
-          timeTable[modalInputIndex].day_end_am = isInContinue ? "NC" : modalInputValue;
+          timeTable[modalInputIndex].day_end_am = isInContinue ? "HC" : modalInputValue;
         
           break;
         
           case "day_start_pm":
-          timeTable[modalInputIndex].day_start_pm = isInContinue ? "NC" : modalInputValue;
+          timeTable[modalInputIndex].day_start_pm = isInContinue ? "HC" : modalInputValue;
          
           break;
         
@@ -155,7 +155,11 @@ const TimesOpeningHandler = () => {
   return (
     <div>
       <Toaster/>
-      {modalToggle && <Modal type={"input"} title={modalTitle} buttonText={"Sauvegarder"} onExit={() => setModalToggle(!modalToggle)} onClick={()=>saveTimeValue()}>
+      {modalToggle && <Modal type={"input"} title={modalTitle}
+        buttonText={"Sauvegarder"}
+        onExit={() => setModalToggle(!modalToggle)}
+        onClick={() => saveTimeValue()}
+      >
         <div className='container--center--column'>
           {
             InputType === "input"
@@ -171,7 +175,7 @@ const TimesOpeningHandler = () => {
                     &&
                     <div>
                       <label htmlFor="close">En Continue</label>
-                      <input type="checkbox" id="close" checked={modalInputValue === "NC" ? isInContinue :  isInContinue} onChange={() => setIsInContinue(!isInContinue)} />
+                      <input type="checkbox" id="close" checked={modalInputValue === "HC" ? isInContinue :  isInContinue} onChange={() => setIsInContinue(!isInContinue)} />
                     </div>
                     }
                 </>
@@ -186,7 +190,7 @@ const TimesOpeningHandler = () => {
         
       </Modal>}
       <PageTitle pageTitle={"Gestion des horaires d'ouverture"} />
-      <div className='container--pad-top table_handler'>
+      <div className='container--pad-top table_handler' style={{overflowY:"hidden"}}>
         <table className='table_handler_container'>
           <thead >
             <tr >
@@ -212,13 +216,13 @@ const TimesOpeningHandler = () => {
                   {t.day_start_am }                 
                 </td>
 
-                <td style={!t.close ? styleSheet.td_red : t.day_end_am === "NC" ? styleSheet.td_big : {}}
+                <td style={!t.close ? styleSheet.td_red : t.day_end_am === "HC" ? styleSheet.td_big : {}}
                   onClick={() => handleModal("input", days[t.id] + " / Fermeture matin", t.id, t.day_end_am, index, "day_end_am", t.close)}
                 >
                   { t.day_end_am } 
                 </td>
 
-                <td style={!t.close ? styleSheet.td_red : t.day_start_pm === "NC" ? styleSheet.td_big : {}}
+                <td style={!t.close ? styleSheet.td_red : t.day_start_pm === "HC" ? styleSheet.td_big : {}}
                   onClick={() => handleModal("input", days[t.id] + " / Ouverture Aprem", t.id, t.day_start_pm, index, "day_start_pm", t.close)}
                 >
                   { t.day_start_pm }

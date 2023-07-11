@@ -100,7 +100,6 @@ const Offers = ({cars,count}) => {
                 if (response?.data?.status !== 0 && response?.status === 200) {
                       
                     if (response?.data?.cars[0]?.length > 0) {
-                        
                             setcarCount(response?.data?.cars[1]) 
                             setofferCards(response?.data?.cars[0])
                         }
@@ -115,11 +114,11 @@ const Offers = ({cars,count}) => {
      }, [])
      
    
-
+     console.log(offerCards);
 
     return (
         <div style={offerCards && offerCards?.length > 0 ? {display:"block"} : {display:"none"}}>
-             <h3 className={'section_title section_title_offres'}>Les offres du moment</h3>
+             <h3 className={'section_title section_title_offres'}>{!offerCards[0]?.offer > 0 ? "Les dernieres arrivées" : "Les offres du moment"  }</h3>
             <Arrows cardsTotalWidth={offerCards.length * 250} carouselX={carouselX} carouselWidth={carouselWidth} onClick={(direction)=>setArrowTarget(direction)}  />
            
             <div className={"section_page section_page--grey"}>

@@ -1,6 +1,5 @@
 //Home Image Hero
 .hero_home{
-    
     height: 95vh;
     background-image: url(/public/images/bkhome-mb.jpg);
     background-position: center;
@@ -47,18 +46,23 @@
     margin-top: 50px;
     display: grid;
     grid-template-columns: 1fr;
-    gap: 50px;
+    gap: 35px;
     margin-bottom: 30px;
-
+    
     @media screen and (max-width:map-get($breakpoints,"large")){
-        margin-left:5px;
+        margin-left:40px;
+    }
+
+    @media screen and (max-width:map-get($breakpoints,"medium")){
+        margin-left:10px;
+      
     }
    
     @media screen and (min-width:1025px) {
         grid-template-columns: 1fr 1fr;
         width: fit-content;
         padding: 50px;
-        gap: 80px 100px ; 
+        gap: 60px 42px ; 
         width: fit-content;
         margin: auto;  
         padding-left:7vw;
@@ -76,6 +80,7 @@
         @media screen and (max-width:map-get($breakpoints,"medium")) {
             padding: 5px;
             font-size: map-get($font_size,"small"); 
+            word-break: break-word;
         }
       
 
