@@ -34,6 +34,25 @@ const Nav = ({menuToggle,handleMenu,setMenuToggle}) => {
         } else {
             document.body.style.overflowY = ""
         }
+    }, [menuToggle])
+    
+ //resize event : check if menu is open when screen width > 768 and setMenuToggle to False
+    useEffect(() => {
+        window.addEventListener("resize",()=> {
+            if (window.innerWidth > 769) {
+               if (menuToggle) {
+                    setMenuToggle(false)
+               }
+            }
+        })
+
+        return window.removeEventListener("resize", () => {
+            if (window.innerWidth > 769) {
+                if (menuToggle) {
+                    setMenuToggle(false)
+                }
+             }
+        })
     },[menuToggle])
 
     

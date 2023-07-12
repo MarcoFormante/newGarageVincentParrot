@@ -64,7 +64,7 @@ const AdminNav = ({checkToken}) => {
                 }
              }
         })
-    })
+    },[])
 
     useEffect(() => {
         dispatch(toggle(adminNavToggle))

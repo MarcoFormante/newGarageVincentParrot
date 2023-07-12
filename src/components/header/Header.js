@@ -19,34 +19,23 @@ const Header = () => {
   const handleMenu = () => {
     setMenuToggle(!menuToggle);
   }
-
-
-  // if screen width < 769 and menu is open , this function closes the menu (see useEffect)
-  const handleResizeScreen = () => {
-    if (window.scrollY > 769) {
-      setMenuToggle(false)
-    }
-  }
  
-
-    //resize event
-    useEffect(() => {
-      window.addEventListener("resize", handleResizeScreen)
-      return () => {
-        window.removeEventListener("resize", handleResizeScreen)
-      
-      }
-    }, [])
-  
+   
   function returnToHome() {
     navigate('/')
   }
+
+ 
+  
+
 
   useEffect(() => {
     if (AdminMenuToggle === true) {
         setMenuToggle(false)
     }
-},[AdminMenuToggle])
+  }, [AdminMenuToggle])
+  
+
  
 
     return (
