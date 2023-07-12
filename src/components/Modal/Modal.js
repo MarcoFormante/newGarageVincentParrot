@@ -24,7 +24,7 @@ const Modal = ({ title, children, onClick, onExit, type, buttonText}) => {
         <div className='modal_exit' onClick={onExit}></div>
           <span className='modal_title'>{title}</span>
           {children}
-          <div className='row'>
+          <div className='container--center--column gap-20'>
               <div role='button' onClick={onExit} className='cta cta--red cta--padding-plus'>Annuler</div>
               <div role='button' onClick={onClick}  className='cta cta--white cta--padding-plus'>OK</div>
           </div>

@@ -114,7 +114,7 @@ const Offers = ({cars,count}) => {
      }, [])
      
    
-     console.log(offerCards);
+   
 
     return (
         <div style={offerCards && offerCards?.length > 0 ? {display:"block"} : {display:"none"}}>

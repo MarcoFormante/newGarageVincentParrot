@@ -10,7 +10,7 @@ const CarCard = ({ id, make, model, thumbnail, km, year, offer, price,currentPag
     sessionStorage.setItem("carSubject", subject)
   }
 
-  console.log(currentPage);
+
  
   return (
       <figure className='car_card'>

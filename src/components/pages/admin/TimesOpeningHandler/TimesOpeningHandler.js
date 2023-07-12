@@ -15,7 +15,7 @@ const TimesOpeningHandler = () => {
   const [modalInputId, setModalInputId] = useState(null);
   const [modalInputIndex, setModalInputIndex] = useState(null);
   const [modalValueColumn, setModalValueColumn] = useState("");
-  const [isValid, setIsValid] = useState(null)
+ 
   const [isClose, setIsClose] = useState(false);
   const [InputType, setInputType] = useState("")
   const [isInContinue,setIsInContinue] = useState(false)
@@ -59,7 +59,7 @@ const TimesOpeningHandler = () => {
     setModalInputId(null)
     setModalInputIndex(null)
     setModalValueColumn("")
-    setIsValid(null)
+    
     setIsClose(false)
     setInputType("input")
     setIsInContinue(false)
@@ -91,10 +91,10 @@ const TimesOpeningHandler = () => {
           if (response.data.status === 1) {
             setLocalTimeValues();
             setTimeTable([...timeTable]);
-            setIsValid(true);
+           
             notifySuccess("Modifié avec succès");
           } else {
-            setIsValid(false);
+           
             notifyError("Un erreur est survenu, rententez.")
           }
         }
@@ -103,7 +103,7 @@ const TimesOpeningHandler = () => {
         )
     } else {
       notifyError("Un erreur est survenu, rententez.")
-      setIsValid(false);
+     
       resetValues();
     }
   }
@@ -166,14 +166,16 @@ const TimesOpeningHandler = () => {
               ?
               (
                 <>
-                  <label htmlFor="time">Time</label>
-                  <input type="time" id="time" value={modalInputValue} onChange={(e) => {
-                  setModalInputValue(e.target.value)
-                  }}
-                  />
+                  <div hidden={isInContinue} style={isInContinue ? {display:"none"} : {}}  className='container--center--column'>
+                    <label htmlFor="time">Time</label>
+                    <input  type="time" id="time" value={modalInputValue} onChange={(e) => {
+                    setModalInputValue(e.target.value)
+                    }}
+                    />
+                  </div>
                   {(modalValueColumn === "day_end_am" || modalValueColumn === "day_start_pm")
                     &&
-                    <div>
+                    <div className='container--center--column '>
                       <label htmlFor="close">En Continue</label>
                       <input type="checkbox" id="close" checked={modalInputValue === "HC" ? isInContinue :  isInContinue} onChange={() => setIsInContinue(!isInContinue)} />
                     </div>
@@ -190,6 +192,8 @@ const TimesOpeningHandler = () => {
         
       </Modal>}
       <PageTitle pageTitle={"Gestion des horaires d'ouverture"} />
+      <div className='container--pad-top mar-auto '>* HC Horaire en continue</div>
+      
       <div className='container--pad-top table_handler' style={{overflowY:"hidden"}}>
         <table className='table_handler_container'>
           <thead >
@@ -206,7 +210,7 @@ const TimesOpeningHandler = () => {
           <tbody>
             {timeTable && timeTable.map((t, index) =>
             
-              <tr key={"time_table_" + index + Math.random()}>
+              <tr key={"time_table_" + index + Math.random().toFixed(3)}>
 
                 <td style={!t.close ? styleSheet.td_red : {}}> {days[t.id]} </td>
 

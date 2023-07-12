@@ -8,6 +8,11 @@
     @include flex-center(column);
     z-index: 10;
 
+    input[type=checkbox]{
+        width: 20px;
+        height: 20px;
+    }
+
 
     &_container{
         background-color: rgb(231, 233, 231);
@@ -42,7 +47,7 @@
         padding: 10px;
     }
 
-    #modal_input{
+    .modal_input{
         width: 300px;
         height: 35px;
         padding-left: 5px;

@@ -41,7 +41,7 @@ const Contact = () => {
           
       <form className='form' onSubmit={(e) => submitForm(e)}>
 
-              <FormElement label={{ for: "carID", text: "carID" }} input={{ className:"width-formInpt_noFlex", hidden:true, type: "text", name: "carID", id: "carID",onChange:()=>{} }} value={`VoitureID: ${location.state.id}`} />
+              <FormElement label={{ for: "carID", text: "" }} input={{ className:"width-formInpt_noFlex", hidden:true, type: "text", name: "carID", id: "carID",onChange:()=>{} }} value={location?.state?.id &&  `VoitureID: ${location?.state?.id}`} />
 
               <FormElement label={{ for: "subject", text: "Subject" }} input={{ className:"width-formInpt_noFlex", type: "text", name: "subject", id: "subject", onChange: (e) => handleChange(e.target.name, e.target.value) }} value={formInputs.subject} />
               

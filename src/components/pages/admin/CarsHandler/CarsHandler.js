@@ -49,6 +49,7 @@ const CarsHandler = () => {
                         }
                     }).then(response => {
                         if (response.data.status === 1) {
+                            console.log(response.data,currentPage);
                             setCars([...response.data.cars])
                             seCarsCount(response.data.count)
                             table.current.scrollLeft = 0
@@ -117,22 +118,22 @@ const CarsHandler = () => {
 
 
     const resizeFile = (file) =>
-  new Promise((resolve) => {
-    Resizer.imageFileResizer(
-      file,
-      1280,
-      853,
-      "WEBP",
-        80,
-      0,
-      (uri) => {
-        resolve(uri);
-      },
-      "file",
-      246,
-      199
-    );
-  });
+    new Promise((resolve) => {
+        Resizer.imageFileResizer(
+        file,
+        1280,
+        853,
+        "WEBP",
+            80,
+        0,
+        (uri) => {
+            resolve(uri);
+        },
+        "file",
+        246,
+        199
+        );
+    });
 
    
 
@@ -155,8 +156,6 @@ const CarsHandler = () => {
             } else {
                 formData.append("value", dataToUpdate.value)
             }
-           
-           
             axios.post(path, formData, {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
@@ -253,7 +252,7 @@ const CarsHandler = () => {
 
                         {dataToUpdate.type !== "file"  &&  dataToUpdate.type !== "select"
                             ?
-                            <input type={dataToUpdate.type} value={dataToUpdate.value}
+                            <input className="modal_input" type={dataToUpdate.type} value={dataToUpdate.value}
                                 onChange={(e) =>
                                     setDataToUpdate({
                                         ...dataToUpdate,
@@ -263,7 +262,7 @@ const CarsHandler = () => {
                             dataToUpdate.type === "select"
                                 
                                 ?
-                                <select name="details_carHandler" id="detail_carHandler" onChange={(e)=>setDataToUpdate({...dataToUpdate,value: e.target.value})}>
+                                <select className="modal_input" name="details_carHandler" id="detail_carHandler" onChange={(e)=>setDataToUpdate({...dataToUpdate,value: e.target.value})}>
                                     {
                                     dataToUpdate.column[0] === "gearbox"
                                         ?
@@ -309,21 +308,20 @@ const CarsHandler = () => {
                     :
 
                     null}
-            
-            
-
-            {!carID && <><PageTitle pageTitle={"Gestion vehicules"}/>
-            <div className='container--pad-top'>
-                <div className='input_center_handler'>
-                    <div className='container--center--column inputs_container_filters_inner '>
-                        <label htmlFor="gestionFilterCars">Filtrer par</label>
-                        <select type="text" id='gestionFilterCars' onChange={(e) => setFilters(e.target.value)}>
-                            <option value="Tout">Tout</option>
-                            <option value="Numero VO">Numero Vo</option>
-                            <option value="ID">ID</option>
-                            <option value="Brand">Brand</option>
-                            <option value="Model">Model</option>
-                        </select>
+            {!carID &&
+                <>
+                    <PageTitle pageTitle={"Gestion vehicules"} />
+                    <div className='container--pad-top'>
+                        <div className='input_center_handler'>
+                            <div className='container--center--column inputs_container_filters_inner '>
+                                <label htmlFor="gestionFilterCars">Filtrer par</label>
+                                <select type="text" id='gestionFilterCars' onChange={(e) => setFilters(e.target.value)}>
+                                    <option value="Tout">Tout</option>
+                                    <option value="Numero VO">Numero Vo</option>
+                                    <option value="ID">ID</option>
+                                    <option value="Brand">Brand</option>
+                                    <option value="Model">Model</option>
+                                </select>
                         {
                             filters !== "Tout" 
                                 ?
@@ -374,7 +372,7 @@ const CarsHandler = () => {
                                 }
                                 }
                                 >
-                                    <img src={"/images/uploads/" + car.thumbnail} alt="" width={30} height={30} style={{ objectFit: "cover" }} /></td>
+                                <img src={"/images/uploads/" + car.thumbnail} alt="" width={30} height={30} style={{ objectFit: "cover" }} /></td>
                                 <td onClick={() => setDataToUpdate({index,table:"cars",id:car.id,column:["year","Année"],value:car.year,type:"number"})}>{car.year}</td>
                                 <td onClick={() => setDataToUpdate({index,table:"cars",id:car.id,column:["km","Kilometre"],value:car.km,type:"number"})}>{car.km}</td>
                                 <td onClick={() => setDataToUpdate({index,table:"cars",id:car.id,column:["price","Prix"],value:car.price,type:"number"})}>{car.price}</td>
@@ -395,7 +393,7 @@ const CarsHandler = () => {
                 </table>
                     
                 <div style={{position:"absolute",left:"50%",transform:"translateX(-50%)"}}>
-                    <SwitchPageBlock currentPage={currentPage} setCurrentPage={(value) => setCurrentPage(value)} handleCarPage={() => { }} dataLength={carsCount} /> 
+                    <SwitchPageBlock currentPage={currentPage} setCurrentPage={(value) => setCurrentPage(value)} handleCarPage={() => { }} dataLength={carsCount } /> 
                 </div> 
           </div>
      

@@ -178,7 +178,7 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
                     onClick={() => newEquipment !== null &&  addEquipment(carID,parseInt(newEquipment.split(',')[0]))}
                     onExit={()=>setModalToggle(false)}
                 >
-                    <select name="newEquip" id="newEquip_carHandler"
+                    <select className="modal_input" name="newEquip" id="newEquip_carHandler"
                         onChange={(e) => setNewEquipment(e.target.value)}>
                         <option value=""></option>
                         {
