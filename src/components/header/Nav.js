@@ -10,7 +10,7 @@ const Nav = ({menuToggle,handleMenu,setMenuToggle}) => {
     const logout = () => {
         window.localStorage.removeItem("token");
         dispatch(remove())
-        setMenuToggle()
+        setMenuToggle(false)
     }
 
    //public Routes (all users)

@@ -241,6 +241,8 @@ a.active {
   position: absolute;
   font-weight: bold;
   width: 100%;
+  color: #FFFFFF;
+  z-index: 2;
 }
 
 .page_title {
@@ -248,7 +250,9 @@ a.active {
 }
 
 .page_title_home {
-  padding-top: 40px;
+  padding-top: 50px;
+  color: #FFFFFF;
+  z-index: 2;
 }
 .page_title_home span {
   color: red;
@@ -308,7 +312,7 @@ h2.page_title_home {
 }
 @media screen and (min-width: 1025px) {
   .carCards_container {
-    margin: 50px;
+    scroll-margin: 50px;
   }
 }
 
@@ -952,13 +956,32 @@ header {
 pages: home
 */
 .hero_home {
-  height: 95vh;
-  background-image: url(/public/images/bkhome-mb.jpg);
+  height: 86vh;
+  background-image: url(/public/images/hero.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  width: 100vw;
+}
+@media screen and (min-width: 769px) {
+  .hero_home {
+    width: 110vw;
+    background-position: center -33vw;
+    background-size: cover;
+  }
+}
+.hero_home::after {
+  content: "";
+  width: 100vw;
+  height: 86vh;
+  background-color: #353535;
+  opacity: 0.5;
+  position: absolute;
+  z-index: 1;
 }
 .hero_home_caption {
-  width: 50%;
+  width: 70%;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -967,10 +990,12 @@ pages: home
   font-size: calc(20px + 1vw);
   color: #FFFFFF;
   font-weight: bold;
+  z-index: 2;
 }
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 769px) {
   .hero_home_caption {
     width: 80%;
+    bottom: 25%;
   }
 }
 
@@ -2075,6 +2100,10 @@ ul li {
 
 .mar-top-20 {
   margin-top: 20px;
+}
+
+.mar-top-50 {
+  margin-top: 50px;
 }
 
 .mar-bot-20 {

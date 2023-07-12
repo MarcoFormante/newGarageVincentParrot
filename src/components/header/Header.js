@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Nav from './Nav'
 import MenuButton from './MenuButton';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { toggle } from '../Reducers/MenuToggleReducer';
 
 
 const Header = () => {
@@ -12,12 +13,13 @@ const Header = () => {
   const [lastScrollY, setLastScrolly] = useState(0);
   const navigate = useNavigate()
   const AdminMenuToggle = useSelector((state) => state.menuToggle.value)
-
+  const dispatch = useDispatch()
  
 
   //menu Toggle function (used by menuButton and nav_links)
   const handleMenu = () => {
     setMenuToggle(!menuToggle);
+    dispatch(toggle(false))
   }
  
    
@@ -32,6 +34,8 @@ const Header = () => {
   useEffect(() => {
     if (AdminMenuToggle === true) {
         setMenuToggle(false)
+    } else {
+      dispatch(toggle(false))
     }
   }, [AdminMenuToggle])
   

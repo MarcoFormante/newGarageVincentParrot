@@ -1,13 +1,32 @@
 //Home Image Hero
 .hero_home{
-    height: 95vh;
-    background-image: url(/public/images/bkhome-mb.jpg);
+    height: 86vh;
+    background-image: url(/public/images/hero.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    width: 100vw;
 
+    @media screen and (min-width:769px) {
+        width: 110vw;
+        background-position: center calc(-33vw);
+        background-size: cover;
+
+    }
+
+    &::after{
+        content: '';
+        width: 100vw;
+        height: 86vh; 
+        background-color: $secondary_color;
+        opacity: 0.5;
+        position: absolute;
+        z-index: 1;
+    }
 
     &_caption{
-        width: 50%;
+        width: 70%;
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
@@ -16,9 +35,11 @@
         font-size: calc(20px + 1vw);
         color: $white_color;
         font-weight: bold;
+        z-index: 2;
 
-        @media screen  and (max-width:420px){
+        @media screen  and (max-width:769px){
             width: 80%;
+            bottom: 25%;
         }
     }
 }

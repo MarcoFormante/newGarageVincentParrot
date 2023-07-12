@@ -34,7 +34,7 @@ const Services = () => {
         {services && services.map((service,index)=> <li key={"service_"+index+service.length}>{service}</li>)}
           </ul>
 
-      <p className={'txt_services txt_services_after_list'}>N’hésitez pas à nous <Link to={"/contact"}>contacter </Link>
+      <p className={'txt_services txt_services_after_list mar-top-50'}>N’hésitez pas à nous <Link to={"/contact"}>contacter </Link>
          si vous souhaitez obtenir plus d’informations. Notre équipe se tient à votre disposition pour répondre
         à toutes vos questions et vous fournir les reinseignements dont vous avez besoin.</p>
         

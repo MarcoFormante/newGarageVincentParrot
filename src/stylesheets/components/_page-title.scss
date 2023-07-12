@@ -5,6 +5,8 @@
   position: absolute;
  font-weight: bold;
  width: 100%;
+ color: $white-color;
+ z-index: 2;
 }
 
 .page_title{
@@ -12,7 +14,9 @@
 }
 
 .page_title_home{
-    padding-top: 40px;
+    padding-top: 50px;
+    color: $white-color;
+    z-index: 2;
    
   
     span{
