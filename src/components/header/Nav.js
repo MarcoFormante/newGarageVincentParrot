@@ -3,13 +3,14 @@ import { NavLink } from 'react-router-dom'
 import { useSelector,useDispatch } from 'react-redux'
 import { remove } from '../Reducers/RoleReducer'
 
-const Nav = ({menuToggle,handleMenu}) => {
+const Nav = ({menuToggle,handleMenu,setMenuToggle}) => {
     const role = useSelector((state) => state.role.value)
     const dispatch = useDispatch()
-
+    
     const logout = () => {
         window.localStorage.removeItem("token");
         dispatch(remove())
+        setMenuToggle()
     }
 
    //public Routes (all users)
@@ -26,6 +27,16 @@ const Nav = ({menuToggle,handleMenu}) => {
                 path: "/contact"
         },
     ]
+
+    useEffect(() => {
+        if (menuToggle) {
+            document.body.style.overflowY = "hidden"
+        } else {
+            document.body.style.overflowY = ""
+        }
+    },[menuToggle])
+
+    
 
 
   return (

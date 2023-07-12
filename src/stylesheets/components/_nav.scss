@@ -15,13 +15,15 @@
     //nav if menu is opened
         &--open{
             width: 100vw;
-            z-index: 10;
+            z-index: 9;
 
                 & > .nav_container{
                     opacity: 1;
                     transform: translateX(0);
                     position: relative;
                 }
+
+                
         }
     //nav-container (childs:nav_link)
         &_container{
@@ -69,17 +71,58 @@ a.active{
 
 
 .admin_nav{
-    background-color: $dark_gray_color;
+    background-color: $secondary_color;
     @include flex_center(row);
     gap: 30px;
     padding: 20px;
-    position: sticky;
     z-index: 10;
     top: 60px;
 
+    @media screen and (min-width:map-get($breakpoints,"medium")) {
+        position: sticky;
+    }
+  
+    &_toggle{
+        @media screen and (max-width:map-get($breakpoints,"medium")) {
+        width: 40px;
+        height: 40px;
+        background-color: rgb(252, 252, 252);
+        border-radius: 12px;
+        background-image: url(/src/icons/admin_icon.svg);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        position: relative;
+        z-index: 11;
+        position: fixed;
+        top: 5px;
+        right: 80px;
+        cursor: pointer;
+
+            &--active{
+                background-color: $brand_color;
+            }
+        }
+    }
+
     @media screen and (max-width:map-get($breakpoints,"medium")) {
-        top: 50px;
+        position: fixed;
+        top: -100%;
+        height: 0;
         padding: 10px;
+        transition: all 0.3s ease-in-out,width 0s  ;
+       
+        @include flex-center(column);
+        width: 100vw;
+
+        &--active{
+            top: 0px;
+            width: 100vw;
+            height: 100vh;
+            z-index: 11;
+        }
+       
+
     }
 }
 

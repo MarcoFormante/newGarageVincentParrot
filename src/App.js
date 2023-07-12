@@ -20,16 +20,16 @@ import TimesOpeningHandler from './components/pages/admin/TimesOpeningHandler/Ti
 import ServicesHandler from './components/pages/admin/ServicesHandler/ServicesHandler';
 import CarsHandler from './components/pages/admin/CarsHandler/CarsHandler';
 
-
-
 function App() {
 
-  const role = (useSelector((state) => state.role.value))
+  const role = useSelector((state) => state.role.value)
   const [login, setlogin] = useState(false)
   const location = useLocation()
   const [hidden,setHidden] = useState([])
   const [checkTrigger,setCheckTrigger]=useState(false)
   const [openingTimes, setOpeningTimes] = useState([]);
+
+  
 
   useEffect(() => {
     setHidden(["admin","area-reserve"].filter(path => location.pathname.includes(path)))

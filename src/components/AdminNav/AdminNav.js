@@ -1,10 +1,13 @@
 import React, { useEffect,useState} from 'react'
 import { NavLink } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { toggle } from '../Reducers/MenuToggleReducer'
 
 
 const AdminNav = ({checkToken}) => {
     const role = useSelector((state) => state.role.value)
+    const [adminNavToggle, setAdminNavToggle] = useState(false)
+    const  dispatch = useDispatch()
     
     const adminLinks = [
         {
@@ -44,19 +47,70 @@ const AdminNav = ({checkToken}) => {
 
     ]
 
+
+    useEffect(() => {
+        window.addEventListener("resize",()=> {
+            if (window.innerWidth > 769) {
+               if (adminNavToggle) {
+                    setAdminNavToggle(false)
+               }
+            }
+        })
+
+        return window.removeEventListener("resize", () => {
+            if (window.innerWidth > 769) {
+                if (adminNavToggle) {
+                     setAdminNavToggle(false)
+                }
+             }
+        })
+    })
+
+    useEffect(() => {
+        dispatch(toggle(adminNavToggle))
+        if (adminNavToggle) {
+            document.body.style.overflowY = "hidden"
+        } else {
+            document.body.style.overflowY = ""
+        }
+    },[adminNavToggle])
+    
+   
     return (
 
        role
             ? 
             <div style={{display:"unset"}}>
-                <nav className='admin_nav'>
+                <nav className={`admin_nav ${adminNavToggle ? "admin_nav--active" : ""}`}>
                 {role && role === "admin"
-                ? adminLinks.map((link, index) => <NavLink onClick={checkToken}  end className={`nav_link `} to={link.to} key={link.linkName + "_" + index}>{link.linkName}</NavLink>)
+                        ? adminLinks.map((link, index) =>
+                            <NavLink onClick={() => {
+                                checkToken()
+                                setAdminNavToggle(false)
+                            }} end className={`nav_link `} to={link.to}
+                                key={link.linkName + "_" + index}>
+                                {link.linkName}
+                            </NavLink>
+                        )   
+
                 : role && role === "employee"
-                        ? employeeLinks.map((link, index) => <NavLink  onClick={checkToken} end className={`nav_link`} to={link.to} key={link.linkName + "_" + index}>{link.linkName}</NavLink>)
+                            ? employeeLinks.map((link, index) =>
+                                <NavLink onClick={() => {
+                                checkToken()
+                                setAdminNavToggle(false)
+                            }} end
+                                className={`nav_link`}
+                                to={link.to}
+                                key={link.linkName + "_" + index}>
+                                {link.linkName}
+                            </NavLink>
+                        )
                             : " "}
                     
                 </nav>
+                <div className={`admin_nav_toggle ${adminNavToggle ? "admin_nav_toggle--active" : ""}`}
+                    onClick={() => setAdminNavToggle(!adminNavToggle)}>
+                </div>
             </div>
             : ""
         
