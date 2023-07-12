@@ -67,13 +67,16 @@ const AdminNav = ({checkToken}) => {
     },[])
 
     useEffect(() => {
-        dispatch(toggle(adminNavToggle))
-        if (adminNavToggle) {
-            document.body.style.overflowY = "hidden"
-        } else {
-            document.body.style.overflowY = ""
+        if (window.innerWidth < 769) {
+            if (adminNavToggle === true) {
+                document.body.style.overflowY = adminNavToggle ? "hidden" : ""
+                dispatch(toggle(true))
+            } else {
+                document.body.style.overflowY = adminNavToggle ? "hidden" : ""
+                dispatch(toggle(false))
+            }
         }
-    },[adminNavToggle])
+},[adminNavToggle,dispatch])
     
    
     return (

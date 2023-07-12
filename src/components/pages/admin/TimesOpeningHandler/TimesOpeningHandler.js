@@ -167,7 +167,7 @@ const TimesOpeningHandler = () => {
               (
                 <>
                   <div hidden={isInContinue} style={isInContinue ? {display:"none"} : {}}  className='container--center--column'>
-                    <label htmlFor="time">Time</label>
+                    <label htmlFor="time" style={{fontSize:18}}>Time</label>
                     <input  type="time" id="time" value={modalInputValue} onChange={(e) => {
                     setModalInputValue(e.target.value)
                     }}
@@ -176,7 +176,7 @@ const TimesOpeningHandler = () => {
                   {(modalValueColumn === "day_end_am" || modalValueColumn === "day_start_pm")
                     &&
                     <div className='container--center--column '>
-                      <label htmlFor="close">En Continue</label>
+                      <label htmlFor="close" style={{fontSize:18}}>En Continue</label>
                       <input type="checkbox" id="close" checked={modalInputValue === "HC" ? isInContinue :  isInContinue} onChange={() => setIsInContinue(!isInContinue)} />
                     </div>
                     }
@@ -184,7 +184,7 @@ const TimesOpeningHandler = () => {
               )
               :
               <>
-                <label htmlFor="close">Fermé</label>
+                <label htmlFor="close" style={{fontSize:18}}>Fermé</label>
                 <input type="checkbox"  id="close" checked={isClose} onChange={()=>setIsClose(!isClose)} />
               </>
           }
@@ -210,9 +210,9 @@ const TimesOpeningHandler = () => {
           <tbody>
             {timeTable && timeTable.map((t, index) =>
             
-              <tr key={"time_table_" + index + Math.random().toFixed(3)}>
+              <tr key={"time_table_" + index * t.id }>
 
-                <td style={!t.close ? styleSheet.td_red : {}}> {days[t.id]} </td>
+                <td style={!t.close ? {...styleSheet.td_red,border:"1px solid black",cursor:"default"}: {border:"1px solid black",cursor:"default"}}> {days[t.id]} </td>
 
                 <td style={!t.close ? styleSheet.td_red : {}}
                   onClick={() => handleModal("input", days[t.id] + " / Ouverture matin", t.id, t.day_start_am, index, "day_start_am", t.close)}

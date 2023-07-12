@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
-import { useSelector,useDispatch } from 'react-redux'
+import { useSelector,useDispatch} from 'react-redux'
 import { remove } from '../Reducers/RoleReducer'
+
 
 const Nav = ({menuToggle,handleMenu,setMenuToggle}) => {
     const role = useSelector((state) => state.role.value)
-    const dispatch = useDispatch()
+   const dispatch = useDispatch()
     
     const logout = () => {
         window.localStorage.removeItem("token");
@@ -28,18 +29,11 @@ const Nav = ({menuToggle,handleMenu,setMenuToggle}) => {
         },
     ]
 
-    useEffect(() => {
-        if (menuToggle) {
-            document.body.style.overflowY = "hidden"
-        } else {
-            document.body.style.overflowY = ""
-        }
-    }, [menuToggle])
-    
+   
  //resize event : check if menu is open when screen width > 768 and setMenuToggle to False
     useEffect(() => {
         window.addEventListener("resize",()=> {
-            if (window.innerWidth > 769) {
+            if (window.innerWidth > 768) {
                if (menuToggle) {
                     setMenuToggle(false)
                }
@@ -47,14 +41,24 @@ const Nav = ({menuToggle,handleMenu,setMenuToggle}) => {
         })
 
         return window.removeEventListener("resize", () => {
-            if (window.innerWidth > 769) {
+            if (window.innerWidth > 768) {
                 if (menuToggle) {
                     setMenuToggle(false)
                 }
              }
         })
-    },[menuToggle])
+    }, [menuToggle, setMenuToggle])
+    
 
+useEffect(() => {
+        if (window.innerWidth < 769) {
+            if (menuToggle === true) {
+                document.body.style.overflowY = menuToggle ? "hidden" : ""
+            } else {
+                document.body.style.overflowY = menuToggle ? "hidden" : ""
+            }
+        }
+},[menuToggle])
     
 
 

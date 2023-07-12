@@ -341,7 +341,7 @@ const CarsHandler = () => {
                     </div> 
 
         </div>
-                <div ref={table} className='table_handler container--pad-top' style={{overflowY:"hidden",margin:10}}>
+                <div ref={table} className='table_handler' style={{overflowY:"hidden",margin:10,paddingTop:10}}>
               <table className='mar-auto  table_handler_container ' style={{overflowY:"hidden",minWidth:1000,textAlign:"center"}}>
                   <thead >
                       <tr>

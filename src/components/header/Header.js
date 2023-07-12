@@ -19,7 +19,6 @@ const Header = () => {
   //menu Toggle function (used by menuButton and nav_links)
   const handleMenu = () => {
     setMenuToggle(!menuToggle);
-    dispatch(toggle(false))
   }
  
    
@@ -34,9 +33,7 @@ const Header = () => {
   useEffect(() => {
     if (AdminMenuToggle === true) {
         setMenuToggle(false)
-    } else {
-      dispatch(toggle(false))
-    }
+    } 
   }, [AdminMenuToggle])
   
 

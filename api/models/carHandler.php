@@ -328,7 +328,6 @@ public function getAllCars( int $currentPage,string $filters,$filterValue){
 
         $this->pdo->beginTransaction();
             try {
-               
                 $stmtImages->execute();
                 $imagesArray = [];
                 while ($row = $stmtImages->fetch(PDO::FETCH_COLUMN)) {
@@ -444,6 +443,71 @@ public function getAllCars( int $currentPage,string $filters,$filterValue){
         }
     }
 
+
+    public function deleteImageGallery(int $id , string $path){
+        if (!is_null($this->pdo)) {
+            $query = "DELETE FROM car_images WHERE path = :path AND car_id = :id";
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindValue(":path",$path,PDO::PARAM_STR);
+            $stmt->bindValue(":id",$id,PDO::PARAM_INT);
+
+            if ($stmt->execute()) {
+                deleteAllImagesFromFolder([$path]);
+            }else{
+                echo json_encode(["status"=> 0, "message"=>"Erreur: problème de connection, impossible de supprimer l'image"]);
+            }
+        }else{
+            echo json_encode(["status"=> 0, "message"=>"Erreur: problème de connection, impossible de supprimer l'image"]);
+        }
+    }
+
+
+
+    public function addNewImages( int $carID,$gallery){
+        $galleryPathArray = [];
+    
+        try {
+            foreach ($gallery['tmp_name'] as $key => $value) {
+                $fileExtention = explode("/",mime_content_type($value))[1];
+                if (preg_match("/webp|jpeg|jpg|png/",$fileExtention)) {
+                    $fileName =  (uniqid() . random_int(20,999))  . uniqid().".webp";
+                    $galleryPathArray[$key] = $fileName; 
+                }else{
+                    throw new Exception("Erreur: le types de images acceptès sont webp,jpeg,png", 1);
+                    die();
+                }
+            }
+
+            $queryCarGallery = "INSERT INTO car_images(path,car_id) VALUES";
+            $galleryLength = count($galleryPathArray);
+            foreach ($galleryPathArray as $key => $value) {
+                if ($key !== $galleryLength - 1) {
+                    $queryCarGallery .= "(:path$key,:car_id$key),";
+                }else{
+                    $queryCarGallery .= "(:path$key,:car_id$key)";
+                }
+            }
+                $stmtCarGallery = $this->pdo->prepare($queryCarGallery);
+                foreach ($galleryPathArray as $key => $value) {
+                    $stmtCarGallery->bindValue(":path$key",$value,PDO::PARAM_STR);
+                    $stmtCarGallery->bindValue(":car_id$key",$carID,PDO::PARAM_INT);
+                }
+                $path = $_SERVER['DOCUMENT_ROOT'] ."/app/public/images/uploads/" ;
+                    uploadGalleryImages($gallery,$path,$galleryPathArray) ;
+                    if ($stmtCarGallery->execute()) {
+                        echo json_encode(["status"=> 1, "message"=>"Images Ajoutées avec succès", "imagePaths"=>$galleryPathArray]);
+                    }else{
+                        echo json_encode(["status"=> 0, "message"=>"Erreur"]);
+                    }
+                
+
+        } catch (Exception $e) {
+            throw new Exception("Erreur: $e", 1);
+        }
+
+        
+    }
+
 }
 
 
@@ -459,6 +523,7 @@ function uploadGalleryImages($gallery,$path,$galleryPathArray){
     foreach ($gallery['tmp_name'] as $key => $imgTmp) {
        move_uploaded_file($imgTmp, $path . $galleryPathArray[$key]);
     } 
+
 }
 
 

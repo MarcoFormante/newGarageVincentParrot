@@ -5,12 +5,14 @@
   position: absolute;
  font-weight: bold;
  width: 100%;
- color: $white-color;
  z-index: 2;
 }
 
+
+
 .page_title{
     padding-top: 12px;
+    color: $secondary_color;
 }
 
 .page_title_home{

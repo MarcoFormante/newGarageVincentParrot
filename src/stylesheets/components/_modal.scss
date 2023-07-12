@@ -14,6 +14,13 @@
     }
 
 
+    input[type=time]{
+        min-width: 150px;
+        text-align: center;
+        font-size: 18px;
+    }
+
+
     &_container{
         background-color: rgb(231, 233, 231);
         position: fixed;
@@ -51,6 +58,7 @@
         width: 300px;
         height: 35px;
         padding-left: 5px;
+       
     }
 
     &_exit{
@@ -70,4 +78,3 @@
     }
 
 }
-

@@ -75,6 +75,12 @@ switch ($requestMethod) {
             break;
         }
 
+        if (isset($_POST['car_id']) && isset($_FILES['gallerie'])) {
+            $CarHandlerController = new CarHandlerController();
+            $CarHandlerController->addNewImages($_POST['car_id'],$_FILES['gallerie']);
+        }
+
+        
 
        
 
@@ -86,6 +92,7 @@ switch ($requestMethod) {
                 $thumbnail = htmlentities($_GET['thumbnail']);
                 $CarHandlerController = new CarHandlerController();
                 $CarHandlerController->deleteCar($id,$thumbnail);
+                break;
         }
 
         if (isset($_GET["car_id"]) && isset($_GET['equip_id'])) {
@@ -93,14 +100,23 @@ switch ($requestMethod) {
            $equipID = htmlspecialchars($_GET['equip_id']);
            $CarHandlerController = new CarHandlerController();
            $CarHandlerController->deleteEquipment($carID,$equipID);
+           break;
         }
 
-        break;
+        if (isset($_GET["car_id"]) && isset($_GET['carImage'])) {
+            $CarHandlerController = new CarHandlerController();
+            $CarHandlerController->deleteImageGallery($_GET["car_id"],$_GET['carImage']);
+            break;
+        }
+
+      
 
     default:
    
         break;
    }
+
+
 
 
 

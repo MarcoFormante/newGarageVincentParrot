@@ -4,6 +4,8 @@ import PageTitle from '../../../PageTitle/PageTitle'
 import Modal from '../../../Modal/Modal'
 import toast, { Toaster } from 'react-hot-toast';
 
+import CarHandlerGallery from './CarHandlerGallery';
+
 const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setNewCarDetailsArray, newCarDetailsArray ,isDetailUpdate, setIsDetailUpdate}) => {
     const [carDetails, setCarDetails] = useState([])
     const [carEquipments, setCarEquipements] = useState([])
@@ -170,7 +172,7 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
 
     return (
         <div className={`carHandler_details ${carID ? "carHandler_details--active" : ""}`}>
-            <div className='carHanlder_details_inner'>
+            <div className='carHandler_details_inner'>
             <Toaster/>
             {modalToggle &&
                 <Modal type={"input"}
@@ -189,7 +191,7 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
                     </select>
                 </Modal>
             }
-            <div className='exitBtn' onClick={() => setCarID()}></div>
+            <div className='exitBtn' onClick={() => setCarID(null)}></div>
             <PageTitle pageTitle={"Details Voiture"}/>
             {/* Car Details */}
             
@@ -259,6 +261,7 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
                 </div>
             </div>
         </div>
+            <CarHandlerGallery carID={carID} />
     </div>
   )
 }

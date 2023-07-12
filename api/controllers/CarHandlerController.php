@@ -47,4 +47,15 @@ Class CarHandlerController{
         $carHandler = new carHandler();
         $carHandler->deleteEquipment($carID,$equipID);
     }
+
+    public function deleteImageGallery(int $id , string $path){
+        $carHandler = new carHandler();
+        $carHandler->deleteImageGallery($id,$path);
+    }
+
+
+    public function addNewImages( int $carID,$gallery){
+        $carHandler = new carHandler();
+        $carHandler->addNewImages($carID,$gallery);
+    }
 }

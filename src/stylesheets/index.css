@@ -241,12 +241,12 @@ a.active {
   position: absolute;
   font-weight: bold;
   width: 100%;
-  color: #FFFFFF;
   z-index: 2;
 }
 
 .page_title {
   padding-top: 12px;
+  color: #353535;
 }
 
 .page_title_home {
@@ -625,6 +625,11 @@ h2.page_title_home {
   width: 20px;
   height: 20px;
 }
+.modal input[type=time] {
+  min-width: 150px;
+  text-align: center;
+  font-size: 18px;
+}
 .modal_container {
   background-color: rgb(231, 233, 231);
   position: fixed;
@@ -956,7 +961,7 @@ header {
 pages: home
 */
 .hero_home {
-  height: 86vh;
+  height: 85vh;
   background-image: url(/public/images/hero.jpg);
   background-position: center;
   background-repeat: no-repeat;
@@ -971,12 +976,15 @@ pages: home
     background-size: cover;
   }
 }
+.hero_home .page_title {
+  color: #FFFFFF;
+}
 .hero_home::after {
   content: "";
   width: 100vw;
-  height: 86vh;
+  height: 85vh;
   background-color: #353535;
-  opacity: 0.5;
+  opacity: 0.6;
   position: absolute;
   z-index: 1;
 }
@@ -2096,6 +2104,10 @@ ul li {
 
 .pad-top-20 {
   padding-top: 20px;
+}
+
+.pad-bot-20 {
+  padding-bottom: 20px;
 }
 
 .mar-top-20 {

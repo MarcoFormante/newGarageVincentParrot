@@ -1,6 +1,6 @@
 //Home Image Hero
 .hero_home{
-    height: 86vh;
+    height: 85vh;
     background-image: url(/public/images/hero.jpg);
     background-position: center;
     background-repeat: no-repeat;
@@ -12,15 +12,18 @@
         width: 110vw;
         background-position: center calc(-33vw);
         background-size: cover;
+    }
 
+    .page_title{
+        color:$white-color ;
     }
 
     &::after{
         content: '';
         width: 100vw;
-        height: 86vh; 
+        height: 85vh; 
         background-color: $secondary_color;
-        opacity: 0.5;
+        opacity: 0.6;
         position: absolute;
         z-index: 1;
     }

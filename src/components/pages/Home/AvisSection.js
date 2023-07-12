@@ -139,7 +139,7 @@ const AvisSection = () => {
                         <div className={"avis_score_stars"}>
                               {/** stars block set "clickable" for avis page */}
                               <StarsBlock numberOfActiveStars={5} clickable={false}/>
-                              <span className={'score'}>{reviewsAverage}/5</span>
+                              <span className={'score'}>{reviewsAverage > 5 ? 5 : reviewsAverage}/5</span>
                         </div>
                         <ScoreBarsBlock totalStarsLength={totalStarsLength} />
                     </div>

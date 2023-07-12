@@ -14,7 +14,7 @@ const Home = () => {
 
   return (
     <div>
-    <PageTitle pageTitle={"Garage Vincent Parrot"} />
+    <PageTitle pageTitle={"Garage Vincent Parrot"}  style={{color:"white"}}/>
       <HeroHome />
       <Offers  />
       <Services />
