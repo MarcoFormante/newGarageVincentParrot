@@ -62,31 +62,12 @@ const Offers = ({cars,count}) => {
         })
 
         return carousel.current.removeEventListener("scroll", () => {
+            setCarouselX(carousel?.current?.scrollLeft)
             setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);  
         })
 
         }, [carouselX,carouselWidth,carousel?.current?.offsetWidth])
 
-    
-    useEffect(() => {
-      
-         window.addEventListener("resize", () => {
-           
-            if (pathName === "/") {
-                setCarouselX(carousel?.current?.scrollLeft);
-                setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);
-            }
-           
-        })   
-
-        return window.removeEventListener("resize", () => {
-            if (pathName === "/") {
-                setCarouselX(carousel?.current?.scrollLeft);
-                setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);
-            }
-         })
-
-     }, [pathName])
     
     
      useEffect(() => {

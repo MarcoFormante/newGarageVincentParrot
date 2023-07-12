@@ -214,7 +214,6 @@ a.active {
     top: -100%;
     height: 0;
     padding: 10px;
-    transition: all 0.3s ease-in-out, width 0s;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -959,7 +958,7 @@ pages: home
   background-size: cover;
 }
 .hero_home_caption {
-  width: 90%;
+  width: 50%;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -969,6 +968,11 @@ pages: home
   color: #FFFFFF;
   font-weight: bold;
 }
+@media screen and (max-width: 420px) {
+  .hero_home_caption {
+    width: 80%;
+  }
+}
 
 .section_page--grey {
   background-color: #CBD0D4;
@@ -977,10 +981,12 @@ pages: home
 }
 
 .section_page_services img {
-  width: 70vw;
+  width: 80vw;
   height: 300px;
   max-width: 450px;
   margin-bottom: 10px;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 @media screen and (max-width: 375px) {
   .section_page_services img {
@@ -992,7 +998,7 @@ pages: home
 .services_list {
   margin-top: 50px;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 35px;
   margin-bottom: 30px;
 }
@@ -1004,11 +1010,17 @@ pages: home
 @media screen and (max-width: 768px) {
   .services_list {
     margin-left: 10px;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+  }
+}
+@media screen and (max-width: 450px) {
+  .services_list {
+    grid-template-columns: 1fr;
   }
 }
 @media screen and (min-width: 1025px) {
   .services_list {
-    grid-template-columns: 1fr 1fr;
     width: -moz-fit-content;
     width: fit-content;
     padding: 50px;
@@ -1023,14 +1035,13 @@ pages: home
   align-items: center;
   gap: 4px;
   font-size: 18px;
-  word-break: break-all;
+  word-break: break-word;
   font-weight: 600;
 }
 @media screen and (max-width: 768px) {
   .services_list li {
     padding: 5px;
     font-size: 16px;
-    word-break: break-word;
   }
 }
 .services_list li::before {
@@ -1063,6 +1074,7 @@ pages: home
   padding: 10px;
   font-size: clamp(16px, 10vw, 17px);
   text-align: center;
+  width: 90vw;
 }
 .txt_services_after_list {
   font-size: 18px;
