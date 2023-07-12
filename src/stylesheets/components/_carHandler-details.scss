@@ -2,17 +2,16 @@
 width: 100vw;
 height: 100vh;
 background-color: rgb(255, 255, 255);
-position: absolute;
+position: fixed;
 top: 0;
 left: 100%;
 transition: left 0.3s ease-in-out;
 z-index: 10;
+overflow-y: scroll;
 
-
-
-&--active{
-    left: 0%;
-}
+    &--active{
+        left: 0%;
+    }
 
 }
 

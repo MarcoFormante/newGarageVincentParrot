@@ -247,7 +247,7 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
                                     </li>  
                                 )}
                             </ul>
-                            <div className='add_new_equipement container--marg-top'>
+                            <div className='add_new_equipement mar-bot-50'>
                                     <span style={{ fontWeight: "600" }}>
                                         Ajouter un nouvel equipement
                                     </span> 
