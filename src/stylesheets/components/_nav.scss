@@ -1,9 +1,10 @@
 
 @media screen and (max-width:map-get($breakpoints,"medium")) {
+    
     .nav{
         height: 100vh;
         width: 0vw;
-        position: fixed;
+        position: absolute;
         left: 0;
         top: 0;
         background-color: $secondary_color;
@@ -16,11 +17,12 @@
         &--open{
             width: 100vw;
             z-index: 9;
-
+            height: 100vh;
                 & > .nav_container{
                     opacity: 1;
                     transform: translateX(0);
                     position: relative;
+                    height: 100vh;
                 }
 
                 
@@ -32,6 +34,7 @@
             opacity: 0;
             transform: translateX(-200px);
             transition: all 0.2s ease;
+           
         }
     
     //Link tags

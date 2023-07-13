@@ -119,7 +119,7 @@ components: button
   .nav {
     height: 100vh;
     width: 0vw;
-    position: fixed;
+    position: absolute;
     left: 0;
     top: 0;
     background-color: #353535;
@@ -130,11 +130,13 @@ components: button
   .nav--open {
     width: 100vw;
     z-index: 9;
+    height: 100vh;
   }
   .nav--open > .nav_container {
     opacity: 1;
     transform: translateX(0);
     position: relative;
+    height: 100vh;
   }
   .nav_container {
     display: flex;
@@ -241,7 +243,7 @@ a.active {
   position: absolute;
   font-weight: bold;
   width: 100%;
-  z-index: 2;
+  z-index: 1;
 }
 
 .page_title {
@@ -252,7 +254,7 @@ a.active {
 .page_title_home {
   padding-top: 50px;
   color: #FFFFFF;
-  z-index: 2;
+  z-index: 1;
 }
 .page_title_home span {
   color: red;
@@ -829,6 +831,8 @@ header {
   align-items: center;
   position: sticky;
   top: 0;
+  left: 0;
+  z-index: 10;
 }
 @media screen and (min-width: 769px) {
   header {
@@ -838,7 +842,7 @@ header {
 
 .brand_logo {
   background-color: #353535;
-  height: 100%;
+  height: 51px;
   width: 111px;
   display: flex;
   flex-direction: row;
@@ -854,6 +858,7 @@ header {
   .brand_logo {
     width: 150px;
     padding-left: 25px;
+    height: 100%;
   }
 }
 .brand_logo img {
@@ -896,8 +901,10 @@ header {
   gap: 20px;
 }
 .footer .social_icons img {
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 30px;
+  -o-object-fit: fill;
+     object-fit: fill;
 }
 .footer .pol {
   order: 1;
@@ -968,6 +975,7 @@ pages: home
   background-position: center;
   background-size: cover;
   width: 100vw;
+  position: relative;
 }
 @media screen and (min-width: 769px) {
   .hero_home {
@@ -986,11 +994,14 @@ pages: home
   background-color: #353535;
   opacity: 0.6;
   position: absolute;
-  z-index: 1;
+  top: 0px;
+  left: 0;
+  z-index: 0;
 }
 .hero_home_caption {
   width: 70%;
   position: absolute;
+  top: 70%;
   left: 50%;
   transform: translateX(-50%);
   bottom: 14%;
