@@ -66,7 +66,7 @@ const NewCarPage = () => {
       
       const formData = new FormData();
       prepareFormData(formData, resizedGallery,resizedThumbnail)
-      axios.post(process.env.REACT_APP_HTTP + "pages/admin/carHandler.php", formData, {
+      axios.post("pages/admin/carHandler.php", formData, {
             headers: {
               "Content-Type":"multipart/form-data"
             }

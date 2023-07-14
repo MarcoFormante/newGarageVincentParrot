@@ -71,7 +71,7 @@ const Offers = ({cars,count}) => {
     
     
      useEffect(() => {
-        const homepagePath = process.env.REACT_APP_HTTP + "pages/homePage.php";
+        const homepagePath = "pages/homePage.php";
         const formData = new FormData();
             formData.append('limit', offerLimit)
             axios.post(homepagePath, formData, {

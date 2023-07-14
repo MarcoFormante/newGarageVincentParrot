@@ -6,7 +6,11 @@ const Services = () => {
   const [services,setServices]=useState([])
   
   useEffect(() => {
-    const homepagePath = process.env.REACT_APP_HTTP + "pages/homePage.php?services=true";
+    //dev
+    // const homepagePath = process.env.REACT_APP_HTTP + "pages/homePage.php?services=true";
+    //prod
+    
+    const homepagePath = "pages/homePage.php?services=true";
     axios.get(homepagePath)
       .then(response => { setServices(response.data.services) })
       .catch(error=>console.warn(error.data.message))

@@ -10,6 +10,7 @@ const CarFilters = ({handleChangeFilters,closeButton,setFiltersToggle,loadFilter
   
   function handleOfferChange() {
     setOffer(!offer);
+    
   }
 
   useEffect(() => {
@@ -19,13 +20,15 @@ const CarFilters = ({handleChangeFilters,closeButton,setFiltersToggle,loadFilter
 
 
   useEffect(() => {
-    const parcAutoPath = process.env.REACT_APP_HTTP + "pages/parcAuto.php";
-    axios.get(parcAutoPath + "?getFilters=" + true) 
-      .then(response => {
-        setFilters({ ...response?.data })
-        setBaseFilters({...response?.data})
-      })
-  },[filters])
+    if (filters) {
+      const parcAutoPath = "pages/parcAuto.php";
+      axios.get(parcAutoPath + "?getFilters=true") 
+        .then(response => {
+          setFilters({ ...response?.data })
+          setBaseFilters({...response?.data})
+        })
+    }
+  },[])
   
 
   return (

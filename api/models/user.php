@@ -92,7 +92,7 @@ Class User{
         if ($email && $pwd) {
          
             if (!is_null($this->pdo)) {
-                $query = "SELECT email, password, role FROM users INNER JOIN Roles ON role_id = Roles.id WHERE email = :email";
+                $query = "SELECT email, password, role FROM users INNER JOIN roles ON role_id = roles.id WHERE email = :email";
                 $stmt = $this->pdo->prepare($query);
                 $stmt->bindParam(":email",$email,PDO::PARAM_STR);
                 

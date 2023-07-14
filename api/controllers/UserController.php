@@ -15,7 +15,9 @@ public function createNewUser(){
 
 
 public function login(){
+    
     if (isset($_POST['email']) && isset($_POST['password'])){
+        
         $user = new User();
         $user->login($_POST['email'],$_POST['password']);
     }else{

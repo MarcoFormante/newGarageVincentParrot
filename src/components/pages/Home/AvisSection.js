@@ -18,21 +18,31 @@ const AvisSection = () => {
 
     
     useEffect(() => {
-    const homepagePath = process.env.REACT_APP_HTTP + "pages/homePage.php?reviews=true";
+    const homepagePath = "pages/homePage.php?reviews=true";
         axios.get(homepagePath)
             .then(response => {
-                let reviews = [];
-                if (response.data.reviews && response.data.reviews.length > 0) {
-                    response?.data?.reviews?.forEach((review,index)=> {
-                        if (review.is_validate === 1 && review.review >= 4 ) {
-                            reviews.push(response.data.reviews[index])
-                        }
-                    });
-                    setAvis([...reviews])
-                }   
-        })
+                console.log(response.data);
+                let reviews = [...response.data.reviews.filter(rev => parseInt(rev.review) > 2 && parseInt(rev.is_validate) === 1 )];
+                console.log(reviews);
+               
+                setAvis([...reviews])
+                console.log(avis);  
+                console.log("avis ok");
+                console.log("ye");
+               
+                // if (response.data.reviews && response.data.reviews.length > 0) {
+                //     response.data.reviews.forEach((review,index)=> {
+                //         if (review.is_validate === 1 && review.review >= 4 ) {
+                //             reviews.push(response.data.reviews[index])
+                //         }
+                //     });
+                //     setAvis(reviews.filter(review => review.is_validate === 1 && review.review >= 3))
+                   
+                // }   
+            })
+        return ()=>{}
     }, [])
-
+console.log(avis);
     function TotalReviewsCalculate(reviews) {
         const { total,stars1, stars2, stars3, stars4, stars5 } = reviews;
         const reviewsSum = stars1 + stars2 + stars3 + stars4 + stars5;
@@ -42,13 +52,17 @@ const AvisSection = () => {
     }
     
     useEffect(() => {
-        const homepagePath = process.env.REACT_APP_HTTP + "pages/homePage.php?totalReviews=true";
-            axios.get(homepagePath)
-                .then(response => {
-                   TotalReviewsCalculate(response.data.total[0]);
-            })
+       
+        
+        return ()=>{ const homepagePath ="pages/homePage.php?totalReviews=true";
+        axios.get(homepagePath)
+            .then(response => {
+                TotalReviewsCalculate(response.data.total[0]);
+                console.log("total ok");
+            })}
         },[])
-    
+    console.log("totalreviewTest ", totalStarsLength);
+    console.log("avis :",avis);
     
     const handleScrollCarousel = (direction) => {
        
@@ -66,12 +80,12 @@ const AvisSection = () => {
         
     }
     
-    useEffect(() => {
-      
-        setAvis([...avis])
-        setPathName(window.location.pathname)
+    // useEffect(() => {
+    //   console.log("location");
+    //     setAvis([...avis])
+    //     setPathName(window.location.pathname)
     
-    }, [window.location.pathname])
+    // }, [window.location.pathname])
 
   
     
@@ -132,7 +146,7 @@ const AvisSection = () => {
 
     
         return (
-            <div className={'section_avis'} style={!avis.length > 0 ? {display:"none"} : {display:"block"}}>
+            <div className={'section_avis'} >
                 <h3 className={'section_title section_title_avis'}>Vos avis</h3> 
                 <div className={"section_page section_page--grey"}>
                     <div className={'avis_score'}>
@@ -149,7 +163,7 @@ const AvisSection = () => {
                 
                 <div className={"avis_cards_container"}>
                     <div className={"avis_cards_container_inner"} style={avis.length * 250 < window.innerWidth ? { justifyContent: "center" } : {}} ref={carousel}>
-                        {avis && avis.map((avis, index) => <AvisCard key={"avis_" + index +"_card" } name={avis.name}  message={avis.message} review={avis.review} />)}
+                        {avis && avis.map((avis, index) =>   <AvisCard key={"avis_" + index +"_card" } name={avis.name}  message={avis.message} review={avis.review} />)}
                     </div>
                     <p className='title_cta'>Votre avis nous interesse</p>
                     <ButtonCta type={"link"} to={"/avis"} inner={"Je donne mon avis"} className={"cta cta--red cta--wh-70vw cta_avis"} />

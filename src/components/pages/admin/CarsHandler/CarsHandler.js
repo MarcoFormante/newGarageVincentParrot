@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import axios from '../../../../api/axios'
 import PageTitle from '../../../PageTitle/PageTitle'
 import SwitchPageBlock from '../../../SwitchPageBlock/SwitchPageBlock'
@@ -32,7 +32,7 @@ const CarsHandler = () => {
     const notifySuccess = (text) => toast.success(text);
     const notifyError = (text) => toast.error(text);
 
-    function getCars() {
+    const getCars = useCallback(() => {
         if (localStorage.getItem("token")) {
             CheckToken(localStorage.getItem("token"))
                 .then(response => {
@@ -67,13 +67,15 @@ const CarsHandler = () => {
                 }
             })
         }
+    },[currentPage,filters,modalFilterValue,navigate]) 
+        
        
-    }
+    
 
 
     useEffect(() => {
         getCars() 
-    }, [currentPage])
+    }, [currentPage,getCars])
 
 
 

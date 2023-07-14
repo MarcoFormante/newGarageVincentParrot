@@ -64,7 +64,7 @@ const AdminNav = ({checkToken}) => {
                 }
              }
         })
-    },[])
+    },[adminNavToggle])
 
     useEffect(() => {
         if (window.innerWidth < 769) {

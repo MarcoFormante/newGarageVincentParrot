@@ -64,6 +64,7 @@ const Accounts = () => {
       if (localStorage.getItem("token")) {
         CheckToken(localStorage.getItem("token"))
           .then(response => {
+            console.log(response.data);
             isRoleValid = response.data.role === "admin"
             if (isRoleValid) {
               axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("token")}`;
@@ -82,6 +83,7 @@ const Accounts = () => {
                
                 setServerMessage(response.data)
                 if (response.data.status === 1) {
+                  console.log(response.data);
                   setNewUser({id:response.data.userId, email:email})
                   notifySuccess("Ajoutè avec succès")
                   setEmail("");

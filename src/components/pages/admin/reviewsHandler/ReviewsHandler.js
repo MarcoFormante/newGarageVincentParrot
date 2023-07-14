@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { memo, useCallback, useEffect, useState } from 'react'
 import axios from '../../../../api/axios'
 import PageTitle from '../../../PageTitle/PageTitle'
 import { AvisCard } from '../../Home/AvisSection'
@@ -6,56 +6,60 @@ import toast, { Toaster } from 'react-hot-toast';
 import Loading from '../../../Loading/Loading';
 import SwitchPageBlock from '../../../SwitchPageBlock/SwitchPageBlock';
 
+
 const ReviewsHandler = () => {
     const [avis,setAvis]=useState([])
     const [filters, setFilters] = useState(0);
     const [loading, setLoading] = useState(false)
     const [currentPage,setCurrentPage] = useState(0)
-    const notifySuccess = (text) => toast.success(text);
+    const notifySuccess = useCallback((text) => toast.success(text),[]);
     const notifyError = (text) => toast.error(text);
 
     
-    console.log(filters);
+
+    const getReviews = useCallback(() => {
+        
+        const homepagePath = `pages/admin/reviewHandler.php?currentPage=${currentPage}&filter=${filters}`;
+        axios.get(homepagePath)
+            .then(response => {
+                console.log(response.data);
+                if (response.data.status === 1) {
+                    let reviews = [];
+                    response.data.reviews.forEach((review, index) => {
+                        reviews.push(response.data.reviews[index])
+                    });
+                    setAvis([...reviews])
+                    setTimeout(() => {
+                        const reviewCount = response.data.reviews[0].count === undefined || response.data.reviews[0].count === null ? 0 : response.data.reviews[0].count
+                        if (response.data.filter === 0) {
+                          
+                           
+                        } else {
+                            notifySuccess(`Nombre d'avis : ${reviewCount}`)
+                        }
+                     
+                    }, 500);
+                } else {
+                    notifyError("Un erreur est survenu")
+                }
+            })
+    },[currentPage,filters,notifySuccess])
+   
+ 
     useEffect(() => {
-        
-            setLoading(true)
-            const homepagePath = process.env.REACT_APP_HTTP + `pages/admin/reviewHandler.php?currentPage=${currentPage}&filter=${filters}`;
-            axios.get(homepagePath)
-                .then(response => {
-                    console.log(response.data);
-                    if (response.data.status === 1) {
-                        let reviews = [];
-                        response.data.reviews.forEach((review, index) => {
-                            reviews.push(response.data.reviews[index])
-                        });
-                        setAvis([...reviews])
-                        setTimeout(() => {
-                            setLoading(false)
-                            const reviewCount = response.data.reviews[0]?.count === undefined || response.data.reviews[0]?.count === null ? 0 : response.data.reviews[0]?.count
-                            if (response?.data?.filter === 0) {
-                                notifySuccess(`Avis à valider : ${reviewCount}`)
-                            } else {
-                                notifySuccess(`Nombre d'avis : ${reviewCount}`)
-                            }
-                         
-                        }, 500);
-                    } else {
-                        notifyError("Un erreur est survenu")
-                    }
-                })
-        
-            
-    }, [currentPage,filters])
+          getReviews()
+       
+    }, [currentPage,filters,getReviews])
 
-
+    
 
 
     
     function toggleReviewValidation(avisId, av) {
-        let newValidationNumber = +!av.is_validate;
+        let newValidationNumber = !parseInt(av.is_validate);
         const formData = new FormData();
         formData.append("reviewValidationValue", newValidationNumber);
-        formData.append("reviewValidationId", avisId);
+        formData.append("reviewValidationId", parseInt(avisId));
         axios.post("pages/admin/reviewHandler.php", formData, {
 
             headers: {
@@ -63,8 +67,9 @@ const ReviewsHandler = () => {
             }
         }
         ).then(response => {
+           
             if (response.status === 200 && response.data.status === 1) {
-                setAvis([...avis], av.is_validate = av.is_validate === 0 ? 1 : 0);
+                setAvis([...avis], av.is_validate = parseInt(av.is_validate) === 0 ? 1 : 0);
                 notifySuccess("Modifié avec succès");
             } else {
                 notifyError("Un erreur est survenu, rententez.")
@@ -77,18 +82,20 @@ const ReviewsHandler = () => {
     return (
       
         <div>
-            <Toaster />
+          
             <Loading isLoading={loading}/>
             <PageTitle pageTitle={"Gestion des avis "} />
-           
+            { currentPage > -1 || filters > - 1 ?  <Toaster /> : ""}
             <div className='container--pad-top ' >
                 <div className='mar-top-20 mar-bot-50'>
-                    <p className='text-center'>Dans cette page vous pouvez <span className='c-red text-bold'>Moderer</span> ou <span className='c-green text-bold'>Valider</span> les Avis</p>
+                    <p className='text-center'>
+                        Dans cette page vous pouvez
+                        <span className='c-red text-bold'>Moderer</span> ou <span className='c-green text-bold'>Valider</span> les Avis</p>
                 </div>
                 <div className='input_center_handler'>
                     <div className='container--center--column inputs_container_filters_inner '>
                         <label htmlFor="gestionReviewFilters">Filtrer par</label>
-                        <select type="text" id='gestionReviewFilters' onChange={(e)=> setFilters(e.target.value)}>
+                        <select type="text" id='gestionReviewFilters' value={filters} onChange={(e)=> setFilters(e.target.value)}>
                             <option value="0">A' valider</option>
                             <option value="1">Tout</option>
                         </select>
@@ -102,31 +109,31 @@ const ReviewsHandler = () => {
                         ?
                         avis.map((av, index) =>
                             <div key={`avis_ADM${av.id}`} className='review_card_container'>
-                                <div style={av.is_validate ? { backgroundColor: "red", color: "white" } : { backgroundColor: "lightgreen", color: "black" }}
-                                    onClick={() => toggleReviewValidation(av.id, av)}
-                                    className='reviewValidatorSwitch'>{av.is_validate ? "Moderer" : "Valider"}
+                                <div style={parseInt(av.is_validate) ? { backgroundColor: "red", color: "white" } : { backgroundColor: "lightgreen", color: "black" }}
+                                    onClick={() => toggleReviewValidation(parseInt(av.id), av)}
+                                    className='reviewValidatorSwitch'>{parseInt(av.is_validate) ? "Moderer" : "Valider"}
                                 </div>
                                 <AvisCard key={"avis_" + index + "_card"}
                                     name={av.name}
                                     message={av.message}
-                                    review={av.review}
-                                    style={av.is_validate === 1 ? { border: "2px solid lightgreen" } : { border: "2px solid red" }}
+                                    review={parseInt(av.review)}
+                                    style={parseInt(av.is_validate) === 1 ? { border: "2px solid lightgreen" } : { border: "2px solid red" }}
                                 />
                             </div>
                         )                        
                         : 
                         avis.map((av, index) => {
-                            return av.is_validate === 0 &&
+                            return parseInt(av.is_validate) === 0 &&
                                 <div key={`avis_ADM${av.id}`} className='review_card_container'>
-                                    <div style={av.is_validate ? { backgroundColor: "red", color: "white" } : { backgroundColor: "lightgreen", color: "black" }}
-                                        onClick={() => toggleReviewValidation(av.id, av)}
-                                        className='reviewValidatorSwitch'>{av.is_validate ? "Moderer" : "Valider"}
+                                    <div style={parseInt(av.is_validate) ? { backgroundColor: "red", color: "white" } : { backgroundColor: "lightgreen", color: "black" }}
+                                        onClick={() => toggleReviewValidation(parseInt(av.id), av)}
+                                        className='reviewValidatorSwitch'>{parseInt(av.is_validate) ? "Moderer" : "Valider"}
                                     </div>
                                     <AvisCard key={"avis_" + index + "_card"}
                                         name={av.name}
                                         message={av.message}
-                                        review={av.review}
-                                        style={av.is_validate === 1 ? { border: "2px solid lightgreen" } : { border: "2px solid red" }}
+                                        review={parseInt(av.review)}
+                                        style={parseInt(av.is_validate) === 1 ? { border: "2px solid lightgreen" } : { border: "2px solid red" }}
                                     />
                                 </div>
                         })

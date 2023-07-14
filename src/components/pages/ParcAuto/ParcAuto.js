@@ -54,7 +54,7 @@ const ParcAuto = () => {
   
   function loadFilteredCars() {
     setLoading(true)
-    const parcAutoPath = process.env.REACT_APP_HTTP + "pages/parcAuto.php";
+    const parcAutoPath = "pages/parcAuto.php";
         axios.get(`${parcAutoPath}?page=${currentPage * 9}&filters=${JSON.stringify(filters)}&getFilters=true`)
             .then(response => {
                 console.log(response.data);

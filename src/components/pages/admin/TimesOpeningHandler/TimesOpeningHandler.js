@@ -89,6 +89,7 @@ const TimesOpeningHandler = () => {
         .then(response => {
           console.log(response.data);
           if (response.data.status === 1) {
+
             setLocalTimeValues();
             setTimeTable([...timeTable]);
            
@@ -212,36 +213,36 @@ const TimesOpeningHandler = () => {
             
               <tr key={"time_table_" + index * t.id }>
 
-                <td style={!t.close ? {...styleSheet.td_red,border:"1px solid black",cursor:"default"}: {border:"1px solid black",cursor:"default"}}> {days[t.id]} </td>
+                <td style={!parseInt(t.close) ? {...styleSheet.td_red,border:"1px solid black",cursor:"default"}: {border:"1px solid black",cursor:"default"}}> {days[t.id]} </td>
 
-                <td style={!t.close ? styleSheet.td_red : {}}
-                  onClick={() => handleModal("input", days[t.id] + " / Ouverture matin", t.id, t.day_start_am, index, "day_start_am", t.close)}
+                <td style={!parseInt(t.close) ? styleSheet.td_red : {}}
+                  onClick={() => handleModal("input", days[t.id] + " / Ouverture matin", t.id, t.day_start_am, index, "day_start_am", parseInt(t.close))}
                 >
                   {t.day_start_am }                 
                 </td>
 
-                <td style={!t.close ? styleSheet.td_red : t.day_end_am === "HC" ? styleSheet.td_big : {}}
-                  onClick={() => handleModal("input", days[t.id] + " / Fermeture matin", t.id, t.day_end_am, index, "day_end_am", t.close)}
+                <td style={!parseInt(t.close) ? styleSheet.td_red : t.day_end_am === "HC" ? styleSheet.td_big : {}}
+                  onClick={() => handleModal("input", days[t.id] + " / Fermeture matin", t.id, t.day_end_am, index, "day_end_am", parseInt(t.close))}
                 >
                   { t.day_end_am } 
                 </td>
 
-                <td style={!t.close ? styleSheet.td_red : t.day_start_pm === "HC" ? styleSheet.td_big : {}}
-                  onClick={() => handleModal("input", days[t.id] + " / Ouverture Aprem", t.id, t.day_start_pm, index, "day_start_pm", t.close)}
+                <td style={!parseInt(t.close) ? styleSheet.td_red : t.day_start_pm === "HC" ? styleSheet.td_big : {}}
+                  onClick={() => handleModal("input", days[t.id] + " / Ouverture Aprem", t.id, t.day_start_pm, index, "day_start_pm",parseInt(t.close))}
                 >
                   { t.day_start_pm }
                 </td>
 
-                <td style={!t.close ? styleSheet.td_red : {}}
-                  onClick={() => handleModal("input",days[t.id] + " / Ouverture Aprem", t.id, t.day_end_pm, index, "day_end_pm", t.close)}
+                <td style={!parseInt(t.close) ? styleSheet.td_red : {}}
+                  onClick={() => handleModal("input",days[t.id] + " / Ouverture Aprem", t.id, t.day_end_pm, index, "day_end_pm", parseInt(t.close))}
                 >
                   { t.day_end_pm }
                 </td>
 
-                <td style={!t.close ? styleSheet.td_red : { color: "green" }}
-                  onClick={() => handleModal("checkbox",days[t.id] + " / Ouverture Aprem", t.id, t.day_end_pm, index, "day_end_pm", t.close)}
+                <td style={!parseInt(t.close) ? styleSheet.td_red : { color: "green" }}
+                  onClick={() => handleModal("checkbox",days[t.id] + " / Ouverture Aprem", t.id, t.day_end_pm, index, "day_end_pm", parseInt(t.close))}
                 >
-                  {!t.close ? "Fermé" : "Ouvert"}
+                  {!parseInt(t.close) ? "Fermé" : "Ouvert"}
                 </td>
 
               </tr>

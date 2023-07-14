@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ButtonCta from '../Buttons/ButtonCta'
-import { useLocation } from 'react-router-dom'
+
 
 
 const CarCard = ({ id, make, model, thumbnail, km, year, offer, price,currentPage,lastlocation}) => {
-  const location = useLocation()
+
   const handleSubject = (subject) => {
     sessionStorage.setItem("carSubject", subject)
   }

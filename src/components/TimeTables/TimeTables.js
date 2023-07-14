@@ -6,12 +6,12 @@ const TimeTables = ({ openingTimes }) => {
 
 
     useEffect(() => {
-        const homepagePath = process.env.REACT_APP_HTTP + "pages/homePage.php?openingTimes=true";
+        const homepagePath = "pages/homePage.php?openingTimes=true";
         axios.get(homepagePath)
             .then(response => {
+                console.log(response.data);
                 setOpeningTime(response.data.openingTimes)
             })
-        .catch()
     },[])
 
     
@@ -23,7 +23,7 @@ const TimeTables = ({ openingTimes }) => {
               <table>
                   <tbody>
                     <tr>
-                    {openingTime.map((time, index) => <td key={"time_table" + index}> <TimeComponent  {...time}  day={days[index]} />   </td>)}
+                    {openingTime && openingTime.map((time, index) => <td key={"time_table" + index}> <TimeComponent  {...time}  day={days[index]} />   </td>)}
                     </tr>
                     </tbody>
               </table>

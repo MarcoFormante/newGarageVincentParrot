@@ -464,6 +464,7 @@ h2.page_title_home {
 }
 .time_table_container tr {
   background-color: #b0b0b0;
+  min-width: 317px;
 }
 .time_table_container td {
   background-color: #FFFFFF;
@@ -979,8 +980,7 @@ pages: home
 }
 @media screen and (min-width: 769px) {
   .hero_home {
-    width: 110vw;
-    background-position: center -33vw;
+    background-position: center -30vw;
     background-size: cover;
   }
 }

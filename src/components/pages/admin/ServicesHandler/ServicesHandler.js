@@ -18,7 +18,7 @@ const ServicesHandler = () => {
     const notifyError = (text) => toast.error(text);
 
     useEffect(() => {
-        const servicesPath = process.env.REACT_APP_HTTP + "pages/admin/servicesHandler.php?servicesADM=true";
+        const servicesPath = "pages/admin/servicesHandler.php?servicesADM=true";
         axios.get(servicesPath)
             .then(response => {
                 if (response.data.status === 1) {

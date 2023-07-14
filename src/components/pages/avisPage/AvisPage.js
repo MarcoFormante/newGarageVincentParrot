@@ -16,7 +16,7 @@ const AvisPage = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const avisPagePath = process.env.REACT_APP_HTTP + "/pages/newReview.php";
+    const avisPagePath = "pages/newReview.php";
     const formData = new FormData();
     formData.append("newReview", true);
     formData.append("name", name);

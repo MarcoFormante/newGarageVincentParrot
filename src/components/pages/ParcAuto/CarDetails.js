@@ -135,8 +135,8 @@ const CarPhotos = ({thumbnail,year,km,price,offer,setCarPhotosInLoading}) => {
     
     useEffect(() => {
         //fetch data imgs from img folder by backend
-        const carDetailsPath = process.env.REACT_APP_HTTP + "pages/carDetails.php"
-        axios.get(carDetailsPath + "?carImages=true&id=" + location.state.id)
+        const carDetailsPath = "pages/carDetails.php"
+        axios.get("pages/carDetails.php?carImages=true&id=" + location.state.id)
             .then(response => {
                 setImgs([{id:"",path:thumbnail}])
                 setImgs(prev => [...prev, ...response.data])
@@ -207,9 +207,9 @@ const Details = ({id,year,km,setDetailsInLoading}) => {
     const detailsTitles = ["Année", "Kilométrage", "Boîte de vitesses", "Puissance DIN","Nùmero VO", "Puissance fiscale","Couleur","Portières","Sièges","Énergie"]
   
     useEffect(() => {
-        const carDetailsPath = process.env.REACT_APP_HTTP + "pages/carDetails.php";
+        const carDetailsPath = "pages/carDetails.php";
 
-        axios.get(carDetailsPath + "?details=true&id="+id)
+        axios.get("pages/carDetails.php?details=true&id="+id)
             .then(response => {
                 console.log(response.data);
                 
