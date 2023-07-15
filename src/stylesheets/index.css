@@ -588,7 +588,9 @@ h2.page_title_home {
 }
 
 .new_car_details .inputs_container input {
-  width: 100px;
+  width: 180px;
+  height: 25px;
+  padding: 3px;
 }
 
 .delete-icon {
@@ -657,6 +659,7 @@ h2.page_title_home {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  align-items: center;
 }
 .modal_title {
   font-weight: bold;
@@ -713,7 +716,6 @@ h2.page_title_home {
   padding: 1px;
 }
 .table_handler td {
-  position: relative;
   border: none;
   padding: 5px 5px;
   width: 100px;

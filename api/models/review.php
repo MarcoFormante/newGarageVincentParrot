@@ -7,9 +7,10 @@ Class Review{
    
 
     public function getReviews(){
-        $query = "SELECT * FROM reviews WHERE review > 3
-         ORDER BY id DESC 
-         LIMIT 0,20";
+        $query = "SELECT * FROM reviews 
+        WHERE review > 2 AND is_validate = 1
+        ORDER BY id DESC 
+        LIMIT 0,20";
 
         if(!is_null($this->pdo)) {
             $stmt = $this->pdo->prepare($query);

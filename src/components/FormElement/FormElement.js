@@ -1,6 +1,6 @@
 import React from 'react'
 
-const FormElement = ({label, input, textarea, select, required,children, value}) => {
+const FormElement = ({label, input, textarea, select, required,children, value,max}) => {
   return (
     <>
       {

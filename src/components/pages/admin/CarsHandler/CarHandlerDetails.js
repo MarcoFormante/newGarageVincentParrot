@@ -27,9 +27,6 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
             const detailsPath = "/pages/carDetails.php?details=true&id=" + carID
             axios.get(detailsPath)
                 .then(response => {
-                  
-                    if (response.status === 200 && response.statusText === "OK") {
-
                         const {
                             gearbox,
                             din_power,
@@ -38,7 +35,7 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
                             doors,
                             seats,
                             energy
-                        } = response?.data.details;
+                        } = response.data.details;
                         
                         const detailsArray = [
                             gearbox,
@@ -53,9 +50,6 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
                         setCarDetails([...detailsArray])
                         setCarEquipements([...response.data.equipements])
                         setIsDetailUpdate(false)
-                    } else {
-                        console.error("Erreur:Impossible de recuperer les données(details voiture)");
-                    }
                 
             })
         }
@@ -103,10 +97,8 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
         }
         if (isDetailUpdate) {
             setCarDetails([...newCarDetailsArray])
-        }
-           
-           
-    }, [dataToUpdate])
+        } 
+    }, [dataToUpdate,carDetails,isDetailUpdate,newCarDetailsArray,setNewCarDetailsArray])
     
 
     function deleteEquipment(carID, equipID) {
@@ -114,7 +106,7 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
         axios.delete(equipmentPath)
             .then(response => {
                 if (response.data.status === 1) {
-                    setCarEquipements([...carEquipments.filter(equip => equip.equip_id !== equipID)])
+                    setCarEquipements([...carEquipments.filter(equip => +equip.equip_id !== +equipID)])
                     notifySuccess(response.data.message)
                 } else if(response.data.status === 0) {
                     notifyError(response.data.message)
@@ -144,7 +136,7 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
     function addEquipment(carID, equipID) {
        
         if (newEquipment) {
-            if (carEquipments.some(e => e.equip_id === parseInt(equipID))) {
+            if (carEquipments.some(e => +e.equip_id === parseInt(equipID))) {
                 notifyError("Cet equipement existe deja")
             } else {
                 const path = "pages/admin/carHandler.php?car_id=" + carID + "&equip_id=" + equipID
@@ -177,7 +169,7 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
             {modalToggle &&
                 <Modal type={"input"}
                     title={"Nouveau equipement pour la voiture ID : " + carID}
-                    onClick={() => newEquipment !== null &&  addEquipment(carID,parseInt(newEquipment.split(',')[0]))}
+                    onClick={() => newEquipment !== null &&  addEquipment(+carID,parseInt(newEquipment.split(',')[0]))}
                     onExit={()=>setModalToggle(false)}
                 >
                     <select className="modal_input" name="newEquip" id="newEquip_carHandler"
@@ -186,7 +178,7 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
                         {
                             allEquipments &&
                             allEquipments.map((equip,i) =>
-                                <option key={"equip_" + i} value={[equip.id,equip.equipment]}>{equip.equipment}</option>)
+                                <option key={"equip_" + i} value={[+equip.id,equip.equipment]}>{equip.equipment}</option>)
                         }
                     </select>
                 </Modal>
@@ -226,7 +218,7 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
                             <ul className={"detail_first_inner_list"}>
                                 {carDetails && detailsTitles.map((detail, index) =>
                                     <li style={{ cursor: "pointer" }}
-                                        onClick={() => setDataToUpdate({ index, table: "car_details", id: carID, column: [detailsColumn[index], detailsTitles[index]], value: carDetails[index] , type: [0,6].some(i => i === index) ? "select" : index === 3 ? "text" :  "number" })}
+                                        onClick={() => setDataToUpdate({ index, table: "car_details", id: +carID, column: [detailsColumn[index], detailsTitles[index]], value: carDetails[index] , type: [0,6].some(i => i === index) ? "select" : index === 3 ? "text" :  "number" })}
                                         key={"detail_" + index}><span className='detail_title'>{detail}</span>
                                         <span> {carDetails[index]}</span>
                                     </li>
@@ -242,7 +234,7 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
                                           
                                        </span>
                                        <span className='delete-icon'
-                                           onClick={() => { deleteEquipment(carID,equipement.equip_id) }}
+                                           onClick={() => { deleteEquipment(+carID,+equipement.equip_id) }}
                                        >
                                            
                                        </span>

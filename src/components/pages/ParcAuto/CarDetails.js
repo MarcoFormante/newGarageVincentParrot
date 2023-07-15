@@ -207,14 +207,10 @@ const Details = ({id,year,km,setDetailsInLoading}) => {
     const detailsTitles = ["Année", "Kilométrage", "Boîte de vitesses", "Puissance DIN","Nùmero VO", "Puissance fiscale","Couleur","Portières","Sièges","Énergie"]
   
     useEffect(() => {
-        const carDetailsPath = "pages/carDetails.php";
 
-        axios.get("pages/carDetails.php?details=true&id="+id)
+        axios.get("pages/carDetails.php?details=true&id="+ id)
             .then(response => {
                 console.log(response.data);
-                
-                if (response.status === 200 && response.statusText === "OK") {
-
                     const {
                         gearbox,
                         din_power,
@@ -224,10 +220,11 @@ const Details = ({id,year,km,setDetailsInLoading}) => {
                         seats,
                         vo_number,
                         energy
-                    } = response?.data.details;
+                    } = response.data.details;
                     
                     const detailsArray = [
-                        year, km + " km",
+                        year,
+                        km + " km",
                         gearbox,
                         din_power + "cv",
                         vo_number,
@@ -239,17 +236,16 @@ const Details = ({id,year,km,setDetailsInLoading}) => {
                     ];
                     
                     setDetails([...detailsArray])
-                    setEquipements([...response?.data.equipements])
+                    setEquipements([...response.data.equipements])
                     setDetailsInLoading(false);
-                } else {
-                    console.error("Erreur:Impossible de recuperer les données(details voiture)");
-                }
+                    
                
             })
         
-    }, [])
+    }, [id,km,setDetailsInLoading,year])
     
- 
+    console.log(details);
+    console.log(equipements);
     const handleActiveDetailBlock = (clicked_element) => {
          switch (clicked_element) {
             case "first":
@@ -273,10 +269,7 @@ const Details = ({id,year,km,setDetailsInLoading}) => {
                 break;
          }
     }
-
-
     return (
-       ( details.length > 0 ) &&
         <div>
             <div className={'container--center--row container--center--row--flex-end'}>
                 {!details.length < 1 && <div
@@ -301,7 +294,7 @@ const Details = ({id,year,km,setDetailsInLoading}) => {
                     {
                     activeDetail === true
                         ?
-                        details && detailsTitles.map((detail, index) => !details.length < 1 && <li key={"detail_" + index}><span className='detail_title'>{detail}</span> <span> {details[index]}</span></li>)
+                        details && detailsTitles.map((detail, index) => <li key={"detail_" + index}><span className='detail_title'>{detail}</span> <span> {details[index]}</span></li>)
                         :
                         equipements && equipements.map((equip, index) => <li key={"equipement_" + index}><span className='detail_title--black'>{equip.equipment}</span></li>)
                         

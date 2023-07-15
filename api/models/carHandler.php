@@ -46,6 +46,15 @@ Class carHandler{
 
     public function createNewCar($thumbnail,$gallery,$details,$equipments){
 
+        $gearboxIsValid = preg_match("/manuelle|automatique/",strtolower($details[0]));
+        $energyIsValid = preg_match("/essence|gazole|électrique|gpl/",strtolower($details[10]));
+        $numberInputsAreValids = $details[13] >= 0 && $details[3] > 0 && $details[4] > 0 && $details[2] > 0 && $details[11] > 0 && $details[5] && $details[8] > 0 && $details[7] > 0 && $details[12] > 0;
+
+        if (!$gearboxIsValid || !$energyIsValid || !$numberInputsAreValids) {
+            echo json_encode(["status"=>0,"message"=>"Erreur: Les valeurs ne peuvent pas etre inferieur à zero"]);
+           return;
+        }
+
         $path = $_SERVER['DOCUMENT_ROOT'] ."/app/public/images/uploads/" ;
         $thumbnailName =  uniqid() . uniqid().".webp";
         $galleryPathArray = [];
@@ -83,17 +92,21 @@ Class carHandler{
                 }
             }
 
+          
+
             //DETAILS
             $carDetailsParams = [":vo_number"=>$details[12],":gearbox"=> $details[9],":din_power"=>$details[7],":fiscal_power"=>$details[8],":color"=>$details[6],":doors"=>$details[11],":seats"=>$details[5],":energy"=>$details[10]];
             $queryCarDetails = "INSERT INTO car_details(car_id,vo_number,gearbox,din_power,fiscal_power,color,doors,seats,energy) VALUES(:car_id,:vo_number,:gearbox,:din_power,:fiscal_power,:color,:doors,:seats,:energy)";
             $stmtCarDetails = $this->pdo->prepare($queryCarDetails);
-        
+            
+            
                  
                   foreach ($carDetailsParams as $key => $value) {
                     if (preg_match("/:vo_number|:din_power|:fiscal_power|:doors|:seats/i",$key)) {
                         $stmtCarDetails->bindValue($key,$value,PDO::PARAM_INT);
                     }else{
                         $stmtCarDetails->bindValue($key,$value,PDO::PARAM_STR);
+
                     }
                 }
                 

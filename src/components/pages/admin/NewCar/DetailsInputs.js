@@ -72,7 +72,7 @@ const DetailsInputs = ({ formValues ,setFormValues,formIsValid }) => {
           <option value="GPL">GPL</option>
         </FormElement>
         <FormElement label={{ for: "doors", text: "Portières" }} input={{ type: "number",name:"doors",id:"doors",onChange:(e)=>setDetailValues({...detailValues,[e.target.name]:e.target.value}) }} value={detailValues.doors}  required={true} />
-        <FormElement label={{ for: "VO", text: "Numero VO" }} input={{ type: "number",name:"VO",id:"VO",onChange:(e)=>setDetailValues({...detailValues,[e.target.name]:e.target.value}) }} value={detailValues.VO} required={true} />
+      <FormElement label={{ for: "VO", text: "Numero VO" }} input={{ type: "number", name: "VO", id: "VO" ,onChange:(e) =>  setDetailValues({ ...detailValues, [e.target.name]: e.target.value})}} value={detailValues.VO.length > 9 ? detailValues.VO.slice(0,9): detailValues.VO} required={true} />
         <FormElement label={{ for: "offer", text: "Offre?" }} input={{ type: "number",name:"offer",id:"offer",onChange:(e)=>setDetailValues({...detailValues,[e.target.name]:e.target.value}) }} value={detailValues.offer} required={true} />
     </>
   )

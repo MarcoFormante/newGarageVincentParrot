@@ -19,7 +19,7 @@ const ReviewsHandler = () => {
 
     const getReviews = useCallback(() => {
         
-        const homepagePath = `pages/admin/reviewHandler.php?currentPage=${currentPage}&filter=${filters}`;
+        const homepagePath = `pages/admin/reviewHandler.php?currentPage=${currentPage * 9}&filter=${filters}`;
         axios.get(homepagePath)
             .then(response => {
                 console.log(response.data);
@@ -58,7 +58,7 @@ const ReviewsHandler = () => {
     function toggleReviewValidation(avisId, av) {
         let newValidationNumber = !parseInt(av.is_validate);
         const formData = new FormData();
-        formData.append("reviewValidationValue", newValidationNumber);
+        formData.append("reviewValidationValue", +newValidationNumber);
         formData.append("reviewValidationId", parseInt(avisId));
         axios.post("pages/admin/reviewHandler.php", formData, {
 
@@ -85,7 +85,7 @@ const ReviewsHandler = () => {
           
             <Loading isLoading={loading}/>
             <PageTitle pageTitle={"Gestion des avis "} />
-            { currentPage > -1 || filters > - 1 ?  <Toaster /> : ""}
+            { currentPage > -1 || filters > -1 ?  <Toaster /> : ""}
             <div className='container--pad-top ' >
                 <div className='mar-top-20 mar-bot-50'>
                     <p className='text-center'>

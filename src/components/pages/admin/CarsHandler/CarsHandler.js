@@ -8,7 +8,6 @@ import Resizer from "react-image-file-resizer"
 import CarHandlerDetails from './CarHandlerDetails';
 import CheckToken from '../../../../helpers/CheckToken';
 import { useNavigate } from 'react-router-dom';
-import { remove } from '../../../Reducers/RoleReducer';
 import notAuth from '../../../../helpers/NotAuth';
 
 const CarsHandler = () => {
@@ -75,7 +74,7 @@ const CarsHandler = () => {
 
     useEffect(() => {
         getCars() 
-    }, [currentPage,getCars])
+    }, [currentPage])
 
 
 
@@ -95,12 +94,12 @@ const CarsHandler = () => {
                 notifySuccess(response.data.message)
                 setCarTarget(null)
                 setModalToggle(false)
-                setCars(cars.filter(car => car.id !== id))
+                setCars(cars.filter(car => +car.id !== +id))
 
             } else if(response.data.includes("unlink")){
                 setCarTarget(null)
                 setModalToggle(false)
-                setCars(cars.filter(car => car.id !== id))
+                setCars(cars.filter(car => +car.id !== id))
                 notifyError("Erreur: La voiture a été supprimé mais impossible de trouver et supprimer les images dans le dossier uploads")
             } else {
                 notifyError(response.data.message)
@@ -145,7 +144,7 @@ const CarsHandler = () => {
             const formData = new FormData()
             formData.append("table", dataToUpdate.table)
             formData.append("column", dataToUpdate.column[0])
-            formData.append("id", dataToUpdate.id)
+            formData.append("id", +dataToUpdate.id)
             if (dataImageToUpdate) {
                 if (typeof (dataToUpdate.value) === "object") {
                     console.log(await resizeFile(dataToUpdate.value));
@@ -198,7 +197,7 @@ const CarsHandler = () => {
             setModalToggle(false)
             getCars()
         }
-    }, [filters])
+    }, [filters,getCars])
     
 
   
@@ -366,27 +365,27 @@ const CarsHandler = () => {
                         {cars && cars.map((car, index) =>
                         <tr key={"carsHandler_" + car.id} style={{border:"none"}} >
                                 <td className='no-event'>{car.id}</td>
-                                <td onClick={() => setDataToUpdate({index,table:"cars",id:car.id,column:["make","Brand"],value:car.make,type:"text"})}>{car.make}</td>
+                                <td onClick={() => setDataToUpdate({index,table:"cars",id:+car.id,column:["make","Brand"],value:car.make,type:"text"})}>{car.make}</td>
                                 <td onClick={() => setDataToUpdate({index,table:"cars",id:car.id,column:["model","Model"],value:car.model,type:"text"})}>{car.model}</td>
                                 <td onClick={() => {
-                                    setDataToUpdate({ index, table: "cars", id: car.id, column: ["thumbnail", "Photo principale"], value: car.thumbnail, type: "file" })
+                                    setDataToUpdate({ index, table: "cars", id: +car.id, column: ["thumbnail", "Photo principale"], value: car.thumbnail, type: "file" })
                                     setDataImageToUpdate(car.thumbnail)
                                 }
                                 }
                                 >
                                 <img src={"/images/uploads/" + car.thumbnail} alt="" width={30} height={30} style={{ objectFit: "cover" }} /></td>
-                                <td onClick={() => setDataToUpdate({index,table:"cars",id:car.id,column:["year","Année"],value:car.year,type:"number"})}>{car.year}</td>
-                                <td onClick={() => setDataToUpdate({index,table:"cars",id:car.id,column:["km","Kilometre"],value:car.km,type:"number"})}>{car.km}</td>
-                                <td onClick={() => setDataToUpdate({index,table:"cars",id:car.id,column:["price","Prix"],value:car.price,type:"number"})}>{car.price}</td>
-                                <td onClick={() => setDataToUpdate({index,table:"cars",id:car.id,column:["offer","Offre"],value:car.offer,type:"number"})}>{car.offer}</td>
-                                <td onClick={() => setDataToUpdate({index,table:"car_details",id:car.id,column:["vo_number","Numero VO"],value:car.vo_number,type:"number"})}>{car.vo_number}</td>
+                                <td onClick={() => setDataToUpdate({index,table:"cars",id:+car.id,column:["year","Année"],value:car.year,type:"number"})}>{car.year}</td>
+                                <td onClick={() => setDataToUpdate({index,table:"cars",id:+car.id,column:["km","Kilometre"],value:car.km,type:"number"})}>{car.km}</td>
+                                <td onClick={() => setDataToUpdate({index,table:"cars",id:+car.id,column:["price","Prix"],value:car.price,type:"number"})}>{car.price}</td>
+                                <td onClick={() => setDataToUpdate({index,table:"cars",id:+car.id,column:["offer","Offre"],value:car.offer,type:"number"})}>{car.offer}</td>
+                                <td onClick={() => setDataToUpdate({index,table:"car_details",id:+car.id,column:["vo_number","Numero VO"],value:car.vo_number,type:"number"})}>{car.vo_number}</td>
                                 <td  className='no-event'>{car.created_at}</td>
                                
                                 <td className='view_icon' onClick={() => {
-                                    setCarID(car.id)
+                                    setCarID(+car.id)
                                 }}></td>
                                 <td className='no-event'> <span className='delete-icon' style={{ margin: "auto" }} onClick={() => {
-                                    setCarTarget({id:car.id,thumbnail:car.thumbnail, vo:car.vo_number, make:car.make, model:car.model})
+                                    setCarTarget({id:+car.id,thumbnail:car.thumbnail, vo:car.vo_number, make:car.make, model:car.model})
                                 }}></span>
                                 </td>
                         </tr>

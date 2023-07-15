@@ -50,12 +50,10 @@ const CarHandlerGallery = ({carID}) => {
         if (gallery.length > 1) {
             const path = `pages/admin/carHandler.php?car_id=${carid}&carImage=${imgPath}`
              axios.delete(path)
-            .then(response => {
-                if (response.data.status === 1) {
+                 .then(response => {
+                     console.log(response.data);
                     notifySuccess("Image supprimè avec succès");
-                    setGallery(gallery.filter(image => image.id !== imgID))
-                  
-                }
+                    setGallery(gallery.filter(image => parseInt(image.id) !== +imgID))
             })
         } else {
             notifyError("La gallerie de photo de la voiture doit avoir aumoins une photo")
@@ -89,7 +87,7 @@ const CarHandlerGallery = ({carID}) => {
                     formData.append("gallerie[]",img)
                 })
                 console.log(resizedGallery);
-                formData.append("car_id",carID)
+                formData.append("car_id",+carID)
                 axios.post(path, formData, {
                 headers: {
                     "Content-Type":"application/x-www-form-urlencoded"
@@ -98,7 +96,7 @@ const CarHandlerGallery = ({carID}) => {
                 if (response.data.status === 1) {
                     console.log(response.data);
                     response.data.imagePaths.forEach(path => {
-                        gallery.push({ id: carID, path: path })
+                        gallery.push({ id: +carID, path: path })
                        
                     });
                     setGallery([...gallery])
@@ -146,6 +144,8 @@ const CarHandlerGallery = ({carID}) => {
     } 
 
 
+
+
   return (
       <div>
           <Loading isLoading={loading}/>
@@ -155,7 +155,7 @@ const CarHandlerGallery = ({carID}) => {
                 {gallery && 
                     gallery.map((img, index) => <div key={"gallery_img_" + index } className='new_car_gallery_img_container'>
                     <img src={"/images/uploads/"+img.path} alt="" />
-                    <div className='delete-icon ' style={{display:"block",margin:"auto"}} onClick={() => deleteImage(img.id,carID,img.path)}></div>
+                    <div className='delete-icon ' style={{display:"block",margin:"auto"}} onClick={() => deleteImage(+img.id,+carID,img.path)}></div>
                     </div>)
                   }
                 </div>
@@ -175,10 +175,12 @@ const CarHandlerGallery = ({carID}) => {
                 }
                  
           </div>
-            <div className='container--center--column'>
+            <div className='container--center--column' style={{paddingBottom:50}}>
                 <div className='pad-bot-20'>
                     <label htmlFor='galleryfileInput'> <span>Ajouter des images </span><span className='add_icon'></span></label>
-                    <input type="file" required hidden name="carGalleryImage" id="galleryfileInput" multiple accept='image/jpeg, image/png' onChange={(e)=> setNewGallery([...newGallery,...e.target.files])}/>
+                  <input type="file" required hidden name="carGalleryImage" id="galleryfileInput" multiple accept='image/jpeg, image/png' onChange={(e) => {
+                      setNewGallery([...newGallery, ...e.target.files])
+                  }} />
                 </div>
                 {newGallery.length > 0 && <div className='mar-auto pad-top-20 pad-bot-20'>
                     <button hidden={loading} className='cta cta--red ' onClick={()=> addNewImages()}>Ajouter</button>

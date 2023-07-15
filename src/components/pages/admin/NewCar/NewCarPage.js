@@ -42,6 +42,7 @@ const NewCarPage = () => {
         galleryIsValid = true;
     } 
 
+
     let detailsCheck = [];
     for (const key in formValues.detailValues) {
       if (formValues.detailValues[key] === "") {
@@ -54,6 +55,7 @@ const NewCarPage = () => {
     if (detailsCheck.every(d => d === "valid")) {
       detailsAreValids = true;
     }
+    
 
     formIsValid = detailsAreValids && thumbnailIsValid && galleryIsValid;
 
@@ -72,18 +74,15 @@ const NewCarPage = () => {
             }
       }).then(response => {
         console.log(response.data);
-          if (response.statusText === "OK" && response.data.status === 1) {
-            notifySuccess(response.data.message);
+          if (response.data.status === 1) {
+            notifySuccess("Nouvelle voiture ajouté avec succès");
             setNewCarCreated(true)
-          
-
           } else {
             setNewCarCreated(false)
             if (response.data.message.includes("vo_number")) {
               notifyError("Erreur: le 'numero VO' existe deja");
-
             } else {
-              notifyError(response.data.message);
+              notifyError(response.data.message)
             }
           
           }
@@ -107,8 +106,6 @@ const NewCarPage = () => {
         if (!galleryIsValid) {
           notifyError("Erreur: Ajoutez au moins une image pour le champ 'Gallerie d'images");
         }
-    
-   
     }
   }
 
@@ -151,7 +148,7 @@ const NewCarPage = () => {
     }
   },[newCarCreated])
 
-
+console.log(newCarCreated);
 
   function prepareDetailsToFormData(formData) {
     for (const key in formValues.detailValues) {
