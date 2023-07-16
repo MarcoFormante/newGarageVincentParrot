@@ -22,7 +22,7 @@ const CarCard = ({ id, make, model, thumbnail, km, year, offer, price,currentPag
                 {/*card_details_left*/}
         
                 <div className={'car_card_details--left'}>
-                    <span className={'car_card_details--left_km'}>{km}km</span>
+                    <span className={'car_card_details--left_km'}>{km} km</span>
                     <span className={'car_card_details--left_year'}>Année: {year}</span>
                 </div>
         

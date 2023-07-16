@@ -33,7 +33,6 @@ components: button
 .cta--red a, .btn_avis a {
   color: #FFFFFF;
 }
-
 .cta--white {
   background-color: #FFFFFF;
   color: #353535;
@@ -975,7 +974,7 @@ header {
 pages: home
 */
 .hero_home {
-  height: 85vh;
+  height: 70vh;
   background-image: url(/public/images/hero.jpg);
   background-position: center;
   background-repeat: no-repeat;
@@ -986,6 +985,7 @@ pages: home
 }
 @media screen and (min-width: 769px) {
   .hero_home {
+    height: 82vh;
     background-position: center -30vw;
     background-size: cover;
   }
@@ -996,7 +996,7 @@ pages: home
 .hero_home::after {
   content: "";
   width: 100vw;
-  height: 85vh;
+  height: 70vh;
   background-color: #353535;
   opacity: 0.6;
   position: absolute;
@@ -1004,10 +1004,15 @@ pages: home
   left: 0;
   z-index: 0;
 }
+@media screen and (min-width: 769px) {
+  .hero_home::after {
+    height: 82vh;
+  }
+}
 .hero_home_caption {
   width: 70%;
   position: absolute;
-  top: 70%;
+  top: 85%;
   left: 50%;
   transform: translateX(-50%);
   bottom: 14%;

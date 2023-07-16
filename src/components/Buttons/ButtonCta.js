@@ -9,7 +9,7 @@ const ButtonCta = ({ state,type,inner,to,...rest}) => {
         )
     } else if(type ==="link"){
       return (
-        <button {...rest}><Link to={to} state={{...state}} >{inner}</Link></button>
+        <button {...rest}><Link className='container--center--row' style={{width:"100%"}} to={to} state={{...state}} >{inner}</Link></button>
       )
     } else if (type === "carCard") {
       return (

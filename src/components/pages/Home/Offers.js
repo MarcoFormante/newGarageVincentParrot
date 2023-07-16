@@ -99,11 +99,10 @@ const Offers = ({cars,count}) => {
 
     return (
         <div style={offerCards && offerCards?.length > 0 ? {display:"block"} : {display:"none"}}>
-             <h3 className={'section_title section_title_offres'}>{!offerCards[0]?.offer > 0 ? "Les dernieres arrivées" : "Les offres du moment"  }</h3>
+             <h3 className={'section_title section_title_offres'}>{!parseInt(offerCards[0]?.offer) > 0 ? "Les dernieres arrivées" : "Les offres du moment"}</h3>
             <Arrows cardsTotalWidth={offerCards.length * 250} carouselX={carouselX} carouselWidth={carouselWidth} onClick={(direction)=>setArrowTarget(direction)}  />
            
             <div className={"section_page section_page--grey"}>
-                
             <div className={'carCards_container'} ref={carousel} style={{overflowY:"hidden"}}>
             <div className={'page_section page_section_offers card_carousel_flex'} style={offerCards.length * 320 < window.innerWidth ? { justifyContent: "center",} : {}}>
                 { offerCards && offerCards?.map((car, index) => car.id  && <CarCard lastlocation={"home"} key={index}  {...offerCards[index]} />) }
@@ -111,7 +110,7 @@ const Offers = ({cars,count}) => {
               
             </div>
             <div className={"container_full--flex"}>
-                <ButtonCta className={"cta cta--red cta_offers cta--wh-70vw"} inner={"Tous nos vèhicules"} type={"link"} to={"/parc-auto"} />
+                <ButtonCta className={"cta cta--red cta_offers cta--wh-70vw container--center--row"} inner={"Tous nos vèhicules"} type={"link"} to={"/parc-auto"} />
             </div>
         </div>
         </div>

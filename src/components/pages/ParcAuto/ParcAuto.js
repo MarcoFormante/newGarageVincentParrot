@@ -16,7 +16,7 @@ const ParcAuto = () => {
     const [filtersToggle, setFiltersToggle] = useState(false)
     const [carCount, setCarCount] = useState(0)
     const [currentPage, setCurrentPage] = useState(0)
-    const [filters, setFilters] = useState({ minKm: 0, maxKm: 500000, minYear: 0, maxYear: 500000, minPrice: 0, maxPrice: 1000000, offer: false })
+    const [filters, setFilters] = useState({ minKm: 0, maxKm: 5000000, minYear: 0, maxYear: 5000000, minPrice: 0, maxPrice: 1000000, offer: false })
     const [loading, setLoading] = useState(false)
     const notifySuccess = (text) => toast.success(text)
     const notifyError = (text) => toast.error(text)

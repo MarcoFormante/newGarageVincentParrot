@@ -35,7 +35,7 @@ const CarDetails = () => {
   return location.state?.make ?  (
       <div>
         {loadingComponent}
-          <PageTitle style={{maxWidth:"73vw",margin:"auto",maxHeight:"52px",overflow:"hidden"}} pageTitle={location.state.make + " " + location.state.model} />
+          <PageTitle style={{maxWidth:"73vw",margin:"auto",maxHeight:"63px",overflow:"hidden"}} pageTitle={location.state.make + " " + location.state.model} />
           {location.state.lastlocation === "parcAuto" 
               ?
               <Link className={"exitBtn"} to={"/parc-auto/"} state={{ currentPage : location.state.currentPage }} />

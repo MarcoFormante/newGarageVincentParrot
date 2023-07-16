@@ -2,7 +2,7 @@ import React, {useState, useEffect } from 'react'
 import MultiRangeSlider from './MultiRangeSlider'
 import axios from '../../../api/axios'
 
-const CarFilters = ({handleChangeFilters,closeButton,setFiltersToggle,loadFilteredCars}) => {
+const CarFilters = ({handleChangeFilters,closeButton,loadFilteredCars}) => {
   const [offer, setOffer] = useState(false)
   const [filters, setFilters] = useState({})
   const [baseFilters,setBaseFilters] = useState({})
@@ -64,7 +64,7 @@ const CarFilters = ({handleChangeFilters,closeButton,setFiltersToggle,loadFilter
           </div>
           <div className='reset container--center--row'>Reset <span className='reset_icon_filters reset_icon' onClick={() => {
               setOffer(false)
-              handleChangeFilters({ minKm: 0, maxKm: 50000, minYear: 0, maxYear: 50000, minPrice: 0, maxPrice: 500000, offer: false })
+              handleChangeFilters({ minKm: 0, maxKm: 5000000, minYear: 0, maxYear: 5000000, minPrice: 0, maxPrice: 50000000, offer: false })
             setFilters({ ...baseFilters })
             loadFilteredCars()
 
