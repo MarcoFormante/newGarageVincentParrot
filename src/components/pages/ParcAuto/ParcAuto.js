@@ -55,7 +55,9 @@ const ParcAuto = () => {
   function loadFilteredCars() {
     setLoading(true)
     const parcAutoPath = "pages/parcAuto.php";
-        axios.get(`${parcAutoPath}?page=${currentPage * 9}&filters=${JSON.stringify(filters)}&getFilters=true`)
+    console.log(filters);
+    axios.get(`${parcAutoPath}?page=${currentPage * 9}&filters=${JSON.stringify(filters)}&getFilters=true`)
+          
             .then(response => {
                 console.log(response.data);
                 console.log(response.statusText);
@@ -67,9 +69,10 @@ const ParcAuto = () => {
                       setLoading(false);
                       window.scrollTo({
                         top: 0
-                        
                       })
-                     
+                     if (!response.data.count) {
+                      notifyError("Aucune voiture trouvée")
+                     }
                   }, 500);
                 }
             })

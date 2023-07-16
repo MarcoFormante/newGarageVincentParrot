@@ -33,6 +33,7 @@ components: button
 .cta--red a, .btn_avis a {
   color: #FFFFFF;
 }
+
 .cta--white {
   background-color: #FFFFFF;
   color: #353535;
@@ -216,6 +217,7 @@ a.active {
     top: -100%;
     height: 0;
     padding: 10px;
+    font-size: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -257,7 +259,7 @@ a.active {
   z-index: 1;
 }
 .page_title_home span {
-  color: red;
+  color: #D64E54;
 }
 
 h1 {
@@ -464,7 +466,9 @@ h2.page_title_home {
 }
 .time_table_container tr {
   background-color: #b0b0b0;
-  min-width: 317px;
+  width: 80vw;
+  max-width: 330px;
+  min-width: 280px;
 }
 .time_table_container td {
   background-color: #FFFFFF;
@@ -755,7 +759,7 @@ td.view_icon {
 
 .exitBtn {
   position: absolute;
-  top: 80px;
+  top: 88px;
   left: 20px;
   width: 40px;
   height: 40px;
@@ -1310,6 +1314,8 @@ input[type=checkbox] {
   width: 40px;
   height: 40px;
   background-image: url(/src/icons//filters_icon_red.svg);
+  position: relative;
+  z-index: 15;
 }
 
 #offre {
@@ -1386,8 +1392,8 @@ input[type=checkbox] {
   min-height: 400px;
   -o-object-position: center;
      object-position: center;
-  -o-object-fit: fill;
-     object-fit: fill;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 @media screen and (max-width: 768px) {
   .img_show_large img {
@@ -1403,20 +1409,15 @@ input[type=checkbox] {
   gap: 8px;
 }
 .car_details_base div {
-  margin-top: 50px;
+  margin-top: 70px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 50px;
+  gap: 37px;
   font-size: clamp(16px, 3vw, 18px);
   text-align: center;
   padding: 5px;
-}
-@media screen and (max-width: 768px) {
-  .car_details_base div span:last-child {
-    display: block;
-  }
 }
 .car_details_base div:first-child {
   font-weight: 600;
@@ -1433,7 +1434,7 @@ input[type=checkbox] {
 @media screen and (max-width: 768px) {
   .details_carousel_container {
     width: 100vw;
-    padding: 0px;
+    padding: 0 5px 0 5px;
   }
 }
 
@@ -1448,7 +1449,6 @@ input[type=checkbox] {
   margin: 10px auto;
   width: -moz-fit-content;
   width: fit-content;
-  gap: 10px;
 }
 .details_carousel_imgs img {
   -o-object-fit: cover;
@@ -1456,7 +1456,7 @@ input[type=checkbox] {
 }
 @media screen and (max-width: 768px) {
   .details_carousel_imgs img {
-    width: 280px;
+    width: 93vw;
     height: 300px;
   }
 }

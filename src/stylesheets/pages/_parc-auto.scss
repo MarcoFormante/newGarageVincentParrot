@@ -118,7 +118,8 @@ input[type="checkbox"]{
     width: 40px;
     height: 40px;
     background-image: url(/src/icons//filters_icon_red.svg);
-    
+    position: relative;
+    z-index: 15;
 }
 
 #offre{

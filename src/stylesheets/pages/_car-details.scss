@@ -56,7 +56,7 @@ transition: left 0.3s  ease-in-out;
         min-width: 600px;
         min-height: 400px;
         object-position: center;
-        object-fit: fill;
+        object-fit: cover;
 
         @media screen and (max-width:(map-get($breakpoints,"medium"))) {
             display: none;
@@ -70,21 +70,12 @@ transition: left 0.3s  ease-in-out;
     gap: 8px;
 
     div{
-        margin-top: 50px;
+        margin-top: 70px;
         @include flex-center(row);
-        gap: 50px;
+        gap: 37px;
         font-size: clamp(16px,3vw,18px);
         text-align: center;
         padding: 5px;
-
-
-        @media screen and (max-width:(map-get($breakpoints,"medium"))) {
-            span:last-child{
-
-                display: block;
-            }
-        }
-        
 
        
         &:first-child{
@@ -109,7 +100,7 @@ transition: left 0.3s  ease-in-out;
 
     @media screen and (max-width:map-get($breakpoints,"medium")) {
         width: 100vw;
-        padding: 0px;
+        padding: 0 5px 0 5px;
     }
 }
 
@@ -121,14 +112,13 @@ transition: left 0.3s  ease-in-out;
     background-color: $secondary_color;
     margin:10px auto;
     width: fit-content;
-    gap: 10px;
-
+    
 
     img{
         object-fit: cover;
 
         @media screen and (max-width:map-get($breakpoints,"medium")) {
-            width: 280px;
+            width: 93vw;
             height: 300px;
         }
     }

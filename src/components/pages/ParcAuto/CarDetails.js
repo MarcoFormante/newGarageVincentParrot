@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef} from 'react'
 import Arrows from '../../Arrows/Arrows'
-import { useLocation, useNavigate,Link, Navigate} from 'react-router-dom'
+import { useLocation,Link, Navigate} from 'react-router-dom'
 import PageTitle from '../../PageTitle/PageTitle'
 import axios from '../../../api/axios'
 import Loading from '../../Loading/Loading'
-import ButtonCta from '../../Buttons/ButtonCta'
+
 
 
 
@@ -26,12 +26,16 @@ const CarDetails = () => {
     }, [detailsInLoading, carPhotosInLoading])
     
     
-    
+    // max-width: 73vw;
+    // margin: auto;
+    // max-height: 52px;
+    // text-overflow: ellipsis;
+    // overflow: hidden;
     
   return location.state?.make ?  (
       <div>
         {loadingComponent}
-          <PageTitle pageTitle={location.state.make + " " + location.state.model} />
+          <PageTitle style={{maxWidth:"73vw",margin:"auto",maxHeight:"52px",overflow:"hidden"}} pageTitle={location.state.make + " " + location.state.model} />
           {location.state.lastlocation === "parcAuto" 
               ?
               <Link className={"exitBtn"} to={"/parc-auto/"} state={{ currentPage : location.state.currentPage }} />
@@ -135,7 +139,6 @@ const CarPhotos = ({thumbnail,year,km,price,offer,setCarPhotosInLoading}) => {
     
     useEffect(() => {
         //fetch data imgs from img folder by backend
-        const carDetailsPath = "pages/carDetails.php"
         axios.get("pages/carDetails.php?carImages=true&id=" + location.state.id)
             .then(response => {
                 setImgs([{id:"",path:thumbnail}])
@@ -161,11 +164,11 @@ const CarPhotos = ({thumbnail,year,km,price,offer,setCarPhotosInLoading}) => {
                 <div className={'car_details_base'}>
                 
                     <div>
-                        <span>Année: {year} </span>
-                        <span>Km: {km} </span>
+                        <span> Année: <span style={{display:"block"}}>{year}</span> </span>
+                        <span>Km: <span style={{display:"block"}}>{km}</span> </span>
                         <p>Prix: 
-                            <span style={offer > 0 ? { textDecoration: "line-through"} : {}}> {price} $</span> 
-                                {offer && offer > 0 ? <span style={{ color: "red" }}> {price - offer} $</span> : ""}
+                            <span style={offer > 0 ? { textDecoration: "line-through"} : {}}> <span style={offer <= 0 ? {display:"block"} : {}}> {price} $ </span></span> 
+                            {offer && offer > 0 ? <span style={{ minWidth:60, color: "white", display: "block", padding: "1px", border: "1px solid", borderRadius:12,background:"#D64E54"}}> {price - offer} $</span> : ""}
                         </p>
                     </div>
     

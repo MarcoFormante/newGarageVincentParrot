@@ -18,7 +18,6 @@ const CarFilters = ({handleChangeFilters,closeButton,setFiltersToggle,loadFilter
   }, [offer])
   
 
-
   useEffect(() => {
     if (filters) {
       const parcAutoPath = "pages/parcAuto.php";
@@ -37,26 +36,25 @@ const CarFilters = ({handleChangeFilters,closeButton,setFiltersToggle,loadFilter
     <div className='filters range_slider_block'>
      
       {filters.minKm && <MultiRangeSlider
-        min={parseInt(filters.minKm) - 1}
-        max={parseInt(filters.maxKm) + 1}
-          onChange={({ min, max }) => handleChangeFilters({minKm:min,maxKm:max})}
+        min={parseInt(filters.minKm ) }
+        max={parseInt(filters.maxKm ) }
+          onChange={({ min, max }) => handleChangeFilters({ minKm: parseInt(min - 1), maxKm: parseInt(max + 1)})}
             title={"Km"}
         />}
 
       {filters.minPrice && <MultiRangeSlider
-        min={parseInt(filters?.minPrice) - 1}
-        max={parseInt(filters?.maxPrice) + 1}
-        onChange={({ min, max }) => handleChangeFilters({minPrice:min,maxPrice:max})}
+        min={parseInt(filters?.minPrice) }
+        max={parseInt(filters?.maxPrice) }
+        onChange={({ min, max }) => handleChangeFilters({minPrice:parseInt(min - 1),maxPrice:parseInt(max + 1)})}
             title={"Prix"}
             
         />}
 
       {filters.minYear && <MultiRangeSlider
-        min={parseInt(filters.minYear) - 1}
-        max={parseInt(filters.maxYear) + 1}
-        onChange={({ min, max }) => handleChangeFilters({minYear:min,maxYear:max})}
+        min={parseInt(filters.minYear) }
+        max={parseInt(filters.maxYear) }
+        onChange={({ min, max }) => handleChangeFilters({minYear:parseInt(min - 1),maxYear:parseInt(max + 1)})}
             title={"Annèe"}
-            
         />}
 
         <div style={{marginTop:50}}>

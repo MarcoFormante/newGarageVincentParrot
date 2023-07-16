@@ -15,8 +15,8 @@ const CarCard = ({ id, make, model, thumbnail, km, year, offer, price,currentPag
   return (
       <figure className='car_card'>
       <img src={"/images/uploads/" + thumbnail} alt={model} />
-       {id}
-              <figcaption className={"car_card_model"}>{model}</figcaption>
+
+      <figcaption className={"car_card_model"}>{make} {model}</figcaption>
                 <div className={'car_card_details'}>
         
                 {/*card_details_left*/}
@@ -42,7 +42,7 @@ const CarCard = ({ id, make, model, thumbnail, km, year, offer, price,currentPag
       
               <div className={'car_card_buttons'}>
                   <ButtonCta className={"car_card_cta cta--red"} inner="Contacter" onClick={() => handleSubject(model)} type="link" to={"/contact"} state={{make,model,id,year}} />
-                  <ButtonCta className={"car_card_cta cta--white"} inner={"Details"} type={"link"} to={"/parc-auto/details/"+ id} state={{id,make,thumbnail,model,year,km,price,offer,currentPage,lastlocation }} />
+                  <ButtonCta className={"car_card_cta cta--white"} inner={"Details"} type={"carCard"} to={"/parc-auto/details/"+ id} state={{id,make,thumbnail,model,year,km,price,offer,currentPage,lastlocation }} />
               </div>
                  
       </figure>

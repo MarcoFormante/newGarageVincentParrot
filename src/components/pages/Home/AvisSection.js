@@ -234,7 +234,7 @@ const ScoreBar = ({ scoreNum, totalStarsLength}) => {
             <div className={'score_bar'} >
                 <span className={'score_num_bar'}>{scoreNum + " Stars"}</span>
                 <div className={'bar_outer'} ref={width}>
-                    <div className={'bar_inner'} style={ (totalStarsLength && barWidth && width!==null)  ? { width: (((totalStarsLength * (barWidth  * 10 ))) / 100), maxWidth:  barWidth } : {width:0}}>
+                    <div className={'bar_inner'} style={ (totalStarsLength && barWidth && width!==null)  ? { width: (((totalStarsLength * (barWidth * 4  ))) / 100), maxWidth:  barWidth } : {width:0}}>
                         {/** dynamic bar that change the width fething dataScore from database */}
                     </div>
                 </div>

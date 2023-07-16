@@ -11,6 +11,10 @@ const ButtonCta = ({ state,type,inner,to,...rest}) => {
       return (
         <button {...rest}><Link to={to} state={{...state}} >{inner}</Link></button>
       )
+    } else if (type === "carCard") {
+      return (
+        <Link  {...rest} to={to} state={{...state}} >{inner}</Link>
+      )
     }
  
 }

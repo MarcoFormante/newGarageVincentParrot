@@ -22,8 +22,10 @@
     }
 
     tr{
-        background-color: lighten($dark-gray-color,20);
-        min-width: 317px;
+        background-color: #b0b0b0;
+        width: 80vw;
+        max-width: 330px;
+        min-width: 280px;
     }
 
     td{
@@ -36,6 +38,7 @@
     span{
         font-weight: bold;
     }
+
     font-size: map-get($font_size,"medium");
     @media screen and (max-width: 370px) {
         font-size: map-get($font_size,"small");

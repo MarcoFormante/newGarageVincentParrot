@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react'
 import Star from './Star'
 
 //STARS BLOCK
-const StarsBlock = ({ numberOfActiveStars,clickable,setReview}) => {
+const StarsBlock = ({ numberOfActiveStars,clickable,setReview,formSent}) => {
     const [stars, setStars] = useState([0,0,0,0,0])
     const [activeStarsLength, setActiveStarsLength] = useState(numberOfActiveStars)
     
     const setNote = (indexStar) => {
-
+        
         if (clickable) {
             const array = [];
             let note = 0;
@@ -22,9 +22,16 @@ const StarsBlock = ({ numberOfActiveStars,clickable,setReview}) => {
             note = array.reduce((num, i) => num + i)
             setReview && setReview(note)
             }
+    }
+   
+    useEffect(()=>{
+        if (formSent) {
+            setNote(4)
         }
+    },[formSent])
     
-  
+    console.log(numberOfActiveStars);
+   
     useEffect(() => {
        
         setActiveStarsLength(4);

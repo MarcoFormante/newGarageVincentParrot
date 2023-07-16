@@ -98,12 +98,12 @@ Class Review{
         if (!is_null($this->pdo)) {
             if ($filter === 0) {
                 $query = "SELECT *, (SELECT count(*) FROM reviews WHERE is_validate = 0) as count FROM reviews
-                WHERE is_validate = 0 LIMIT :currentPage,9";
+                WHERE is_validate = 0 ORDER BY id DESC LIMIT :currentPage,9";
                 $stmt = $this->pdo->prepare($query);
                 $stmt->bindValue(':currentPage',$currentPage,PDO::PARAM_INT);
 
             }elseif($filter === 1){
-                $query = "SELECT *, (SELECT count(*) FROM reviews) as count FROM reviews LIMIT :currentPage,9";
+                $query = "SELECT *, (SELECT count(*) FROM reviews) as count FROM reviews ORDER BY id DESC LIMIT :currentPage,9";
                 $stmt = $this->pdo->prepare($query);
                 $stmt->bindValue(':currentPage',$currentPage,PDO::PARAM_INT);
             }
