@@ -376,9 +376,9 @@ h2.page_title_home {
 .car_card_buttons {
   display: flex;
   justify-content: space-between;
-  margin: 0 28px;
+  margin: 7px 28px;
 }
-.car_card *:not(.car_card > img) {
+.car_card .car_card *:not(.car_card > img, a, button) {
   margin-top: 7px;
 }
 
@@ -410,6 +410,7 @@ h2.page_title_home {
   border-radius: 8px;
   max-width: 320px;
   position: relative;
+  word-break: break-all;
 }
 .avis_card_name {
   text-transform: capitalize;
@@ -417,6 +418,7 @@ h2.page_title_home {
   font-size: 24px;
   position: absolute;
   top: 10px;
+  overflow: hidden;
 }
 .avis_card_text {
   width: 100%;

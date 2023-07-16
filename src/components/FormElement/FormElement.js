@@ -1,13 +1,13 @@
 import React from 'react'
 
-const FormElement = ({label, input, textarea, select, required,children, value,max}) => {
+const FormElement = ({label, input, textarea, select, required,children, value,maxLength}) => {
   return (
     <>
       {
                 label && input &&
                 <div className='inputs_container'>
                     {label && <label style={label.style} htmlFor={label.for}>{label.text} {required && <span style={{color:"red"}}>*</span>}</label>}
-            {input && <input  {...input} required={required} value={value} />}
+            {input && <input  {...input} maxLength={maxLength} required={required} value={value} />}
                 </div>
             }
             
@@ -15,7 +15,7 @@ const FormElement = ({label, input, textarea, select, required,children, value,m
                 label && textarea && 
                 <div className='inputs_container'>
                     {label && <label  style={label.style} htmlFor={label.for}> {label.text} {required && <span style={{color:"red"}}>*</span>}</label>}
-                    {textarea && <textarea {...textarea} required={required} value={value} />}
+                    {textarea && <textarea {...textarea} maxLength={maxLength} required={required} value={value} />}
                 </div>
             }
 

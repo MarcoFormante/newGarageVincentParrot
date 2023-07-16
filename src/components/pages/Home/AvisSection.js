@@ -13,7 +13,8 @@ const AvisSection = () => {
     const [carouselX, setCarouselX] = useState(null)
     const [avis, setAvis] = useState([]);
     const [reviewsAverage, setReviewsAverage] = useState(0)
-    const [totalStarsLength,setTotalStarsLength] = useState([])
+    const [totalStarsLength, setTotalStarsLength] = useState([])
+    const [sum,setSum] = useState(0)
 
     
     useEffect(() => {
@@ -24,18 +25,8 @@ const AvisSection = () => {
                  
                 console.log("avis ok");
                 console.log("ye");
-               
-                // if (response.data.reviews && response.data.reviews.length > 0) {
-                //     response.data.reviews.forEach((review,index)=> {
-                //         if (review.is_validate === 1 && review.review >= 4 ) {
-                //             reviews.push(response.data.reviews[index])
-                //         }
-                //     });
-                //     setAvis(reviews.filter(review => review.is_validate === 1 && review.review >= 3))
-                   
-                // }   
             })
-        return ()=>{}
+       
     }, [])
 
     console.log(avis); 
@@ -46,7 +37,8 @@ const AvisSection = () => {
         const reviewsSum = +stars1 + +stars2 + +stars3 + +stars4 + +stars5;
         const avarage = (reviewsSum / +total) * 5;
         setReviewsAverage(avarage.toFixed(1));
-        setTotalStarsLength([stars1/1,stars2/2, stars3/3, stars4/4, stars5/5])
+        setTotalStarsLength([stars1 / 1, stars2 / 2, stars3 / 3, stars4 / 4, stars5 / 5])
+        setSum(reviewsSum)
     }
     
     useEffect(() => {
@@ -92,8 +84,6 @@ const AvisSection = () => {
     
     useEffect(() => {
         if (avis.length > 0) {
-        
-     
             setCarouselX(carousel?.current?.scrollLeft);
             setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);
             switch (arrowTarget) {
@@ -112,24 +102,6 @@ const AvisSection = () => {
     }, [arrowTarget, carouselWidth])
 
   
-
-    // useEffect(() => {
-       
-    //     carousel.current.addEventListener("scroll", () => {
-            
-    //             setCarouselX(carousel.current.scrollLeft)
-            
-    //         })
-
-    //     return carousel.current.removeEventListener("scroll", () => {
-    //         setCarouselX(carousel.current.scrollLeft)
-    //         })
-        
-    // }, [])
-    
-    
-    
-
 
     useEffect(() => {
         if (avis.length > 0) {
@@ -152,7 +124,7 @@ const AvisSection = () => {
     
         return (
             <div className={'section_avis'} >
-                {avis ? <div>
+                {avis.length > 0 ? <div>
                     <h3 className={'section_title section_title_avis'}>Vos avis</h3> 
                     <div className={"section_page section_page--grey"}>
                         <div className={'avis_score'}>
@@ -161,7 +133,7 @@ const AvisSection = () => {
                                 <StarsBlock numberOfActiveStars={5} clickable={false}/>
                                 <span className={'score'}>{reviewsAverage > 5 ? 5 : reviewsAverage}/5</span>
                             </div>
-                            <ScoreBarsBlock totalStarsLength={totalStarsLength} />
+                            <ScoreBarsBlock sum={sum} totalStarsLength={totalStarsLength} />
                         </div>
                     </div>
     
@@ -191,14 +163,14 @@ const AvisSection = () => {
 export default AvisSection
 
 
-const ScoreBarsBlock = ({totalStarsLength}) => {
+const ScoreBarsBlock = ({totalStarsLength,sum}) => {
     const bars = [1, 2, 3, 4, 5];
   
 
     return (
     <div>
             {bars.map((bar, index) =>
-                <ScoreBar key={"scorebar_bar" + bar + index}
+                <ScoreBar sum={sum} key={"scorebar_bar" + bar + index}
                     totalStarsLength={totalStarsLength[index]}
                     scoreNum={bar}
                 />
@@ -208,9 +180,10 @@ const ScoreBarsBlock = ({totalStarsLength}) => {
 }
 
 
-const ScoreBar = ({ scoreNum, totalStarsLength}) => {
+const ScoreBar = ({ scoreNum, totalStarsLength,sum}) => {
     
     const [barWidth, setBarWidth] = useState(477)
+    const [percentage,setPercentage] = useState((totalStarsLength/sum) * 100)
     const width = React.useRef()
 
     useEffect(() => {
@@ -234,7 +207,7 @@ const ScoreBar = ({ scoreNum, totalStarsLength}) => {
             <div className={'score_bar'} >
                 <span className={'score_num_bar'}>{scoreNum + " Stars"}</span>
                 <div className={'bar_outer'} ref={width}>
-                    <div className={'bar_inner'} style={ (totalStarsLength && barWidth && width!==null)  ? { width: (((totalStarsLength * (barWidth * 4  ))) / 100), maxWidth:  barWidth } : {width:0}}>
+                    <div className={'bar_inner'} style={ (totalStarsLength && barWidth && width!==null)  ? { width: (((percentage /100 ) * barWidth)) + "%", maxWidth: barWidth   } : {width:0}}>
                         {/** dynamic bar that change the width fething dataScore from database */}
                     </div>
                 </div>

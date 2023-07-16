@@ -52,11 +52,11 @@ const AvisPage = () => {
       <PageTitle pageTitle={"Votre avis nous interesse"} />
       <Toaster/>
       <form className='form' onSubmit={handleSubmit} >
-            <FormElement label={{ for: "name", text: "Prénom" }} input={{className:"width-formInpt_noFlex", type: "text", name: "name", id: "name", onChange:(e)=> setName(e.target.value) }} value={name} required={true} />
-            <FormElement label={{ for: "message", text: "Commentaire" }} textarea={{className:"width-formInpt_noFlex", name: "message", id: "message",  onChange: (e) => setMessage(e.target.value) }}  value={message} required={true}/>
+            <FormElement label={{ for: "name", text: "Prénom" }} input={{className:"width-formInpt_noFlex", type: "text", name: "name", id: "name", onChange:(e)=> setName(e.target.value.slice(0,18)) }} maxLength={18} value={name} required={true} />
+            <FormElement label={{ for: "message", text: "Commentaire" }} textarea={{className:"width-formInpt_noFlex", name: "message", id: "message",  onChange: (e) => setMessage(e.target.value.slice(0,255)) }}  maxLength={255}  value={message} required={true}/>
               <span style={{fontSize:"20px"}}>Laissez une note</span>
               <StarsBlock numberOfActiveStars={review} clickable={true} formSent={formSent} setReview={(value) => setReview(value)} />
-              <FormElement input={{type:"submit",value:"Envoyer"}}/>
+        <FormElement input={{ type: "submit", value: "Envoyer" }} />
           </form>
           
 
