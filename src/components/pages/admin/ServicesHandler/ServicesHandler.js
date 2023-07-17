@@ -79,7 +79,6 @@ const ServicesHandler = () => {
                     "Content-Type":"application/www-x-urlencodeform"
                 }
             }).then(response => {
-                console.log(response.data);
                 if (response.data.status === 1) {
                     if (Type === "update") {
                         services[serviceIndex].service = modalInptValue;

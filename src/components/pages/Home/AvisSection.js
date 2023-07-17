@@ -41,15 +41,10 @@ const AvisSection = () => {
             .then(response => {
                 
                 TotalReviewsCalculate(response.data.total[0]);
-                console.log("total ok");
-                console.log("total:",response.data.total[0]);
             })
     }, [])
     
 
-    
-    console.log("totalreviewTest ", totalStarsLength);
-    console.log("avis :",avis);
     
     const handleScrollCarousel = (direction) => {
        
@@ -67,13 +62,6 @@ const AvisSection = () => {
         
     }
     
-    // useEffect(() => {
-    //   console.log("location");
-    //     setAvis([...avis])
-    //     setPathName(window.location.pathname)
-    
-    // }, [window.location.pathname])
-
   
     
     useEffect(() => {
@@ -177,7 +165,6 @@ const ScoreBar = ({ scoreNum, totalStarsLength,sum}) => {
     const [percentage,setPercentage] = useState((totalStarsLength / (sum - totalStarsLength / barWidth) ) * 100)
     const width = React.useRef()
 
-    console.log(totalStarsLength);
     useEffect(() => {
         if (width?.current) {
             setBarWidth(width?.current?.offsetWidth)

@@ -13,8 +13,7 @@ const CarHandlerGallery = ({carID}) => {
     const notifySuccess = (text) => toast.success(text);
     const notifyError = (text) => toast.error(text);
     
-    console.log(gallery);
-    console.log(newGallery);
+    
     useEffect(() => {
        
         if (carID) {
@@ -51,7 +50,7 @@ const CarHandlerGallery = ({carID}) => {
             const path = `pages/admin/carHandler.php?car_id=${carid}&carImage=${imgPath}`
              axios.delete(path)
                  .then(response => {
-                     console.log(response.data);
+                   
                     notifySuccess("Image supprimè avec succès");
                     setGallery(gallery.filter(image => parseInt(image.id) !== +imgID))
             })
@@ -86,7 +85,7 @@ const CarHandlerGallery = ({carID}) => {
                 resizedGallery.forEach((img) => {
                     formData.append("gallerie[]",img)
                 })
-                console.log(resizedGallery);
+                
                 formData.append("car_id",+carID)
                 axios.post(path, formData, {
                 headers: {
@@ -94,7 +93,7 @@ const CarHandlerGallery = ({carID}) => {
                 }
             }).then(response => {
                 if (response.data.status === 1) {
-                    console.log(response.data);
+                    
                     response.data.imagePaths.forEach(path => {
                         gallery.push({ id: +carID, path: path })
                        

@@ -28,7 +28,6 @@ const ListAllAccounts = ({newUser}) => {
                             }
                         })
                         .then(response => {
-                            console.log(response.data);
                             if (response.data.status === 1) {
                                 setAccountList([...response.data.users])
                             } else {

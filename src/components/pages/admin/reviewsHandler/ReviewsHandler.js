@@ -22,7 +22,6 @@ const ReviewsHandler = () => {
         const homepagePath = `pages/admin/reviewHandler.php?currentPage=${currentPage * 9}&filter=${filters}`;
         axios.get(homepagePath)
             .then(response => {
-                console.log(response.data);
                 if (response.data.status === 1) {
                     let reviews = [];
                     response.data.reviews.forEach((review, index) => {

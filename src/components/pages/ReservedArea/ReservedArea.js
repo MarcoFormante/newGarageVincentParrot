@@ -20,7 +20,6 @@ const ReservedArea = ({ setLogin }) => {
     e.preventDefault();
     if (email && password) {
       CheckUser(email, password).then((response) => {
-        console.log(response.data);
         let isValid = response.data.status;
         if (isValid === 1){
           const token = response.data.token;
@@ -33,7 +32,7 @@ const ReservedArea = ({ setLogin }) => {
           setErrorMessage(response.data.message)
         }
       }
-      ).catch(error => console.log(error))
+      )
     }
   }
   

@@ -6,8 +6,8 @@ import axios from '../../../api/axios'
 import toast ,{Toaster} from "react-hot-toast"
 
 const AvisPage = () => {
-    const [name, setName] = useState("")
-    const [message, setMessage] = useState("")
+  const [name, setName] = useState("")
+  const [message, setMessage] = useState("")
   const [review, setReview] = useState(5)
   const [formSent, setFormSent] = useState(false);
    
@@ -28,8 +28,7 @@ const AvisPage = () => {
       {
         "Content-Type": "application/x-www-form-urlencoded"
       }
-    })
-      .then(response => {
+    }).then(response => {
         if (response.data.status === 1) {
           notifySuccess(response.data.message)
           setName("")
@@ -45,7 +44,6 @@ const AvisPage = () => {
       }).finally(setFormSent(false))
   }
     
-  console.log(review);
 
   return (
     <div>

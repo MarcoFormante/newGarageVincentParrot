@@ -25,12 +25,7 @@ const CarDetails = () => {
        
     }, [detailsInLoading, carPhotosInLoading])
     
-    
-    // max-width: 73vw;
-    // margin: auto;
-    // max-height: 52px;
-    // text-overflow: ellipsis;
-    // overflow: hidden;
+
     
   return location.state?.make ?  (
       <div>
@@ -213,7 +208,6 @@ const Details = ({id,year,km,setDetailsInLoading}) => {
 
         axios.get("pages/carDetails.php?details=true&id="+ id)
             .then(response => {
-                console.log(response.data);
                     const {
                         gearbox,
                         din_power,
@@ -247,8 +241,6 @@ const Details = ({id,year,km,setDetailsInLoading}) => {
         
     }, [id,km,setDetailsInLoading,year])
     
-    console.log(details);
-    console.log(equipements);
     const handleActiveDetailBlock = (clicked_element) => {
          switch (clicked_element) {
             case "first":

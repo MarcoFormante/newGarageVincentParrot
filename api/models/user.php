@@ -2,7 +2,7 @@
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 require_once("connection.php");
-require_once '/xampp/htdocs/app/vendor/autoload.php';
+require_once $_SERVER['DOCUMENT_ROOT'] .'/app/vendor/autoload.php';
 
 use \Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -10,24 +10,6 @@ use Firebase\JWT\Key;
 Class User{
 
     use Connection;
-
-    private string $email;
-    private string $password;
-    private string $role;
-
-   
-
-    public function getEmail():string{
-        return $this->email;
-    }
-
-    public function getPassword():string{
-        return $this->password;
-    }
-
-    public function getRole():string{
-        return $this->role;
-    }
 
     public function filterEmailPwd(string $email,string $pwd){
         $email = filter_var($email, FILTER_VALIDATE_EMAIL);

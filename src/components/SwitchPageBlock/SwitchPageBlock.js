@@ -15,8 +15,6 @@ const SwitchPageBlock = (props) => {
         if (dataLength > maxCarsforPage) {
             const pagesLength = Math.floor(dataLength / maxCarsforPage); 
             let pagesArray = [];
-            console.log(pagesLength);
-        
             for (let i = 0; i <= pagesLength ; i++) {
                 pagesArray[i] = i ;
             }
@@ -24,9 +22,8 @@ const SwitchPageBlock = (props) => {
         } else {
             setPages([0])
         }
-
-
     }, [props.dataLength, dataLength])
+    
     
     useEffect(() => {
         props.handleCarPage(props.currentPage);

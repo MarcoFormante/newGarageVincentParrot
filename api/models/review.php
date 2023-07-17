@@ -1,6 +1,6 @@
 <?php
-//change path for production
-require_once '/xampp/htdocs/app/api/models/connection.php';
+
+require_once $_SERVER['DOCUMENT_ROOT'] . "/app/api/models/connection.php";
 
 Class Review{
     use Connection;

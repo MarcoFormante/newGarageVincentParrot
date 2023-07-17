@@ -27,7 +27,6 @@ const TimesOpeningHandler = () => {
         const timeTablePath = process.env.REACT_APP_HTTP + "pages/admin/timeTableHandler.php"  
         axios.get(timeTablePath + "?getTime=" + true)
           .then(response => {
-            console.log(response.data);
             setTimeTable(response.data.timeTable)
           })
     }, [])

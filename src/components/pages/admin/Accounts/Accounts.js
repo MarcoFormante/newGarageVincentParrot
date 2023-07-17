@@ -12,7 +12,7 @@ const Accounts = () => {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [serverMessage, setServerMessage] = useState({ status: "", message: "" });
+  
   const [newUser, setNewUser] = useState({});
   
   
@@ -24,7 +24,7 @@ const Accounts = () => {
     const emailInput = e.target.value;
     setEmail(emailInput);
     setEmailError("");
-    setServerMessage("");
+    
   }
 
 
@@ -64,7 +64,6 @@ const Accounts = () => {
       if (localStorage.getItem("token")) {
         CheckToken(localStorage.getItem("token"))
           .then(response => {
-            console.log(response.data);
             isRoleValid = response.data.role === "admin"
             if (isRoleValid) {
               axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("token")}`;
@@ -80,10 +79,7 @@ const Accounts = () => {
                 }
                 
               ).then(response => {
-               
-                setServerMessage(response.data)
                 if (response.data.status === 1) {
-                  console.log(response.data);
                   setNewUser({id:response.data.userId, email:email})
                   notifySuccess("Ajoutè avec succès")
                   setEmail("");
@@ -93,7 +89,6 @@ const Accounts = () => {
                 }
               })
                 .catch(error => {
-                  setServerMessage(error.data)
                   notifyError("Erreur: un probleme est survenu , impossible de ajouter un nouveau compte")
                 })
               }

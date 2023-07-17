@@ -11,7 +11,6 @@ import PageTitle from '../../PageTitle/PageTitle'
 
 const Home = () => {
   
-
   return (
     <div>
     <PageTitle pageTitle={"Garage Vincent Parrot"}  style={{color:"white"}}/>

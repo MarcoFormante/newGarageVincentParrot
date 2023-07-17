@@ -92,7 +92,7 @@ const CarsHandler = () => {
         const path = `pages/admin/carHandler.php?id=${id}&thumbnail=${thumbnail}`
         axios.delete(path)
         .then(response => {
-         console.log(response.data);
+        
             if (response.data.status === 1) {
                 notifySuccess(response.data.message)
                 setCarTarget(null)
@@ -114,7 +114,6 @@ const CarsHandler = () => {
 
     useEffect(() => {
         if (dataToUpdate !== null) {
-            console.log(typeof(dataToUpdate.value) === "object");
             setModalToggle(true);
         }
       
@@ -150,7 +149,6 @@ const CarsHandler = () => {
             formData.append("id", +dataToUpdate.id)
             if (dataImageToUpdate) {
                 if (typeof (dataToUpdate.value) === "object") {
-                    console.log(await resizeFile(dataToUpdate.value));
                      formData.append("value", await resizeFile(dataToUpdate.value))
                     await formData.append("imageData", dataImageToUpdate ? dataImageToUpdate : 0)
                 } else {
@@ -165,8 +163,6 @@ const CarsHandler = () => {
                     "Content-Type": "application/x-www-form-urlencoded",
                 }
             }).then(response => {
-                console.log(response.data);
-                
                 if (response.data.status === 1) {
                     if (response.data.imageData) {
                         setCars([...cars, { ...cars[dataToUpdate.index][dataToUpdate.column[0]] = response.data.imageData }])

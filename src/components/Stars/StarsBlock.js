@@ -30,7 +30,6 @@ const StarsBlock = ({ numberOfActiveStars,clickable,setReview,formSent}) => {
         }
     },[formSent])
     
-    console.log(numberOfActiveStars);
    
     useEffect(() => {
        

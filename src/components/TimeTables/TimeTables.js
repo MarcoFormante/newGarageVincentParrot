@@ -9,7 +9,6 @@ const TimeTables = ({ openingTimes }) => {
         const homepagePath = "pages/homePage.php?openingTimes=true";
         axios.get(homepagePath)
             .then(response => {
-                console.log(response.data);
                 setOpeningTime(response.data.openingTimes)
             })
     },[])
@@ -39,7 +38,6 @@ export default TimeTables
 const TimeComponent = (props) => {
     return (
         <>
-          
             {parseInt(props.close) === 0
                 ?
                 <p className={"time_table_single time_table_single--close"}> <span>{props.day}:</span> <span style={{ marginLeft: "25%" }} className='text-center'>Fermé</span></p>

@@ -73,7 +73,6 @@ const NewCarPage = () => {
               "Content-Type":"multipart/form-data"
             }
       }).then(response => {
-        console.log(response.data);
           if (response.data.status === 1) {
             notifySuccess("Nouvelle voiture ajouté avec succès");
             setNewCarCreated(true)
