@@ -193,7 +193,7 @@ const TimesOpeningHandler = () => {
         
       </Modal>}
       <PageTitle pageTitle={"Gestion des horaires d'ouverture"} />
-      <div className='container--pad-top mar-auto '>* HC Horaire en continue</div>
+      <div className='container--pad-top mar-auto '>* HC : Horaire en continue</div>
       
       <div className='container--pad-top table_handler' style={{overflowY:"hidden"}}>
         <table className='table_handler_container'>

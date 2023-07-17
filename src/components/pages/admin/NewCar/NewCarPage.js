@@ -77,6 +77,7 @@ const NewCarPage = () => {
           if (response.data.status === 1) {
             notifySuccess("Nouvelle voiture ajouté avec succès");
             setNewCarCreated(true)
+            setFormValues({formValues :""})
           } else {
             setNewCarCreated(false)
             if (response.data.message.includes("vo_number")) {
@@ -89,6 +90,7 @@ const NewCarPage = () => {
       }).finally(response => {
         setTimeout(() => {
           setIsLoading(false)
+        
         }, 500);
          
       })
@@ -140,7 +142,7 @@ const NewCarPage = () => {
 
   useEffect(() => {
     if (newCarCreated) {
-      setFormValues({ detailValues: {}, equipmentValues: [], thumbnail: "", gallery: [] })
+      setFormValues({ detailValues: {}, equipmentValues: [""], thumbnail: "", gallery: [] })
       setThumb(null)
       window.scrollTo({
         top:0
@@ -209,7 +211,7 @@ console.log(newCarCreated);
                       />
                     </div>
                     <div className='new_car_img-thumb_display'>
-                    { thumb &&  <img style={{objectFit:"cover",margin:"auto"}} src={URL.createObjectURL(thumb)} width={300} height={300} alt='' />}
+                    { thumb &&  <img style={{objectFit:"contain",margin:"auto"}} src={URL.createObjectURL(thumb)} width={300} height={300} alt='' />}
                     </div>
                   {/* car details */}
                     <div className='new_car_details container--pad-top inputs_container'>

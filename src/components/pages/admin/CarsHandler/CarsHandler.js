@@ -9,6 +9,7 @@ import CarHandlerDetails from './CarHandlerDetails';
 import CheckToken from '../../../../helpers/CheckToken';
 import { useNavigate } from 'react-router-dom';
 import notAuth from '../../../../helpers/NotAuth';
+import Loading from '../../../Loading/Loading';
 
 const CarsHandler = () => {
     const [currentPage, setCurrentPage] = useState(0)
@@ -23,6 +24,7 @@ const CarsHandler = () => {
     const [newCarDetailsArray,setNewCarDetailsArray] = useState([])
     const [carID, setCarID] = useState(null)
     const [isDetailUpdate, setIsDetailUpdate] = useState(false);
+    const [loading,setLoading] = useState(false)
     const navigate = useNavigate()
 
     
@@ -32,6 +34,7 @@ const CarsHandler = () => {
     const notifyError = (text) => toast.error(text);
 
     const getCars = useCallback(() => {
+        setLoading(true)
         if (localStorage.getItem("token")) {
             CheckToken(localStorage.getItem("token"))
                 .then(response => {
@@ -48,7 +51,7 @@ const CarsHandler = () => {
                         }
                     }).then(response => {
                         if (response.data.status === 1) {
-                            console.log(response.data,currentPage);
+                           
                             setCars([...response.data.cars])
                             seCarsCount(response.data.count)
                             table.current.scrollLeft = 0
@@ -64,7 +67,7 @@ const CarsHandler = () => {
                     notAuth()
                     navigate("/")
                 }
-            })
+            }).finally(setLoading(false))
         }
     },[currentPage,filters,modalFilterValue,navigate]) 
         
@@ -202,8 +205,8 @@ const CarsHandler = () => {
 
   
     return (
-        <div>
-          
+        <div style={{position:"relative"}}>
+            <Loading isLoading={loading}/>
             <Toaster />
             <CarHandlerDetails carID={carID}
                 setCarID={(value) => setCarID(value)}

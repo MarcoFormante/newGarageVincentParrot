@@ -5,7 +5,8 @@ import axios from '../../../api/axios'
 const CarFilters = ({handleChangeFilters,closeButton,loadFilteredCars}) => {
   const [offer, setOffer] = useState(false)
   const [filters, setFilters] = useState({})
-  const [baseFilters,setBaseFilters] = useState({})
+  const [baseFilters, setBaseFilters] = useState({})
+  const [reset,setReset] = useState(false)
  
   
   function handleOfferChange() {
@@ -19,33 +20,42 @@ const CarFilters = ({handleChangeFilters,closeButton,loadFilteredCars}) => {
   
 
   useEffect(() => {
-    if (filters) {
       const parcAutoPath = "pages/parcAuto.php";
       axios.get(parcAutoPath + "?getFilters=true") 
         .then(response => {
           setFilters({ ...response?.data })
           setBaseFilters({...response?.data})
         })
-    }
   },[])
   
+  useEffect(() => {
+    if (reset) {
+      setFilters({...baseFilters})
+    } else {
+      setFilters({...filters})
+    }
+   
+  },[reset])
 
   return (
   <div>
       
     <div className='filters range_slider_block'>
      
-      {filters.minKm && <MultiRangeSlider
-        min={parseInt(filters.minKm ) }
-        max={parseInt(filters.maxKm ) }
-          onChange={({ min, max }) => handleChangeFilters({ minKm: parseInt(min - 1), maxKm: parseInt(max + 1)})}
+        {filters.minKm && <MultiRangeSlider
+          filter={filters}
+          reset={reset}
+          setReset={(value)=>setReset(value)}
+        min={filters.minKm }
+        max={filters.maxKm  }
+          onChange={({ min, max }) => handleChangeFilters({ minKm: min, maxKm:max })}
             title={"Km"}
         />}
 
       {filters.minPrice && <MultiRangeSlider
         min={parseInt(filters?.minPrice) }
         max={parseInt(filters?.maxPrice) }
-        onChange={({ min, max }) => handleChangeFilters({minPrice:parseInt(min - 1),maxPrice:parseInt(max + 1)})}
+        onChange={({ min, max }) => handleChangeFilters({minPrice:parseInt(min - 1),maxPrice: (max + 1)})}
             title={"Prix"}
             
         />}
@@ -64,9 +74,18 @@ const CarFilters = ({handleChangeFilters,closeButton,loadFilteredCars}) => {
           </div>
           <div className='reset container--center--row'>Reset <span className='reset_icon_filters reset_icon' onClick={() => {
               setOffer(false)
-              handleChangeFilters({ minKm: 0, maxKm: 5000000, minYear: 0, maxYear: 5000000, minPrice: 0, maxPrice: 50000000, offer: false })
-            setFilters({ ...baseFilters })
-            loadFilteredCars()
+              setFilters({ minKm: 0, maxKm: 8000000, minPrice: 0, maxPrice: 8000000000, minYear: 0, maxYear: 800000000, offer: false })
+          
+          
+            setReset(true)
+            setTimeout(() => {
+              setReset(false)
+              handleChangeFilters({ minKm: 0, maxKm: 8000000, minPrice: 0, maxPrice: 8000000000, minYear: 0, maxYear: 800000000, offer: false })
+            
+            }, 10);
+            
+
+          
 
           }}></span></div>
         </div>

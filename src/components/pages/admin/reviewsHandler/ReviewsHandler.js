@@ -30,7 +30,7 @@ const ReviewsHandler = () => {
                     });
                     setAvis([...reviews])
                     setTimeout(() => {
-                        const reviewCount = response.data.reviews[0].count === undefined || response.data.reviews[0].count === null ? 0 : response.data.reviews[0].count
+                        const reviewCount = response.data.reviews[0]?.count === undefined || response.data.reviews[0]?.count === null ? 0 : response.data.reviews[0]?.count
                         if (response.data.filter === 0) {
                           
                            
@@ -89,8 +89,8 @@ const ReviewsHandler = () => {
             <div className='container--pad-top ' >
                 <div className='mar-top-20 mar-bot-50'>
                     <p className='text-center'>
-                        Dans cette page vous pouvez
-                        <span className='c-red text-bold'>Moderer</span> ou <span className='c-green text-bold'>Valider</span> les Avis</p>
+                        Dans cette page vous pouvez 
+                        <span className='c-red text-bold'> Moderer</span> ou <span className='c-green text-bold'>Valider</span> les Avis</p>
                 </div>
                 <div className='input_center_handler'>
                     <div className='container--center--column inputs_container_filters_inner '>

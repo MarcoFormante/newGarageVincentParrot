@@ -36,7 +36,7 @@ const ParcAuto = () => {
     }
   },[carCount])
   
-  console.log("loca:" + location?.state?.currentPage);
+ 
  
   useEffect(() => {
    

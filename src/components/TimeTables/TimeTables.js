@@ -46,7 +46,7 @@ const TimeComponent = (props) => {
                 :
                 props.day_end_am === "HC" || props.day_start_pm === "HC"
                     ?
-                    <p className={"time_table_single"}><span>{props.day}:</span> <time style={{ marginLeft: "18%" }}>{props.day_start_am}</time>-<time>{props.day_end_pm}</time> </p>
+                    <p className={"time_table_single"}><span>{props.day + ":"}</span> <time style={{ marginLeft: "18%" }}>{props.day_start_am}</time>-<time>{props.day_end_pm}</time> </p>
                     :
                 <p className={"time_table_single"}><span>{props.day}: </span> <time>{props.day_start_am}</time>-<time>{props.day_end_am}</time>/ <time>{props.day_start_pm}</time>-<time>{props.day_end_pm}</time></p>
             }

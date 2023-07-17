@@ -46,12 +46,22 @@ Class carHandler{
 
     public function createNewCar($thumbnail,$gallery,$details,$equipments){
 
-        $gearboxIsValid = preg_match("/manuelle|automatique/",strtolower($details[0]));
-        $energyIsValid = preg_match("/essence|gazole|électrique|gpl/",strtolower($details[10]));
+        $gearboxIsValid = preg_match("/manuelle|automatique/i",$details[9]);
+        $energyIsValid = preg_match("/Essence|gazole|électrique|gpl/i",$details[10]);
         $numberInputsAreValids = $details[13] >= 0 && $details[3] > 0 && $details[4] > 0 && $details[2] > 0 && $details[11] > 0 && $details[5] && $details[8] > 0 && $details[7] > 0 && $details[12] > 0;
 
-        if (!$gearboxIsValid || !$energyIsValid || !$numberInputsAreValids) {
-            echo json_encode(["status"=>0,"message"=>"Erreur: Les valeurs ne peuvent pas etre inferieur à zero"]);
+        if (!$gearboxIsValid  ) {
+            echo json_encode(["status"=>0,"message"=>"Erreur: La valeur pour Boite de vitesse n'est pas la bonne valeur"]);
+           return;
+        }
+
+        if (!$energyIsValid ) {
+            echo json_encode(["status"=>0,"message"=>"Erreur: La valeur pour Energie n'est pas la bonne valeur"]);
+           return;
+        }
+
+        if (!$numberInputsAreValids ) {
+            echo json_encode(["status"=>0,"message"=>"Erreur: Les valeurs ne peuvent pas etre inferieur à zero,verifiez bien tous les champs"]);
            return;
         }
 

@@ -43,17 +43,17 @@ const Contact = () => {
 
               <FormElement label={{ for: "carID", text: "" }} input={{ className:"width-formInpt_noFlex", hidden:true, type: "text", name: "carID", id: "carID",onChange:()=>{} }} value={location?.state?.id &&  `VoitureID: ${location?.state?.id}`} />
 
-              <FormElement label={{ for: "subject", text: "Subject" }} input={{ className:"width-formInpt_noFlex", type: "text", name: "subject", id: "subject", onChange: (e) => handleChange(e.target.name, e.target.value) }} value={formInputs.subject} />
+              <FormElement label={{ for: "subject", text: "Subject" }} input={{ className:"width-formInpt_noFlex", type: "text", name: "subject", id: "subject", onChange: (e) => handleChange(e.target.name, e.target.value) }} value={formInputs.subject.slice(0,100)} maxLength={100} />
               
-              <FormElement label={{ for: "surname", text: "Nom" }} input={{className:"width-formInpt_noFlex", type: "text", name: "surname", id: "surname",required:true,value:formInputs.surname, onChange:(e)=> handleChange(e.target.name,e.target.value) }}  value={formInputs.surname} required={true} />
+              <FormElement label={{ for: "surname", text: "Nom" }} input={{className:"width-formInpt_noFlex", type: "text", name: "surname", id: "surname",required:true,value:formInputs.surname, onChange:(e)=> handleChange(e.target.name,e.target.value.slice(0,50)) }}  maxLength={50}  value={formInputs.surname} required={true} />
               
-              <FormElement label={{ for: "name", text: "Prénom" }} input={{className:"width-formInpt_noFlex", type: "text", name: "name", id: "name",required:true,value:formInputs.name, onChange:(e)=> handleChange(e.target.name,e.target.value) }}  value={formInputs.name} required={true} />
+              <FormElement label={{ for: "name", text: "Prénom" }} input={{className:"width-formInpt_noFlex", type: "text", name: "name", id: "name",required:true,value:formInputs.name, onChange:(e)=> handleChange(e.target.name,e.target.value.slice(0,50)) }}  maxLength={50}  value={formInputs.name} required={true} />
               
-              <FormElement label={{for:"email",text:"Email"}} input={{className:"width-formInpt_noFlex", type:"email",name:"email",id:"email",required:true,value:formInputs.email, onChange:(e)=> handleChange(e.target.name,e.target.value)}} value={formInputs.email} required={true} />
+              <FormElement label={{for:"email",text:"Email"}} input={{className:"width-formInpt_noFlex", type:"email",name:"email",id:"email",required:true,value:formInputs.email, onChange:(e)=> handleChange(e.target.name,e.target.value.slice(0,50))}}  maxLength={50} value={formInputs.email} required={true} />
               
-              <FormElement label={{for:"tel",text:"Telephone"}} input={{className:"width-formInpt_noFlex" , type:"number",name:"tel",id:"tel",required:true,value:formInputs.tel, onChange:(e)=> handleChange(e.target.name,e.target.value)}} value={formInputs.tel} required={true}/>
+              <FormElement label={{for:"tel",text:"Telephone"}} input={{className:"width-formInpt_noFlex" , type:"number",name:"tel",id:"tel",required:true,value:formInputs.tel, onChange:(e)=> handleChange(e.target.name,e.target.value.slice(0,10))}} value={formInputs.tel} required={true}/>
 
-              <FormElement label={{for:"message",text:"Message"}} textarea={{className:"width-formInpt_noFlex",  name:"message",id:"message",required:true,value:formInputs.message, onChange:(e)=> handleChange(e.target.name,e.target.value)}} value={formInputs.message} required={true} />
+              <FormElement label={{for:"message",text:"Message"}} textarea={{className:"width-formInpt_noFlex",  name:"message",id:"message",required:true,value:formInputs.message,placeHolder:"max 255 characters", onChange:(e)=> handleChange(e.target.name,e.target.value)}} maxLength={255} value={formInputs.message} required={true} />
              
               <FormElement input={{type:"submit",value:"Envoyer"}}/>
               

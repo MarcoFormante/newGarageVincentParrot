@@ -22,22 +22,16 @@ const AvisSection = () => {
         axios.get(homepagePath)
             .then(response => {
                 setAvis([...response.data.reviews])
-                 
-                console.log("avis ok");
-                console.log("ye");
             })
-       
     }, [])
 
-    console.log(avis); 
-    console.log(avis);
     
     function TotalReviewsCalculate(reviews) {
         const { total,stars1, stars2, stars3, stars4, stars5 } = reviews;
         const reviewsSum = +stars1 + +stars2 + +stars3 + +stars4 + +stars5;
         const avarage = (reviewsSum / +total) * 5;
         setReviewsAverage(avarage.toFixed(1));
-        setTotalStarsLength([stars1 / 1, stars2 / 2, stars3 / 3, stars4 / 4, stars5 / 5])
+        setTotalStarsLength([+stars1 , +stars2 , +stars3 , +stars4 , +stars5 ])
         setSum(reviewsSum)
     }
     
@@ -105,8 +99,6 @@ const AvisSection = () => {
 
     useEffect(() => {
         if (avis.length > 0) {
-            
-        
             carousel?.current?.addEventListener("scroll", () => {
                 setCarouselX(carousel?.current?.scrollLeft)
                 setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);
@@ -115,7 +107,6 @@ const AvisSection = () => {
             return carousel?.current?.removeEventListener("scroll", () => {
                 setCarouselX(carousel?.current?.scrollLeft)
                 setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);
-            
             })
         }
         }, [carouselX,carouselWidth])
@@ -183,9 +174,10 @@ const ScoreBarsBlock = ({totalStarsLength,sum}) => {
 const ScoreBar = ({ scoreNum, totalStarsLength,sum}) => {
     
     const [barWidth, setBarWidth] = useState(477)
-    const [percentage,setPercentage] = useState((totalStarsLength/sum) * 100)
+    const [percentage,setPercentage] = useState((totalStarsLength / (sum - totalStarsLength / barWidth) ) * 100)
     const width = React.useRef()
 
+    console.log(totalStarsLength);
     useEffect(() => {
         if (width?.current) {
             setBarWidth(width?.current?.offsetWidth)
@@ -200,14 +192,19 @@ const ScoreBar = ({ scoreNum, totalStarsLength,sum}) => {
         window.removeEventListener("resize", () => {
             setBarWidth(width?.current?.offsetWidth)
         })
-    },[])
+    }, [])
+    
+
+    useEffect(() => {
+        setPercentage((totalStarsLength / (sum - totalStarsLength / barWidth) ) * 100)
+    },[totalStarsLength,barWidth,sum])
    
     return (
         <div>
             <div className={'score_bar'} >
                 <span className={'score_num_bar'}>{scoreNum + " Stars"}</span>
                 <div className={'bar_outer'} ref={width}>
-                    <div className={'bar_inner'} style={ (totalStarsLength && barWidth && width!==null)  ? { width: (((percentage /100 ) * barWidth)) + "%", maxWidth: barWidth   } : {width:0}}>
+                    <div className={'bar_inner'} style={ (totalStarsLength && barWidth && width!==null)  ? { width: (((percentage /100 ) * barWidth)) + "px", maxWidth: barWidth   } : {width:0}}>
                         {/** dynamic bar that change the width fething dataScore from database */}
                     </div>
                 </div>

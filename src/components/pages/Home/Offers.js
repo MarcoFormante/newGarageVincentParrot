@@ -100,7 +100,7 @@ const Offers = ({cars,count}) => {
     return (
         <div style={offerCards && offerCards?.length > 0 ? {display:"block"} : {display:"none"}}>
              <h3 className={'section_title section_title_offres'}>{!parseInt(offerCards[0]?.offer) > 0 ? "Les dernieres arrivées" : "Les offres du moment"}</h3>
-            <Arrows cardsTotalWidth={offerCards.length * 250} carouselX={carouselX} carouselWidth={carouselWidth} onClick={(direction)=>setArrowTarget(direction)}  />
+            <Arrows cardsTotalWidth={offerCards.length * 296} carouselX={carouselX} carouselWidth={carouselWidth} onClick={(direction)=>setArrowTarget(direction)}  />
            
             <div className={"section_page section_page--grey"}>
             <div className={'carCards_container'} ref={carousel} style={{overflowY:"hidden"}}>

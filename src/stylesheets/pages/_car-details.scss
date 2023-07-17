@@ -56,7 +56,6 @@ transition: left 0.3s  ease-in-out;
         min-width: 600px;
         min-height: 400px;
         object-position: center;
-        object-fit: cover;
 
         @media screen and (max-width:(map-get($breakpoints,"medium"))) {
             display: none;
@@ -115,11 +114,11 @@ transition: left 0.3s  ease-in-out;
     
 
     img{
-        object-fit: cover;
+       
 
         @media screen and (max-width:map-get($breakpoints,"medium")) {
-            width: 93vw;
-            height: 300px;
+            height: 64vw;
+            width: 88vw;
         }
     }
 
