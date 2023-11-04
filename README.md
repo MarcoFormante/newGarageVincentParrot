@@ -7,3 +7,4 @@ ECF Garage V.Parrot -- Marco Formante
 -Creation des tables en SQL pour le database;
 -Remplir les tables avec les données DEFAULT pour different pages
 -Creer le dossier et les fichiers PHP necessaires;
+# newGarageVincentParrot
