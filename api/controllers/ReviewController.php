@@ -78,7 +78,7 @@ Class ReviewController extends AbstractController{
 
     public function reviewValidation($param){
        
-        if ($this->valueFromToken() === "admin") {
+        if ($this->valueFromToken() === "admin" || $this->valueFromToken() === "employee") {
             
             if (isset($param[1]) && isset($param[2]) && is_numeric($param[1]) && is_numeric($param[2]) ) {
                 $Review = new ReviewModel();

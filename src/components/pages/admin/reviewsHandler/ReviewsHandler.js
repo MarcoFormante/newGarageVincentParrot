@@ -12,44 +12,37 @@ const ReviewsHandler = () => {
     const [filters, setFilters] = useState(0);
     const [loading, setLoading] = useState(false)
     const [currentPage,setCurrentPage] = useState(0)
-    const notifySuccess = useCallback((text) => toast.success(text),[]);
+    const notifySuccess = (text) => toast.success(text);
     const notifyError = (text) => toast.error(text);
 
     
-
-    const getReviews = useCallback(() => {
-        const formData = new FormData();
-        formData.append("currentPage", currentPage)
-        formData.append("filters", filters)
-        
-        axios.post("review/allToValidate",formData)
-            .then(response => {
-                if (response.data.status === 1) {
-                    let reviews = [];
-                    response.data.reviews.forEach((review, index) => {
-                        reviews.push(response.data.reviews[index])
-                    });
-                    setAvis([...reviews])
-                    setTimeout(() => {
-                        const reviewCount = response.data.reviews[0]?.count === undefined || response.data.reviews[0]?.count === null ? 0 : response.data.reviews[0]?.count
-                        if (response.data.filter === 0) {
-                          
-                        } else {
-                            notifySuccess(`Nombre d'avis : ${reviewCount}`)
-                        }
-                     
-                    }, 500);
-                } else {
-                    notifyError("Un erreur est survenu")
-                }
-            })
-    },[currentPage,filters,notifySuccess])
-   
  
     useEffect(() => {
-          getReviews()
-          return () => {}
-    }, [currentPage,filters,getReviews])
+        setLoading(true)
+            const formData = new FormData();
+            formData.append("currentPage", currentPage)
+            formData.append("filters", filters)
+        
+            axios.post("review/allToValidate", formData, {})
+                .then(response => {
+                    if (response.data.status === 1) {
+                        setAvis([...response.data.reviews])
+                        setTimeout(() => {
+                            const reviewCount = response.data.reviews[0]?.count === undefined || response.data.reviews[0]?.count === null ? 0 : response.data.reviews[0]?.count
+                            if (response.data.filter === 0) {
+                          
+                            } else {
+                                notifySuccess(`Nombre d'avis : ${reviewCount}`)
+                            }
+                     
+                        }, 500);
+                    } else {
+                        notifyError("Un erreur est survenu")
+                    }
+                }).finally(setTimeout(() => {
+                   setLoading(false) 
+                },500))  
+    }, [currentPage,filters])
 
     
 

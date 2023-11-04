@@ -40,21 +40,20 @@ function App() {
 
   useEffect(() => {
     setHidden(["admin", "area-reserve"].filter(path => location.pathname.match(path)))
-  },[document.location.pathname])
+  },[location.pathname])
 
  
  
 
   useEffect(() => {
-  
-    if (document.location.pathname.match("admin")) {
+    if (location.pathname.match("admin")) {
       if (sessionStorage.getItem("token")) {
         setAuthToken(sessionStorage.getItem("token"))
       } else {
         NotAuth()
       }
     }
-  },[document.location.pathname])
+  },[location.pathname])
   
  
   return (
