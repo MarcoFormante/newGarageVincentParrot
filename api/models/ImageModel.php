@@ -77,7 +77,7 @@ class ImageModel extends AbstractModel
                     throw new Exception("Que les photos horizontales sont acceptées");
                 }
                 if (preg_match("/webp|jpeg|jpg|png/",$fileExtention)) {
-                    $fileName =  uniqid(10) . ".webp";
+                    $fileName =  uniqid(rand()) . ".webp";
                     $galleryPathArray[$key] = $fileName; 
                 }else{
                     throw new Exception("le types de images acceptès sont webp,jpeg,png", 1);

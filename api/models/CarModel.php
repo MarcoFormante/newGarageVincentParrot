@@ -252,13 +252,13 @@ class CarModel extends AbstractModel
            
         
             $path = $_SERVER['DOCUMENT_ROOT'] . "/EcfGarage/public/images/uploads/";
-            $thumbnailName =  uniqid(10) . ".webp";
+            $thumbnailName =  uniqid(rand()) . ".webp";
             $galleryPathArray = [];
 
             foreach ($gallery['tmp_name'] as $key => $value) {
                 $fileExtention = explode("/", mime_content_type($value))[1];
                 if (preg_match("/webp|jpeg|jpg|png/", $fileExtention)) {
-                    $fileName =  uniqid(10) . ".webp";
+                    $fileName =  uniqid(rand()) . ".webp";
                     $galleryPathArray[$key] = $fileName;
                 } else {
                     throw new Exception("les formats  acceptès pour les images sont webp,jpeg,png");
@@ -642,65 +642,6 @@ class CarModel extends AbstractModel
   
 
 
-    // public function addNewImages( int $carID,$gallery){
-    //     $galleryPathArray = [];
-    
-    //     try {
-    //         $this->pdo->beginTransaction();
-
-    //         foreach ($gallery['tmp_name'] as $key => $value) {
-    //             $fileExtention = explode("/",mime_content_type($value))[1];
-    //             if (!getimagesize($value)) {
-    //                 throw new Exception("Un file different que une image a été trouvé");
-    //             }
-
-    //             $width = getimagesize($value)[0];
-    //             $height = getimagesize($value)[1];
-
-    //             if ($width <= $height) {
-    //                 throw new Exception("Que les photos horizontales sont acceptées");
-    //             }
-    //             if (preg_match("/webp|jpeg|jpg|png/",$fileExtention)) {
-    //                 $fileName =  uniqid(10) . ".webp";
-    //                 $galleryPathArray[$key] = $fileName; 
-    //             }else{
-    //                 throw new Exception("le types de images acceptès sont webp,jpeg,png", 1);
-                   
-    //             }
-    //         }
-
-    //         $queryCarGallery = "INSERT INTO car_images(path,car_id) VALUES";
-    //         $galleryLength = count($galleryPathArray);
-    //         foreach ($galleryPathArray as $key => $value) {
-    //             if ($key !== $galleryLength - 1) {
-    //                 $queryCarGallery .= "(:path$key,:car_id$key),";
-    //             }else{
-    //                 $queryCarGallery .= "(:path$key,:car_id$key)";
-    //             }
-    //         }
-    //             $stmtCarGallery = $this->pdo->prepare($queryCarGallery);
-    //             foreach ($galleryPathArray as $key => $value) {
-    //                 $stmtCarGallery->bindValue(":path$key",$value,PDO::PARAM_STR);
-    //                 $stmtCarGallery->bindValue(":car_id$key",$carID,PDO::PARAM_INT);
-    //             }
-    //             $path = $_SERVER['DOCUMENT_ROOT'] ."/EcfGarage/public/images/uploads/" ;
-    //                 if ($stmtCarGallery->execute()) {
-    //                     if ($this->uploadGalleryImages($gallery,$path,$galleryPathArray)) {
-    //                         $this->pdo->commit();
-    //                         return ["status"=> 1, "message"=>"Images Ajoutées avec succès", "imagePaths"=>$galleryPathArray];
-    //                     }else{
-    //                         $this->pdo->rollBack();
-    //                         throw new Exception("Un probleme est survenu");
-    //                     }
-    //                 }else{
-    //                     throw new Exception("Un probleme est survenu");
-    //                 }
-    //     } catch (Exception $e) {
-    //         return $this->error($e->getMessage());
-    //     }
-    // }
-
-
     public function updateCar(string $column, $value, int $id,string $imageData = null){
         if (!is_null($this->pdo)) {
             $valueIsImage = is_array($value);
@@ -743,7 +684,7 @@ class CarModel extends AbstractModel
                 
               
 
-                $imageName =  uniqid(10) .".webp";
+                $imageName =  uniqid(rand()) .".webp";
                 $query = "UPDATE cars SET $column = :value WHERE id = :id ";
                 $stmt = $this->pdo->prepare($query);
               
