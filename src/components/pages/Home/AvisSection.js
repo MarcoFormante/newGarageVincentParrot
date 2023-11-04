@@ -224,7 +224,8 @@ const ScoreBar = ({ scoreNum, totalStarsLength,sum,averageAnimation,triggerAnima
                 scrollTrigger: {
                     trigger: triggerAnimation.current,
                     start: "-50% center",
-                   
+                    end: " bottom",
+                    scrub: 1
                 },
                 onStart: () => {
                   averageAnimation()

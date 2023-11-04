@@ -8,7 +8,6 @@ import ButtonCta from '../../Buttons/ButtonCta'
 import toast, { Toaster } from 'react-hot-toast';
 import Loading from '../../Loading/Loading'
 import { useLocation } from 'react-router-dom'
-import gsap from 'gsap'
 
 
 const ParcAuto = () => {
@@ -21,7 +20,6 @@ const ParcAuto = () => {
     const [loading, setLoading] = useState(false)
     const notifySuccess = (text) => toast.success(text)
     const notifyError = (text) => toast.error(text)
-   const comp = React.useRef()
   
   function handleCarPage(page) {
         setCurrentPage(page)

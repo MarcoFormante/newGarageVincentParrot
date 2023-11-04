@@ -17,10 +17,14 @@ const CarCard = (props) => {
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
      if (document.location.pathname.match(/parc-auto/i)) {
-      gsap.fromTo(".car_card", { opacity: 0,scale:0 }, {
-        opacity: 1, duration: 0.3,scale:1, stagger: {
+      gsap.fromTo(".car_card", { opacity: 0,scale:0, y:800 }, {
+        opacity: 1,
+        duration: 0.3,
+        scale: 1,
+        y:0,
+        stagger: {
           each: 0.1,  
-        
+          ease: "power1.inOut",
       }})
      }
       
