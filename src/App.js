@@ -1,10 +1,10 @@
-import React,{useCallback, useEffect, useState} from 'react'
+import React,{useCallback, useEffect, useLayoutEffect, useState} from 'react'
 import Header from './components/header/Header';
 import Home from './components/pages/Home/Home';
 import TimeOpeningBlock from './components/pages/Home/TimeOpeningBlock';
 import Footer from './components/Footer/Footer';
 import ParcAuto from './components/pages/ParcAuto/ParcAuto';
-import { Routes, Route, useLocation, Navigate,Outlet} from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate,Outlet, useNavigate} from 'react-router-dom';
 import CarDetails from './components/pages/ParcAuto/CarDetails';
 import Contact from './components/pages/Contact/Contact';
 import ReservedArea from './components/pages/ReservedArea/ReservedArea';
@@ -19,6 +19,12 @@ import ReviewsHandler from './components/pages/admin/reviewsHandler/ReviewsHandl
 import TimesOpeningHandler from './components/pages/admin/TimesOpeningHandler/TimesOpeningHandler';
 import ServicesHandler from './components/pages/admin/ServicesHandler/ServicesHandler';
 import CarsHandler from './components/pages/admin/CarsHandler/CarsHandler';
+import { setAuthToken } from './helpers/SetAuth';
+import NotAuth from './helpers/NotAuth';
+
+
+
+
 
 function App() {
 
@@ -27,13 +33,28 @@ function App() {
   const location = useLocation()
   const [hidden,setHidden] = useState([])
   const [checkTrigger,setCheckTrigger]=useState(false)
-  const [openingTimes, setOpeningTimes] = useState([]);
+  const navigate = useNavigate()
+ 
 
-  
+
 
   useEffect(() => {
-    setHidden(["admin","area-reserve"].filter(path => location.pathname.includes(path)))
-  }, [location.pathname])
+    setHidden(["admin", "area-reserve"].filter(path => location.pathname.match(path)))
+  },[document.location.pathname])
+
+ 
+ 
+
+  useEffect(() => {
+  
+    if (document.location.pathname.match("admin")) {
+      if (sessionStorage.getItem("token")) {
+        setAuthToken(sessionStorage.getItem("token"))
+      } else {
+        NotAuth()
+      }
+    }
+  },[document.location.pathname])
   
  
   return (
@@ -45,17 +66,17 @@ function App() {
       <AdminNav role={role} checkToken={() => setCheckTrigger(!checkTrigger)} />
       <main>
         <Routes>
-          <Route exact path='/' element={<Home handleOpeningTimes={(values)=>setOpeningTimes(values)} />} />
+          <Route exact path='/' element={<Home />} />
           <Route path='/parc-auto' element={<ParcAuto />} />
           <Route path='/parc-auto/details/:id' element={<CarDetails />} />
           <Route path="/contact" element={<Contact/>} />
           <Route path="/area-reserve" element={<ReservedArea setLogin={(value) => setlogin(value)} />} />
           <Route path="/avis" element={<AvisPage/>} />
-          <Route path='*' element={"NOT FOUND 404"} />
+          <Route path='*' element={<Navigate to={"/"}/>} />
       
           {/*Protected*/}
           
-          <Route element={<ProtectedRoute auth={window.localStorage.getItem("token")}
+          <Route element={<ProtectedRoute auth={window.sessionStorage.getItem("token")}
             login={login} redirectPath={"/"} checkTrigger={checkTrigger} />}
           >
             <Route path={"/admin/new-car"} element={<NewCarPage/>} />
@@ -64,7 +85,7 @@ function App() {
             <Route path={"/admin/accounts"} element={<Accounts/>} />
             <Route path={"/admin/reviews"} element={<ReviewsHandler/>} />
             <Route path={"/admin/timeTable"} element={<TimesOpeningHandler/>} />
-            <Route path={"/admin/*"} element={<h1>notfound</h1>} />
+            <Route path={"/admin/*"} element={<Navigate to={"/"}/>} />
           </Route>
           
         </Routes>
@@ -72,7 +93,7 @@ function App() {
       {
         !hidden[0] &&
         <div>
-          <TimeOpeningBlock openingTimes={openingTimes} />
+          <TimeOpeningBlock  />
           <Footer />
         </div>
       }
@@ -92,7 +113,7 @@ const ProtectedRoute = ({ auth, redirectPath, checkTrigger }) => {
   const dispatch = useDispatch()
  
   const checkToken = useCallback(() => {
-    if (localStorage.getItem("token")) {
+    if (auth) {
       CheckToken(auth).then((response) => {
         let isValid = response.data.status;
         if (isValid === 1) {
@@ -100,22 +121,23 @@ const ProtectedRoute = ({ auth, redirectPath, checkTrigger }) => {
           dispatch(add(userRole))
         } else {
           dispatch(remove())
-         
+          sessionStorage.clear()
         }
       })
     } else {
       dispatch(remove())
+      sessionStorage.clear()
     }
   },[dispatch,auth])
     
 
 
   useEffect(() => {
-     window.addEventListener("storage",checkToken())
+     window.addEventListener("storage",checkToken)
     
-    return window.removeEventListener("storage",checkToken())
+    return () => window.removeEventListener("storage",checkToken)
     
-},[checkTrigger,checkToken])
+},[checkTrigger])
 
 return auth
       ?

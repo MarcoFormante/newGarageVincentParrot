@@ -37,6 +37,8 @@ const Accounts = () => {
   
 
   function checkInputs(email, password) {
+    // eslint-disable-next-line no-empty-character-class
+    
     let isEmailValid = email.match(/([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?(\.[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?)+/)
     let isPasswordValid = password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,61}$/gm)
     if (!isPasswordValid) {
@@ -56,45 +58,31 @@ const Accounts = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
+  
     if (checkInputs(email, password)) {
-    let formData = new FormData();
-    formData.append("email", email);
-    formData.append("password", password)
-      let isRoleValid = false
-      if (localStorage.getItem("token")) {
-        CheckToken(localStorage.getItem("token"))
-          .then(response => {
-            isRoleValid = response.data.role === "admin"
-            if (isRoleValid) {
-              axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("token")}`;
-              axios.post('pages/admin/accounts.php',
-                {
-                  email: email,
-                  password: password
-                },
-                {
-                  headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                  }
-                }
-                
-              ).then(response => {
+      let formData = new FormData();
+      formData.append("email", email);
+      formData.append("password", password)
+     
+      axios.post('user/new', formData).then(response => {
+              console.log(response.data);
                 if (response.data.status === 1) {
                   setNewUser({id:response.data.userId, email:email})
                   notifySuccess("Ajoutè avec succès")
                   setEmail("");
                   setPassword("");
                 } else {
-                  notifyError("Erreur: un probleme est survenu , impossible de ajouter un nouveau compte")
+
+                  if (response.data.status === 0 && response.data.message.match(/Duplicate entry/)) {
+                      notifyError("Erreur: cet utilisateur existe deja")
+                  } else {
+                      notifyError("Erreur: un probleme est survenu, impossible d'ajouter un nouveau compte")
+                  }
+                    
                 }
-              })
-                .catch(error => {
-                  notifyError("Erreur: un probleme est survenu , impossible de ajouter un nouveau compte")
+              }).catch(error => {
+                  notifyError("Erreur: un probleme est survenu, impossible de ajouter un nouveau compte")
                 })
-              }
-          })
-       
-        }
        
     }
 }

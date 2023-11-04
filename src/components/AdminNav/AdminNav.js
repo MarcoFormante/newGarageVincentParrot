@@ -4,10 +4,15 @@ import { useSelector, useDispatch } from 'react-redux'
 import { toggle } from '../Reducers/MenuToggleReducer'
 
 
-const AdminNav = ({checkToken}) => {
-    const role = useSelector((state) => state.role.value)
+const AdminNav = ({ checkToken }) => {
+    const roleInStore = useSelector(state => state.role.value)
+    const [role,setRole] = useState((""))
     const [adminNavToggle, setAdminNavToggle] = useState(false)
-    const  dispatch = useDispatch()
+    const dispatch = useDispatch()
+    
+    useEffect(() => {
+        setRole(roleInStore  || window.sessionStorage.getItem("role") )
+    },[roleInStore])
     
     const adminLinks = [
         {
@@ -81,10 +86,11 @@ const AdminNav = ({checkToken}) => {
    
     return (
 
-       role
+       role && sessionStorage.getItem("token")
             ? 
             <div style={{display:"unset"}}>
                 <nav className={`admin_nav ${adminNavToggle ? "admin_nav--active" : ""}`}>
+                    
                 {role && role === "admin"
                         ? adminLinks.map((link, index) =>
                             <NavLink onClick={() => {

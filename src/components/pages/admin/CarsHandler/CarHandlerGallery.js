@@ -18,10 +18,10 @@ const CarHandlerGallery = ({carID}) => {
        
         if (carID) {
             setLoading(true)
-            const path = "pages/carDetails.php?carImages=true&id=" + carID
+            const path = `image/carGallery/${carID}`
             axios.get(path)
             .then(response => { 
-                    setGallery([...response.data])
+                    setGallery([...response.data.images])
                    
             }).catch(error => {
                 notifyError("Erreur: Impossible recuperer les images (Gallerie)")
@@ -35,6 +35,8 @@ const CarHandlerGallery = ({carID}) => {
             setGallery([])
             setNewGallery([])
         }
+
+        return () => {}
     },[carID])
     
     function deleteImg(img) {
@@ -45,14 +47,17 @@ const CarHandlerGallery = ({carID}) => {
 
 
    
-    function deleteImage(imgID,carid, imgPath) {
+    function deleteImage(carid, imgPath) {
+        
         if (gallery.length > 1) {
-            const path = `pages/admin/carHandler.php?car_id=${carid}&carImage=${imgPath}`
+            const path = `image/single/${carid}/${imgPath}`
              axios.delete(path)
                  .then(response => {
-                   
-                    notifySuccess("Image supprimè avec succès");
-                    setGallery(gallery.filter(image => parseInt(image.id) !== +imgID))
+                    if (response.data.status === 1) {
+                        notifySuccess("Image supprimè avec succès");
+                        
+                        setGallery(gallery.filter(image => image.path !== imgPath))
+                    }
             })
         } else {
             notifyError("La gallerie de photo de la voiture doit avoir aumoins une photo")
@@ -70,6 +75,8 @@ const CarHandlerGallery = ({carID}) => {
                 }
             });
         }
+
+        return () => {}
     },[newGallery])
 
 
@@ -77,29 +84,34 @@ const CarHandlerGallery = ({carID}) => {
          setLoading(true)
         if (newGallery.length > 0) {
            
-            const path = "pages/admin/carHandler.php"
+            const path = "image/new"
             const formData = new FormData()
             const resizedGallery = await resizeGalleryImages(newGallery);
 
             if (resizedGallery) {
                 resizedGallery.forEach((img) => {
-                    formData.append("gallerie[]",img)
+                    formData.append("gallery[]",img)
                 })
                 
-                formData.append("car_id",+carID)
+                formData.append("carID",+carID)
                 axios.post(path, formData, {
                 headers: {
                     "Content-Type":"application/x-www-form-urlencoded"
                 }
             }).then(response => {
                 if (response.data.status === 1) {
-                    
-                    response.data.imagePaths.forEach(path => {
+                    response?.data?.imagePaths.forEach(path => {
                         gallery.push({ id: +carID, path: path })
-                       
                     });
+                    const imgLength = response?.data?.imagePaths.length 
+                    const successSentence = imgLength > 1 ? "ajoutées avec succés" : "ajoutée avec succés"
                     setGallery([...gallery])
                     setNewGallery([])
+                    notifySuccess(successSentence)
+                } else {
+                    if (response.data.status === 0) {
+                        notifyError(response?.data?.message)
+                    }
                 }
                 
             }).finally(setLoading(false))
@@ -114,8 +126,8 @@ const CarHandlerGallery = ({carID}) => {
     new Promise((resolve) => {
         Resizer.imageFileResizer(
         file,
-        1280,
-        853,
+        600,
+        400,
         "WEBP",
             80,
         0,
@@ -154,7 +166,7 @@ const CarHandlerGallery = ({carID}) => {
                 {gallery && 
                     gallery.map((img, index) => <div key={"gallery_img_" + index } className='new_car_gallery_img_container'>
                     <img src={"/images/uploads/"+img.path} alt="" />
-                    <div className='delete-icon ' style={{display:"block",margin:"auto"}} onClick={() => deleteImage(+img.id,+carID,img.path)}></div>
+                    <div className='delete-icon ' style={{display:"block",margin:"auto"}} onClick={() => deleteImage(+carID,img.path)}></div>
                     </div>)
                   }
                 </div>

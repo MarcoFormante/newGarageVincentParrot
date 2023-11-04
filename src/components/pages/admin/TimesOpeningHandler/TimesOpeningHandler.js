@@ -24,11 +24,12 @@ const TimesOpeningHandler = () => {
   const notifyError = (text) => toast.error(text);
     
     useEffect(() => {
-        const timeTablePath = process.env.REACT_APP_HTTP + "pages/admin/timeTableHandler.php"  
-        axios.get(timeTablePath + "?getTime=" + true)
+
+        axios.get("timetable/all")
           .then(response => {
-            setTimeTable(response.data.timeTable)
+            setTimeTable(response.data.openingTimes)
           })
+        
     }, [])
   
   
@@ -65,7 +66,7 @@ const TimesOpeningHandler = () => {
   }
 
   function saveTimeValue() {
-    const timeTablePath = process.env.REACT_APP_HTTP + "pages/admin/timeTableHandler.php"
+  
     const formData = new FormData(); 
     formData.append("id", modalInputId);
     formData.append("column", modalValueColumn);
@@ -79,14 +80,8 @@ const TimesOpeningHandler = () => {
     if (modalInputValue) {
       console.log(modalInputValue);
 
-      axios.post(timeTablePath, formData, {
-
-        headers: {
-          "Content-Type": "application/www-x-urlencodeform"
-        }
-      })
+      axios.post("timetable/update", formData)
         .then(response => {
-          console.log(response.data);
           if (response.data.status === 1) {
 
             setLocalTimeValues();

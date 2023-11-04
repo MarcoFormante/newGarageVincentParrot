@@ -1,9 +1,11 @@
 
-import React, { useEffect, useState,useRef } from 'react'
+import React, { useEffect, useState,useRef, useLayoutEffect, useCallback } from 'react'
 import StarsBlock from '../../Stars/StarsBlock'
 import ButtonCta from '../../Buttons/ButtonCta'
 import Arrows from '../../Arrows/Arrows'
 import axios from '../../../api/axios'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/all'
 
 //Section "Vos Avis" in home page
 const AvisSection = () => {
@@ -14,13 +16,14 @@ const AvisSection = () => {
     const [avis, setAvis] = useState([]);
     const [reviewsAverage, setReviewsAverage] = useState(0)
     const [totalStarsLength, setTotalStarsLength] = useState([])
-    const [sum,setSum] = useState(0)
-
+    const [sum, setSum] = useState(0)
+    const [average,setAverage] = useState(0)
+    const triggerScoreAnimation = React.useRef()
     
     useEffect(() => {
-    const homepagePath = "pages/homePage.php?reviews=true";
-        axios.get(homepagePath)
+        axios.get("review/all")
             .then(response => {
+                console.log(response.data);
                 setAvis([...response.data.reviews])
             })
     }, [])
@@ -36,14 +39,33 @@ const AvisSection = () => {
     }
     
     useEffect(() => {
-        const homepagePath ="pages/homePage.php?totalReviews=true";
-        axios.get(homepagePath)
+        axios.get("review/total")
             .then(response => {
-                
-                TotalReviewsCalculate(response.data.total[0]);
+                TotalReviewsCalculate(...response.data.total);
             })
     }, [])
     
+
+    const averageAnimation = useCallback(() => {
+            setTimeout(() => {
+                if (average === Math.floor(reviewsAverage) ) {
+                    setAverage(reviewsAverage)
+                } else {
+                    setAverage(average + 1)
+                }
+            }, 100);
+    }, [average, reviewsAverage]) 
+    
+
+    useEffect(() => {
+        if (average <= Math.floor(reviewsAverage)) {
+            averageAnimation()
+        } else {
+            return ()=>{}
+        }
+        
+    },[average])
+ 
 
     
     const handleScrollCarousel = (direction) => {
@@ -51,7 +73,7 @@ const AvisSection = () => {
             const cardPadding = 20;
             carousel.current.scrollBy({
                 top: 0,
-                left: direction + window.innerWidth - cardPadding,
+                left: direction + 310,
                 behavior: "smooth"
             })
             
@@ -81,9 +103,9 @@ const AvisSection = () => {
             }
     
         }
-    }, [arrowTarget, carouselWidth])
+    }, [arrowTarget, carouselWidth,avis.length])
 
-  
+
 
     useEffect(() => {
         if (avis.length > 0) {
@@ -97,7 +119,7 @@ const AvisSection = () => {
                 setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);
             })
         }
-        }, [carouselX,carouselWidth])
+        }, [carouselX,carouselWidth,avis.length])
 
 
     
@@ -105,14 +127,14 @@ const AvisSection = () => {
             <div className={'section_avis'} >
                 {avis.length > 0 ? <div>
                     <h3 className={'section_title section_title_avis'}>Vos avis</h3> 
-                    <div className={"section_page section_page--grey"}>
+                    <div className={"section_page section_page--grey"} ref={triggerScoreAnimation}>
                         <div className={'avis_score'}>
                             <div className={"avis_score_stars"}>
                                 {/** stars block set "clickable" for avis page */}
                                 <StarsBlock numberOfActiveStars={5} clickable={false}/>
-                                <span className={'score'}>{reviewsAverage > 5 ? 5 : reviewsAverage}/5</span>
+                                <span className={'score'}>{average}/5</span>
                             </div>
-                            <ScoreBarsBlock sum={sum} totalStarsLength={totalStarsLength} />
+                            <ScoreBarsBlock sum={sum} totalStarsLength={totalStarsLength} averageAnimation={averageAnimation} triggerAnimation={triggerScoreAnimation} />
                         </div>
                     </div>
     
@@ -120,7 +142,7 @@ const AvisSection = () => {
                     
                     <div className={"avis_cards_container"}>
                         <div className={"avis_cards_container_inner"} style={avis.length * 250 < window.innerWidth ? { justifyContent: "center" } : {}} ref={carousel}>
-                            {avis && avis.map((avis, index) =>   <AvisCard key={"avis_" + index +"_card" } name={avis.name}  message={avis.message} review={avis.review} />)}
+                            {avis && avis.map((avis, index) =>  <AvisCard key={"avis_" + index +"_card" } name={avis.name}  message={avis.message} review={avis.review} />)}
                         </div>
                     
                     </div>
@@ -142,16 +164,20 @@ const AvisSection = () => {
 export default AvisSection
 
 
-const ScoreBarsBlock = ({totalStarsLength,sum}) => {
+const ScoreBarsBlock = ({totalStarsLength,sum,averageAnimation,triggerAnimation}) => {
     const bars = [1, 2, 3, 4, 5];
   
 
     return (
     <div>
             {bars.map((bar, index) =>
-                <ScoreBar sum={sum} key={"scorebar_bar" + bar + index}
+                <ScoreBar
+                    sum={sum}
+                    key={"scorebar_bar" + bar + index}
                     totalStarsLength={totalStarsLength[index]}
                     scoreNum={bar}
+                    averageAnimation={averageAnimation}
+                    triggerAnimation={triggerAnimation}
                 />
             )}
     </div>
@@ -159,11 +185,14 @@ const ScoreBarsBlock = ({totalStarsLength,sum}) => {
 }
 
 
-const ScoreBar = ({ scoreNum, totalStarsLength,sum}) => {
+const ScoreBar = ({ scoreNum, totalStarsLength,sum,averageAnimation,triggerAnimation}) => {
     
     const [barWidth, setBarWidth] = useState(477)
-    const [percentage,setPercentage] = useState((totalStarsLength / (sum - totalStarsLength / barWidth) ) * 100)
+    const [percentage, setPercentage] = useState((totalStarsLength / (sum - totalStarsLength / barWidth)) * 100)
+    const comp = React.useRef()
     const width = React.useRef()
+    const el = React.useRef()
+    const scoreBar = React.useRef()
 
     useEffect(() => {
         if (width?.current) {
@@ -184,14 +213,34 @@ const ScoreBar = ({ scoreNum, totalStarsLength,sum}) => {
 
     useEffect(() => {
         setPercentage((totalStarsLength / (sum - totalStarsLength / barWidth) ) * 100)
-    },[totalStarsLength,barWidth,sum])
+    }, [totalStarsLength, barWidth, sum])
+    
+    useLayoutEffect(() => {
+       gsap.registerPlugin(ScrollTrigger)
+        let ctx = gsap.context(() => {
+            gsap.to(el?.current, {
+                width: percentage * barWidth / 100,
+                duration: 2,
+                scrollTrigger: {
+                    trigger: triggerAnimation.current,
+                    start: "-50% center",
+                   
+                },
+                onStart: () => {
+                  averageAnimation()
+                }
+            })
+        },comp.current);
+        
+        return () => ctx.revert();
+    },[barWidth,percentage])
    
     return (
         <div>
-            <div className={'score_bar'} >
+            <div className={'score_bar'} ref={scoreBar} >
                 <span className={'score_num_bar'}>{scoreNum + " Stars"}</span>
-                <div className={'bar_outer'} ref={width}>
-                    <div className={'bar_inner'} style={ (totalStarsLength && barWidth && width!==null)  ? { width: (((percentage /100 ) * barWidth)) + "px", maxWidth: barWidth   } : {width:0}}>
+                <div className={'bar_outer'} ref={width} style={{overflow:"hidden"}}>
+                    <div className={'bar_inner'} ref={el} style={{width:0}}>
                         {/** dynamic bar that change the width fething dataScore from database */}
                     </div>
                 </div>
@@ -204,7 +253,7 @@ export const AvisCard = ({name,message,review,style}) => {
     
     return (
         <>
-            <div className={'avis_card'}  style={style}>
+            <div className={'avis_card'} style={style}>
 
                 <span className={'avis_card_name'}>{name}</span>
               

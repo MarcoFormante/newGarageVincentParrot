@@ -56,24 +56,24 @@ switch ($requestMethod) {
         }
 
 
-        if (isset($_POST['newEquipment'])) {
-            $equipment = htmlspecialchars($_POST['newEquipment']);
-            $CarHandlerController = new CarHandlerController();
-            $CarHandlerController->addNewEquipment($equipment);
-            break;
-        }
+        // if (isset($_POST['newEquipment'])) {
+        //     $equipment = htmlspecialchars($_POST['newEquipment']);
+        //     $CarHandlerController = new CarHandlerController();
+        //     $CarHandlerController->addNewEquipment($equipment);
+        //     break;
+        // }
 
 
-        if (isset($_POST['table']) && isset($_POST['column']) && isset($_POST['id'])) {
-            $CarHandlerController = new CarHandlerController();
-            if ($_FILES) {
-                $CarHandlerController->updateCar($_POST['table'],$_POST['column'],$_FILES['value'],$_POST['id'],$_POST['imageData']);
-            }else{
-                $CarHandlerController->updateCar($_POST['table'],$_POST['column'],$_POST['value'],$_POST['id']);
-            } 
+        // if (isset($_POST['table']) && isset($_POST['column']) && isset($_POST['id'])) {
+        //     $CarHandlerController = new CarHandlerController();
+        //     if ($_FILES) {
+        //         $CarHandlerController->updateCar($_POST['table'],$_POST['column'],$_FILES['value'],$_POST['id'],$_POST['imageData']);
+        //     }else{
+        //         $CarHandlerController->updateCar($_POST['table'],$_POST['column'],$_POST['value'],$_POST['id']);
+        //     } 
 
-            break;
-        }
+        //     break;
+        // }
 
         if (isset($_POST['car_id']) && isset($_FILES['gallerie'])) {
             $CarHandlerController = new CarHandlerController();

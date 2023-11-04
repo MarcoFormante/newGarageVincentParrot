@@ -1,26 +1,12 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] .'/app/api/models/connection.php';
-Class Service{
+require_once 'AbstractModel.php';
 
-    use Connection;
+
+Class ServiceModel extends AbstractModel
+{
+
    
     public function getAllServices(){
-        $query="SELECT service from services ";
-
-        if (!is_null($this->pdo)) {
-            $stmt = $this->pdo->prepare($query);
-            $arrServices = [];
-            if ($stmt->execute()) {
-                while($row = $stmt->fetch(PDO::FETCH_COLUMN)){
-                    $arrServices[]=$row;
-                }
-                
-                return $arrServices;
-            }
-        }
-    }
-
-    public function getAllServicesADM(){
         $query="SELECT * from services ";
 
         if (!is_null($this->pdo)) {
@@ -31,8 +17,12 @@ Class Service{
                     $arrServices[]=$row;
                 }
                 
-                return $arrServices;
+                return ["status"=>1,"services"=>$arrServices];
+            }else{
+                return $this->error("Erreur pendant la recuperation des services.");
             }
+        }else{
+            return $this->error("Erreur pendant la recuperation des services.");
         }
     }
 
@@ -40,7 +30,7 @@ Class Service{
 
     public function updateService(string $editType,int $id, string $value){
        $query ="";
-      
+      try {
         if ($editType === "update") {
              
             $query = "UPDATE services SET service = :value WHERE id = :id";
@@ -59,16 +49,22 @@ Class Service{
 
             if ($stmt->execute()) {
                 if ($editType === "update") {
-                    echo json_encode(['status'=>1,"message"=> "Service Modifié avec succès"]);
+                    return ['status'=>1,"message"=> "Service Modifié avec succès"];
                 }else{
-                    echo json_encode(['status'=>1,"message"=> "Service supprimé avec succès"]);
+                   return ['status'=>1,"message"=> "Service supprimé avec succès"];
                 }
              
-            }else{
-                echo json_encode(['status'=>0,"message"=> "Erreur pendant la modification du service, rententez."]);
+            }else{ 
+                throw new PDOException("Erreur pendant la modification du service, rententez.");
             }
 
+        }else{
+            throw new PDOException("Erreur pendant la modification du service, rententez.");
         }
+      } catch (\Exception $e) {
+        $this->error($e->getMessage());
+      }
+       
     }
 
 
@@ -80,11 +76,13 @@ Class Service{
             $stmt->bindValue(':value',$value,PDO::PARAM_STR);
 
             if ($stmt->execute()) {
-                echo json_encode(['status'=>1,"message"=> "Service ajouté avec succés", "lastId"=> $this->pdo->lastInsertId()]);
+                return ['status'=>1,"message"=> "Service ajouté avec succés", "lastId"=> $this->pdo->lastInsertId()];
             }else{
-                echo json_encode(['status'=>0,"message"=> "Erreur pendant l'ajoute du nouveau service, rententez."]);
+                return $this->error("Erreur pendant l'ajout du nouveau service.");
             }
 
+        }else{
+            return $this->error("Erreur pendant l'ajout du nouveau service.");
         }
     }
 }

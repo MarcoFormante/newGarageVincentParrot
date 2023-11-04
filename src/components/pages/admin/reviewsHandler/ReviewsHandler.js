@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import axios from '../../../../api/axios'
 import PageTitle from '../../../PageTitle/PageTitle'
 import { AvisCard } from '../../Home/AvisSection'
@@ -18,9 +18,11 @@ const ReviewsHandler = () => {
     
 
     const getReviews = useCallback(() => {
+        const formData = new FormData();
+        formData.append("currentPage", currentPage)
+        formData.append("filters", filters)
         
-        const homepagePath = `pages/admin/reviewHandler.php?currentPage=${currentPage * 9}&filter=${filters}`;
-        axios.get(homepagePath)
+        axios.post("review/allToValidate",formData)
             .then(response => {
                 if (response.data.status === 1) {
                     let reviews = [];
@@ -32,7 +34,6 @@ const ReviewsHandler = () => {
                         const reviewCount = response.data.reviews[0]?.count === undefined || response.data.reviews[0]?.count === null ? 0 : response.data.reviews[0]?.count
                         if (response.data.filter === 0) {
                           
-                           
                         } else {
                             notifySuccess(`Nombre d'avis : ${reviewCount}`)
                         }
@@ -47,7 +48,7 @@ const ReviewsHandler = () => {
  
     useEffect(() => {
           getReviews()
-       
+          return () => {}
     }, [currentPage,filters,getReviews])
 
     
@@ -55,19 +56,14 @@ const ReviewsHandler = () => {
 
     
     function toggleReviewValidation(avisId, av) {
+        console.log(avis);
         let newValidationNumber = !parseInt(av.is_validate);
         const formData = new FormData();
         formData.append("reviewValidationValue", +newValidationNumber);
         formData.append("reviewValidationId", parseInt(avisId));
-        axios.post("pages/admin/reviewHandler.php", formData, {
-
-            headers: {
-                    "Content-Type": "application/www-x-urlencodeform"
-            }
-        }
-        ).then(response => {
-           
-            if (response.status === 200 && response.data.status === 1) {
+        axios.post(`review/validation/${+newValidationNumber}/${+avisId}`)
+            .then(response => {
+            if (response?.data?.status === 1) {
                 setAvis([...avis], av.is_validate = parseInt(av.is_validate) === 0 ? 1 : 0);
                 notifySuccess("Modifié avec succès");
             } else {

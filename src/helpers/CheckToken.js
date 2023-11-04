@@ -1,7 +1,7 @@
-import axios from "axios"
+import axios from "../api/axios";
 
 export default function CheckToken(token) {
     let formData = new FormData();
     formData.append("token", token)
-    return axios.post(`${process.env.REACT_APP_HTTP}helpers/check/index.php`,formData)
+    return axios.post("user/checkToken",formData)
 }

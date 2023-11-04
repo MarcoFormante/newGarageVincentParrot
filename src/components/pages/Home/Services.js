@@ -5,19 +5,13 @@ import axios from '../../../api/axios'
 const Services = () => {
   const [services,setServices]=useState([])
   
-  useEffect(() => {
-    //dev
-    // const homepagePath = process.env.REACT_APP_HTTP + "pages/homePage.php?services=true";
-    //prod
-    
-    const homepagePath = "pages/homePage.php?services=true";
-    axios.get(homepagePath)
-      .then(response => { setServices(response.data.services) })
+  useEffect(() => { 
+   
+    axios.get("service/all")
+      .then(response => { setServices(response?.data?.services || [])})
       .catch(error=>console.warn(error.data.message))
 },[])
   
- 
-
   return (
     <div className={'section_page section_page_services'}>
         <h3 className={'section_title section_title_services'}>Decouvrez nos services</h3> 
@@ -35,13 +29,12 @@ const Services = () => {
       </figure>
       
           <ul className={"services_list"}>
-        {services && services.map((service,index)=> <li key={"service_"+index+service.length}>{service}</li>)}
+        {services && services.map((data,index)=> <li key={"service_" + index}>{data.service}</li>)}
           </ul>
 
       <p className={'txt_services txt_services_after_list mar-top-50'}>N’hésitez pas à nous <Link to={"/contact"}>contacter </Link>
          si vous souhaitez obtenir plus d’informations. Notre équipe se tient à votre disposition pour répondre
         à toutes vos questions et vous fournir les reinseignements dont vous avez besoin.</p>
-        
     </div>
   )
 }

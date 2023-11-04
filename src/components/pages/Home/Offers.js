@@ -11,8 +11,9 @@ const Offers = ({cars,count}) => {
     const [carouselX, setCarouselX] = useState(0)
     const [pathName, setPathName] = useState("")
     const [offerCards, setofferCards] = useState([])
-    const [offerLimit, setOfferLimit] = useState(0);
     const [carCount, setcarCount] = useState(0);
+    const [screenWidth, setScreenWidth] = useState(0)
+    const [imgWidth,setImgWidth] = useState(0)
 
  
 
@@ -20,7 +21,7 @@ const Offers = ({cars,count}) => {
     const handleScrollCarousel = React.useCallback((direction) => {
         const cardPadding = 20;
             carousel.current.scrollBy({
-                left: direction + window.innerWidth - cardPadding,
+                left: direction + 310,
                 behavior: "smooth"
             })
         /** prevent multiple clicks*/
@@ -56,38 +57,50 @@ const Offers = ({cars,count}) => {
     // every tick check scrollLeft of carousel ref
     useEffect(() => {
         
-        carousel.current.addEventListener("scroll", () => {
+        carousel?.current?.addEventListener("scroll", () => {
             setCarouselX(carousel?.current?.scrollLeft)
             setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);  
         })
 
-        return carousel.current.removeEventListener("scroll", () => {
+        return carousel?.current?.removeEventListener("scroll", () => {
             setCarouselX(carousel?.current?.scrollLeft)
             setCarouselWidth(carousel?.current?.scrollWidth - carousel?.current?.offsetWidth);  
         })
 
-        }, [carouselX,carouselWidth,carousel?.current?.offsetWidth])
+    }, [carouselX, carouselWidth, carousel?.current?.offsetWidth])
+    
+
+    useEffect(() => {
+        window.addEventListener("resize", (e) => {
+            if (e.target) {
+                setScreenWidth(e.target.innerWidth)
+            }
+        })
+
+        return () => window.removeEventListener("resize", (e) => {
+            if (e.target) {
+                setScreenWidth(e.target.innerWidth)
+            }
+        })
+    },[])
+
 
     
     
      useEffect(() => {
-        const homepagePath = "pages/homePage.php";
-        const formData = new FormData();
-            formData.append('limit', offerLimit)
-            axios.post(homepagePath, formData, {
-                headers: {"Content-Type": "application/x-www-form-urlencoded"}})
+         axios.get(`car/offers`)
                 .then(response => {
-                  
+                  console.log(response.data);
                 if (response?.data?.status !== 0 && response?.status === 200) {
                       
-                    if (response?.data?.cars[0]?.length > 0) {
-                            setcarCount(response?.data?.cars[1]) 
-                            setofferCards(response?.data?.cars[0])
+                    if (response?.data?.cars?.length > 0) {
+                            setcarCount(response?.data?.count) 
+                            setofferCards(response?.data?.cars)
                         }
                         
                       } else {
-                        //create component for error page
-                        console.warn(response.data.message)
+                    
+                        console.warn(response?.data?.message)
                     }
                 
                 }).catch(error => console.warn(error))  
@@ -100,12 +113,12 @@ const Offers = ({cars,count}) => {
     return (
         <div style={offerCards && offerCards?.length > 0 ? {display:"block"} : {display:"none"}}>
              <h3 className={'section_title section_title_offres'}>{!parseInt(offerCards[0]?.offer) > 0 ? "Les dernieres arrivées" : "Les offres du moment"}</h3>
-            <Arrows cardsTotalWidth={offerCards.length * 296} carouselX={carouselX} carouselWidth={carouselWidth} onClick={(direction)=>setArrowTarget(direction)}  />
+            <Arrows cardsTotalWidth={offerCards.length * imgWidth } carouselX={carouselX} carouselWidth={carouselWidth} onClick={(direction)=>setArrowTarget(direction)}  />
            
-            <div className={"section_page section_page--grey"}>
+            <div className={"section_page section_page--grey"} >
             <div className={'carCards_container'} ref={carousel} style={{overflowY:"hidden"}}>
-            <div className={'page_section page_section_offers card_carousel_flex'} style={offerCards.length * 320 < window.innerWidth ? { justifyContent: "center",} : {}}>
-                { offerCards && offerCards?.map((car, index) => car.id  && <CarCard lastlocation={"home"} key={index}  {...offerCards[index]} />) }
+            <div className={'page_section page_section_offers card_carousel_flex'}  style={offerCards.length * imgWidth < window.innerWidth ? { justifyContent: "center"} : {}}>
+                { offerCards && offerCards?.map((car, index) => car.id  && <CarCard setImgWidth={setImgWidth}  lastlocation={"home"} key={index}  {...offerCards[index]} />) }
             </div>
               
             </div>

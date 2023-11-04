@@ -17,7 +17,7 @@ overflow-y: scroll;
 
 .exitBtn{
     position: absolute;
-    top: 87px;
+    top: 95px;
     left: 20px;
     width: 40px;
     height: 40px;
@@ -27,7 +27,11 @@ overflow-y: scroll;
     background-size: contain;
     transform: rotateY(180deg);
     cursor: pointer;
+    z-index: 9;
 
+    @media screen and (min-width:769px) {
+        top: 120px;
+    }
  }
 
  

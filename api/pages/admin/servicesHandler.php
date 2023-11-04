@@ -3,14 +3,19 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 
 
-require '../../models/service.php';
+
+
 require_once  '../../controllers/ServiceController.php';
 
-if (isset($_GET['servicesADM'])) {
+
+$AuthToken = apache_request_headers()["Authorization"];
+var_dump(str_replace("Bearer ","",$AuthToken));
+
+if (isset($_GET['service'])) {
 
    try{
         $serviceController = new ServiceController();
-        $services = $serviceController->getAllServicesADM();
+        $services = $serviceController->getAllServices();
         echo json_encode(["status"=> 1, "services" => $services]);
     }catch(Exception $e){
         echo json_encode(["status"=> 0, "message" => "Erreur: " . $e]);

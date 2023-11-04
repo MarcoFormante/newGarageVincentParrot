@@ -17,18 +17,11 @@ const AvisPage = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const avisPagePath = "pages/newReview.php";
     const formData = new FormData();
-    formData.append("newReview", true);
     formData.append("name", name);
     formData.append("message", message);
     formData.append("review", review);
-    axios.post(avisPagePath, formData, {
-      headers:
-      {
-        "Content-Type": "application/x-www-form-urlencoded"
-      }
-    }).then(response => {
+    axios.post("review/new", formData).then(response => {
         if (response.data.status === 1) {
           notifySuccess(response.data.message)
           setName("")

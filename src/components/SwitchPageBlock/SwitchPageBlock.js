@@ -9,7 +9,7 @@ const SwitchPageBlock = (props) => {
     useEffect(() => {
         ///fetch data , Count of cars 
         setDataLength(props.dataLength);
-        const maxCarsforPage = 10;
+        const maxCarsforPage = 12;
 
         //if dataLength > maxCarsforPage set new array of pages and set pages ::  useState()
         if (dataLength > maxCarsforPage) {

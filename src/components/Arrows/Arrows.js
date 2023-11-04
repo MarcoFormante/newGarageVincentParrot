@@ -2,7 +2,6 @@ import React from 'react'
 
 const Arrows = ({ cardsTotalWidth ,carouselX, carouselWidth, onClick }) => {
 
-  
   return (
     <div className={"arrows_container"}>
       <button className={'arrow arrow_left_car_ca rousel'}

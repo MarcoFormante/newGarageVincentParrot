@@ -18,8 +18,7 @@ const ServicesHandler = () => {
     const notifyError = (text) => toast.error(text);
 
     useEffect(() => {
-        const servicesPath = "pages/admin/servicesHandler.php?servicesADM=true";
-        axios.get(servicesPath)
+        axios.get("service/all")
             .then(response => {
                 if (response.data.status === 1) {
                     if (response.data.services) {
@@ -27,12 +26,11 @@ const ServicesHandler = () => {
                     } else {
                         console.error("ERROR , Impossible de recevoir les données")
                     }
-
                 } else {
                     console.error("ERROR , Impossible de recevoir les données");
                 }
-                
             }).catch(error => console.error("ERROR , Impossible de recevoir les données"))
+            return () => {}
     }, [])
 
 
@@ -61,24 +59,21 @@ const ServicesHandler = () => {
 
 
     function updateService() {
-        const servicesPath = process.env.REACT_APP_HTTP + "pages/admin/servicesHandler.php";
+       
         if ( Type === "update" || Type === "delete") {
             const formData = new FormData()
             if (Type && Type === "update") {
-                formData.append("edit", "update")
-                formData.append("value",modalInptValue)
+                formData.append("editType", "update")
+                formData.append("value", modalInptValue.trim())
             } else if(Type && Type === "delete") {
-                formData.append("edit", "delete")
+                formData.append("editType", "delete")
                 formData.append("value","null")
             }
            
             formData.append("id", serviceId)
            
-            axios.post(servicesPath, formData, {
-                headers: {
-                    "Content-Type":"application/www-x-urlencodeform"
-                }
-            }).then(response => {
+            axios.post("service/update", formData)
+                .then(response => {
                 if (response.data.status === 1) {
                     if (Type === "update") {
                         services[serviceIndex].service = modalInptValue;
@@ -101,14 +96,13 @@ const ServicesHandler = () => {
 
 
     function addNewService() {
-        const servicesPath = process.env.REACT_APP_HTTP + "pages/admin/servicesHandler.php";
+        const servicesPath = "service/new";
         if (newService) {
             const formData = new FormData()
-            formData.append("add",true)
             formData.append("value",newService)
             axios.post(servicesPath, formData, {
                 headers: {
-                    "Content-Type": "application/www-x-urlencodeform"
+                    "Content-Type": "application/x-www-form-urlencoded"
                 }
             }).then(response => {
                 if (response.data.status === 1) {
@@ -124,7 +118,7 @@ const ServicesHandler = () => {
                 }
             }).finally(resetValues())
         } else {
-            notifyError("Il faut ecrir d'abord un nouveau service")
+            notifyError("Ce champs peut pas etre vide")
         }
     }
 
@@ -140,7 +134,7 @@ const ServicesHandler = () => {
           {modalToggle &&
               <Modal title={Type === "update" ? modalTitle : "Voulez-vous supprimer ce service?" } type={Type === "update" ? "input" : "alert"} buttonText={"Sauvegarder"} onExit={() => resetValues()} onClick={()=> updateService()}>
                   <div className='container--center--column gap-20'>
-                    <label htmlFor="serviceInpt">{Type === "update" ? "Modifier" : "Service à effacer"}</label>
+                    <label htmlFor="serviceInpt">{Type === "update" ? "Modifier" : "Service à supprimer"}</label>
                       <textarea disabled={Type === "delete"}
                           style={{ padding: 10, width:300, height:"fit-content",maxHeight:100 }}
                           type="text" id='serviceInpt'
@@ -155,8 +149,15 @@ const ServicesHandler = () => {
           <div className='container--pad-top'>
               <div className='input_center_handler container--center--column gap-20 mar-bot-20' >
                   <label htmlFor="newService" className='text-bold'>Nouveau service :</label>
-                    <textarea type="text" placeholder='Ecrir ici le nouveau service' value={newService} id='newService' onChange={(e)=> setNewService(e.target.value)} style={{minWidth:300,paddingLeft:5,minHeight:80,paddingTop:4}} />
-                    <button className='cta cta--red'  onClick={() =>handleNewService("add")}>Ajoute</button>
+                  <textarea type="text"
+                      placeholder='Ecrir ici le nouveau service'
+                      value={newService} id='newService'
+                      onChange={(e) => setNewService(e.target.value)}
+                      style={{ minWidth: 300, paddingLeft: 5, minHeight: 80, paddingTop: 4 }}
+                  />
+                  <button className='cta cta--red'
+                      onClick={() => handleNewService("add")}
+                  >Ajoute</button>
                 </div>
         <table className='table_servicesHandler'>
             <thead>
@@ -167,8 +168,7 @@ const ServicesHandler = () => {
                   </tr>
             </thead>
             <tbody>
-              
-                      {services && services.map((service, index) =>
+                {services && services.map((service, index) =>
                 <tr key={`service_row${service.id}`}>
                     <td>{service.service}</td>
                     <td>
@@ -186,7 +186,7 @@ const ServicesHandler = () => {
                         </span>
                     </td>
                 </tr>
-                )}
+             )}
                
             </tbody>
           

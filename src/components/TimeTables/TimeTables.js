@@ -1,28 +1,33 @@
 import React, { useEffect, useState } from 'react'
 import axios from '../../api/axios'
-const TimeTables = ({ openingTimes }) => {
+
+
+
+const TimeTables = () => {
     const [openingTime,setOpeningTime] = useState([])
     const days = ["lun", "mar", "mer", "jeu", "ven", "sam", "dim"]
 
-
     useEffect(() => {
-        const homepagePath = "pages/homePage.php?openingTimes=true";
-        axios.get(homepagePath)
-            .then(response => {
+            axios.get("timetable/all")
+                .then(response => {
                 setOpeningTime(response.data.openingTimes)
             })
     },[])
 
-    
-
   return (
-      openingTimes && <div>
+      openingTime && <div>
           <h3 className={'section_title section_title_time_tables'}>Nos horaires</h3> 
           <div className='time_table_container'>
               <table>
                   <tbody>
                     <tr>
-                    {openingTime && openingTime.map((time, index) => <td key={"time_table" + index}> <TimeComponent  {...time}  day={days[index]} />   </td>)}
+                          {openingTime && openingTime.map((time, index) =>
+                              <td key={"time_table" + index}>
+                                  <TimeComponent
+                                      {...time}
+                                      day={days[index]}
+                                  />
+                              </td>)}
                     </tr>
                     </tbody>
               </table>

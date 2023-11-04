@@ -46,6 +46,7 @@ const DetailsInputs = ({ formValues ,setFormValues,formIsValid }) => {
         })
     }
     document.querySelectorAll("select").forEach(inpt => inpt.value = "")
+    
   },[formIsValid])
 
   return (

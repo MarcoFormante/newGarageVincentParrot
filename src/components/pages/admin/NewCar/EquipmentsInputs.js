@@ -18,14 +18,9 @@ const EquipmentsInputs = ({formValues,setFormValues,formIsValid}) => {
     
     function addEquipement() {
         if (modalInput) {
-            const carHandlerPage = "pages/admin/carHandler.php"
             const formData = new FormData()
             formData.append("newEquipment",modalInput)
-            axios.post(carHandlerPage, formData, {
-                headers: {
-                    "Content-Type":"application/x-www-form-urlencoded"
-                }
-            }).then(response => {
+            axios.post(`equipment/new/${modalInput}`).then(response => {
                 
                 if (response.data.status === 1) {
                     setEquipments([...equipments,{id: response.data.equipId, equipment: modalInput }])
@@ -43,7 +38,7 @@ const EquipmentsInputs = ({formValues,setFormValues,formIsValid}) => {
                 }
             })
         }
-       
+        return () => {}
     }
 
 
@@ -54,7 +49,7 @@ const EquipmentsInputs = ({formValues,setFormValues,formIsValid}) => {
 
 
     useEffect(() => {
-        const carHandlerPage ="pages/admin/carHandler.php?getAllEquipments=true"
+        const carHandlerPage ="equipment/all"
         axios.get(carHandlerPage)
             .then(response => {
                 if (response.data.status === 1) {
@@ -62,7 +57,7 @@ const EquipmentsInputs = ({formValues,setFormValues,formIsValid}) => {
                     setEquipments([...data])
             }
         })
-      
+        return () => {}
     }, [])
 
 

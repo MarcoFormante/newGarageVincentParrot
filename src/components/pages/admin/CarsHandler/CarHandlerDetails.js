@@ -3,10 +3,10 @@ import axios from '../../../../api/axios'
 import PageTitle from '../../../PageTitle/PageTitle'
 import Modal from '../../../Modal/Modal'
 import toast, { Toaster } from 'react-hot-toast';
-
 import CarHandlerGallery from './CarHandlerGallery';
 
-const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setNewCarDetailsArray, newCarDetailsArray ,isDetailUpdate, setIsDetailUpdate}) => {
+
+const CarHandlerDetails = ({ carIndex, carProps, setCarProps, setDataToUpdate,setIsDetailUpdate}) => {
     const [carDetails, setCarDetails] = useState([])
     const [carEquipments, setCarEquipements] = useState([])
     const [activeDetail, setActiveDetail] = useState(false)
@@ -16,17 +16,16 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
     
     const detailsTitles = ["Boîte de vitesse", "Puissance DIN", "Puissance fiscale", "Couleur", "Portières", "Sièges", "Énergie"]
     const detailsColumn = ['gearbox', "din_power", "fiscal_power", "color", "doors", "seats", "energy"]
-
     const notifySuccess = (text) => toast.success(text);
     const notifyError = (text) => toast.error(text);
  
- 
     
     useEffect(() => {
-        if (carID) {
-            const detailsPath = "/pages/carDetails.php?details=true&id=" + carID
-            axios.get(detailsPath)
+        if (carProps) {
+            axios.get(`equipment/id/${carProps.id}`)
                 .then(response => {
+                    if (response.data?.status === 1) {
+                        
                         const {
                             gearbox,
                             din_power,
@@ -35,7 +34,7 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
                             doors,
                             seats,
                             energy
-                        } = response.data.details;
+                        } = carProps;
                         
                         const detailsArray = [
                             gearbox,
@@ -47,14 +46,21 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
                             energy
                         ];
                         
-                        setCarDetails([...detailsArray])
-                        setCarEquipements([...response.data.equipements])
+                    setCarDetails([...detailsArray])
+                    if (response?.data?.equipments) {
+                        setCarEquipements([...response.data.equipments])
+                    } else {
+                        setCarEquipements([])
+                    }
+                      
                         setIsDetailUpdate(false)
-                
+                    } else {
+                        setCarProps(null)
+                    }
             })
         }
         
-    }, [carID])
+    }, [carProps,setCarProps,setIsDetailUpdate])
     
 
     const handleActiveDetailBlock = (clicked_element) => {
@@ -82,34 +88,17 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
     }
 
 
-    useEffect(() => {
-       if (dataToUpdate?.table === "car_details") {
-        let newDetailArray = []
-        carDetails.forEach((detail,i) => {
-            if (carDetails[dataToUpdate.index] !== detail) {
-                newDetailArray.push(carDetails[i])
-          
-            } else {
-                newDetailArray.push(dataToUpdate.value)
-            }
-                setNewCarDetailsArray([...newDetailArray])
-        });
-        }
-        if (isDetailUpdate) {
-            setCarDetails([...newCarDetailsArray])
-        } 
-    }, [dataToUpdate,carDetails,isDetailUpdate,newCarDetailsArray,setNewCarDetailsArray])
-    
+   
 
     function deleteEquipment(carID, equipID) {
-        const equipmentPath = `/pages/admin/carHandler.php?car_id=${carID}&equip_id=${equipID}`
-        axios.delete(equipmentPath)
+      
+        axios.delete(`equipment/delete/${carID}/${equipID}`)
             .then(response => {
-                if (response.data.status === 1) {
+                if (response?.data?.status === 1) {
                     setCarEquipements([...carEquipments.filter(equip => +equip.equip_id !== +equipID)])
-                    notifySuccess(response.data.message)
-                } else if(response.data.status === 0) {
-                    notifyError(response.data.message)
+                    notifySuccess(response?.data?.message)
+                } else if(response?.data?.status === 0) {
+                    notifyError(response?.data?.message)
                 } else {
                     notifyError("Erreur: Un probleme est survenu, impossible de supprimer l'equipment")
                 }
@@ -118,15 +107,16 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
     }
 
     useEffect(() => {
-            const equipmentsPath = "pages/admin/carHandler.php?getAllEquipments=true"
+            const equipmentsPath = "equipment/all"
             axios.get(equipmentsPath)
                 .then(response => {
+                    console.log(response.data);
                 if (response.data.status === 1) {
                        setAllEquipments([...response.data.equipments])
                     } else if (response.data.status === 0) {
                         notifyError("Erreur: Un probleme est survenu, impossible recuperer la liste des equipements")
                 } 
-            })
+                })
         
     }, [])
 
@@ -139,8 +129,8 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
             if (carEquipments.some(e => +e.equip_id === parseInt(equipID))) {
                 notifyError("Cet equipement existe deja")
             } else {
-                const path = "pages/admin/carHandler.php?car_id=" + carID + "&equip_id=" + equipID
-                axios.get(path)
+                const path = `equipment/add/${carID}/${equipID}`;
+                axios.post(path)
                     .then(response => {
                         if (response.data.status === 1) {
                             carEquipments.push({ equip_id: parseInt(newEquipment.split(",")[0]), equipment: newEquipment.split(",")[1] })
@@ -157,19 +147,21 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
                     })
             }  
         }
+
+        return () => {}
     }
 
 
     
-
+    
     return (
-        <div className={`carHandler_details ${carID ? "carHandler_details--active" : ""}`}>
+        <div className={`carHandler_details ${carProps?.id ? "carHandler_details--active" : ""}`}>
             <div className='carHandler_details_inner'>
             <Toaster/>
             {modalToggle &&
                 <Modal type={"input"}
-                    title={"Nouveau equipement pour la voiture ID : " + carID}
-                    onClick={() => newEquipment !== null &&  addEquipment(+carID,parseInt(newEquipment.split(',')[0]))}
+                    title={"Nouveau equipement pour la voiture ID : " + carProps.id}
+                    onClick={() => newEquipment !== null &&  addEquipment(+carProps.id,parseInt(newEquipment.split(',')[0]))}
                     onExit={()=>setModalToggle(false)}
                 >
                     <select className="modal_input" name="newEquip" id="newEquip_carHandler"
@@ -178,12 +170,12 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
                         {
                             allEquipments &&
                             allEquipments.map((equip,i) =>
-                                <option key={"equip_" + i} value={[+equip.id,equip.equipment]}>{equip.equipment}</option>)
+                            <option key={"equip_" + i} value={[+equip.id,equip.equipment]}>{equip.equipment}</option>)
                         }
                     </select>
                 </Modal>
             }
-            <div className='exitBtn' onClick={() => setCarID(null)}></div>
+            <div className='exitBtn' style={{top:80}} onClick={() => setCarProps(null)}></div>
             <PageTitle pageTitle={"Details Voiture"}/>
             {/* Car Details */}
             
@@ -218,7 +210,7 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
                             <ul className={"detail_first_inner_list"}>
                                 {carDetails && detailsTitles.map((detail, index) =>
                                     <li style={{ cursor: "pointer" }}
-                                        onClick={() => setDataToUpdate({ index, table: "car_details", id: +carID, column: [detailsColumn[index], detailsTitles[index]], value: carDetails[index] , type: [0,6].some(i => i === index) ? "select" : index === 3 ? "text" :  "number" })}
+                                        onClick={() => setDataToUpdate({ index: carIndex, table: "cars", id: +carProps.id, column: [detailsColumn[index], detailsTitles[index]], value: carDetails[index] , type: [0,6].some(i => i === index) ? "select" : index === 3 ? "text" :  "number" })}
                                         key={"detail_" + index}><span className='detail_title'>{detail}</span>
                                         <span> {carDetails[index]}</span>
                                     </li>
@@ -234,7 +226,7 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
                                           
                                        </span>
                                        <span className='delete-icon'
-                                           onClick={() => { deleteEquipment(+carID,+equipement.equip_id) }}
+                                           onClick={() => { deleteEquipment(+carProps.id,+equipement.equip_id) }}
                                        >
                                            
                                        </span>
@@ -253,7 +245,7 @@ const CarHandlerDetails = ({ carID, setCarID, setDataToUpdate, dataToUpdate,setN
                 </div>
             </div>
         </div>
-            <CarHandlerGallery carID={carID} />
+            <CarHandlerGallery carID={carProps?.id} />
     </div>
   )
 }

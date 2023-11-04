@@ -7,7 +7,7 @@ import { setAuthToken } from '../../../helpers/SetAuth'
 import { add } from '../../Reducers/RoleReducer'
 import { useDispatch } from 'react-redux'
 
-const ReservedArea = ({ setLogin }) => {
+const   ReservedArea = ({ setLogin }) => {
   
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,19 +15,20 @@ const ReservedArea = ({ setLogin }) => {
   const location = useLocation() 
   const [errorMessage, setErrorMessage] = useState("");
   const  dispatch = useDispatch()
-
+ 
   function handleSubmit(e) {
     e.preventDefault();
     if (email && password) {
       CheckUser(email, password).then((response) => {
-        let isValid = response.data.status;
+        const isValid = response.data.status;
         if (isValid === 1){
           const token = response.data.token;
-          window.localStorage.setItem("token", token);
+          window.sessionStorage.setItem("token", token);
+          window.sessionStorage.setItem("role",response.data.role)
           setAuthToken(token);
           dispatch(add(response.data.role))
           setLogin(true)
-          navigate("/", { replace:true ,state:{from:location}})
+          navigate("/", { replace:true,state:{from:location}})
         } else {
           setErrorMessage(response.data.message)
         }

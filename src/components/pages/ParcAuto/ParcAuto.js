@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState,useEffect, useLayoutEffect } from 'react'
 import PageTitle from '../../PageTitle/PageTitle'
 import CarCard from '../../CarCard/CarCard'
 import SwitchPageBlock from '../../SwitchPageBlock/SwitchPageBlock'
@@ -8,6 +8,7 @@ import ButtonCta from '../../Buttons/ButtonCta'
 import toast, { Toaster } from 'react-hot-toast';
 import Loading from '../../Loading/Loading'
 import { useLocation } from 'react-router-dom'
+import gsap from 'gsap'
 
 
 const ParcAuto = () => {
@@ -20,7 +21,7 @@ const ParcAuto = () => {
     const [loading, setLoading] = useState(false)
     const notifySuccess = (text) => toast.success(text)
     const notifyError = (text) => toast.error(text)
-   
+   const comp = React.useRef()
   
   function handleCarPage(page) {
         setCurrentPage(page)
@@ -46,18 +47,21 @@ const ParcAuto = () => {
      setCurrentPage(currentPage)
     }
     loadFilteredCars()
-  },[currentPage])
+  }, [currentPage])
+  
+  
 
    
 
   
-  
-  function loadFilteredCars() {
-    setLoading(true)
-    const parcAutoPath = "pages/parcAuto.php";
-
-    axios.get(`${parcAutoPath}?page=${currentPage * 9}&filters=${JSON.stringify(filters)}&getFilters=true`)
+ async function loadFilteredCars() {
+   setLoading(true)
+   const formdata = new FormData()
+   formdata.append("page",currentPage * 12)
+   formdata.append("filters",JSON.stringify(filters))
+   axios.post(`car/all`,formdata)
       .then(response => {
+        console.log(response.data);
           if(response.status === 200 && response.request.readyState === 4 ) {
             setCars(response?.data?.cars)
             setCarCount(response?.data?.count)
@@ -81,7 +85,7 @@ const ParcAuto = () => {
 
     return (
       
-      <div className='parc-auto_page'>
+      <div className='parc-auto_page' >
         <Loading isLoading={loading}/>
          <Toaster/>
         
@@ -115,7 +119,7 @@ const ParcAuto = () => {
                 <div className={filtersToggle === false ? "filters_icon" : "filter_icon--active"}></div>
             </div>
             <div className='parc_auto_cars_switch_block'>
-              <div className={'parc_auto_cars_section'}>   
+              <div className={'parc_auto_cars_section'} >   
                   
                 {cars && !loading && cars.map((car, index) => <CarCard currentPage={currentPage} lastlocation={"parcAuto"} key={"parc-auto " + index + car.id} {...cars[index]} />)}
             </div>

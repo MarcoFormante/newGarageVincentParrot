@@ -1,17 +1,24 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useSelector,useDispatch} from 'react-redux'
 import { remove } from '../Reducers/RoleReducer'
 
 
+
 const Nav = ({menuToggle,handleMenu,setMenuToggle}) => {
-    const role = useSelector((state) => state.role.value)
+
+    
+  const role = window.sessionStorage.getItem("role")
    const dispatch = useDispatch()
+  
     
     const logout = () => {
-        window.localStorage.removeItem("token");
+       
         dispatch(remove())
+        window.sessionStorage.removeItem("token");
+        window.sessionStorage.removeItem("role");
         setMenuToggle(false)
+        
     }
 
    //public Routes (all users)
@@ -24,8 +31,8 @@ const Nav = ({menuToggle,handleMenu,setMenuToggle}) => {
             path: "/parc-auto"
         },
         {
-                page: "Contact",
-                path: "/contact"
+            page: "Contact",
+            path: "/contact"
         },
     ]
 
@@ -60,7 +67,7 @@ useEffect(() => {
         }
 },[menuToggle])
     
-
+console.log(role);
 
   return (
       <nav className={`nav ${menuToggle ? "nav--open" : ""}`}>
@@ -88,13 +95,13 @@ useEffect(() => {
                             end
                             onClick={handleMenu}    
                             >
-                            {"Area Reservé"}
+                            {"Espace Reservé"}
                         </NavLink>
                       
                       :
                         <NavLink 
                         className={`nav_link nav_link_logout`}
-                        onClick={logout}      
+                        onClick={()=> logout()}      
                         >
                         {"Logout"}
                     </NavLink>

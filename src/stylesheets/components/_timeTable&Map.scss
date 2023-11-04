@@ -39,7 +39,7 @@
         font-weight: bold;
     }
 
-    font-size: map-get($font_size,"medium");
+    font-size: 19px;
     @media screen and (max-width: 370px) {
         font-size: map-get($font_size,"small");
     }
@@ -54,6 +54,10 @@
     @include flex-center(column);
         width: 300px;
         max-width: 300px;
+        @media screen and (min-width: 1024px) {
+            height: 337px;
+        }
+       
             iframe{
                 width: 100vw;
                 height: 400px;

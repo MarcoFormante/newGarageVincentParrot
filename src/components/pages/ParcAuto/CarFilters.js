@@ -20,13 +20,13 @@ const CarFilters = ({handleChangeFilters,closeButton,loadFilteredCars}) => {
   
 
   useEffect(() => {
-      const parcAutoPath = "pages/parcAuto.php";
-      axios.get(parcAutoPath + "?getFilters=true") 
+      const parcAutoPath = "car/filters";
+      axios.get(parcAutoPath) 
         .then(response => {
-          setFilters({ ...response?.data })
-          setBaseFilters({...response?.data})
+          setFilters({ ...response?.data.filters })
+         
         })
-  },[])
+  },[reset])
   
   useEffect(() => {
     if (reset) {
@@ -35,27 +35,29 @@ const CarFilters = ({handleChangeFilters,closeButton,loadFilteredCars}) => {
       setFilters({...filters})
     }
    
-  },[reset])
+  }, [reset])
+  
+  console.log(filters);
 
   return (
   <div>
       
-    <div className='filters range_slider_block'>
+    <div className='filters range_slider_block' style={!filters.minKm ? {display:"none"}: {}}>
      
         {filters.minKm && <MultiRangeSlider
           filter={filters}
           reset={reset}
           setReset={(value)=>setReset(value)}
-        min={filters.minKm }
-        max={filters.maxKm  }
-          onChange={({ min, max }) => handleChangeFilters({ minKm: min, maxKm:max })}
+        min={filters.minKm  }
+        max={filters.maxKm }
+          onChange={({ min, max }) => handleChangeFilters({ minKm: min -1, maxKm: max + 1 })}
             title={"Km"}
         />}
 
       {filters.minPrice && <MultiRangeSlider
         min={parseInt(filters?.minPrice) }
-        max={parseInt(filters?.maxPrice) }
-        onChange={({ min, max }) => handleChangeFilters({minPrice:parseInt(min - 1),maxPrice: (max + 1)})}
+        max={parseInt(filters?.maxPrice ) }
+        onChange={({ min, max }) => handleChangeFilters({minPrice: min ,maxPrice: max })}
             title={"Prix"}
             
         />}
@@ -63,7 +65,7 @@ const CarFilters = ({handleChangeFilters,closeButton,loadFilteredCars}) => {
       {filters.minYear && <MultiRangeSlider
         min={parseInt(filters.minYear) }
         max={parseInt(filters.maxYear) }
-        onChange={({ min, max }) => handleChangeFilters({minYear:parseInt(min - 1),maxYear:parseInt(max + 1)})}
+        onChange={({ min, max }) => handleChangeFilters({minYear: min - 1, maxYear: max + 1})}
             title={"Annèe"}
         />}
 
@@ -82,7 +84,7 @@ const CarFilters = ({handleChangeFilters,closeButton,loadFilteredCars}) => {
               setReset(false)
               handleChangeFilters({ minKm: 0, maxKm: 8000000, minPrice: 0, maxPrice: 8000000000, minYear: 0, maxYear: 800000000, offer: false })
             
-            }, 10);
+            }, 1000);
             
 
           
@@ -91,7 +93,7 @@ const CarFilters = ({handleChangeFilters,closeButton,loadFilteredCars}) => {
         </div>
        
         <div>
-      {  closeButton}
+      {closeButton}
         </div>
       
     </div>

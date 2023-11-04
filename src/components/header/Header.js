@@ -8,12 +8,10 @@ import { toggle } from '../Reducers/MenuToggleReducer';
 
 const Header = () => {
   const [menuToggle, setMenuToggle] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
   const [isSticky, setIsSticky] = useState(false);
-  const [lastScrollY, setLastScrolly] = useState(0);
   const navigate = useNavigate()
   const AdminMenuToggle = useSelector((state) => state.menuToggle.value)
-  const dispatch = useDispatch()
+
  
 
   //menu Toggle function (used by menuButton and nav_links)

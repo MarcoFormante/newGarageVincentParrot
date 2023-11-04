@@ -1,14 +1,13 @@
 .avis_cards_container{
     overflow-y: hidden;
-    
+    margin-left: 10px;
 
     @media screen and (min-width:1025px){
-        margin: 50px;
+        margin: 20px 10px;
     }
 
     &_inner{
         display: flex;
-        gap: 10px;
         overflow-y: hidden;
         @extend .hidden-scrollbar;
         

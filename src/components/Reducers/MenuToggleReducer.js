@@ -4,7 +4,7 @@ const initialState = {
     value:false
 }
 
-export const roleReducer = createSlice({
+export const navReducer = createSlice({
     name: "menuToggle",
     initialState: initialState,
     reducers: {
@@ -15,6 +15,6 @@ export const roleReducer = createSlice({
 })
 
 
-export const {toggle} = roleReducer.actions
+export const {toggle} = navReducer.actions
 
-export default roleReducer.reducer
+export default navReducer.reducer

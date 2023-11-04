@@ -274,44 +274,10 @@ h2.page_title_home {
   gap: 10px;
 }
 
-.arrows_container {
-  display: flex;
-  justify-content: end;
-  padding: 20px;
-  gap: 10px;
-}
-@media screen and (max-width: 768px) {
-  .arrows_container {
-    display: none;
-  }
-}
-
-.arrow {
-  cursor: pointer;
-  border-radius: 4px;
-}
-.arrow div {
-  width: 50px;
-  height: 50px;
-  background-color: #FFFFFF;
-  background-image: url(/src/icons/arrow.svg);
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-.arrow div:active {
-  background-color: #D64E54;
-}
-.arrow div.arrow_left {
-  transform: rotateY(180deg);
-  background-color: #CBD0D4;
-}
-.arrow div.arrow_left:active {
-  background-color: #D64E54;
-}
-
 .carCards_container {
   overflow-y: hidden;
   margin-left: 10px;
+  margin-right: 10px;
 }
 @media screen and (min-width: 1025px) {
   .carCards_container {
@@ -386,15 +352,15 @@ h2.page_title_home {
 
 .avis_cards_container {
   overflow-y: hidden;
+  margin-left: 10px;
 }
 @media screen and (min-width: 1025px) {
   .avis_cards_container {
-    margin: 50px;
+    margin: 20px 10px;
   }
 }
 .avis_cards_container_inner {
   display: flex;
-  gap: 10px;
   overflow-y: hidden;
 }
 
@@ -478,7 +444,7 @@ h2.page_title_home {
 }
 
 .time_table_single {
-  font-size: 24px;
+  font-size: 19px;
 }
 .time_table_single span {
   font-weight: bold;
@@ -500,6 +466,11 @@ h2.page_title_home {
   align-items: center;
   width: 300px;
   max-width: 300px;
+}
+@media screen and (min-width: 1024px) {
+  .map_container {
+    height: 337px;
+  }
 }
 .map_container iframe {
   width: 100vw;
@@ -762,7 +733,7 @@ td.view_icon {
 
 .exitBtn {
   position: absolute;
-  top: 87px;
+  top: 95px;
   left: 20px;
   width: 40px;
   height: 40px;
@@ -772,6 +743,12 @@ td.view_icon {
   background-size: contain;
   transform: rotateY(180deg);
   cursor: pointer;
+  z-index: 9;
+}
+@media screen and (min-width: 769px) {
+  .exitBtn {
+    top: 120px;
+  }
 }
 
 .loading {
@@ -829,6 +806,36 @@ td.view_icon {
   right: 20px;
   background: red;
   transform: translateY(-50%);
+}
+
+.arrows_container {
+  display: flex;
+  justify-content: end;
+  padding: 20px;
+  gap: 10px;
+}
+
+.arrow {
+  cursor: pointer;
+  border-radius: 4px;
+}
+.arrow div {
+  width: 50px;
+  height: 50px;
+  background-color: #FFFFFF;
+  background-image: url(/src/icons/arrow.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.arrow div:active {
+  background-color: #D64E54;
+}
+.arrow div.arrow_left {
+  transform: rotateY(180deg);
+  background-color: #CBD0D4;
+}
+.arrow div.arrow_left:active {
+  background-color: #D64E54;
 }
 
 /*
@@ -1213,7 +1220,7 @@ pages: home
 
 .parc_auto_cars_section {
   display: grid;
-  padding-top: 20px;
+  padding-top: 50px;
   max-width: 92vw;
   grid-template-columns: repeat(auto-fill, 320px);
   gap: 30px;
@@ -2272,6 +2279,11 @@ ul li {
 
 .width-formInpt_noFlex {
   width: 75vw;
+}
+
+.scrollAnim {
+  opacity: 0;
+  transform: translate(0%, 50px);
 }
 
 html {
