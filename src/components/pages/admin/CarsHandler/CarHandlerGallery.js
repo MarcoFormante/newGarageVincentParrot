@@ -19,7 +19,11 @@ const CarHandlerGallery = ({carID}) => {
         if (carID) {
             setLoading(true)
             const path = `image/carGallery/${carID}`
-            axios.get(path)
+            axios.get(path, {
+                headers: {
+                    "Authorization": "Bearer " + sessionStorage.getItem("token")
+                  }
+            })
             .then(response => { 
                     setGallery([...response.data.images])
                    
@@ -51,7 +55,11 @@ const CarHandlerGallery = ({carID}) => {
         
         if (gallery.length > 1) {
             const path = `image/single/${carid}/${imgPath}`
-             axios.delete(path)
+            axios.delete(path, {
+                headers: {
+                    "Authorization": "Bearer " + sessionStorage.getItem("token")
+                  }
+             })
                  .then(response => {
                     if (response.data.status === 1) {
                         notifySuccess("Image supprimè avec succès");
@@ -147,9 +155,8 @@ const CarHandlerGallery = ({carID}) => {
         for (let i = 0; i < images.length; i++) {
           a.push(await resizeFile(images[i]));
         }
-        return  a
+        return a
       } catch (error) {
-        console.log(error);
         return
       }
     } 

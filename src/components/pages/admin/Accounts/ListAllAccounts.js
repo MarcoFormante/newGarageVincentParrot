@@ -2,7 +2,7 @@ import React, { useEffect, useInsertionEffect, useState } from "react";
 import axios from "../../../../api/axios";
 import toast, { Toaster } from "react-hot-toast";
 import Modal from "../../../Modal/Modal";
-import CheckToken from "../../../../helpers/CheckToken";
+
 
 const ListAllAccounts = ({ newUser }) => {
   const [accountList, setAccountList] = useState([]);
@@ -13,9 +13,10 @@ const ListAllAccounts = ({ newUser }) => {
   const notifyError = (text) => toast.error(text);
 
     useEffect(() => {
-
-            axios.post("user/all").then((response) => {
-              console.log(response);
+      axios.post("user/all", {}, {
+        headers: {
+              "Authorization": "Bearer " + sessionStorage.getItem("token")
+            }}).then((response) => {
         if (response.data.status === 1) {
           setAccountList([...response.data.users]);
         } else {
@@ -27,7 +28,11 @@ const ListAllAccounts = ({ newUser }) => {
 
   function deleteUser(id) {
           axios
-            .delete(`user/delete/${id}`)
+            .delete(`user/delete/${id}`, {
+              headers: {
+                "Authorization" : "Bearer " + sessionStorage.getItem("token")
+              }
+            })
             .then((response) => {
               if (response.data.status === 1) {
                 notifySuccess(response.data.message);

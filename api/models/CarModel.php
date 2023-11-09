@@ -13,9 +13,9 @@ class CarModel extends AbstractModel
     public function getAllCars($page, $filters)
     {
         try {
-            
+
             $filters = json_decode($filters, true);
-            
+
             if (!is_array($filters)) {
                 throw new Exception("Probleme pendant la recuperation des données");
             }
@@ -34,12 +34,12 @@ class CarModel extends AbstractModel
             }
 
             $queryCarCount = "SELECT COUNT(*) as count FROM cars 
-        WHERE km > ? AND km < ? AND year > ? AND year < ? 
-        AND price > ? - offer AND price < ? $withOffer";
+            WHERE km > ? AND km < ? AND year > ? AND year < ? 
+            AND price > ? - offer AND price < ? $withOffer";
 
             $queryGetCars = "SELECT * FROM cars  
-        WHERE (km > :minKm AND km < :maxKm) AND (year > :minYear AND year < :maxYear)
-        AND (price - offer > :minPrice  AND price - offer < :maxPrice) $withOffer LIMIT :page,12";
+            WHERE (km > :minKm AND km < :maxKm) AND (year > :minYear AND year < :maxYear)
+            AND (price - offer > :minPrice  AND price - offer < :maxPrice) $withOffer LIMIT :page,12";
 
 
             if (!is_null($this->pdo)) {
@@ -62,7 +62,6 @@ class CarModel extends AbstractModel
 
                 if ($exeCount) {
                     $count = $stmt->fetch(PDO::FETCH_ASSOC);
-                    
                 } else {
                     throw new PDOException("Probleme pendant la recuperation des données");
                 }
@@ -257,15 +256,15 @@ class CarModel extends AbstractModel
 
             foreach ($gallery['tmp_name'] as $key => $value) {
                 $fileExtention = explode("/", mime_content_type($value))[1];
-                if (preg_match("/webp|jpeg|jpg|png/", $fileExtention)) {
+                if (preg_match("/webp/", $fileExtention)) {
                     $fileName =  uniqid(rand()) . ".webp";
                     $galleryPathArray[$key] = $fileName;
                 } else {
-                    throw new Exception("les formats  acceptès pour les images sont webp,jpeg,png");
+                    throw new Exception("le format acceptè pour les images est webp");
                 }
             }
             $fileExtentionThumb = explode("/", mime_content_type($thumbnail['tmp_name']))[1];
-            if (preg_match("/webp|jpeg|jpg|png/", $fileExtentionThumb)) {
+            if (preg_match("/webp/", $fileExtentionThumb)) {
                 $thumbnailValid = true;
             } else {
                 $thumbnailValid = false;
@@ -275,7 +274,11 @@ class CarModel extends AbstractModel
             if (!is_null($this->pdo) && $thumbnailValid === true) {
                 //CAR CARD
                 $carCardParams = [":make" => trim($details[0]), ":model" => trim($details[1]), ":thumbnail" => $thumbnailName, ":year" => trim($details[3]), ":km" => trim($details[4]), ":price" => trim($details[2]), ":offer" => abs(trim($details[13])),":vo_number" => trim($details[12]), ":gearbox" => $details[9], ":din_power" => trim($details[7]), ":fiscal_power" => trim($details[8]), ":color" => $details[6], ":doors" => trim($details[11]), ":seats" => trim($details[5]), ":energy" => trim($details[10])];
-                $queryCarCard = "INSERT INTO cars(make,model,thumbnail,year,km,price,offer,vo_number,gearbox,din_power,fiscal_power,color,doors,seats,energy) VALUES(:make,:model,:thumbnail,:year,:km,:price,:offer,:vo_number,:gearbox,:din_power,:fiscal_power,:color,:doors,:seats,:energy)";
+               
+                $queryCarCard = 
+                "INSERT INTO cars(make,model,thumbnail,year,km,price,offer,vo_number,gearbox,din_power,fiscal_power,color,doors,seats,energy) 
+                VALUES(:make,:model,:thumbnail,:year,:km,:price,:offer,:vo_number,:gearbox,:din_power,:fiscal_power,:color,:doors,:seats,:energy)";
+
                 $stmtCar = $this->pdo->prepare($queryCarCard);
 
                 foreach ($carCardParams as $key => $value) {
@@ -318,9 +321,8 @@ class CarModel extends AbstractModel
 
                 $stmtCarGallery = $this->pdo->prepare($queryCarGallery);
 
-
+                //Start Transaction 
                 $this->pdo->beginTransaction();
-
 
                 $carId = "";
                 if ( $stmtCar = $stmtCar->execute()) {
@@ -384,18 +386,16 @@ class CarModel extends AbstractModel
     private function uploadGalleryImages($gallery, $path, $galleryPathArray)
     {
         $countImages = count($gallery['tmp_name']);
-    
+
         foreach ($gallery['tmp_name'] as $key => $imgTmp) {
-           
             $imageUploaded = move_uploaded_file($imgTmp, $path . $galleryPathArray[$key]);
             if ($imageUploaded) {
                 if ($key === $countImages - 1) {
                     return true;
-                 }
-            }else{
+                }
+            } else {
                 return false;
             }
-            
         }
     }
 
@@ -404,11 +404,11 @@ class CarModel extends AbstractModel
     {
         $path = $_SERVER['DOCUMENT_ROOT'] . "/EcfGarage/public/images/uploads/";
         foreach ($images as $key => $value) {
-            if (unlink($path . $value)) {
-                return false;
+            if (file_exists($path . $value)) {
+                unlink($path . $value);
             }
         }
-        return ["status" => 1, "message" => "Voiture supprimé avec succès"];
+        return ["status" => 1, "message" => "supprimé avec succès"];
     }
 
 

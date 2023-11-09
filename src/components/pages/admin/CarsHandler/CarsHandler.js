@@ -43,7 +43,11 @@ const CarsHandler = () => {
     formData.append("filters", filters);
     formData.append("filterValue", modalFilterValue);
     axios
-      .post(path, formData)
+      .post(path, formData, {
+        headers: {
+          "Authorization": "Bearer " + sessionStorage.getItem("token")
+        }
+      })
       .then((response) => {
         if (response.data.status === 1) {
           setCars([...response.data.cars]);
@@ -65,11 +69,7 @@ const CarsHandler = () => {
 
 
   useEffect(() => {
-    if (sessionStorage.getItem("token")) {
       getCars();
-    }
-   
-    return () => {}
   }, [currentPage]);
   
 
@@ -78,21 +78,23 @@ const CarsHandler = () => {
     if (carTarget) {
       setModalToggle(true);
     }
-
-    return () => {}
   }, [carTarget]);
 
 
 
   function deleteCar(id, thumbnail) {
     const path = `car/delete/${id}/${thumbnail}`;
-    axios.delete(path).then((response) => {
+    axios.delete(path, {
+      headers: {
+        "Authorization": "Bearer " + sessionStorage.getItem("token")
+      }
+    }).then((response) => {
       if (response.data.status === 1) {
         notifySuccess(response.data.message);
         setCarTarget(null);
         setModalToggle(false);
         setCars(cars.filter((car) => +car.id !== +id));
-      } else if (response.data.includes("unlink")) {
+      } else if (response.data.message.includes("unlink")) {
         setCarTarget(null);
         setModalToggle(false);
         setCars(cars.filter((car) => +car.id !== id));
@@ -109,8 +111,6 @@ const CarsHandler = () => {
     if (dataToUpdate !== null) {
       setModalToggle(true);
     }
-
-    return () => {}
   }, [dataToUpdate]);
 
   const resizeFile = (file) =>
@@ -131,7 +131,7 @@ const CarsHandler = () => {
       );
     });
   
-  console.log(filters);
+
   
 
   async function updateCar() {
@@ -160,7 +160,11 @@ const CarsHandler = () => {
         formData.append("value", dataToUpdate.value);
       }
       axios
-        .post(path, formData)
+        .post(path, formData, {
+          headers: {
+            "Authorization": "Bearer " + sessionStorage.getItem("token")
+          }
+        })
         .then((response) => {
           if (response.data.status === 1) {
             if (response?.data?.imageData) {
@@ -199,7 +203,7 @@ const CarsHandler = () => {
       getCars();
     }
 
-    return () => {}
+   
   }, [filters]);
 
   return (

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Modal from '../../../Modal/Modal'
 import axios from '../../../../api/axios';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 
 
@@ -20,7 +20,11 @@ const EquipmentsInputs = ({formValues,setFormValues,formIsValid}) => {
         if (modalInput) {
             const formData = new FormData()
             formData.append("newEquipment",modalInput)
-            axios.post(`equipment/new/${modalInput}`).then(response => {
+            axios.post(`equipment/new/${modalInput}`, {
+                headers: {
+                    "Authorization": "Bearer " + sessionStorage.getItem("token")
+                  }
+            }).then(response => {
                 
                 if (response.data.status === 1) {
                     setEquipments([...equipments,{id: response.data.equipId, equipment: modalInput }])
@@ -28,7 +32,7 @@ const EquipmentsInputs = ({formValues,setFormValues,formIsValid}) => {
                     handleModal()
                     setModalInput("")
                 } else {
-                    if (response.data.includes("Duplicate entry")) {
+                    if (response.data.message.match(/Duplicate entry/)) {
                         notifyError("Erreur: Cet équipement existe déjà")
                     } else {
                         notifyError("Erreur: Un problème est survenu, rententez")
@@ -50,7 +54,11 @@ const EquipmentsInputs = ({formValues,setFormValues,formIsValid}) => {
 
     useEffect(() => {
         const carHandlerPage ="equipment/all"
-        axios.get(carHandlerPage)
+        axios.get(carHandlerPage, {
+            headers: {
+                "Authorization": "Bearer " + sessionStorage.getItem("token")
+              }
+        })
             .then(response => {
                 if (response.data.status === 1) {
                     const data = response.data.equipments

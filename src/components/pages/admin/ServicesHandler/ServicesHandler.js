@@ -72,7 +72,11 @@ const ServicesHandler = () => {
            
             formData.append("id", serviceId)
            
-            axios.post("service/update", formData)
+            axios.post("service/update", formData, {
+                headers: {
+                    "Authorization": "Bearer " + sessionStorage.getItem("token")
+                  }
+            })
                 .then(response => {
                 if (response.data.status === 1) {
                     if (Type === "update") {
@@ -102,8 +106,8 @@ const ServicesHandler = () => {
             formData.append("value",newService)
             axios.post(servicesPath, formData, {
                 headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                }
+                    "Authorization": "Bearer " + sessionStorage.getItem("token")
+                  }
             }).then(response => {
                 if (response.data.status === 1) {
                     setServices(prev => [...prev, {
@@ -148,16 +152,25 @@ const ServicesHandler = () => {
         <PageTitle pageTitle={"Gestion des services"} />
           <div className='container--pad-top'>
               <div className='input_center_handler container--center--column gap-20 mar-bot-20' >
-                  <label htmlFor="newService" className='text-bold'>Nouveau service :</label>
-                  <textarea type="text"
+                  <label
+                      htmlFor="newService"
+                      className='text-bold'
+                  >
+                      Nouveau service :
+                  </label>
+                  <textarea
+                      type="text"
                       placeholder='Ecrir ici le nouveau service'
                       value={newService} id='newService'
                       onChange={(e) => setNewService(e.target.value)}
                       style={{ minWidth: 300, paddingLeft: 5, minHeight: 80, paddingTop: 4 }}
                   />
-                  <button className='cta cta--red'
+                  <button
+                      className='cta cta--red'
                       onClick={() => handleNewService("add")}
-                  >Ajoute</button>
+                  >
+                    Ajoute
+                  </button>
                 </div>
         <table className='table_servicesHandler'>
             <thead>

@@ -4,16 +4,16 @@ import { useLocation, Link, Navigate } from "react-router-dom";
 import PageTitle from "../../PageTitle/PageTitle";
 import axios from "../../../api/axios";
 import Loading from "../../Loading/Loading";
-import { useSelector } from "react-redux";
+
 
 const CarDetails = () => {
   const location = useLocation();
   const [loadingComponent, setLoadingComponent] = useState(null);
   const [detailsInLoading, setDetailsInLoading] = useState(true);
   const [carPhotosInLoading, setCarPhotosInLoading] = useState(true);
-  const menuToggle = useSelector(state => state)
  
-  console.log(menuToggle);
+ 
+ 
   useEffect(() => {
     if (detailsInLoading && carPhotosInLoading) {
       setLoadingComponent(true);
@@ -28,7 +28,6 @@ const CarDetails = () => {
     return <Loading isLoading={true} />;
   }
 
-  console.log(location?.state);
 
   return location.state?.make && !loadingComponent ? (
     <div>
@@ -50,6 +49,7 @@ const CarDetails = () => {
       ) : (
         <Link className={"exitBtn"} to={"/"} />
       )}
+      
       <CarPhotos
         thumbnail={location.state.thumbnail}
         year={location.state.year}
@@ -60,9 +60,9 @@ const CarDetails = () => {
       />
       <Details
         {...location.state}
-        
         setDetailsInLoading={(value) => setDetailsInLoading(value)}
       />
+
     </div>
   ) : (
     <Navigate to={"/"} />
@@ -167,7 +167,6 @@ const CarPhotos = ({
       setImgWidth(imgRef?.current?.width)
     });
   }, []);
-console.log(imgWidth);
   useEffect(() => {
     
     //fetch data imgs from img folder by backend

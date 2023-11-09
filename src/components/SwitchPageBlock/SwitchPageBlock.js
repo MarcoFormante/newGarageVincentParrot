@@ -7,22 +7,22 @@ const SwitchPageBlock = (props) => {
     // const [currentPage, setCurrentPage] = useState(props.currentPage);
 
     useEffect(() => {
-        ///fetch data , Count of cars 
-        setDataLength(props.dataLength);
-        const maxCarsforPage = 12;
+      //cars Length
+      setDataLength(props.dataLength);
+      const maxCarsforPage = 12;
 
-        //if dataLength > maxCarsforPage set new array of pages and set pages ::  useState()
-        if (dataLength > maxCarsforPage) {
-            const pagesLength = Math.floor(dataLength / maxCarsforPage); 
-            let pagesArray = [];
-            for (let i = 0; i <= pagesLength ; i++) {
-                pagesArray[i] = i ;
-            }
-                setPages([...pagesArray])
-        } else {
-            setPages([0])
+      //if dataLength > maxCarsforPage set new array of pages
+      if (props.dataLength > maxCarsforPage) {
+        const pagesLength = Math.floor(props.dataLength / maxCarsforPage);
+        let pagesArray = [];
+        for (let i = 0; i <= pagesLength; i++) {
+          pagesArray[i] = i;
         }
-    }, [props.dataLength, dataLength])
+        setPages([...pagesArray]);
+      } else {
+        setPages([0]);
+      }
+    }, [props.dataLength]);
     
     
     useEffect(() => {

@@ -21,11 +21,6 @@ class CarController extends AbstractController
                             $this->getOffers($param);
                             break;
 
-                        // case 'images':
-                        //     $this->getCarImages($param);
-                        //     break;
-
-
                         case 'filters':
                             $this->getAllFilterParams();
                             break;
@@ -150,7 +145,6 @@ class CarController extends AbstractController
 
     public function newCar()
     {
-
         try {
             if ($this->valueFromToken() === "admin" || $this->valueFromToken() === "employee") {
 

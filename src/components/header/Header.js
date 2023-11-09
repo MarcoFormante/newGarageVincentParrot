@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toggle } from '../Reducers/MenuToggleReducer';
 
 
-const Header = () => {
+const Header = ({login}) => {
   const [menuToggle, setMenuToggle] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
   const navigate = useNavigate()
@@ -25,8 +25,6 @@ const Header = () => {
   }
 
  
-  
-
 
   useEffect(() => {
     if (AdminMenuToggle === true) {
@@ -45,7 +43,7 @@ const Header = () => {
             <img src={"/images/brand-logo.png"} alt={"Garage Vincent Parrot"} />
           </div>
   
-          <Nav menuToggle={menuToggle ? menuToggle : null} setMenuToggle={()=>setMenuToggle(!menuToggle)} handleMenu={handleMenu} />
+          <Nav login={login} menuToggle={menuToggle ? menuToggle : null} setMenuToggle={()=>setMenuToggle(!menuToggle)} handleMenu={handleMenu} />
           <MenuButton className={`menu_button ${menuToggle ? "menu_button--open " : ""} `} onClick={handleMenu} />
         </header>
       </div>

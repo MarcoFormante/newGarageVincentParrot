@@ -75,6 +75,7 @@ const NewCarPage = () => {
           .post("car/new", formData, {
             headers: {
               "Content-Type": "multipart/form-data",
+              "Authorization" : "Bearer " + sessionStorage.getItem("token")
             },
           })
           .then((response) => {
@@ -82,13 +83,17 @@ const NewCarPage = () => {
               notifySuccess("Nouvelle voiture ajouté avec succès");
               setNewCarCreated(true);
               setFormValues({ formValues: "" });
-            } else {
+            } else if (response?.data?.status === 0) {
               setNewCarCreated(false);
-              if (response?.data?.message?.includes("vo_number")) {
+              if (response?.data?.message?.match(/vo_number/)) {
                 notifyError("Erreur: le 'numero VO' existe deja");
+              } else if (response?.data?.code === "23000") {
+                notifyError("Erreur: Cet equipment existe deja");
               } else {
                 notifyError(response.data.message);
               }
+            } else {
+              notifyError(response.data.message);
             }
           })
           .finally((response) => {
@@ -143,7 +148,7 @@ const NewCarPage = () => {
     if (newCarCreated) {
       setFormValues({
         detailValues: {},
-        equipmentValues: [""],
+        equipmentValues: [],
         thumbnail: "",
         gallery: [],
       });
@@ -155,7 +160,7 @@ const NewCarPage = () => {
     return () => {}
   }, [newCarCreated]);
 
-  console.log(newCarCreated);
+
 
   function prepareDetailsToFormData(formData) {
     for (const key in formValues.detailValues) {
@@ -186,7 +191,6 @@ const NewCarPage = () => {
       }
       return a;
     } catch (error) {
-      console.log(error);
       return;
     }
   };

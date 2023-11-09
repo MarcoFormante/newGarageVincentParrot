@@ -2,26 +2,26 @@
 require_once 'AbstractModel.php';
 
 
-Class ServiceModel extends AbstractModel
+class ServiceModel extends AbstractModel
 {
 
-   
-    public function getAllServices(){
-        $query="SELECT * from services ";
+    public function getAllServices()
+    {
+        $query = "SELECT * from services ";
 
         if (!is_null($this->pdo)) {
             $stmt = $this->pdo->prepare($query);
             $arrServices = [];
             if ($stmt->execute()) {
-                while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                    $arrServices[]=$row;
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $arrServices[] = $row;
                 }
-                
-                return ["status"=>1,"services"=>$arrServices];
-            }else{
+
+                return ["status" => 1, "services" => $arrServices];
+            } else {
                 return $this->error("Erreur pendant la recuperation des services.");
             }
-        }else{
+        } else {
             return $this->error("Erreur pendant la recuperation des services.");
         }
     }

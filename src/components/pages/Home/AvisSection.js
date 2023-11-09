@@ -23,7 +23,6 @@ const AvisSection = () => {
     useEffect(() => {
         axios.get("review/all")
             .then(response => {
-                console.log(response.data);
                 setAvis([...response.data.reviews])
             })
     }, [])

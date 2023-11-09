@@ -148,10 +148,12 @@ class ImageModel extends AbstractModel
     protected function deleteAllImagesFromFolder($images)
     {
         $path = $_SERVER['DOCUMENT_ROOT'] . "/EcfGarage/public/images/uploads/";
-        foreach ($images as $key => $value) {
-            unlink($path . $value);
-        }
-        return ["status" => 1, "message" => "Voiture supprimé avec succès"];
+            foreach ($images as $key => $value) {
+                if (file_exists($path . $value)) {
+                    unlink($path . $value) ;
+                }
+            }
+        return ["status" => 1, "message" => "supprimé avec succès"];
     }
 
 

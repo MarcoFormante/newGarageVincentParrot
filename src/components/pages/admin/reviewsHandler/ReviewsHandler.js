@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from '../../../../api/axios'
 import PageTitle from '../../../PageTitle/PageTitle'
 import { AvisCard } from '../../Home/AvisSection'
@@ -23,7 +23,11 @@ const ReviewsHandler = () => {
             formData.append("currentPage", currentPage)
             formData.append("filters", filters)
         
-            axios.post("review/allToValidate", formData, {})
+        axios.post("review/allToValidate", formData, {
+            headers: {
+                "Authorization": "Bearer " + sessionStorage.getItem("token")
+              }
+            })
                 .then(response => {
                     if (response.data.status === 1) {
                         setAvis([...response.data.reviews])
@@ -49,12 +53,15 @@ const ReviewsHandler = () => {
 
     
     function toggleReviewValidation(avisId, av) {
-        console.log(avis);
         let newValidationNumber = !parseInt(av.is_validate);
         const formData = new FormData();
         formData.append("reviewValidationValue", +newValidationNumber);
         formData.append("reviewValidationId", parseInt(avisId));
-        axios.post(`review/validation/${+newValidationNumber}/${+avisId}`)
+        axios.post(`review/validation/${+newValidationNumber}/${+avisId}`, {
+            headers: {
+                "Authorization": "Bearer " + sessionStorage.getItem("token")
+              }
+        })
             .then(response => {
             if (response?.data?.status === 1) {
                 setAvis([...avis], av.is_validate = parseInt(av.is_validate) === 0 ? 1 : 0);

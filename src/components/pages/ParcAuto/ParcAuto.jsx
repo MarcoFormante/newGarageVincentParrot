@@ -38,7 +38,6 @@ const ParcAuto = () => {
  
  
   useEffect(() => {
-   
     if (location.state?.currentPage) {
       setCurrentPage(location.state?.currentPage)
     } else {
@@ -52,14 +51,13 @@ const ParcAuto = () => {
    
 
   
- async function loadFilteredCars() {
+function loadFilteredCars() {
    setLoading(true)
    const formdata = new FormData()
    formdata.append("page",currentPage * 12)
    formdata.append("filters",JSON.stringify(filters))
    axios.post(`car/all`,formdata)
       .then(response => {
-        console.log(response.data);
           if(response.status === 200 && response.request.readyState === 4 ) {
             setCars(response?.data?.cars)
             setCarCount(response?.data?.count)
@@ -120,8 +118,15 @@ const ParcAuto = () => {
               <div className={'parc_auto_cars_section'} >   
                   
                 {cars && !loading && cars.map((car, index) => <CarCard currentPage={currentPage} lastlocation={"parcAuto"} key={"parc-auto " + index + car.id} {...cars[index]} />)}
-            </div>
-                  <SwitchPageBlock carCount={carCount} dataLength={carCount} currentPage={location.state?.currentPage ?? currentPage} setCurrentPage={(value)=>setCurrentPage(value)} handleCarPage={(page)=> handleCarPage(page)} />
+          </div>
+          
+          <SwitchPageBlock
+            dataLength={carCount}
+            currentPage={location.state?.currentPage ?? currentPage}
+            setCurrentPage={(value) => setCurrentPage(value)}
+            handleCarPage={(page) => handleCarPage(page)}
+          />
+
             </div>
             
     </div>

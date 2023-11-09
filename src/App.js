@@ -36,24 +36,24 @@ function App() {
   const navigate = useNavigate()
  
 
-
-
   useEffect(() => {
     setHidden(["admin", "area-reserve"].filter(path => location.pathname.match(path)))
   },[location.pathname])
 
  
- 
+  // useEffect(() => {
+  //   if (location.pathname.match("admin")) {
 
-  useEffect(() => {
-    if (location.pathname.match("admin")) {
-      if (sessionStorage.getItem("token")) {
-        setAuthToken(sessionStorage.getItem("token"))
-      } else {
-        NotAuth()
-      }
-    }
-  },[location.pathname])
+  //       CheckToken(sessionStorage.getItem("token")).then(response => {
+  //       if (response.data.status === 1 ) {
+  //           setAuthToken(sessionStorage.getItem("token"))
+  //       }else {
+  //         NotAuth()
+  //         navigate("/",{replace:true})
+  //       }
+  //     })
+  //   }
+  // },[checkTrigger])
   
  
   return (
@@ -106,37 +106,38 @@ export default App;
 
 
 
-const ProtectedRoute = ({ auth, redirectPath, checkTrigger }) => {
+const ProtectedRoute = ({ auth, redirectPath, checkTrigger}) => {
 
   const location = useLocation();
-  const dispatch = useDispatch()
- 
+  const dispatch = useDispatch();
+
   const checkToken = useCallback(() => {
     if (auth) {
       CheckToken(auth).then((response) => {
         let isValid = response.data.status;
         if (isValid === 1) {
           const userRole = response.data.role;
-          dispatch(add(userRole))
+          dispatch(add(userRole));
         } else {
-          dispatch(remove())
-          sessionStorage.clear()
+          dispatch(remove());
+          sessionStorage.clear();
         }
-      })
+      });
     } else {
-      dispatch(remove())
-      sessionStorage.clear()
+      dispatch(remove());
+      sessionStorage.clear();
     }
-  },[dispatch,auth])
-    
-
+  }, [dispatch, auth]);
 
   useEffect(() => {
-     window.addEventListener("storage",checkToken)
-    
-    return () => window.removeEventListener("storage",checkToken)
-    
-},[checkTrigger])
+    checkToken();
+  }, [checkTrigger]);
+
+  useEffect(() => {
+    window.addEventListener("storage", checkToken);
+
+    return () => window.removeEventListener("storage", checkToken);
+  }, []);
 
 return auth
       ?

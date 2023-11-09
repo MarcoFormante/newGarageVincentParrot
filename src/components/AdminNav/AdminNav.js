@@ -1,7 +1,9 @@
-import React, { useEffect,useState} from 'react'
+import React, { useEffect,useMemo,useState} from 'react'
 import { NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { toggle } from '../Reducers/MenuToggleReducer'
+import CheckToken from '../../helpers/CheckToken'
+import NotAuth from '../../helpers/NotAuth'
 
 
 const AdminNav = ({ checkToken }) => {
@@ -10,11 +12,53 @@ const AdminNav = ({ checkToken }) => {
     const [adminNavToggle, setAdminNavToggle] = useState(false)
     const dispatch = useDispatch()
     
+  
+console.log(roleInStore);
     useEffect(() => {
-        setRole(roleInStore  || window.sessionStorage.getItem("role") )
-    },[roleInStore])
+        window.addEventListener("storage", () => {
+            
+            if (sessionStorage.getItem("token") || sessionStorage.getItem("role") === "admin"|"employee") {
+                sessionStorage.getItem("token")
+                    ? CheckToken(sessionStorage.getItem("token")).then(res => setRole(res.data.role))
+                    : NotAuth()
+            } else {
+                NotAuth()
+            }
+            console.log("ciao");
+        })
+
+        return ()=>  window.addEventListener("storage", () => {
+            
+            if (sessionStorage.getItem("token") || sessionStorage.getItem("role") === "admin"|"employee") {
+                sessionStorage.getItem("token")
+                    ? CheckToken(sessionStorage.getItem("token")).then(res => setRole(res.data.role))
+                    : NotAuth()
+            } else {
+                NotAuth()
+            }
+            console.log("ciao");
+        })
+
+     
+    }, [])
     
-    const adminLinks = [
+    useEffect(() => {
+        if (roleInStore === "admin"|"employee" || (sessionStorage.getItem("token") || sessionStorage.getItem("role") === "admin"|"employee" )) {
+            if (sessionStorage.getItem("token") || sessionStorage.getItem("role") === "admin" | "employee") {
+                sessionStorage.getItem("token")
+                ? CheckToken(sessionStorage.getItem("token")).then(res => setRole(res.data.role))
+                : NotAuth()
+            } else {
+                NotAuth()
+            }
+        } else {
+            NotAuth()
+        }
+    }, [roleInStore])
+    
+
+    
+    const adminLinks = useMemo( () => [
         {
             to: "admin/new-car",
             linkName : "Nouveau véhicule"
@@ -38,8 +82,9 @@ const AdminNav = ({ checkToken }) => {
         {
             to: "admin/timeTable",
             linkName : "Horaires"
-        }, ]
-    const employeeLinks = [
+        },],[])
+    
+    const employeeLinks = useMemo(()=>[
         {
             to: "admin/new-car",
             linkName : "Nouveau véhicule"
@@ -49,8 +94,7 @@ const AdminNav = ({ checkToken }) => {
             linkName : "Gestion Avis"
         },
         
-
-    ]
+    ],[])
 
 
     useEffect(() => {

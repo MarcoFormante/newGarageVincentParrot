@@ -11,7 +11,6 @@ const CarFilters = ({handleChangeFilters,closeButton,loadFilteredCars}) => {
   
   function handleOfferChange() {
     setOffer(!offer);
-    
   }
 
   useEffect(() => {
@@ -20,11 +19,9 @@ const CarFilters = ({handleChangeFilters,closeButton,loadFilteredCars}) => {
   
 
   useEffect(() => {
-      const parcAutoPath = "car/filters";
-      axios.get(parcAutoPath) 
+      axios.get("car/filters") 
         .then(response => {
           setFilters({ ...response?.data.filters })
-         
         })
   },[reset])
   
@@ -37,7 +34,7 @@ const CarFilters = ({handleChangeFilters,closeButton,loadFilteredCars}) => {
    
   }, [reset])
   
-  console.log(filters);
+
 
   return (
   <div>

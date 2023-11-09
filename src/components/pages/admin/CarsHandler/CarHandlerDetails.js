@@ -22,7 +22,11 @@ const CarHandlerDetails = ({ carIndex, carProps, setCarProps, setDataToUpdate,se
     
     useEffect(() => {
         if (carProps) {
-            axios.get(`equipment/id/${carProps.id}`)
+            axios.get(`equipment/id/${carProps.id}`, {
+                headers: {
+                    "Authorization": "Bearer " + sessionStorage.getItem("token")
+                  }
+            })
                 .then(response => {
                     if (response.data?.status === 1) {
                         
@@ -92,7 +96,11 @@ const CarHandlerDetails = ({ carIndex, carProps, setCarProps, setDataToUpdate,se
 
     function deleteEquipment(carID, equipID) {
       
-        axios.delete(`equipment/delete/${carID}/${equipID}`)
+        axios.delete(`equipment/delete/${carID}/${equipID}`, {
+            headers: {
+                "Authorization": "Bearer " + sessionStorage.getItem("token")
+              }
+        })
             .then(response => {
                 if (response?.data?.status === 1) {
                     setCarEquipements([...carEquipments.filter(equip => +equip.equip_id !== +equipID)])
@@ -108,9 +116,12 @@ const CarHandlerDetails = ({ carIndex, carProps, setCarProps, setDataToUpdate,se
 
     useEffect(() => {
             const equipmentsPath = "equipment/all"
-            axios.get(equipmentsPath)
+        axios.get(equipmentsPath, {
+            headers: {
+                "Authorization": "Bearer " + sessionStorage.getItem("token")
+              }
+            })
                 .then(response => {
-                    console.log(response.data);
                 if (response.data.status === 1) {
                        setAllEquipments([...response.data.equipments])
                     } else if (response.data.status === 0) {
@@ -130,7 +141,11 @@ const CarHandlerDetails = ({ carIndex, carProps, setCarProps, setDataToUpdate,se
                 notifyError("Cet equipement existe deja")
             } else {
                 const path = `equipment/add/${carID}/${equipID}`;
-                axios.post(path)
+                axios.post(path, {
+                    headers: {
+                        "Authorization": "Bearer " + sessionStorage.getItem("token")
+                      }
+                })
                     .then(response => {
                         if (response.data.status === 1) {
                             carEquipments.push({ equip_id: parseInt(newEquipment.split(",")[0]), equipment: newEquipment.split(",")[1] })
@@ -147,8 +162,6 @@ const CarHandlerDetails = ({ carIndex, carProps, setCarProps, setDataToUpdate,se
                     })
             }  
         }
-
-        return () => {}
     }
 
 

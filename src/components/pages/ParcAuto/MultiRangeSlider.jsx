@@ -10,7 +10,7 @@ const MultiRangeSlider = ({ min, max, onChange, title}) => {
   const maxValRef = useRef(max);
   const range = useRef(null); 
   const [isClicking, setIsClicking] = useState(false);
-console.log(min);
+
 
   // Convert to percentage
   const getPercent = useCallback(

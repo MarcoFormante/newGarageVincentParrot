@@ -17,7 +17,7 @@ class UserController extends AbstractController
 
                 if ($param !== null) {
                     switch ($param[0]) {
-                        case 'check':
+                        case 'login':
 
                             $this->login();
 
@@ -62,8 +62,6 @@ class UserController extends AbstractController
                     }
                     break;
                 }
-
-
 
             default:
                 throw new Exception("Error Processing Request");
@@ -115,11 +113,10 @@ class UserController extends AbstractController
     {
 
         if (isset($_POST['email']) && isset($_POST['password'])) {
-
             $user = new UserModel();
             $this->response($user->login($_POST['email'], $_POST['password']));
         } else {
-            $this->showError("L\'email et le password sont obbligatoires");
+            $this->showError("L'email et le password sont obbligatoires");
         }
     }
 
@@ -136,11 +133,12 @@ class UserController extends AbstractController
             $this->showError("Vous n'avez pas les droits d'administrateur");
         }
     }
-
+    
     public function getAllAccounts()
     {
-        $isAdmin = false;
+      
         $userModel = new userModel();
+        
         if (!empty(apache_request_headers()["Authorization"])) {
             $auth = apache_request_headers()["Authorization"];
             $token = str_replace("Bearer ", "", $auth);
@@ -148,16 +146,12 @@ class UserController extends AbstractController
                 $response =  $userModel->checkToken(trim($token));
                 if (!empty($response['status']) && $response['status'] === 1) {
                     if ($response['role'] === "admin") {
-                        $isAdmin = true;
+                        $this->response($userModel->getAllAccounts());
+                    }else{
+                        $this->showError("un problem est survenu");
                     }
                 }
-            }
-        }
-        if (!$isAdmin) {
-            $this->showError("un problem est survenu");
-            exit();
-        }
-        $this->response($userModel->getAllAccounts());
+            }}
     }
 
 

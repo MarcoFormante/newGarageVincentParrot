@@ -66,39 +66,37 @@ const TimesOpeningHandler = () => {
   }
 
   function saveTimeValue() {
-  
-    const formData = new FormData(); 
+    const formData = new FormData();
     formData.append("id", modalInputId);
     formData.append("column", modalValueColumn);
-    formData.append("value",isInContinue ? "HC" : modalInputValue);
+    formData.append("value", isInContinue ? "HC" : modalInputValue);
     if (isClose) {
-      formData.append("close",0)
+      formData.append("close", 0);
     } else {
-      formData.append("close",1)
+      formData.append("close", 1);
     }
 
     if (modalInputValue) {
-      console.log(modalInputValue);
-
-      axios.post("timetable/update", formData)
-        .then(response => {
+      axios
+        .post("timetable/update", formData, {
+          headers: {
+            Authorization: "Bearer " + sessionStorage.getItem("token"),
+          },
+        })
+        .then((response) => {
           if (response.data.status === 1) {
-
             setLocalTimeValues();
             setTimeTable([...timeTable]);
-           
+
             notifySuccess("Modifié avec succès");
           } else {
-           
-            notifyError("Un erreur est survenu, rententez.")
+            notifyError("Un erreur est survenu, rententez.");
           }
-        }
-        ).finally(
-          resetValues()
-        )
+        })
+        .finally(resetValues());
     } else {
-      notifyError("Un erreur est survenu, rententez.")
-     
+      notifyError("Un erreur est survenu, rententez.");
+
       resetValues();
     }
   }

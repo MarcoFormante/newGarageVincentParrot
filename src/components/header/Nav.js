@@ -67,7 +67,6 @@ useEffect(() => {
         }
 },[menuToggle])
     
-console.log(role);
 
   return (
       <nav className={`nav ${menuToggle ? "nav--open" : ""}`}>

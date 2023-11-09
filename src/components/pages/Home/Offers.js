@@ -90,7 +90,7 @@ const Offers = ({cars,count}) => {
      useEffect(() => {
          axios.get(`car/offers`)
                 .then(response => {
-                  console.log(response.data);
+                  
                 if (response?.data?.status !== 0 && response?.status === 200) {
                       
                     if (response?.data?.cars?.length > 0) {
