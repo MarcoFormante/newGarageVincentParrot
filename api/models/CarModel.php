@@ -289,25 +289,7 @@ class CarModel extends AbstractModel
                     }
                 }
 
-                //EQUIPMENTS
-
-               
-               
-                if ($equipments !== null &&  count($equipments) > 0 && $equipments[0] !== "") {
-                    $queryCarEquipments = "INSERT INTO car_equipments(car_id,equip_id) VALUES";
-                    foreach ($equipments as $key => $value) {
-                        if ($key !== count($equipments) - 1) {
-                            $queryCarEquipments .= "(:car_id$key,:equip_id$value),";
-                        } else {
-                            $queryCarEquipments .= "(:car_id$key,:equip_id$value)";
-                        }
-                    }
-                    $stmtCarEquipments = $this->pdo->prepare($queryCarEquipments);
-                }
-
-             
-
-
+    
                 //CAR GALLERY
                 $queryCarGallery = "INSERT INTO car_images(path,car_id) VALUES";
                 $galleryLength = count($galleryPathArray);
@@ -332,17 +314,36 @@ class CarModel extends AbstractModel
                    
                     throw new Exception("Error Processing Request", 0);
                 }
-              
-                if ($equipments !== null &&  count($equipments) > 0 && $equipments[0] !== "") {
+
+
+                 //EQUIPMENTS
+
+    
+                 if (count($equipments) > 0 && $equipments[0] !== "") {
+                    $queryCarEquipments = "INSERT INTO car_equipments(car_id,equip_id) VALUES";
                     foreach ($equipments as $key => $value) {
+                            
+                        if ($key !== count($equipments) - 1) {
+                            $queryCarEquipments .= "(:car_id$key,:equip_id$value),";
+                        } else {
+                            $queryCarEquipments .= "(:car_id$key,:equip_id$value)";
+                        }
+                    } 
+                  
+                    $stmtCarEquipments = $this->pdo->prepare($queryCarEquipments);
+                }
+              
+                if (count($equipments) > 0 && $equipments[0] !== "") {
+                    foreach ($equipments as $key => $value) {
+                      
                         $stmtCarEquipments->bindValue(":car_id$key", $carId, PDO::PARAM_INT);
                         $stmtCarEquipments->bindValue(":equip_id$value", $value, PDO::PARAM_INT);
-                        if ($stmtCarEquipments->execute()) {
-                       
-                        }else{
-                            $this->pdo->rollBack();
-                            throw new Exception("Error Processing Request", 0);
-                        }
+                    }
+                    if ($stmtCarEquipments->execute()) {
+                     
+                    }else{
+                        $this->pdo->rollBack();
+                        throw new Exception("Error Processing Request", 0);
                     }
                 }
 

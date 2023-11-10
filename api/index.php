@@ -4,14 +4,13 @@ header("Access-Control-Allow-Origin:*");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: *");
 
-$method = $_SERVER["REQUEST_METHOD"];
 
 
     try {
         if(!empty($_GET['route'])){
             
             $url= explode("/", filter_var($_GET['route'],FILTER_SANITIZE_URL));
-           
+            $method = $_SERVER["REQUEST_METHOD"];
             $controllerName = ucfirst($url[0]) . "Controller" ?? false;
         
             $param = count($url) > 1 && !empty($url[1]) ? array_slice($url,1) : null;

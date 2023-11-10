@@ -106,8 +106,7 @@ export default App;
 
 
 
-const ProtectedRoute = ({ auth, redirectPath, checkTrigger}) => {
-
+const ProtectedRoute = ({ auth, redirectPath, checkTrigger }) => {
   const location = useLocation();
   const dispatch = useDispatch();
 
@@ -139,11 +138,11 @@ const ProtectedRoute = ({ auth, redirectPath, checkTrigger}) => {
     return () => window.removeEventListener("storage", checkToken);
   }, []);
 
-return auth
-      ?
-  <div>
-     <Outlet />
-      </div>
-      :
-      <Navigate to={redirectPath} replace state={{from: location} } />
-}
+  return auth ? (
+    <div>
+      <Outlet />
+    </div>
+  ) : (
+    <Navigate to={redirectPath} replace state={{ from: location }} />
+  );
+};
