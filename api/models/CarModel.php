@@ -39,7 +39,7 @@ class CarModel extends AbstractModel
 
             $queryGetCars = "SELECT * FROM cars  
             WHERE (km > :minKm AND km < :maxKm) AND (year > :minYear AND year < :maxYear)
-            AND (price - offer > :minPrice  AND price - offer < :maxPrice) $withOffer LIMIT :page,12";
+            AND (price - offer > :minPrice  AND price - offer < :maxPrice) $withOffer ORDER BY id DESC LIMIT :page,12";
 
 
             if (!is_null($this->pdo)) {
@@ -423,7 +423,7 @@ class CarModel extends AbstractModel
         if ($filters === "Tout") {
             $query = "SELECT * 
             FROM cars 
-            ORDER BY created_at ASC
+            ORDER BY created_at DESC
             LIMIT :currentPage,12";
 
             $queryCountCars = "SELECT count(*) as count FROM cars ";

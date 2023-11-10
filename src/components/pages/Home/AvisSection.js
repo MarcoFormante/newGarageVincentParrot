@@ -137,10 +137,10 @@ const AvisSection = () => {
                         </div>
                     </div>
     
-                    <Arrows cardsTotalWidth={avis.length * 250} carouselX={carouselX} carouselWidth={carouselWidth} onClick={(direction) => setArrowTarget(direction)} />
+                    <Arrows cardsTotalWidth={avis.length * 300} carouselX={carouselX} carouselWidth={carouselWidth} onClick={(direction) => setArrowTarget(direction)} />
                     
                     <div className={"avis_cards_container"}>
-                        <div className={"avis_cards_container_inner"} style={avis.length * 250 < window.innerWidth ? { justifyContent: "center" } : {}} ref={carousel}>
+                        <div className={"avis_cards_container_inner"} style={avis.length * 300 < window.innerWidth ? { justifyContent: "center" } : {}} ref={carousel}>
                             {avis && avis.map((avis, index) =>  <AvisCard key={"avis_" + index +"_card" } name={avis.name}  message={avis.message} review={avis.review} />)}
                         </div>
                     

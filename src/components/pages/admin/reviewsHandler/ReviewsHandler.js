@@ -20,7 +20,7 @@ const ReviewsHandler = () => {
     useEffect(() => {
         setLoading(true)
             const formData = new FormData();
-            formData.append("currentPage", currentPage)
+            formData.append("currentPage", currentPage * 9)
             formData.append("filters", filters)
         
         axios.post("review/allToValidate", formData, {
