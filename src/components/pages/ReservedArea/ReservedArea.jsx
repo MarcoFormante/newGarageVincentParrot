@@ -25,14 +25,15 @@ const   ReservedArea = ({ setLogin }) => {
       axios.post(`user/login`, formData).then((response) => {
         if (response.data.status === 1) {
           const token = response.data.token;
+          const role =  response.data.role
           window.sessionStorage.setItem("token", token);
-          window.sessionStorage.setItem("role", response.data.role);
-          dispatch(add(response.data.role))
-          setAuthToken(token);
-          setLogin(true);
+          window.sessionStorage.setItem("role", role);
+          dispatch(add(role));
           navigate("/");
-        } else {
+        } else if(response.data.status === 0) {
           setErrorMessage(response.data.message);
+        } else {
+          setErrorMessage("Erreur: Un problème est survenu");
         }
       });
     }
@@ -40,7 +41,7 @@ const   ReservedArea = ({ setLogin }) => {
 
   return (
     <div>
-      <PageTitle pageTitle={"Area Reservé au personnel"} />
+      <PageTitle pageTitle={"Espace Réservé au personnel"} />
       <form className="form" onSubmit={handleSubmit}>
         <FormElement
           label={{ for: "email", text: "Email" }}

@@ -146,7 +146,7 @@ class CarController extends AbstractController
     public function newCar()
     {
         try {
-            if ($this->valueFromToken() === "admin" || $this->valueFromToken() === "employee") {
+            if (preg_match("/admin|employee/",$this->valueFromToken())) {
 
                 if (isset($_FILES['thumbnail']) && isset($_FILES['gallery']) && isset($_POST['details'])) {
                     $thumbnail = $_FILES['thumbnail'];

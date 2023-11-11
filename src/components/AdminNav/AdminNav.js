@@ -27,7 +27,7 @@ console.log(roleInStore);
             console.log("ciao");
         })
 
-        return ()=>  window.addEventListener("storage", () => {
+        return ()=>  window.removeEventListener("storage", () => {
             
             if (sessionStorage.getItem("token") || sessionStorage.getItem("role") === "admin"|"employee") {
                 sessionStorage.getItem("token")

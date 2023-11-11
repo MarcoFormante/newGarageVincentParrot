@@ -94,7 +94,7 @@ useEffect(() => {
                             end
                             onClick={handleMenu}    
                             >
-                            {"Espace Reservé"}
+                            {"Espace Réservé"}
                         </NavLink>
                       
                       :

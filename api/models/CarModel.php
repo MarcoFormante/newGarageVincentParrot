@@ -319,7 +319,7 @@ class CarModel extends AbstractModel
                  //EQUIPMENTS
 
     
-                 if (count($equipments) > 0 && $equipments[0] !== "") {
+                 if (is_array($equipments) && count($equipments) > 0 && $equipments[0] !== "") {
                     $queryCarEquipments = "INSERT INTO car_equipments(car_id,equip_id) VALUES";
                     foreach ($equipments as $key => $value) {
                             
@@ -333,7 +333,7 @@ class CarModel extends AbstractModel
                     $stmtCarEquipments = $this->pdo->prepare($queryCarEquipments);
                 }
               
-                if (count($equipments) > 0 && $equipments[0] !== "") {
+                if (is_array($equipments) && count($equipments) > 0 && $equipments[0] !== "") {
                     foreach ($equipments as $key => $value) {
                       
                         $stmtCarEquipments->bindValue(":car_id$key", $carId, PDO::PARAM_INT);

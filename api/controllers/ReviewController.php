@@ -78,7 +78,7 @@ Class ReviewController extends AbstractController{
 
     public function reviewValidation($param){
        
-        if ($this->valueFromToken() === "admin" || $this->valueFromToken() === "employee") {
+        if (preg_match("/admin|employee/",$this->valueFromToken())) {
             
             if (isset($param[1]) && isset($param[2]) && is_numeric($param[1]) && is_numeric($param[2]) ) {
                 $Review = new ReviewModel();
@@ -88,6 +88,7 @@ Class ReviewController extends AbstractController{
             }
        
         }else{
+           
             $this->showError("un probleme est survenu");
         }
     }
@@ -98,7 +99,7 @@ Class ReviewController extends AbstractController{
     }
 
     public function getReviewsToValidate(){
-        if ($this->valueFromToken() === "admin") {
+        if (preg_match("/admin|employee/",$this->valueFromToken())) {
           
             if (isset($_POST['currentPage']) && isset($_POST['filters'])) {
                 $currentPage = $_POST['currentPage'];

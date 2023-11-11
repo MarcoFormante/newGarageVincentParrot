@@ -29,7 +29,7 @@ import NotAuth from './helpers/NotAuth';
 function App() {
 
   const role = useSelector((state) => state.role.value)
-  const [login, setlogin] = useState(false)
+
   const location = useLocation()
   const [hidden,setHidden] = useState([])
   const [checkTrigger,setCheckTrigger]=useState(false)
@@ -69,14 +69,14 @@ function App() {
           <Route path='/parc-auto' element={<ParcAuto />} />
           <Route path='/parc-auto/details/:id' element={<CarDetails />} />
           <Route path="/contact" element={<Contact/>} />
-          <Route path="/area-reserve" element={<ReservedArea setLogin={(value) => setlogin(value)} />} />
+          <Route path="/area-reserve" element={<ReservedArea />} />
           <Route path="/avis" element={<AvisPage/>} />
           <Route path='*' element={<Navigate to={"/"}/>} />
       
           {/*Protected*/}
           
           <Route element={<ProtectedRoute auth={window.sessionStorage.getItem("token")}
-            login={login} redirectPath={"/"} checkTrigger={checkTrigger} />}
+            redirectPath={"/"} checkTrigger={checkTrigger} />}
           >
             <Route path={"/admin/new-car"} element={<NewCarPage/>} />
             <Route path={"/admin/carsHandler"} element={<CarsHandler/>} />

@@ -83,6 +83,7 @@ const NewCarPage = () => {
               notifySuccess("Nouvelle voiture ajouté avec succès");
               setNewCarCreated(true);
               setFormValues({ formValues: "" });
+              // document.location.reload()
             } else if (response?.data?.status === 0) {
               setNewCarCreated(false);
               if (response?.data?.message?.match(/vo_number/)) {
