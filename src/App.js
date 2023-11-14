@@ -62,7 +62,7 @@ function App() {
       {/*public*/}
       
       <Header />
-      <AdminNav role={role} checkToken={() => setCheckTrigger(!checkTrigger)} />
+      <AdminNav role={role} checkTrigger={() => setCheckTrigger(!checkTrigger)} />
       <main>
         <Routes>
           <Route exact path='/' element={<Home />} />

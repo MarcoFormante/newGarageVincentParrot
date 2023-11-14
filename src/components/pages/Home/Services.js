@@ -3,13 +3,18 @@ import { Link } from 'react-router-dom'
 import axios from '../../../api/axios'
 
 const Services = () => {
-  const [services,setServices]=useState([])
+  const [services,setServices] = useState([])
   
   useEffect(() => { 
-   
     axios.get("service/all")
-      .then(response => { setServices(response?.data?.services || [])})
-      .catch(error=>console.warn(error.data.message))
+      .then(response =>
+      {
+        if (response.data?.status === 1) {
+          setServices(response.data.services)
+        } else if (response.data?.status === 0) {
+          console.warn(response.data.message)
+        }
+      })
 },[])
   
   return (
@@ -29,7 +34,9 @@ const Services = () => {
       </figure>
       
           <ul className={"services_list"}>
-        {services && services.map((data,index)=> <li key={"service_" + index}>{data.service}</li>)}
+            {services && services.map((data, index) =>
+              <li key={"service_" + index}>{data.service}</li>)
+            }
           </ul>
 
       <p className={'txt_services txt_services_after_list mar-top-50'}>N’hésitez pas à nous <Link to={"/contact"}>contacter </Link>

@@ -5,7 +5,7 @@ const ButtonCta = ({ state,type,inner,to,...rest}) => {
     
     if (type === "button") {
         return (
-                <button {...rest}>{inner}</button>
+            <button {...rest}>{inner}</button>
         )
     } else if(type ==="link"){
       return (

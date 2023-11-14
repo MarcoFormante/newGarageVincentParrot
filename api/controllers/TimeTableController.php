@@ -43,7 +43,6 @@ Class TimeTableController extends AbstractController{
     }
 
     public function getTimeTable(){
-       
         $TimeTable = new TimetableModel();
         $this->response($TimeTable->getOpeningTimes());
         

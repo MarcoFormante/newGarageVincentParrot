@@ -9,7 +9,6 @@ require_once("AbstractModel.php");
 
 class CarModel extends AbstractModel
 {
-
     public function getAllCars($page, $filters)
     {
         try {
@@ -24,7 +23,7 @@ class CarModel extends AbstractModel
             $requiredKeys = ["minKm", "maxKm", "minYear", "maxYear", "minPrice", "maxPrice", "offer"];
             foreach ($arrayKeys as $key => $value) {
                 if (!in_array($requiredKeys[$key], $arrayKeys)) {
-                    throw new Exception("Error Processing Request");
+                    throw new Exception("Probleme pendant la recuperation des données");
                 }
             }
 
@@ -43,21 +42,23 @@ class CarModel extends AbstractModel
 
 
             if (!is_null($this->pdo)) {
-                $this->pdo->beginTransaction();
+               
                 $stmt = $this->pdo->prepare($queryCarCount);
                 $stmt2 = $this->pdo->prepare($queryGetCars);
-
                 foreach ($filters as $f => $v) {
 
                     if ($f !== "offer") {
                         $stmt2->bindValue(":$f", $v);
                     }
                 }
-
                 $stmt2->bindValue(":page", intval($page), PDO::PARAM_INT);
-
                 //execution of two stmts to get Count & filtered cars
-                $exeCount = $stmt->execute([$filters["minKm"], $filters["maxKm"], $filters['minYear'], $filters['maxYear'], $filters['minPrice'], $filters['maxPrice']]);
+                $exeCount = $stmt->execute(
+                    [
+                        $filters["minKm"], $filters["maxKm"], $filters['minYear'],
+                        $filters['maxYear'], $filters['minPrice'], $filters['maxPrice']
+                    ]
+                );
                 $exeCars = $stmt2->execute();
 
                 if ($exeCount) {
@@ -65,16 +66,15 @@ class CarModel extends AbstractModel
                 } else {
                     throw new PDOException("Probleme pendant la recuperation des données");
                 }
-
                 if ($exeCars) {
                     $cars = [];
                     while ($row = $stmt2->fetch(PDO::FETCH_ASSOC)) {
                         $cars[] = $row;
                     }
-                    $this->pdo->commit();
+                  
                     return ["status" => 1, "count" => $count['count'], "cars" => $cars];
                 } else {
-                    $this->pdo->rollBack();
+                   
                     throw new PDOException("Probleme pendant la recuperation des données");
                 }
             } else {
@@ -289,7 +289,6 @@ class CarModel extends AbstractModel
                     }
                 }
 
-    
                 //CAR GALLERY
                 $queryCarGallery = "INSERT INTO car_images(path,car_id) VALUES";
                 $galleryLength = count($galleryPathArray);
@@ -315,10 +314,8 @@ class CarModel extends AbstractModel
                     throw new Exception("Error Processing Request", 0);
                 }
 
-
                  //EQUIPMENTS
 
-    
                  if (is_array($equipments) && count($equipments) > 0 && $equipments[0] !== "") {
                     $queryCarEquipments = "INSERT INTO car_equipments(car_id,equip_id) VALUES";
                     foreach ($equipments as $key => $value) {

@@ -24,13 +24,16 @@ const TimesOpeningHandler = () => {
   const notifyError = (text) => toast.error(text);
     
     useEffect(() => {
-
-        axios.get("timetable/all")
-          .then(response => {
-            setTimeTable(response.data.openingTimes)
-          })
-        
-    }, [])
+      axios.get("timetable/all").then((response) => {
+        if (response.data.status === 1) {
+          setTimeTable(response.data.openingTimes);
+        } else if(response.data.status === 0) {
+          notifyError(response.data?.message)
+        } else {
+          notifyError("Un problème est survenu")
+        }
+      });
+    }, []);
   
   
   function handleModal(type,title, id, value,index,column,close) {
@@ -66,17 +69,17 @@ const TimesOpeningHandler = () => {
   }
 
   function saveTimeValue() {
-    const formData = new FormData();
-    formData.append("id", modalInputId);
-    formData.append("column", modalValueColumn);
-    formData.append("value", isInContinue ? "HC" : modalInputValue);
-    if (isClose) {
-      formData.append("close", 0);
-    } else {
-      formData.append("close", 1);
-    }
-
     if (modalInputValue) {
+      const formData = new FormData();
+      formData.append("id", modalInputId);
+      formData.append("column", modalValueColumn);
+      formData.append("value", isInContinue ? "HC" : modalInputValue);
+      if (isClose) {
+        formData.append("close", 0);
+      } else {
+        formData.append("close", 1);
+      }
+
       axios
         .post("timetable/update", formData, {
           headers: {
@@ -87,7 +90,6 @@ const TimesOpeningHandler = () => {
           if (response.data.status === 1) {
             setLocalTimeValues();
             setTimeTable([...timeTable]);
-
             notifySuccess("Modifié avec succès");
           } else {
             notifyError("Un erreur est survenu, rententez.");
@@ -96,7 +98,6 @@ const TimesOpeningHandler = () => {
         .finally(resetValues());
     } else {
       notifyError("Un erreur est survenu, rententez.");
-
       resetValues();
     }
   }
@@ -161,16 +162,25 @@ const TimesOpeningHandler = () => {
                 <>
                   <div hidden={isInContinue} style={isInContinue ? {display:"none"} : {}}  className='container--center--column'>
                     <label htmlFor="time" style={{fontSize:18}}>Time</label>
-                    <input  type="time" id="time" value={modalInputValue} onChange={(e) => {
-                    setModalInputValue(e.target.value)
-                    }}
+                    <input
+                      type="time"
+                      id="time"
+                      value={modalInputValue}
+                      onChange={(e) => {
+                      setModalInputValue(e.target.value)
+                      }}
                     />
                   </div>
                   {(modalValueColumn === "day_end_am" || modalValueColumn === "day_start_pm")
                     &&
                     <div className='container--center--column '>
                       <label htmlFor="close" style={{fontSize:18}}>En Continue</label>
-                      <input type="checkbox" id="close" checked={modalInputValue === "HC" ? isInContinue :  isInContinue} onChange={() => setIsInContinue(!isInContinue)} />
+                      <input
+                        type="checkbox"
+                        id="close"
+                        checked={isInContinue}
+                        onChange={() => setIsInContinue(!isInContinue)}
+                      />
                     </div>
                     }
                 </>
@@ -178,7 +188,12 @@ const TimesOpeningHandler = () => {
               :
               <>
                 <label htmlFor="close" style={{fontSize:18}}>Fermé</label>
-                <input type="checkbox"  id="close" checked={isClose} onChange={()=>setIsClose(!isClose)} />
+                <input
+                  type="checkbox"
+                  id="close"
+                  checked={isClose}
+                  onChange={() => setIsClose(!isClose)}
+                />
               </>
           }
         </div>

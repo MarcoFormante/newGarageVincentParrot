@@ -379,6 +379,8 @@ h2.page_title_home {
   max-width: 320px;
   position: relative;
   overflow-wrap: break-word;
+  box-shadow: 7px 7px 5px 0px #cbd0d4;
+  border: 1px solid black;
 }
 .avis_card_name {
   text-transform: capitalize;
@@ -2290,14 +2292,10 @@ html {
   box-sizing: border-box;
 }
 
-::-webkit-scrollbar {
-  display: none;
-}
-
 *,
 *::before,
 *::after {
-  box-sizing: inherit;
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }

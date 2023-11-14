@@ -50,64 +50,60 @@ const MultiRangeSlider = ({ min, max, onChange, title}) => {
   },[isClicking])
 
     return (
-      
-        <div className="slider_filter">
-            <span>{title}</span>
-       
-      <div className={"container_slider"}>
-          
-      <input
-        type="range"
-        min={min}
-        max={max}
-        value={minVal}
-        onClick={() => {
-          setIsClicking(false)
+      <div className="slider_filter">
+        <span>{title}</span>
+
+        <div className={"container_slider"}>
+          <input
+            type="range"
+            min={min}
+            max={max}
+            value={minVal}
+            onClick={() => {
+              setIsClicking(false);
             }}
             onTouchEnd={() => {
-              setIsClicking(false)
+              setIsClicking(false);
             }}
-            
-        onChange={(event) => {
-          setIsClicking(true);
-        const value = Math.min(Number(event.target.value), maxVal - 1);
-        setMinVal(value);
-        minValRef.current = value;
-        }}
-        className="thumb thumb--left"
-        style={{ zIndex: minVal > max - 100 && "5" }}
-      />
-          
-      <input
-        type="range"
-        min={min}
-        max={max}
+            onChange={(event) => {
+              setIsClicking(true);
+              const value = Math.min(Number(event.target.value), maxVal - 1);
+              setMinVal(value);
+              minValRef.current = value;
+            }}
+            className="thumb thumb--left"
+            style={{ zIndex: minVal > max - 100 && "5" }}
+          />
+
+          <input
+            type="range"
+            min={min}
+            max={max}
             value={maxVal}
             onTouchEnd={() => {
-              setIsClicking(false)
+              setIsClicking(false);
             }}
             onClick={() => {
-             
-              setIsClicking(false)
+              setIsClicking(false);
             }}
-        onChange={(event) => {
-          setIsClicking(true);
-          const value = Math.max(Number(event.target.value), minVal + 1);
-          setMaxVal(value);
-          maxValRef.current = value;
-        }}
-        className={"thumb thumb--right"}
-      />
+            onChange={(event) => {
+              setIsClicking(true);
+              const value = Math.max(Number(event.target.value), minVal + 1);
+              setMaxVal(value);
+              maxValRef.current = value;
+            }}
+            className={"thumb thumb--right"}
+          />
 
-      <div className="slider">
-        <div className="slider__track" />
-        <div ref={range} className="slider__range" />
+          <div className="slider">
+            <div className="slider__track" />
+            <div ref={range} className="slider__range" />
             <div className="slider__left-value">{minVal}</div>
-        <div className="slider__right-value">{maxVal}</div>
+            <div className="slider__right-value">{maxVal}</div>
+          </div>
+        </div>
       </div>
-    </div>
-    </div>
-  );
+    );
 };
 
 MultiRangeSlider.propTypes = {

@@ -1,41 +1,43 @@
-import React, { useLayoutEffect } from 'react'
-import PropTypes from 'prop-types'
-import ButtonCta from '../Buttons/ButtonCta'
-import gsap from 'gsap'
-
-
+import React, { useLayoutEffect } from "react";
+import PropTypes from "prop-types";
+import ButtonCta from "../Buttons/ButtonCta";
+import gsap from "gsap";
 
 const CarCard = (props) => {
-
   const handleSubject = (subject) => {
-    sessionStorage.setItem("carSubject", subject)
-  }
-  const comp = React.useRef()
-  const el = React.useRef()
-
+    sessionStorage.setItem("carSubject", subject);
+  };
+  const comp = React.useRef();
+  const el = React.useRef();
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-     if (document.location.pathname.match(/parc-auto/i)) {
-      gsap.fromTo(".car_card", { opacity: 0,scale:0, y:800 }, {
-        opacity: 1,
-        duration: 0.3,
-        scale: 1,
-        y:0,
-        stagger: {
-          each: 0.1,  
-          ease: "power1.inOut",
-      }})
-     }
-      
+      if (document.location.pathname.match(/parc-auto/i)) {
+        gsap.fromTo(
+          ".car_card",
+          { opacity: 0, scale: 0, y: 800 },
+          {
+            opacity: 1,
+            duration: 0.3,
+            scale: 1,
+            y: 0,
+            stagger: {
+              each: 0.1,
+              ease: "power1.inOut",
+            },
+          }
+        );
+      }
     }, comp.current);
-   return () => ctx.revert()
-  }, [])
-
-
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <figure className="car_card" ref={el} onLoad={(e)=>props.setImgWidth && props?.setImgWidth(e.target.width)} >
+    <figure
+      className="car_card"
+      ref={el}
+      onLoad={(e) => props.setImgWidth && props?.setImgWidth(e.target.width)}
+    >
       <img src={"/images/uploads/" + props.thumbnail} alt={props.model} />
 
       <figcaption className={"car_card_model"}>
@@ -54,14 +56,12 @@ const CarCard = (props) => {
         {/*card_details_right (price)*/}
 
         <div className={"car_card_details--right"}>
-          {
-            props.offer && props.offer > 0 ?
-            (
+          {props.offer && props.offer > 0 ? (
             <span className={"car_card_details_offer_price"}>
               {props.price - props.offer} $
             </span>
-              ) : (
-                ""
+          ) : (
+            ""
           )}
           <span
             className={"car_card_details_price"}
@@ -96,7 +96,7 @@ const CarCard = (props) => {
             color: props.color,
             doors: props.doors,
             seats: props.seats,
-            energy:props.energy,
+            energy: props.energy,
             currentPage: props.currentPage,
             lastlocation: props.lastlocation,
           }}
@@ -113,22 +113,22 @@ const CarCard = (props) => {
             make: props.make,
             mdoel: props.model,
             id: props.id,
-            year: props.year,
+            year: props.year
           }}
         />
       </div>
     </figure>
   );
-}
+};
 
-export default CarCard
+export default CarCard;
 
 CarCard.propTypes = {
-    id: PropTypes.number.isRequired,
-    thumbnail:PropTypes.string.isRequired,
-    model: PropTypes.string.isRequired,
-    km: PropTypes.number.isRequired,
-    year: PropTypes.number.isRequired,
-    offer: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired
-}
+  id: PropTypes.number.isRequired,
+  thumbnail: PropTypes.string.isRequired,
+  model: PropTypes.string.isRequired,
+  km: PropTypes.number.isRequired,
+  year: PropTypes.number.isRequired,
+  offer: PropTypes.number.isRequired,
+  price: PropTypes.number.isRequired,
+};

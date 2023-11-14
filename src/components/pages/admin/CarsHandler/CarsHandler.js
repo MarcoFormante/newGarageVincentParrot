@@ -580,6 +580,7 @@ const CarsHandler = () => {
                   position: "absolute",
                   left: "50%",
                   transform: "translateX(-50%)",
+                  zIndex:-1
                 }}
               >
                 <SwitchPageBlock

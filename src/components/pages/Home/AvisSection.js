@@ -82,8 +82,7 @@ const AvisSection = () => {
             }, 500)
         
     }
-    
-  
+     
     
     useEffect(() => {
         if (avis.length > 0) {
@@ -131,16 +130,16 @@ const AvisSection = () => {
                             <div className={"avis_score_stars"}>
                                 {/** stars block set "clickable" for avis page */}
                                 <StarsBlock numberOfActiveStars={5} clickable={false}/>
-                                <span className={'score'}>{average}/5</span>
+                                <span className={'score'}>{Number(average).toFixed(1)}/5</span>
                             </div>
                             <ScoreBarsBlock sum={sum} totalStarsLength={totalStarsLength} averageAnimation={averageAnimation} triggerAnimation={triggerScoreAnimation} />
                         </div>
                     </div>
     
-                    <Arrows cardsTotalWidth={avis.length * 300} carouselX={carouselX} carouselWidth={carouselWidth} onClick={(direction) => setArrowTarget(direction)} />
+                    <Arrows cardsTotalWidth={avis.length * 320} carouselX={carouselX} carouselWidth={carouselWidth} onClick={(direction) => setArrowTarget(direction)} />
                     
                     <div className={"avis_cards_container"}>
-                        <div className={"avis_cards_container_inner"} style={avis.length * 300 < window.innerWidth ? { justifyContent: "center" } : {}} ref={carousel}>
+                        <div className={"avis_cards_container_inner"} style={avis.length * 320 < window.innerWidth ? { justifyContent: "center" } : {}} ref={carousel}>
                             {avis && avis.map((avis, index) =>  <AvisCard key={"avis_" + index +"_card" } name={avis.name}  message={avis.message} review={avis.review} />)}
                         </div>
                     
@@ -224,7 +223,8 @@ const ScoreBar = ({ scoreNum, totalStarsLength,sum,averageAnimation,triggerAnima
                     trigger: triggerAnimation.current,
                     start: "-50% center",
                     end: " bottom",
-                    scrub: 1
+                    scrub: 1,
+                 
                 },
                 onStart: () => {
                   averageAnimation()

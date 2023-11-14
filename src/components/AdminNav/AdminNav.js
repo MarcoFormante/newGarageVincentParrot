@@ -6,14 +6,14 @@ import CheckToken from '../../helpers/CheckToken'
 import NotAuth from '../../helpers/NotAuth'
 
 
-const AdminNav = ({ checkToken }) => {
+const AdminNav = ({ checkTrigger }) => {
     const roleInStore = useSelector(state => state.role.value)
     const [role,setRole] = useState((""))
     const [adminNavToggle, setAdminNavToggle] = useState(false)
     const dispatch = useDispatch()
     
   
-console.log(roleInStore);
+
     useEffect(() => {
         window.addEventListener("storage", () => {
             
@@ -24,7 +24,7 @@ console.log(roleInStore);
             } else {
                 NotAuth()
             }
-            console.log("ciao");
+          
         })
 
         return ()=>  window.removeEventListener("storage", () => {
@@ -36,7 +36,7 @@ console.log(roleInStore);
             } else {
                 NotAuth()
             }
-            console.log("ciao");
+           
         })
 
      
@@ -138,7 +138,7 @@ console.log(roleInStore);
                 {role && role === "admin"
                         ? adminLinks.map((link, index) =>
                             <NavLink onClick={() => {
-                                checkToken()
+                                checkTrigger()
                                 setAdminNavToggle(false)
                             }} end className={`nav_link `} to={link.to}
                                 key={link.linkName + "_" + index}>
@@ -149,7 +149,7 @@ console.log(roleInStore);
                 : role && role === "employee"
                             ? employeeLinks.map((link, index) =>
                                 <NavLink onClick={() => {
-                                checkToken()
+                                checkTrigger()
                                 setAdminNavToggle(false)
                             }} end
                                 className={`nav_link`}

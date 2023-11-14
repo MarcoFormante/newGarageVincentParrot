@@ -28,6 +28,9 @@
     max-width: 320px;
     position: relative;
     overflow-wrap: break-word;
+    box-shadow: 7px 7px 5px 0px #cbd0d4;
+    border: 1px solid black;
+
 
     &_name{
         text-transform: capitalize;
@@ -48,6 +51,7 @@
 
     .star{
         margin-left: 10px;
+        
     }
 
 

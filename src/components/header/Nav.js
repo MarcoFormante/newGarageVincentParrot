@@ -23,7 +23,7 @@ const Nav = ({menuToggle,handleMenu,setMenuToggle}) => {
 
    //public Routes (all users)
     const publicLinks = [{
-            page: "Acceuil",
+            page: "Accueil",
             path: "/"
         },
         {

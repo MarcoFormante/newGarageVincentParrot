@@ -117,7 +117,12 @@ function loadFilteredCars() {
             <div className='parc_auto_cars_switch_block'>
               <div className={'parc_auto_cars_section'} >   
                   
-                {cars && !loading && cars.map((car, index) => <CarCard currentPage={currentPage} lastlocation={"parcAuto"} key={"parc-auto " + index + car.id} {...cars[index]} />)}
+            {cars && !loading && cars.map((car, index) =>
+              <CarCard
+                currentPage={currentPage}
+                lastlocation={"parcAuto"}
+                key={"parc-auto " + index + car.id}
+                {...cars[index]} />)}
           </div>
           
           <SwitchPageBlock
