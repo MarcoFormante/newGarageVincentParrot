@@ -78,20 +78,19 @@ Class ServiceController extends AbstractController{
           
         }
 
-    public function addNewService(){
-       if ($this->valueFromToken() === "admin") {
-        if (isset($_POST['value'])) {
-            $service = new ServiceModel();
-            $value = trim($_POST['value']);
-           $this->response($service->addNewService($value));
-        }else{
+    public function addNewService()
+    {
+        if ($this->valueFromToken() === "admin") {
+            if (isset($_POST['value'])) {
+                $service = new ServiceModel();
+                $value = trim($_POST['value']);
+                $this->response($service->addNewService($value));
+            } else {
+                $this->showError("Un probleme est survenu");
+            }
+        } else {
             $this->showError("Un probleme est survenu");
         }
-    
-       }else{
-        $this->showError("Un probleme est survenu");
-       }
-      
     }
 }
 

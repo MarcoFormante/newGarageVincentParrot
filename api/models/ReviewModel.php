@@ -52,7 +52,6 @@ class ReviewModel extends AbstractModel
 
     public function reviewValidation($reviewValue, $reviewId)
     {
-
         $query = "UPDATE reviews SET is_validate = :value WHERE id = :id";
         try {
             if (!is_null($this->pdo)) {

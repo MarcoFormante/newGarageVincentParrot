@@ -80,10 +80,12 @@ Class ReviewController extends AbstractController{
        
         if (preg_match("/admin|employee/",$this->valueFromToken())) {
             
-            if (isset($param[1]) && isset($param[2]) && is_numeric($param[1]) && is_numeric($param[2]) ) {
+              
+            if (isset($_POST["reviewValidationValue"]) && isset($_POST["reviewValidationId"])) {
                 $Review = new ReviewModel();
-                $this->response($Review->reviewValidation($param[1],$param[2]));
+                $this->response($Review->reviewValidation($_POST["reviewValidationValue"],$_POST["reviewValidationId"]));
             }else{
+              
                 $this->showError("un probleme est survenu");
             }
        

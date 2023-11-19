@@ -69,7 +69,7 @@ class UserModel extends AbstractModel
                         ]
                     ;
                 } else {
-                    throw new Exception("Erreur pendant l'envois des données", 1);
+                    throw new Exception("Erreur pendant l'envois des données");
                 }
             } catch (Exception $e) {
                 return $this->error("Erreur pendant l'envois des données, vérifier que l'email n'existe deja, Error: " . $e->getMessage());

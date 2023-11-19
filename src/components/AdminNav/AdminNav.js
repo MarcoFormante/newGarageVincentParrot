@@ -1,5 +1,5 @@
 import React, { useEffect,useMemo,useState} from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { toggle } from '../Reducers/MenuToggleReducer'
 import CheckToken from '../../helpers/CheckToken'
@@ -11,6 +11,7 @@ const AdminNav = ({ checkTrigger }) => {
     const [role,setRole] = useState((""))
     const [adminNavToggle, setAdminNavToggle] = useState(false)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     
   
 
@@ -19,10 +20,17 @@ const AdminNav = ({ checkTrigger }) => {
             
             if (sessionStorage.getItem("token") || sessionStorage.getItem("role") === "admin"|"employee") {
                 sessionStorage.getItem("token")
-                    ? CheckToken(sessionStorage.getItem("token")).then(res => setRole(res.data.role))
-                    : NotAuth()
+                    ? CheckToken(sessionStorage.getItem("token")).then(res => {
+                        setRole(res.data.role)
+                        if (sessionStorage.getItem("role") !== (res.data.role)) {
+                            NotAuth()
+                            navigate("/")
+                        }
+                    })
+                    : NotAuth() 
             } else {
                 NotAuth()
+                navigate("/")
             }
           
         })
@@ -31,10 +39,17 @@ const AdminNav = ({ checkTrigger }) => {
             
             if (sessionStorage.getItem("token") || sessionStorage.getItem("role") === "admin"|"employee") {
                 sessionStorage.getItem("token")
-                    ? CheckToken(sessionStorage.getItem("token")).then(res => setRole(res.data.role))
+                    ? CheckToken(sessionStorage.getItem("token")).then(res => {
+                        setRole(res.data.role)
+                        if (sessionStorage.getItem("role") !== (res.data.role)) {
+                            NotAuth()
+                            navigate("/")
+                        }
+                    })
                     : NotAuth()
             } else {
                 NotAuth()
+                navigate("/")
             }
            
         })
@@ -46,15 +61,21 @@ const AdminNav = ({ checkTrigger }) => {
         if (roleInStore === "admin"|"employee" || (sessionStorage.getItem("token") || sessionStorage.getItem("role") === "admin"|"employee" )) {
             if (sessionStorage.getItem("token") || sessionStorage.getItem("role") === "admin" | "employee") {
                 sessionStorage.getItem("token")
-                ? CheckToken(sessionStorage.getItem("token")).then(res => setRole(res.data.role))
-                : NotAuth()
+                    ? CheckToken(sessionStorage.getItem("token")).then(res => {
+                        setRole(res.data.role)
+                        if (sessionStorage.getItem("role") !== (res.data.role)) {
+                            NotAuth()
+                        }
+                    })
+                    : NotAuth()
+               
             } else {
                 NotAuth()
             }
         } else {
             NotAuth()
         }
-    }, [roleInStore])
+    }, [roleInStore,sessionStorage.getItem("role")])
     
 
     

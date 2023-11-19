@@ -101,9 +101,10 @@ class ImageController extends AbstractController
 
     public function addNewImages(){
         try {
-            $imageModel = new ImageModel();
+           
               if ($this->valueFromToken() === "admin") {
                   if (isset($_POST["carID"]) && isset($_FILES['gallery'])) {
+                    $imageModel = new ImageModel();
                       $this->response($imageModel->addNewImages($_POST['carID'],$_FILES['gallery']));
                   }else{
                       throw new Exception("Error Processing Request");    

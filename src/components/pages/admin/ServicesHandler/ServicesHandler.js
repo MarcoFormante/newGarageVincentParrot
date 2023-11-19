@@ -3,8 +3,11 @@ import Modal from "../../../Modal/Modal";
 import axios from "../../../../api/axios";
 import PageTitle from "../../../PageTitle/PageTitle";
 import toast, { Toaster } from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const ServicesHandler = () => {
+  const role = useSelector(state => state.role.value)
   const [services, setServices] = useState([]);
   const [modalToggle, setModalToggle] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
@@ -13,28 +16,31 @@ const ServicesHandler = () => {
   const [serviceIndex, setServiceIndex] = useState(null);
   const [Type, setType] = useState("");
   const [newService, setNewService] = useState("");
-
+  const navigate = useNavigate()
   const notifySuccess = (text) => toast.success(text);
   const notifyError = (text) => toast.error(text);
 
   useEffect(() => {
-    axios
+    if (role && role === "admin") {
+      axios
       .get("service/all")
       .then((response) => {
         if (response.data.status === 1) {
           if (response.data.services) {
             setServices(response.data.services);
           } else {
-            console.error("ERROR , Impossible de recevoir les données");
+            notifyError("Erreur: Impossible recevoir les données");
           }
         } else {
-          console.error("ERROR , Impossible de recevoir les données");
+          notifyError("Erreur: Impossible recevoir les données");
         }
       })
       .catch((error) =>
-        console.error("ERROR , Impossible de recevoir les données")
-      );
-    return () => {};
+      notifyError("Erreur: Impossible recevoir les données"))
+    } else {
+      navigate("/")
+    }
+   
   }, []);
 
   function handleModal(title, inptValue, id, index, editType) {
@@ -178,19 +184,18 @@ const ServicesHandler = () => {
           <label htmlFor="newService" className="text-bold">
             Nouveau service :
           </label>
-            <textarea
-                placeholder="Ecrir ici le nouveau service"
-                value={newService}
-                id="newService"
-                onChange={(e) => setNewService(e.target.value)}
-                style={{
-                minWidth: 300,
-                paddingLeft: 5,
-                minHeight: 80,
-                paddingTop: 4,
-                }}
-            />
-                  
+          <textarea
+              placeholder="Ecrir ici le nouveau service"
+              value={newService}
+              id="newService"
+              onChange={(e) => setNewService(e.target.value)}
+              style={{
+              minWidth: 300,
+              paddingLeft: 5,
+              minHeight: 80,
+              paddingTop: 4,
+              }}
+          />
             <button
                 className="cta cta--red"
                 onClick={() => handleNewService("add")}

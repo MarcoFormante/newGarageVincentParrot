@@ -8,7 +8,6 @@ class ServiceModel extends AbstractModel
     public function getAllServices()
     {
         $query = "SELECT * from services ";
-
         if (!is_null($this->pdo)) {
             $stmt = $this->pdo->prepare($query);
             $arrServices = [];
@@ -16,7 +15,6 @@ class ServiceModel extends AbstractModel
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     $arrServices[] = $row;
                 }
-
                 return ["status" => 1, "services" => $arrServices];
             } else {
                 return $this->error("Erreur pendant la recuperation des services.");
@@ -68,20 +66,24 @@ class ServiceModel extends AbstractModel
     }
 
 
-    public function addNewService(string $value){
+    public function addNewService(string $value)
+    {
         $query = "INSERT INTO services(service) VALUE(:value)";
 
         if (!is_null($this->pdo)) {
             $stmt = $this->pdo->prepare($query);
-            $stmt->bindValue(':value',$value,PDO::PARAM_STR);
+            $stmt->bindValue(':value', $value, PDO::PARAM_STR);
 
             if ($stmt->execute()) {
-                return ['status'=>1,"message"=> "Service ajouté avec succés", "lastId"=> $this->pdo->lastInsertId()];
-            }else{
+                return [
+                'status' => 1, 
+                "message" => "Service ajouté avec succés", 
+                "lastId" => $this->pdo->lastInsertId()
+            ];
+            } else {
                 return $this->error("Erreur pendant l'ajout du nouveau service.");
             }
-
-        }else{
+        } else {
             return $this->error("Erreur pendant l'ajout du nouveau service.");
         }
     }

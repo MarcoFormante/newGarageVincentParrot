@@ -57,7 +57,7 @@ const ReviewsHandler = () => {
         const formData = new FormData();
         formData.append("reviewValidationValue", +newValidationNumber);
         formData.append("reviewValidationId", parseInt(avisId));
-        axios.post(`review/validation/${+newValidationNumber}/${+avisId}`, {
+        axios.post(`review/validation`,formData, {
             headers: {
                 "Authorization": "Bearer " + sessionStorage.getItem("token")
               }

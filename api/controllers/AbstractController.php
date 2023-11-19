@@ -44,7 +44,7 @@ private function successResponse($data){
 }
 
 
-protected function valueFromToken()
+    protected function valueFromToken()
     {
         include("models/UserModel.php");
         if (!empty(apache_request_headers()["Authorization"])) {
@@ -64,8 +64,7 @@ protected function valueFromToken()
         } else {
             return false;
         }
-    
-}
+    }
 
 
 }

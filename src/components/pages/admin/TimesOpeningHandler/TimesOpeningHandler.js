@@ -3,6 +3,7 @@ import axios from '../../../../api/axios'
 import PageTitle from '../../../PageTitle/PageTitle'
 import Modal from '../../../Modal/Modal'
 import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -15,15 +16,15 @@ const TimesOpeningHandler = () => {
   const [modalInputId, setModalInputId] = useState(null);
   const [modalInputIndex, setModalInputIndex] = useState(null);
   const [modalValueColumn, setModalValueColumn] = useState("");
- 
   const [isClose, setIsClose] = useState(false);
   const [InputType, setInputType] = useState("")
   const [isInContinue,setIsInContinue] = useState(false)
-  
+  const navigate = useNavigate()
   const notifySuccess = (text) => toast.success(text);
   const notifyError = (text) => toast.error(text);
     
-    useEffect(() => {
+  useEffect(() => {
+    if (sessionStorage.getItem("role") === "admin") {
       axios.get("timetable/all").then((response) => {
         if (response.data.status === 1) {
           setTimeTable(response.data.openingTimes);
@@ -33,6 +34,9 @@ const TimesOpeningHandler = () => {
           notifyError("Un problème est survenu")
         }
       });
+    } else {
+      navigate("/")
+    }
     }, []);
   
   

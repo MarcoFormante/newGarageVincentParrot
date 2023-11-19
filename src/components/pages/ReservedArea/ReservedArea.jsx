@@ -15,7 +15,6 @@ const   ReservedArea = ({ setLogin }) => {
   const dispatch = useDispatch()
   
 
-
   function handleSubmit(e) {
     e.preventDefault();
     if (email && password) {

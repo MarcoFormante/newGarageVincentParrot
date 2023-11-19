@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "../../../../api/axios";
 import PageTitle from "../../../PageTitle/PageTitle";
 import SwitchPageBlock from "../../../SwitchPageBlock/SwitchPageBlock";
@@ -6,9 +6,9 @@ import toast, { Toaster } from "react-hot-toast";
 import Modal from "../../../Modal/Modal";
 import Resizer from "react-image-file-resizer";
 import CarHandlerDetails from "./CarHandlerDetails";
-import CheckToken from "../../../../helpers/CheckToken";
+
 import { useNavigate } from "react-router-dom";
-import notAuth from "../../../../helpers/NotAuth";
+
 import Loading from "../../../Loading/Loading";
 
 const CarsHandler = () => {
@@ -34,36 +34,41 @@ const CarsHandler = () => {
   const notifySuccess = (text) => toast.success(text);
   const notifyError = (text) => toast.error(text);
 
-  const getCars = () => {
 
-    setLoading(true);
-    const path = "car/all";
-    const formData = new FormData();
-    formData.append("page", currentPage * 12);
-    formData.append("filters", filters);
-    formData.append("filterValue", modalFilterValue);
-    axios
-      .post(path, formData, {
-        headers: {
-          "Authorization": "Bearer " + sessionStorage.getItem("token")
-        }
-      })
-      .then((response) => {
-        if (response.data.status === 1) {
-          setCars([...response.data.cars]);
-          seCarsCount(response.data.count);
-          if (table.current) {
-            table.current.scrollLeft = 0;
+  const getCars = () => {
+    if (sessionStorage.getItem("role") === "admin") {
+      setLoading(true);
+      const path = "car/all";
+      const formData = new FormData();
+      formData.append("page", currentPage * 12);
+      formData.append("filters", filters);
+      formData.append("filterValue", modalFilterValue);
+      axios
+        .post(path, formData, {
+          headers: {
+            "Authorization": "Bearer " + sessionStorage.getItem("token")
           }
-        
-          if (response.data.cars.length < 1) {
-            notifyError("Aucune voiture trouvée");
+        })
+        .then((response) => {
+          if (response.data.status === 1) {
+            setCars([...response.data.cars]);
+            seCarsCount(response.data.count);
+            if (table.current) {
+              table.current.scrollLeft = 0;
+            }
+          
+            if (response.data.cars.length < 1) {
+              notifyError("Aucune voiture trouvée");
+            }
+          } else {
+            notifyError(response.data.message);
           }
-        } else {
-          notifyError(response.data.message);
-        }
-      })
-      .finally(setLoading(false));
+        })
+        .finally(setLoading(false));
+    } else {
+      navigate("/")
+    }
+   
   }
 
 

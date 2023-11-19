@@ -6,7 +6,7 @@ const StarsBlock = ({ numberOfActiveStars,clickable,setReview,formSent}) => {
     const [stars, setStars] = useState([0,0,0,0,0])
     const [activeStarsLength, setActiveStarsLength] = useState(numberOfActiveStars)
     
-    const setNote = (indexStar) => {
+    const onClick = (indexStar) => {
       if (clickable) {
         const array = [];
         let note = 0;
@@ -20,18 +20,18 @@ const StarsBlock = ({ numberOfActiveStars,clickable,setReview,formSent}) => {
         setStars([...array]);
         note = array.reduce((num, i) => num + i);
         setReview(note);
+        console.log(note);
       }
     };
    
     useEffect(()=>{
         if (formSent) {
-            setNote(4)
+            onClick(4)
         }
     },[formSent])
     
    
     useEffect(() => {
-       
         setActiveStarsLength(4);
         let starsArray = [0, 0, 0, 0, 0];
         starsArray.map((star, index) =>
@@ -50,9 +50,8 @@ const StarsBlock = ({ numberOfActiveStars,clickable,setReview,formSent}) => {
         return (
             <div className={'stars_block'}>
                 {stars && stars.map((star, index) =>
-                    
                     <Star key={"stars__" + index} 
-                        onClick={(e) => setNote(index)}
+                        onClick={(e) => onClick(index)}
                         style={clickable ? { cursor: "pointer" } : {}}
                         color={star === 1 ? "red" : "grey"}
                     />

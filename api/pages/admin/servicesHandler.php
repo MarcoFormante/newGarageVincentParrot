@@ -8,8 +8,8 @@ header("Access-Control-Allow-Headers: *");
 require_once  '../../controllers/ServiceController.php';
 
 
-$AuthToken = apache_request_headers()["Authorization"];
-var_dump(str_replace("Bearer ","",$AuthToken));
+
+
 
 if (isset($_GET['service'])) {
 

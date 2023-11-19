@@ -996,7 +996,7 @@ pages: home
 */
 .hero_home {
   height: 70vh;
-  background-image: url(/public/images/hero.jpg);
+  background-image: url(/public/images/hero-small.webp);
   background-position: center;
   background-repeat: no-repeat;
   background-position: center;
@@ -1009,6 +1009,7 @@ pages: home
     height: 82vh;
     background-position: center -30vw;
     background-size: cover;
+    background-image: url(/public/images/hero.webp);
   }
 }
 .hero_home .page_title {

@@ -62,7 +62,7 @@ function App() {
       {/*public*/}
       
       <Header />
-      <AdminNav role={role} checkTrigger={() => setCheckTrigger(!checkTrigger)} />
+    { ( role || sessionStorage.getItem("role")) && <AdminNav role={role} checkTrigger={() => setCheckTrigger(!checkTrigger)} />}
       <main>
         <Routes>
           <Route exact path='/' element={<Home />} />
@@ -109,24 +109,34 @@ export default App;
 const ProtectedRoute = ({ auth, redirectPath, checkTrigger }) => {
   const location = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const role = useSelector((state) => state.role.value);
 
-  const checkToken = useCallback(() => {
-    if (auth) {
+  const checkToken = () => {
+    if (auth && role) {
       CheckToken(auth).then((response) => {
-        let isValid = response.data.status;
-        if (isValid === 1) {
+        if (response.data.status === 1) {
           const userRole = response.data.role;
-          dispatch(add(userRole));
+          if (sessionStorage.getItem("role") && sessionStorage.getItem("role") !== userRole) {
+            dispatch(remove());
+            sessionStorage.clear();
+            navigate("/");
+            return;
+          } else {
+            dispatch(add(userRole));
+          }
         } else {
           dispatch(remove());
           sessionStorage.clear();
+          navigate("/");
         }
       });
     } else {
       dispatch(remove());
       sessionStorage.clear();
+      navigate("/");
     }
-  }, [dispatch, auth]);
+  };
 
   useEffect(() => {
     checkToken();
@@ -138,7 +148,7 @@ const ProtectedRoute = ({ auth, redirectPath, checkTrigger }) => {
     return () => window.removeEventListener("storage", checkToken);
   }, []);
 
-  return auth ? (
+  return auth && role ? (
     <div>
       <Outlet />
     </div>

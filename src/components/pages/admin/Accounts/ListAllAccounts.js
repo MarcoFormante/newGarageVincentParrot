@@ -2,27 +2,33 @@ import React, { useEffect, useInsertionEffect, useState } from "react";
 import axios from "../../../../api/axios";
 import toast, { Toaster } from "react-hot-toast";
 import Modal from "../../../Modal/Modal";
+import { useNavigate } from "react-router-dom";
 
 
 const ListAllAccounts = ({ newUser }) => {
   const [accountList, setAccountList] = useState([]);
   const [accountTarget, setAccountTarget] = useState({});
   const [modalToggle, setModalToggle] = useState(false);
-
+  const navigate = useNavigate()
   const notifySuccess = (text) => toast.success(text);
   const notifyError = (text) => toast.error(text);
 
-    useEffect(() => {
+  useEffect(() => {
+    if (sessionStorage.getItem("role") === "admin") {
       axios.post("user/all", {}, {
         headers: {
-              "Authorization": "Bearer " + sessionStorage.getItem("token")
-            }}).then((response) => {
+          "Authorization": "Bearer " + sessionStorage.getItem("token")
+        }
+      }).then((response) => {
         if (response.data.status === 1) {
           setAccountList([...response.data.users]);
         } else {
           notifyError("Erreur: impossible de recuperer les comptes");
         }
       });
+    } else {
+      navigate("/")
+    }
     }, []);
   
 

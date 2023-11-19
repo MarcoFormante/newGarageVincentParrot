@@ -111,7 +111,7 @@ const CarCard = (props) => {
           to={"/contact"}
           state={{
             make: props.make,
-            mdoel: props.model,
+            model: props.model,
             id: props.id,
             year: props.year
           }}

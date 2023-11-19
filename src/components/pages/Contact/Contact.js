@@ -48,7 +48,7 @@ const Contact = () => {
     e.preventDefault()
     if (formInputs.surname && formInputs.name && formInputs.email && formInputs.tel && formInputs.message) {
       checkFormInputs(formInputs.surname, formInputs.name, formInputs.email, formInputs.tel, formInputs.message)
-      if ( emailjs.sendForm("service_23l3ul5", "template_vsffnz7", e.target, "dQufTu-6qCghfGD3w")) {
+      if ( emailjs.sendForm(process.env.REACT_APP_EMJService, process.env.REACT_APP_EMJTemplate, e.target, process.env.REACT_APP_EMJCode)) {
         notifySuccess("Message envoyé avec succès")
         setFormInputs({ subject: "", surname: "", name: "", email: "", tel: "", message: "" })
       } else {

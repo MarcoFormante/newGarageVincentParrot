@@ -16,7 +16,7 @@ const CarHandlerGallery = ({carID}) => {
     
     useEffect(() => {
        
-        if (carID) {
+        if (carID && sessionStorage.getItem("token")) {
             setLoading(true)
             const path = `image/carGallery/${carID}`
             axios.get(path, {
@@ -104,7 +104,7 @@ const CarHandlerGallery = ({carID}) => {
                 formData.append("carID",+carID)
                 axios.post(path, formData, {
                 headers: {
-                    "Content-Type":"application/x-www-form-urlencoded"
+                    "Authorization": "Bearer " + sessionStorage.getItem("token")
                 }
             }).then(response => {
                 if (response.data.status === 1) {

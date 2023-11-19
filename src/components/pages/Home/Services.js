@@ -21,7 +21,7 @@ const Services = () => {
     <div className={'section_page section_page_services'}>
         <h3 className={'section_title section_title_services'}>Decouvrez nos services</h3> 
         <figure className={'container--flex container_services_first_block'}>
-            <img src={"/images/services-image-garagevp.jpg"} alt="" width={530} height={447}/>
+            <img src={"/images/services-image-garagevp.webp"} alt="" width={530} height={447}/>
         <p className={'txt-services txt_services--lineheight'}>
             Dans notre centre,
             nous nous engageons à fournir des services
