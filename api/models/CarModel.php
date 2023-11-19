@@ -46,9 +46,9 @@ class CarModel extends AbstractModel
                 $stmt = $this->pdo->prepare($queryCarCount);
                 $stmt2 = $this->pdo->prepare($queryGetCars);
                 foreach ($filters as $f => $v) {
-
+                   
                     if ($f !== "offer") {
-                        $stmt2->bindValue(":$f", $v);
+                        $stmt2->bindValue(":$f", intval($v),PDO::PARAM_INT);
                     }
                 }
                 $stmt2->bindValue(":page", intval($page), PDO::PARAM_INT);
@@ -62,7 +62,7 @@ class CarModel extends AbstractModel
                 $exeCars = $stmt2->execute();
 
                 if ($exeCount) {
-                    $count = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $count = $stmt->fetch(PDO::FETCH_COLUMN);
                 } else {
                     throw new PDOException("Probleme pendant la recuperation des données");
                 }
@@ -71,8 +71,10 @@ class CarModel extends AbstractModel
                     while ($row = $stmt2->fetch(PDO::FETCH_ASSOC)) {
                         $cars[] = $row;
                     }
-                  
-                    return ["status" => 1, "count" => $count['count'], "cars" => $cars];
+                 
+                    $sanitizedCars = $this->sanitize($cars);
+                    $sanitizedCount = $this->sanitize($count);
+                    return ["status" => 1, "count" => $sanitizedCount, "cars" => $sanitizedCars];
                 } else {
                    
                     throw new PDOException("Probleme pendant la recuperation des données");
@@ -81,7 +83,7 @@ class CarModel extends AbstractModel
                 throw new PDOException("Probleme pendant la recuperation des données");
             }
         } catch (Exception $e) {
-            return $this->error($e->getMessage());
+            return $this->error(htmlspecialchars($e->getMessage()));
         }
     }
 
@@ -714,6 +716,22 @@ class CarModel extends AbstractModel
               
             }
         
+        }
+    }
+
+    private function sanitize($value){
+      
+        if (is_numeric($value)) {
+            return $value + 0;
+        }elseif(is_bool($value)){
+            return $value ? true : false;
+        }elseif(is_array($value)){
+            $array =  array_map(function($data){
+                return $this->sanitize($data);
+            },$value);
+            return $array;
+        }else {
+         return htmlspecialchars($value,ENT_QUOTES,"UTF-8");
         }
     }
 

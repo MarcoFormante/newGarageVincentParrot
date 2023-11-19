@@ -29,5 +29,5 @@ header("Access-Control-Allow-Methods: *");
         }
        
     } catch (Exception $e) {
-        echo json_encode(['status' => 0, "message" => $e->getMessage(),"code"=>$e->getCode()],JSON_UNESCAPED_UNICODE);
+        echo json_encode(['status' => 0, "message" => htmlspecialchars($e->getMessage()),"code"=>intval($e->getCode())],JSON_UNESCAPED_UNICODE);
     }

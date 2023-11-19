@@ -30,6 +30,8 @@ abstract class AbstractModel
         echo $this->Json($this->Error($data));
     }
 
+   
+
     
 
 }
