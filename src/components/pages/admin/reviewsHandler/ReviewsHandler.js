@@ -28,7 +28,8 @@ const ReviewsHandler = () => {
                 "Authorization": "Bearer " + sessionStorage.getItem("token")
               }
             })
-                .then(response => {
+            .then(response => {
+                    console.log(response.data);
                     if (response.data.status === 1) {
                         setAvis([...response.data.reviews])
                         setTimeout(() => {
@@ -72,7 +73,7 @@ const ReviewsHandler = () => {
         })
       
     }
-    
+
 
     return (
       
@@ -136,7 +137,7 @@ const ReviewsHandler = () => {
                 }
                
             </div>
-            <SwitchPageBlock handleCarPage={()=>{} } currentPage={currentPage} setCurrentPage={(value)=>setCurrentPage(value)} dataLength={avis[0]?.count} />
+         {  avis[0]?.count &&  <SwitchPageBlock handleCarPage={()=>{} } currentPage={currentPage } setCurrentPage={(value)=>setCurrentPage(value)} dataLength={avis[0].count + 3} />}
     </div>
      
   )

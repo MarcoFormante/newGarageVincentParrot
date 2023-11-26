@@ -36,7 +36,7 @@ class CarModel extends AbstractModel
             $queryCarCount = "SELECT COUNT(*) as count FROM cars 
             WHERE km BETWEEN ? AND  ? 
             AND year BETWEEN ? AND  ? 
-            AND price BETWEEN ? - offer AND  ? $withOffer";
+            AND price - offer BETWEEN ? AND  ? $withOffer";
 
             $queryGetCars = "SELECT * FROM cars  
             WHERE km BETWEEN :minKm AND  :maxKm

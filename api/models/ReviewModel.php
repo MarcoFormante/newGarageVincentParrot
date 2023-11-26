@@ -78,11 +78,11 @@ class ReviewModel extends AbstractModel
     public function getTotalReviews()
     {
         $query = "SELECT COUNT(review)*5 AS total,
-        COUNT(IF(review = 1,1,NULL))*1 AS stars1,
-        COUNT(IF(review = 2,1,NULL))*2 AS stars2,
-        COUNT(IF(review = 3,1,NULL))*3 AS stars3,
-        COUNT(IF(review = 4,1,NULL))*4 AS stars4,
-        COUNT(IF(review = 5,1,NULL))*5 AS stars5 
+        COUNT(IF(review = 1,1,NULL)) AS stars1,
+        COUNT(IF(review = 2,1,NULL)) AS stars2,
+        COUNT(IF(review = 3,1,NULL)) AS stars3,
+        COUNT(IF(review = 4,1,NULL)) AS stars4,
+        COUNT(IF(review = 5,1,NULL)) AS stars5 
         from reviews WHERE is_validate = 1";
 
         try {
