@@ -9,16 +9,17 @@ require_once("AbstractModel.php");
 
 class CarModel extends AbstractModel
 {
-    public function getAllCars($page, $filters)
+    public function getAllCars($page, $filter)
     {
         try {
 
-            $filters = json_decode($filters, true);
+            $f = json_decode($filter, true);
 
-            if (!is_array($filters)) {
+            if (!is_array($f)) {
                 throw new Exception("Probleme pendant la recuperation des données");
             }
-
+            $filters = $this->sanitize($f);
+            
             $arrayKeys = array_keys($filters);
             $requiredKeys = ["minKm", "maxKm", "minYear", "maxYear", "minPrice", "maxPrice", "offer"];
             foreach ($arrayKeys as $key => $value) {
@@ -33,12 +34,15 @@ class CarModel extends AbstractModel
             }
 
             $queryCarCount = "SELECT COUNT(*) as count FROM cars 
-            WHERE km > ? AND km < ? AND year > ? AND year < ? 
-            AND price > ? - offer AND price < ? $withOffer";
+            WHERE km BETWEEN ? AND  ? 
+            AND year BETWEEN ? AND  ? 
+            AND price BETWEEN ? - offer AND  ? $withOffer";
 
             $queryGetCars = "SELECT * FROM cars  
-            WHERE (km > :minKm AND km < :maxKm) AND (year > :minYear AND year < :maxYear)
-            AND (price - offer > :minPrice  AND price - offer < :maxPrice) $withOffer ORDER BY id DESC LIMIT :page,12";
+            WHERE km BETWEEN :minKm AND  :maxKm
+            AND year BETWEEN :minYear AND :maxYear
+            AND price - offer BETWEEN :minPrice  AND :maxPrice
+            $withOffer ORDER BY id DESC LIMIT :page,12";
 
 
             if (!is_null($this->pdo)) {
@@ -83,7 +87,7 @@ class CarModel extends AbstractModel
                 throw new PDOException("Probleme pendant la recuperation des données");
             }
         } catch (Exception $e) {
-            return $this->error(htmlspecialchars($e->getMessage()));
+            return $this->error("Probleme pendant la recuperation des données");
         }
     }
 
@@ -97,6 +101,7 @@ class CarModel extends AbstractModel
         $query = "SELECT id,path FROM car_images WHERE car_id = :id";
 
         try {
+            $id = $this->sanitize($id);
             if (!is_null($this->pdo)) {
                 $stmt = $this->pdo->prepare($query);
                 $stmt->bindValue(':id', $id, PDO::PARAM_INT);
@@ -106,6 +111,7 @@ class CarModel extends AbstractModel
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         $images[] = $row;
                     }
+                    $images = $this->sanitize($images);
                     return ["status" => 1, "images" => $images];
                 } else {
                     throw new Exception("Erreur pendant la recuperation des images");
@@ -120,6 +126,9 @@ class CarModel extends AbstractModel
 
 
     public function deleteImageGallery(int $id , string $path){
+        $id = $this->sanitize($id);
+        $path = $this->sanitize($path);
+        realpath($path);
         if (!is_null($this->pdo)) {
             $query = "DELETE FROM car_images WHERE path = :path AND car_id = :id";
             $stmt = $this->pdo->prepare($query);
@@ -205,7 +214,7 @@ class CarModel extends AbstractModel
             }
         } catch (Exception $e) {
 
-            return $this->error($e->getMessage());
+            return $this->error("Erreur pendant la recuperation des données");
         }
     }
 
@@ -232,7 +241,8 @@ class CarModel extends AbstractModel
 
     public function newCar($thumbnail, $gallery, $details, array $equipments = null)
     {
-     
+       
+
         try {
            
             if (!$this->checkImageSize($gallery['tmp_name']) || !$this->checkImageSize([$thumbnail['tmp_name']])) {
@@ -270,7 +280,7 @@ class CarModel extends AbstractModel
                 $thumbnailValid = true;
             } else {
                 $thumbnailValid = false;
-                throw new Exception("le types de images acceptès sont webp,jpeg,png , verifiez la photo principale (thumbnail)", 1);
+                throw new Exception("le type de image acceptès est webp");
             }
 
             if (!is_null($this->pdo) && $thumbnailValid === true) {
@@ -313,7 +323,7 @@ class CarModel extends AbstractModel
                     $carId = $this->pdo->lastInsertId();
                 }else{
                    
-                    throw new Exception("Error Processing Request", 0);
+                    throw new Exception("Un problème est survenu", 0);
                 }
 
                  //EQUIPMENTS
@@ -321,7 +331,8 @@ class CarModel extends AbstractModel
                  if (is_array($equipments) && count($equipments) > 0 && $equipments[0] !== "") {
                     $queryCarEquipments = "INSERT INTO car_equipments(car_id,equip_id) VALUES";
                     foreach ($equipments as $key => $value) {
-                            
+                            $key = $this->sanitize($key);
+                            $value = $this->sanitize($value);
                         if ($key !== count($equipments) - 1) {
                             $queryCarEquipments .= "(:car_id$key,:equip_id$value),";
                         } else {
@@ -334,7 +345,8 @@ class CarModel extends AbstractModel
               
                 if (is_array($equipments) && count($equipments) > 0 && $equipments[0] !== "") {
                     foreach ($equipments as $key => $value) {
-                      
+                        $key = $this->sanitize($key);
+                        $value = $this->sanitize($value);
                         $stmtCarEquipments->bindValue(":car_id$key", $carId, PDO::PARAM_INT);
                         $stmtCarEquipments->bindValue(":equip_id$value", $value, PDO::PARAM_INT);
                     }
@@ -342,11 +354,13 @@ class CarModel extends AbstractModel
                      
                     }else{
                         $this->pdo->rollBack();
-                        throw new Exception("Error Processing Request", 0);
+                        throw new Exception("Un problème est survenu", 0);
                     }
                 }
 
                 foreach ($galleryPathArray as $key => $value) {
+                    $key = $this->sanitize($key);
+                    $value = $this->sanitize($value);
                     $stmtCarGallery->bindValue(":path$key", $value, PDO::PARAM_STR);
                     $stmtCarGallery->bindValue(":car_id$key", $carId, PDO::PARAM_INT);
                 }
@@ -358,16 +372,16 @@ class CarModel extends AbstractModel
                             return ["status" => 1, "message" => "Nouvelle voiture creé avec succès"];                           
                         }else{
                             $this->pdo->rollBack();
-                            throw new Exception("Error Processing Request", 0);
+                            throw new Exception("Un problème est survenu", 0);
                         }
                 }else{
                     $this->pdo->rollBack();
-                    throw new Exception("Error Processing Request", 0);
+                    throw new Exception("Un problème est survenu", 0);
                 }
             }
         } catch (Exception $e) {
         
-            return $this->error($e->getMessage());
+            return $this->error("Un problème est survenu");
         }
     }
 
@@ -443,7 +457,7 @@ class CarModel extends AbstractModel
                 return ["status"=> 1, "cars"=>$cars,"count"=>$count];
                     
                 } catch (PDOException $e) {
-                   return $this->error("Un problème est survenu, impossible de recuperer les voitures /" . $e->getMessage());
+                   return $this->error("Un problème est survenu, impossible de recuperer les voitures");
                 }
 
         }elseif ($filters === "Numero VO") {
@@ -468,7 +482,7 @@ class CarModel extends AbstractModel
                     return ["status"=> 1, "cars"=>$cars,"count"=>$count];
                         
                     } catch (PDOException $e) {
-                       return $this->error("Un problème est survenu, impossible de recuperer les voitures /" . $e->getMessage());
+                       return $this->error("Un problème est survenu, impossible de recuperer les voitures ");
                     }
                 
         }elseif ($filters === "ID") {
@@ -492,7 +506,7 @@ class CarModel extends AbstractModel
                 return ["status"=> 1, "cars"=>$cars,"count"=>$count];
                     
                 } catch (PDOException $e) {
-                   return $this->error("Un problème est survenu, impossible de recuperer les voitures /" . $e->getMessage());
+                   return $this->error("Un problème est survenu, impossible de recuperer les voitures ");
                 }
 
         }elseif($filters === "Brand"){
@@ -522,7 +536,7 @@ class CarModel extends AbstractModel
                 return ["status"=> 1, "cars"=>$cars,"count"=>$count];
                     
                 } catch (PDOException $e) {
-                   return $this->error("Un problème est survenu, impossible de recuperer les voitures /" . $e->getMessage());
+                   return $this->error("Un problème est survenu, impossible de recuperer les voitures ");
                 }
         }elseif ($filters === "Model") {
             $query = "SELECT *
@@ -551,7 +565,7 @@ class CarModel extends AbstractModel
                 return ["status"=> 1, "cars"=>$cars,"count"=>$count];
                     
                 } catch (PDOException $e) {
-                   return $this->error("Un problème est survenu, impossible de recuperer les voitures /" . $e->getMessage());
+                   return $this->error("Un problème est survenu, impossible de recuperer les voitures");
                 }
         }
 
@@ -644,15 +658,15 @@ class CarModel extends AbstractModel
 
     public function updateCar(string $column, $value, int $id,string $imageData = null){
         if (!is_null($this->pdo)) {
-            $valueIsImage = is_array($value);
-           
+            $valueIsImage = is_array($value) && getimagesize($value['tmp_name']);
+            
             
             $columnNames = ["make","model","thumbnail","year","km","price","offer","vo_number","gearbox","din_power","fiscal_power","color","doors","seats","energy"];
             if (!in_array($column,$columnNames)) {
                 return $this->error("Un probleme est survenu, impossible d'effectuer la modification");
             }
            
-           
+            $column = $this->sanitize($column);
             if (!$valueIsImage) {
                 $query = "UPDATE cars SET $column = :value WHERE id = :id ";
                 $stmt = $this->pdo->prepare($query);
@@ -674,12 +688,12 @@ class CarModel extends AbstractModel
 
                 $isValidImage = $this->checkImageSize([$value['tmp_name']]);
                 if (!$isValidImage) {
-                    return $this->error("Un probleme est survenu, impossible d'effectuer la modification, verifié si la photo est bien horizontale");
+                    return $this->error("Un probleme est survenu, impossible d'effectuer la modification, verifié que la photo soit bien en horizontale");
                 }
 
                 $fileExtention = explode("/",mime_content_type($value['tmp_name']))[1];
-                if (!preg_match("/jpeg|png|jpg|webp/i",strtolower($fileExtention))) {
-                   return ["status"=> 0, "message"=>"Erreur: les types d'images acceptés sont jpeg et png"];
+                if (!preg_match("/webp/i",strtolower($fileExtention))) {
+                   return ["status"=> 0, "message"=>"Erreur: le type d'image accepté est WEBP"];
                 }	
                 
               
@@ -710,7 +724,7 @@ class CarModel extends AbstractModel
                 }
                         
                 } catch (Exception $e) {
-                 return $this->error("Un probleme est survenu, impossible d'effectuer la modification");
+                    return $this->error("Un probleme est survenu, impossible d'effectuer la modification");
                 }
 
               
@@ -719,21 +733,7 @@ class CarModel extends AbstractModel
         }
     }
 
-    private function sanitize($value){
-      
-        if (is_numeric($value)) {
-            return $value + 0;
-        }elseif(is_bool($value)){
-            return $value ? true : false;
-        }elseif(is_array($value)){
-            $array =  array_map(function($data){
-                return $this->sanitize($data);
-            },$value);
-            return $array;
-        }else {
-         return htmlspecialchars($value,ENT_QUOTES,"UTF-8");
-        }
-    }
+    
 
     
 }

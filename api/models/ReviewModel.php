@@ -30,6 +30,9 @@ class ReviewModel extends AbstractModel
     {
         $query = "INSERT INTO reviews(name,message,review) VALUES(:name,:message,:review)";
         try {
+            $name = $this->sanitize($name);
+            $name = $this->sanitize($message);
+            $name = $this->sanitize($review);
             if (!is_null($this->pdo)) {
                 $stmt = $this->pdo->prepare($query);
                 $stmt->bindParam(':name', $name, PDO::PARAM_STR);

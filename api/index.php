@@ -3,6 +3,7 @@
 header("Access-Control-Allow-Origin:*");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: *");
+header("Content-Type: application/json");
 
 
 
@@ -11,14 +12,16 @@ header("Access-Control-Allow-Methods: *");
             
             $url= explode("/", filter_var($_GET['route'],FILTER_SANITIZE_URL));
             $method = $_SERVER["REQUEST_METHOD"];
-            $controllerName = ucfirst($url[0]) . "Controller" ?? false;
+            $controllerName = $url[0] ? ucfirst($url[0]) . "Controller" : false;
         
             $param = count($url) > 1 && !empty($url[1]) ? array_slice($url,1) : null;
-           
-            if (file_exists("controllers/" . $controllerName . ".php")) {
             
+            if (file_exists("controllers/" . $controllerName . ".php")) {
+                
                 require("controllers/" . $controllerName . ".php");
+                
                 $controller = new $controllerName();
+               
                 $controller->index($method, $param);
             } else {
                 throw new Exception("Un erreur est survenu");
@@ -29,5 +32,9 @@ header("Access-Control-Allow-Methods: *");
         }
        
     } catch (Exception $e) {
-        echo json_encode(['status' => 0, "message" => htmlspecialchars($e->getMessage()),"code"=>intval($e->getCode())],JSON_UNESCAPED_UNICODE);
+        
+        echo json_encode(['status' => 0, "message" => $e->getMessage(),"code"=>intval($e->getCode())],JSON_UNESCAPED_UNICODE);
     }
+
+
+    

@@ -39,6 +39,7 @@ class EquipmentController extends AbstractController
 
                     switch ($param[0]) {
                         case 'add':
+                          
                             $this->addCarEquipment($param);
                             break;
                         case 'new':
@@ -105,7 +106,8 @@ class EquipmentController extends AbstractController
 
     public function addCarEquipment($param)
     {
-        if ($this->valueFromToken() === "admin" || $this->valueFromToken() === "employee") {
+        if ($this->valueFromToken() === "admin" || $this->valueFromToken() === "employee" ) {
+            
             $eqModel = new EquipmentModel;
             if ($this->checkNumericParam($param, 1) &&  $this->checkNumericParam($param, 2)) {
                 $this->response($eqModel->addCarEquipment($param[1], $param[2]));
@@ -121,12 +123,13 @@ class EquipmentController extends AbstractController
 
     public function addNewEquipment($param)
     {
+       
         if ($this->valueFromToken() === "admin" || $this->valueFromToken() === "employee") {
             $eqModel = new EquipmentModel;
             if (!empty($param[1]) && is_string($param[1])) {
                 $this->response($eqModel->addNewEquipment($param[1]));
             } else {
-                $this->showError("Un probleme est survenu");
+                $this->showError("Un problème est survenu");
             }
         } else {
             $this->showError("Un probleme est survenu");

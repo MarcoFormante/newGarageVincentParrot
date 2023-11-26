@@ -72,7 +72,7 @@ class UserModel extends AbstractModel
                     throw new Exception("Erreur pendant l'envois des données");
                 }
             } catch (Exception $e) {
-                return $this->error("Erreur pendant l'envois des données, vérifier que l'email n'existe deja, Error: " . $e->getMessage());
+                return $this->error("Erreur pendant l'envois des données, vérifier que l'email n'existe deja");
             }
         } else {
             return $this->error("Erreur pendant l'envois des données, email et password sont obbligatoires");
@@ -84,6 +84,8 @@ class UserModel extends AbstractModel
     public function login(string $email, string $pwd)
     {
         if ($email && $pwd) {
+            $email = $this->sanitize($email);
+            $pwd = $this->sanitize($pwd);
             if (!is_null($this->pdo)) {
                 $query = "SELECT email, password, role FROM users 
                 INNER JOIN roles ON role_id = roles.id
@@ -128,9 +130,9 @@ class UserModel extends AbstractModel
 
     public function checkToken(string $token)
     {
-        $decodeToken = JWT::decode($token, new Key(getenv("JWTkey"), "HS256"));
-        if ($decodeToken) {
-            return ["status" => 1, "role" => $decodeToken->role];
+        $decodedToken = JWT::decode($token, new Key(getenv("JWTkey"), "HS256"));
+        if ($decodedToken) {
+            return ["status" => 1, "role" => $decodedToken->role];
         } else {
             return false;
         }

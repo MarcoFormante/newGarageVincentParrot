@@ -112,7 +112,7 @@ class ImageModel extends AbstractModel
                         throw new Exception("Un probleme est survenu");
                     }
         } catch (Exception $e) {
-            return $this->error($e->getMessage());
+            return $this->error("Un probleme est survenu");
         }
     }
 

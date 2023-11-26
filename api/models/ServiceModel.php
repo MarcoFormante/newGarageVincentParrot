@@ -60,7 +60,7 @@ class ServiceModel extends AbstractModel
             throw new PDOException("Erreur pendant la modification du service, rententez.");
         }
       } catch (\Exception $e) {
-        $this->error($e->getMessage());
+        $this->error("Erreur pendant la modification du service, rententez.");
       }
        
     }

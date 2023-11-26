@@ -110,7 +110,7 @@ const ProtectedRoute = ({ auth, redirectPath, checkTrigger }) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const role = useSelector((state) => state.role.value);
+  const role = useSelector((state) => state.role.value || sessionStorage.getItem("role"));
 
   const checkToken = () => {
     if (auth && role) {

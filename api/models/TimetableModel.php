@@ -26,7 +26,7 @@ Class TimetableModel  extends AbstractModel
 
     public function updateOpeningTimes(int $id,string $value,string $column, string $close)
     {
-        $columnName = htmlspecialchars($column);
+        $columnName = $this->sanitize($column);
         if (!in_array($columnName, ["day_start_am", "day_end_am", "day_start_pm", "day_end_pm"])) {
             return $this->error("Erreur pendant la modification de l'horaire");
         }
@@ -37,12 +37,12 @@ Class TimetableModel  extends AbstractModel
             return $this->error("Erreur pendant la modification de l'horaire");
         }
 
-        $query = "UPDATE opening_times SET $columnName = :value , close = :column WHERE id = :id";
+        $query = "UPDATE opening_times SET $columnName = :value , close = :closeNum WHERE id = :id";
 
         if (!is_null($this->pdo)) {
             $stmt = $this->pdo->prepare($query);
             $stmt->bindValue(":value", $value, PDO::PARAM_STR);
-            $stmt->bindValue(":column",$closeNum,PDO::PARAM_STR);
+            $stmt->bindValue(":closeNum",$closeNum,PDO::PARAM_STR);
             $stmt->bindValue(':id', $id, PDO::PARAM_INT);
 
             if ($stmt->execute()) {

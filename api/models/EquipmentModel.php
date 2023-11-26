@@ -33,7 +33,7 @@ class EquipmentModel extends AbstractModel
                 throw new PDOException("Probleme pendant la recuperation des données");
             }
         } catch (\Exception $e) {
-            return $this->error($e->getMessage());
+            return $this->error("Probleme pendant la recuperation des données");
         }
     }
 
@@ -96,7 +96,7 @@ class EquipmentModel extends AbstractModel
 
     public function addNewEquipment(string $equipment){
         $query = "INSERT INTO equipments(equipment) VALUE(:equipment)";
-    
+   
         if (!is_null($this->pdo)) {
             $stmt = $this->pdo->prepare($query);
             $stmt->bindValue(":equipment",$equipment);

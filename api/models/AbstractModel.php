@@ -15,8 +15,6 @@ abstract class AbstractModel
     }
 
     
-
-
     protected function error($message){
         return ['status'=>0,"message"=>"Erreur: "  . $message];
     }
@@ -30,6 +28,21 @@ abstract class AbstractModel
         echo $this->Json($this->Error($data));
     }
 
+    protected function sanitize($value){
+      
+        if (is_numeric($value)) {
+            return $value + 0;
+        }elseif(is_bool($value)){
+            return $value ? true : false;
+        }elseif(is_array($value)){
+            $array =  array_map(function($data){
+                return $this->sanitize($data);
+            },$value);
+            return $array;
+        }else {
+         return filter_var($value,FILTER_SANITIZE_SPECIAL_CHARS,FILTER_FLAG_NO_ENCODE_QUOTES);
+        }
+    }
    
 
     
