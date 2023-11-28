@@ -35,6 +35,9 @@
       "react-app/jest"
     ]
   },
+  "name":"Garage Vincent Parrot",
+  "homepage": "https://garagevincentparrot.marcoformante.com/",
+  "version":"1.0.0",
   "browserslist": {
     "production": [
       ">0.2%",

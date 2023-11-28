@@ -31,7 +31,7 @@ const AvisSection = () => {
     function TotalReviewsCalculate(reviews) {
         const { total,stars1, stars2, stars3, stars4, stars5 } = reviews;
         const reviewsSum = +stars1  + +stars2  + +stars3 + +stars4  + +stars5 ;
-        const avarage = (+stars1 *1 + +stars2 *2 + +stars3 * 3 + +stars4 * 4 + +stars5 *5) / total * 5;
+        const avarage = ((+stars1 * 1) +( +stars2 * 2) + (+stars3 * 3) + (+stars4 * 4) + (+stars5 *5)) / +total * 5;
         setReviewsAverage(avarage.toFixed(1));
         setTotalStarsLength([+stars1 , +stars2 , +stars3 , +stars4 , +stars5 ])
         setSum(reviewsSum)
@@ -59,9 +59,7 @@ const AvisSection = () => {
     useEffect(() => {
         setAverage(reviewsAverage)
         if (average <= Math.floor(reviewsAverage)) {
-            // averageAnimation()
-        } else {
-            return ()=>{}
+            averageAnimation()
         }
         
     },[average])
@@ -70,7 +68,6 @@ const AvisSection = () => {
     
     const handleScrollCarousel = (direction) => {
        
-            const cardPadding = 20;
             carousel.current.scrollBy({
                 top: 0,
                 left: direction + 310,
